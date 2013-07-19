@@ -12,6 +12,7 @@
         <Button x:Name="SignUp" Content="SignUp" HorizontalAlignment="Left" Margin="119,238,0,0" VerticalAlignment="Top" Click="SignUp_Click"/>
         <Button x:Name="CourseOverview" Content="CourseOverview" HorizontalAlignment="Left" Margin="234,410,0,0" VerticalAlignment="Top" Click="CourseOverview_Click"/>
         <Button x:Name="MyCourses" Content="MyCourses" HorizontalAlignment="Left" Margin="401,209,0,0" VerticalAlignment="Top" Click="MyCourses_Click"/>
+        <Button x:Name="CourseStore" Content="Courstore" HorizontalAlignment="Left" Margin="505,410,0,0" VerticalAlignment="Top" Click="CourseStore_Click"/>
 
     </Grid>
 </Page>

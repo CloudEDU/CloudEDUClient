@@ -6,15 +6,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    
+    <Page.Resources>
+        <SolidColorBrush x:Key="PageRed" Color="#DC0000" />
+        <SolidColorBrush x:Key="PageBlue" Color="#008CDC" />
+        <SolidColorBrush x:Key="PageGreen" Color="#96DC00" />
+    </Page.Resources>
 
     <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*" />
             <ColumnDefinition Width="1150*" />
-            <ColumnDefinition Width="150*" />
+            <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="150*" />
+            <RowDefinition Height="150" />
             <RowDefinition Height="500*" />
             <RowDefinition Height="60*" />
         </Grid.RowDefinitions>
@@ -30,18 +36,18 @@
             <StackPanel Grid.Column="0" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 50">
                     <Button Style="{StaticResource BackButtonStyle}" Click="BackButton_Click" Margin="-5, 10" />
-                    <TextBlock Style="{StaticResource PageHeaderTextStyle}" Text="attending"
+                    <TextBlock x:Name="NavigateText" Style="{StaticResource PageHeaderTextStyle}" Text="attending"
                                HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Margin="10, 20" />
                 </StackPanel>
-                <Border x:Name="HomeBorder" Background="#DC0000" >
+                <Border x:Name="HomeBorder" Background="{StaticResource PageRed}" >
                     <TextBlock x:Name="HomeText" Style="{StaticResource PageHeaderTextStyle}" Text="Home"
                                Margin="5, 15, 0, 15" />
                 </Border>
-                <Border x:Name="LecturesBorder" Background="#008CDC" >
+                <Border x:Name="LecturesBorder" Background="{StaticResource PageBlue}" >
                     <TextBlock x:Name="LecturesText" Style="{StaticResource PageHeaderTextStyle}" Text="Lectures"
                                Margin="5, 15, 0, 15" />
                 </Border>
-                <Border x:Name="NotesBorder" Background="#96DC00" >
+                <Border x:Name="NotesBorder" Background="{StaticResource PageGreen}" >
                     <TextBlock x:Name="NotesText" Style="{StaticResource PageHeaderTextStyle}" Text="Notes"
                                Margin="5, 15, 0, 15" Foreground="White"/>
                 </Border>

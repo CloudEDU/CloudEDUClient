@@ -14,10 +14,10 @@
     <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource StorePageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1200*"/>
-            <ColumnDefinition Width="150*"/>
+            <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="150*"/>
+            <RowDefinition Height="150"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="60*" />
         </Grid.RowDefinitions>
@@ -93,7 +93,8 @@
                     <Button x:Name="CommentsButton" Style="{StaticResource TextSecondaryButtonStyle}" Content="Comments"
                             Margin="20, 0" FontSize="20" />
                 </StackPanel>
-                <ScrollViewer Grid.Row="1" Style="{StaticResource VerticalScrollViewerStyle}" VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Grid.Row="1" x:Name="OverviewScroll" Style="{StaticResource VerticalScrollViewerStyle}"
+                              VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical" Margin="20, 20">
                         <Image Height="400" Width="550" Stretch="Fill" Source="../Images/Courses/ComputerNetworking.png"
                            HorizontalAlignment="Left"/>
