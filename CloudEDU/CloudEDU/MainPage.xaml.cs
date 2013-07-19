@@ -25,8 +25,6 @@ namespace CloudEDU
         public MainPage()
         {
             this.InitializeComponent();
-
-            
         }
 
         /// <summary>
@@ -51,6 +49,16 @@ namespace CloudEDU
         private void CourseOverview_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(CourseStore.CourseOverview));
+        }
+
+        private void MyCourses_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MyCourses));
+        }
+
+        private void CourseStore_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(CourseStore.CourseStore));
         }
     }
 }

@@ -21,7 +21,7 @@
                 Width="100" Height="100" VerticalAlignment="Center" AutomationProperties.Name="" />
         <Button Content="Sign Up?" HorizontalAlignment="Center" Margin="0, 200, 0, 0" VerticalAlignment="Center"
                 FontFamily="Candara" FontSize="20" BorderThickness="0" Background="Transparent"
-                Foreground="White" />
+                Foreground="White" Click="Button_Click" />
         
     </Grid>
 </Page>

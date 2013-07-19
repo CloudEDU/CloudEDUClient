@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CloudEDU.Login
 {
+    /// <summary>
+    /// User model
+    /// </summary>
     class User
     {
         public string Username { get; set; }
