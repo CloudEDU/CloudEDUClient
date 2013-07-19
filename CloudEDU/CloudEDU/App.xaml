@@ -2,7 +2,8 @@
     x:Class="CloudEDU.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CloudEDU">
+    xmlns:local="using:CloudEDU"
+    RequestedTheme="Light">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -14,6 +15,10 @@
                  -->
                 <ResourceDictionary Source="Common/StandardStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Various Brushes -->
+            <SolidColorBrush x:Key="LoginPageBackgroundThemeBrush" Color="#53A1B8" />
+            <SolidColorBrush x:Key="StorePageBackgroundThemeBrush" Color="White" />
 
         </ResourceDictionary>
     </Application.Resources>

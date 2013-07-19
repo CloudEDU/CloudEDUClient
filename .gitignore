@@ -28,3 +28,6 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+
+.DS_Store
+._.DS_Store
