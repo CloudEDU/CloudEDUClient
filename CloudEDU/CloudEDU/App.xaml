@@ -15,6 +15,8 @@
                 <ResourceDictionary Source="Common/StandardStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
+            <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="#53a1b8" />
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

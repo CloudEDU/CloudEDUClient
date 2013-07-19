@@ -7,7 +7,54 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <ControlTemplate TargetType="Button" x:Key="UserImage">
+            <Border Background="#75B3C5" Width="150" Height="150" CornerRadius="1000">
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Height="140" Width="140" Stretch="Fill" Source="{TemplateBinding Content}" />
+            </Border>
+        </ControlTemplate>
+        <ControlTemplate TargetType="Button" x:Key="AddUser">
+            <Border Background="#75B3C5" Width="150" Height="150" CornerRadius="1000">
+                <TextBlock Text="{TemplateBinding Content}"
+                           Height="300" Width="200" FontSize="210" Foreground="#BDDBE4" Margin="0, -90, 0, 0" />
+            </Border>
+        </ControlTemplate>
+    </Page.Resources>
+
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        
+        <ListView Name="UserList" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Template="{StaticResource UserImage}" Content="{Binding ImageSource}" />
+                        <TextBlock FontSize="25" Text="{Binding Username}" Width="25" Height="25" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal" >
+            <Button Template="{StaticResource UserImage}" Content="../Assets/User/ania.png" />
+            <Border Background="#75B3C5;" Width="150" Height="150" CornerRadius="1000">
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Assets/User/ania.png"
+            	   Height="140" Width="140" Stretch="Fill" />
+            </Border>
+            <Border Background="#75B3C5;" Width="150" Height="150" CornerRadius="1000">
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Assets/User/ania.png"
+            	   Height="140" Width="140" Stretch="Fill" />
+            </Border>
+            <Border Background="#75B3C5;" Width="150" Height="150" CornerRadius="1000">
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Assets/User/ania.png"
+            	   Height="140" Width="140" Stretch="Fill" />
+            </Border>
+            <Border Background="#75B3C5;" Width="150" Height="150" CornerRadius="1000">
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="../Assets/User/ania.png"
+            	   Height="140" Width="140" Stretch="Fill" />
+            </Border>
+            <Button Template="{StaticResource AddUser}" Content="+" />
+        </StackPanel>
 
     </Grid>
 </Page>

@@ -493,11 +493,17 @@
         <Setter Property="AutomationProperties.Name" Value="Out"/>
         <Setter Property="Content" Value="&#xE110;"/>
     </Style>
+    
+    -->
+    
     <Style x:Key="NextAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="NextAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Next"/>
         <Setter Property="Content" Value="&#xE111;"/>
     </Style>
+
+    <!--
+    
     <Style x:Key="PreviousAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="PreviousAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Previous"/>
