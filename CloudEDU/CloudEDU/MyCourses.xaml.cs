@@ -14,14 +14,14 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace CloudEDU.Login
+namespace CloudEDU
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Login : Page
+    public sealed partial class MyCourses : Page
     {
-        public Login()
+        public MyCourses()
         {
             this.InitializeComponent();
         }
@@ -35,9 +35,16 @@ namespace CloudEDU.Login
         {
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(SignUp));
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+            }
+            else
+            {
+                Frame.Navigate(typeof(MainPage));
+            }
         }
     }
 }

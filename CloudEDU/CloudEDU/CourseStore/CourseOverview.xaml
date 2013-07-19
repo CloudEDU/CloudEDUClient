@@ -25,8 +25,8 @@
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
             <Button Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Click="BackButton_Click" />
-            <TextBlock x:Name="CourseTitle" Style="{StaticResource PageHeaderTextStyle}" HorizontalAlignment="Center"
-                       Text="Computer Network" VerticalAlignment="Center"/>
+            <TextBlock x:Name="Title" Style="{StaticResource PageHeaderTextStyle}" HorizontalAlignment="Center"
+                       Text="Computer Network" VerticalAlignment="Center" FontSize="100" Margin="0, -10"/>
         </StackPanel>
 
         <Grid Grid.Column="0" Grid.Row="1">
@@ -57,24 +57,24 @@
                         <TextBlock Style="{StaticResource BodyTextStyle}" Text="Category:"
                                    Foreground="{StaticResource CourseInfoFontForegroundBrush}"
                                    Margin="0, 0, 10, 0" />
-                        <TextBlock x:Name="CourseName" Style="{StaticResource BodyTextStyle}" Text="Computer Science"
+                        <TextBlock x:Name="Category" Style="{StaticResource BodyTextStyle}" Text="Computer Science"
                                    Foreground="{StaticResource CourseInfoFontForegroundBrush}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Style="{StaticResource BodyTextStyle}" Text="Age grading: " 
                                    Foreground="{StaticResource CourseInfoFontForegroundBrush}"
                                    Margin="0, 0, 10, 0" />
-                        <TextBlock x:Name="CourseGradingAge" Style="{StaticResource BodyTextStyle}" Text="1+"
+                        <TextBlock x:Name="GradingAge" Style="{StaticResource BodyTextStyle}" Text="1+"
                                    Foreground="{StaticResource CourseInfoFontForegroundBrush}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Style="{StaticResource BodyTextStyle}" Text="Distributor: " 
                                    Foreground="{StaticResource CourseInfoFontForegroundBrush}"
                                    Margin="0, 0, 10, 0" />
-                        <TextBlock x:Name="CourseDistributor" Style="{StaticResource BodyTextStyle}" Text="xxxEDU"
+                        <TextBlock x:Name="Distributor" Style="{StaticResource BodyTextStyle}" Text="xxxEDU"
                                    Foreground="{StaticResource CourseInfoFontForegroundBrush}" />
                     </StackPanel>
-                    <TextBlock x:Name="CourseCopyright" Style="{StaticResource CaptionTextStyle}"
+                    <TextBlock x:Name="Copyright" Style="{StaticResource CaptionTextStyle}"
                                Foreground="{StaticResource CourseInfoFontForegroundBrush}"
                                Text="Copyright © 2013-2013 CloudEDU All rights reserved." FontFamily="SimSun" />
                 </StackPanel>
@@ -84,6 +84,7 @@
                     <RowDefinition Height="50" />
                     <RowDefinition Height="500*" />
                 </Grid.RowDefinitions>
+            
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
                     <Button x:Name="OverviewButton" Style="{StaticResource TextPrimaryButtonStyle}" Content="Overview"
                             Margin="20, 0" FontSize="20" />
@@ -94,7 +95,7 @@
                 </StackPanel>
                 <ScrollViewer Grid.Row="1" Style="{StaticResource VerticalScrollViewerStyle}" VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical" Margin="20, 20">
-                        <Image Height="400" Width="550" Stretch="Fill" Source="Images/Courses/ComputerNetworking.png"
+                        <Image Height="400" Width="550" Stretch="Fill" Source="../Images/Courses/ComputerNetworking.png"
                            HorizontalAlignment="Left"/>
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Computer Network is ..."
                                Margin="0, 20"/>

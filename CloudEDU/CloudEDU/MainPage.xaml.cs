@@ -52,5 +52,10 @@ namespace CloudEDU
         {
             Frame.Navigate(typeof(CourseStore.CourseOverview));
         }
+
+        private void MyCourses_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MyCourses));
+        }
     }
 }
