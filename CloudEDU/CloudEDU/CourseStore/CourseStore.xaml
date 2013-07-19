@@ -17,6 +17,42 @@
             <RowDefinition Height="500*" />
             <RowDefinition Height="60*" />
         </Grid.RowDefinitions>
+
+        <GridView ItemTemplate="{StaticResource Standard250x250ItemTemplate}"
+                  SelectionMode="None"
+                  IsSwipeEnabled="False"
+                  Grid.Column="1" Grid.Row="1"
+                  Grid.ColumnSpan="2"
+                  IsItemClickEnabled="True">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            <GridView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Button Style="{StaticResource TextPrimaryButtonStyle}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Title" Style="{StaticResource GroupHeaderTextStyle}" />
+                                        <TextBlock Text="{StaticResource ChevronGlyph}"
+                                                   Style="{StaticResource GroupHeaderTextStyle}" />
+                                    </StackPanel>
+                                </Button>
+                            </Grid>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </GridView.GroupStyle>
+        </GridView>
+        
         <Grid Grid.Column="1" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1000*" />
@@ -26,5 +62,6 @@
                        HorizontalAlignment="Left" Text="Courstore" VerticalAlignment="Center"
                        FontSize="100" Margin="0, -10"/>
         </Grid>
+        
     </Grid>
 </Page>
