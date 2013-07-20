@@ -13,7 +13,7 @@
 
     <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource StorePageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1200*"/>
+            <ColumnDefinition />
             <ColumnDefinition Width="150"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
