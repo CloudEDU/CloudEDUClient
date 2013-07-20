@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudEDU.CourseStore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -64,7 +65,7 @@ namespace CloudEDU
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!rootFrame.Navigate(typeof(MainPage), args.Arguments))
+                if (!rootFrame.Navigate(typeof(CourseStore.Courstore), args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }
@@ -85,6 +86,35 @@ namespace CloudEDU
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+    }
+
+    /// <summary>
+    /// Global ItemContainerStyleSelector for GridView
+    /// </summary>
+    public class VariableSizedStyleSelector : StyleSelector
+    {
+        public Style NormalStyle { get; set; }
+        public Style DoubleHeightStyle { get; set; }
+        public Style DoubleWidthStyle { get; set; }
+        public Style SquareStyle { get; set; }
+
+        /// <summary>
+        /// Returns a specific Style based on custom logic.
+        /// </summary>
+        /// <param name="item">The content</param>
+        /// <param name="container">The element to which the style is applied</param>
+        /// <returns>An application-specific style to apply</returns>
+        protected override Style SelectStyleCore(object item, DependencyObject container)
+        {
+            //if (this.NormalStyle == null || this.DoubleHeightStyle == null ||
+            //    this.DoubleWidthStyle == null || this.SquareStyle == null)
+            //    return base.SelectStyleCore(item, container);
+
+            if (((Course)item).Name == "the power of smile")
+                return DoubleHeightStyle;
+            else
+                return NormalStyle;
         }
     }
 }

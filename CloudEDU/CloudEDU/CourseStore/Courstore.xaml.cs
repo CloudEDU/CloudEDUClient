@@ -19,18 +19,17 @@ namespace CloudEDU.CourseStore
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class CourseStore : Page
+    public sealed partial class Courstore : Page
     {
+        private StoreSampleData storeSampleData;
+        private List<GroupInfoList<Object>> dataCategory;
 
-        StoreSampleData storeSampleData = null;
-
-        public CourseStore()
+        public Courstore()
         {
             this.InitializeComponent();
 
             storeSampleData = new StoreSampleData();
-
-            List<GroupInfoList<Object>> dataCategory = storeSampleData.GetGroupsByCategory();
+            dataCategory = storeSampleData.GetGroupsByCategory();
             cvs1.Source = dataCategory;
         }
 
@@ -41,7 +40,6 @@ namespace CloudEDU.CourseStore
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
         }
     }
 }

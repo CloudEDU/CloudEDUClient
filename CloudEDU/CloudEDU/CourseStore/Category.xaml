@@ -1,0 +1,58 @@
+﻿<Page
+    x:Class="CloudEDU.CourseStore.Category"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CloudEDU.CourseStore"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="cvs1" IsSourceGrouped="False" />
+    </Page.Resources>
+
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <GridView Grid.Row="1" x:Name="CategoryDetails" SelectionMode="None"
+                  ItemsSource="{Binding Source={StaticResource cvs1}}"
+                  ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}">
+            <GridView ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}" />
+
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Image Source="{Binding ImageSource}" Stretch="UniformToFill"/>
+                        <Rectangle Fill="Black" Height="120" VerticalAlignment="Bottom" Opacity="0.5" />
+                        <StackPanel VerticalAlignment="Bottom">
+                            <TextBlock Text="{Binding Name}" Foreground="White"
+                                       Style="{StaticResource GroupHeaderTextStyle}" Height="50" Margin="15,0,15,0"/>
+                            <TextBlock Text="{Binding Rate}" Foreground="White"
+                                       Style="{StaticResource PageHeaderTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="1150*" />
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"
+                       HorizontalAlignment="Left" Text="Category" VerticalAlignment="Center"
+                       FontSize="100" Margin="0, -10"/>
+        </Grid>
+    </Grid>
+</Page>

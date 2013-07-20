@@ -20,6 +20,31 @@
             <SolidColorBrush x:Key="LoginPageBackgroundThemeBrush" Color="#53A1B8" />
             <SolidColorBrush x:Key="StorePageBackgroundThemeBrush" Color="White" />
 
+            <ItemsPanelTemplate x:Key="VariableSizedItemTemplate">
+                <VariableSizedWrapGrid Orientation="Vertical" />
+            </ItemsPanelTemplate>
+
+            <Style x:Key="DefaultGridViewItemStyle" TargetType="GridViewItem"></Style>
+            <Style x:Key="DoubleHeightGridViewItemStyle" TargetType="GridViewItem"
+               BasedOn="{StaticResource DefaultGridViewItemStyle}">
+                <Setter Property="VariableSizedWrapGrid.RowSpan" Value="2" />
+            </Style>
+            <Style x:Key="DoubleWidthGridViewItemStyle" TargetType="GridViewItem"
+               BasedOn="{StaticResource DefaultGridViewItemStyle}">
+                <Setter Property="VariableSizedWrapGrid.ColumnSpan" Value="2" />
+            </Style>
+            <Style x:Key="SquareGridViewItemStyle" TargetType="GridViewItem"
+               BasedOn="{StaticResource DefaultGridViewItemStyle}">
+                <Setter Property="VariableSizedWrapGrid.RowSpan" Value="2" />
+                <Setter Property="VariableSizedWrapGrid.ColumnSpan" Value="2" />
+            </Style>
+
+            <local:VariableSizedStyleSelector x:Key="VariableSizedStyleSelector"
+                                          NormalStyle="{StaticResource DefaultGridViewItemStyle}"
+                                          DoubleHeightStyle="{StaticResource DoubleHeightGridViewItemStyle}"
+                                          DoubleWidthStyle="{StaticResource DoubleWidthGridViewItemStyle}"
+                                          SquareStyle="{StaticResource SquareGridViewItemStyle}" />
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

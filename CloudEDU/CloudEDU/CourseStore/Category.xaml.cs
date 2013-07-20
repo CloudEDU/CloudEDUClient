@@ -1,5 +1,4 @@
-﻿using CloudEDU.Login;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,14 +14,14 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace CloudEDU
+namespace CloudEDU.CourseStore
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class Category : Page
     {
-        public MainPage()
+        public Category()
         {
             this.InitializeComponent();
         }
@@ -34,31 +33,6 @@ namespace CloudEDU
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-        }
-
-        private void Login_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Login.Login));
-        }
-
-        private void SignUp_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(Login.SignUp));
-        }
-
-        private void CourseOverview_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(CourseStore.CourseOverview));
-        }
-
-        private void MyCourses_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(MyCourses));
-        }
-
-        private void CourseStore_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(CourseStore.Courstore));
         }
     }
 }
