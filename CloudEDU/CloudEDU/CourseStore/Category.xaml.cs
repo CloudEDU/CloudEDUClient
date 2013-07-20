@@ -21,6 +21,9 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public sealed partial class Category : Page
     {
+        private StoreData storeSampleData;
+        private List<GroupInfoList<Object>> dataCategory;
+
         public Category()
         {
             this.InitializeComponent();
@@ -33,6 +36,21 @@ namespace CloudEDU.CourseStore
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            storeSampleData = new StoreData();
+            dataCategory = storeSampleData.GetSingleGroupByCategoryName("newest");
+            cvs1.Source = dataCategory;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Frame.CanGoBack)
+            {
+                Frame.GoBack();
+            }
+            else
+            {
+                Frame.Navigate(typeof(Courstore));
+            }
         }
     }
 }

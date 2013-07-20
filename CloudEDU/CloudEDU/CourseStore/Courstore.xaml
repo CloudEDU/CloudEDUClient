@@ -20,8 +20,6 @@
         <GridView Grid.Row="1" x:Name="CoursesByCategory" SelectionMode="None"
                   ItemsSource="{Binding Source={StaticResource cvs1}}"
                   ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}">
-            <GridView ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}" />
-
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Horizontal"/>

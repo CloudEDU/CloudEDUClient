@@ -110,6 +110,7 @@ namespace CloudEDU
             //if (this.NormalStyle == null || this.DoubleHeightStyle == null ||
             //    this.DoubleWidthStyle == null || this.SquareStyle == null)
             //    return base.SelectStyleCore(item, container);
+            System.Diagnostics.Debug.WriteLine(item.ToString());
 
             if (((Course)item).Name == "the power of smile")
                 return DoubleHeightStyle;
