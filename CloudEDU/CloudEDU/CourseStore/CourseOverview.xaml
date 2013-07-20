@@ -82,7 +82,7 @@
             <Grid Grid.Column="2" Margin="40, 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50" />
-                    <RowDefinition Height="500*" />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
             
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
@@ -96,7 +96,7 @@
                 <ScrollViewer Grid.Row="1" x:Name="OverviewScroll" Style="{StaticResource VerticalScrollViewerStyle}"
                               VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical" Margin="20, 20">
-                        <Image Height="400" Width="550" Stretch="Fill" Source="../Images/Courses/ComputerNetworking.png"
+                        <Image Width="550" Stretch="Fill" Source="ms-appx:///Images/Courses/ComputerNetworking.png"
                            HorizontalAlignment="Left"/>
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Computer Network is ..."
                                Margin="0, 20"/>

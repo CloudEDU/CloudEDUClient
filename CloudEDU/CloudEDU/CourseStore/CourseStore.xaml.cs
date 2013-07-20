@@ -21,9 +21,17 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public sealed partial class CourseStore : Page
     {
+
+        StoreSampleData storeSampleData = null;
+
         public CourseStore()
         {
             this.InitializeComponent();
+
+            storeSampleData = new StoreSampleData();
+
+            List<GroupInfoList<Object>> dataCategory = storeSampleData.GetGroupsByCategory();
+            cvs1.Source = dataCategory;
         }
 
         /// <summary>

@@ -7,61 +7,85 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <CollectionViewSource x:Name="cvs1" IsSourceGrouped="true" />
+
+    </Page.Resources>
+
     <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*" />
-            <ColumnDefinition Width="1150*" />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
-            <RowDefinition Height="500*" />
-            <RowDefinition Height="60*" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
-        <GridView ItemTemplate="{StaticResource Standard250x250ItemTemplate}"
-                  SelectionMode="None"
-                  IsSwipeEnabled="False"
-                  Grid.Column="1" Grid.Row="1"
-                  Grid.ColumnSpan="2"
-                  IsItemClickEnabled="True">
+        <GridView Grid.Row="1" x:Name="CoursesByCategory" SelectionMode="None"
+                  ItemsSource="{Binding Source={StaticResource cvs1}}">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Horizontal" />
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
+
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="1, 0, 0, 6">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="{Binding ImageSource}" VerticalAlignment="Center" />
+                            <Canvas Height="80" Background="Black" Opacity="0.5" Margin="0, -80, 0, 0" />
+                            <StackPanel Orientation="Vertical" Margin="0, -90, 0, 0">
+                                <TextBlock x:Name="Rate" Style="{StaticResource GroupHeaderTextStyle}"
+                                           VerticalAlignment="Center" Text="{Binding Name}" Foreground="White"
+                                           Margin="5, 5"/>
+                                <StackPanel Orientation="Horizontal" Margin="5, 5">
+                                    <Image Source="ms-appx:///Images/Courses/star.png" Width="30" Stretch="Uniform"
+                                       HorizontalAlignment="Left" />
+                                    <Image Source="ms-appx:///Images/Courses/star.png" Width="30" Stretch="Uniform"
+                                       HorizontalAlignment="Left" />
+                                    <Image Source="ms-appx:///Images/Courses/star.png" Width="30" Stretch="Uniform"
+                                       HorizontalAlignment="Left" />
+                                    <Image Source="ms-appx:///Images/Courses/star.png" Width="30" Stretch="Uniform"
+                                       HorizontalAlignment="Left" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+
             <GridView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <Button Style="{StaticResource TextPrimaryButtonStyle}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="Title" Style="{StaticResource GroupHeaderTextStyle}" />
-                                        <TextBlock Text="{StaticResource ChevronGlyph}"
-                                                   Style="{StaticResource GroupHeaderTextStyle}" />
-                                    </StackPanel>
-                                </Button>
-                            </Grid>
+                            <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90" Margin="100, 0, 100, 0">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Key}" Margin="3, -7, 10, 30" Foreground="#63A8BD"
+                                               Style="{StaticResource PageHeaderTextStyle}" />
+                                    <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol"
+                                               Margin="0, -7, 0, 30" Style="{StaticResource PageHeaderTextStyle}"
+                                               Foreground="#63A8BD" />
+                                </StackPanel>
+                            </Button>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
+
                     <GroupStyle.Panel>
                         <ItemsPanelTemplate>
-                            <VariableSizedWrapGrid Orientation="Vertical" />
+                            <VariableSizedWrapGrid Orientation="Vertical" Margin="100, 0, 100, 0" />
                         </ItemsPanelTemplate>
                     </GroupStyle.Panel>
                 </GroupStyle>
             </GridView.GroupStyle>
         </GridView>
-        
-        <Grid Grid.Column="1" Grid.Row="0">
+
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1000*" />
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="1150*" />
                 <ColumnDefinition Width="150" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Style="{StaticResource PageHeaderTextStyle}"
+            <TextBlock Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"
                        HorizontalAlignment="Left" Text="Courstore" VerticalAlignment="Center"
                        FontSize="100" Margin="0, -10"/>
         </Grid>
-        
     </Grid>
 </Page>

@@ -146,6 +146,11 @@
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Images\Courses\ComputerNetworking.png" />
+    <Content Include="Images\Courses\course1.png" />
+    <Content Include="Images\Courses\course2.png" />
+    <Content Include="Images\Courses\course3.png" />
+    <Content Include="Images\Courses\star.png" />
+    <Content Include="Images\Courses\transparent.png" />
     <Content Include="Images\Users\ania.png" />
     <Content Include="Images\Users\shadow.png" />
   </ItemGroup>
