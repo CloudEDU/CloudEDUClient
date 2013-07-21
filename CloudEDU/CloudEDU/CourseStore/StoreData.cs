@@ -8,8 +8,9 @@ namespace CloudEDU.CourseStore
 {
     /// <summary>
     /// The Model used to group the data according to the category, provide 
-    /// GetSingleGroupByCategoryName() and GetGroupsByCategory() two methods.
-    /// The Demo.
+    /// GetSingleGroupByCategoryName(), GetGroupsByCategory(string categoryName) 
+    /// and GetGroupsByAttendingOrTeaching() three methods.
+    /// Here is the Demo.
     /// <code>
     /// Course course = new Course();
     /// List<Course> courses = new List<Course>();

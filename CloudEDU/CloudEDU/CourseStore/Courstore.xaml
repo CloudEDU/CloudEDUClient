@@ -30,10 +30,9 @@
                 <DataTemplate>
                     <Grid>
                         <Image Source="{Binding ImageSource}" Stretch="UniformToFill"/>
-                        <Rectangle Fill="Black" Height="120" VerticalAlignment="Bottom" Opacity="0.5" />
+                        <Rectangle Style="{StaticResource GridViewOpacityRectangleStyle}" />
                         <StackPanel VerticalAlignment="Bottom">
-                            <TextBlock Text="{Binding Name}" Foreground="White"
-                                       Style="{StaticResource GroupHeaderTextStyle}" Height="50" Margin="15,0,15,0"/>
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource GridViewDataTemplateNameTextBlockStyle}" />
                             <TextBlock Text="{Binding Rate}" Foreground="White"
                                        Style="{StaticResource PageHeaderTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
                         </StackPanel>
@@ -47,11 +46,10 @@
                         <DataTemplate>
                             <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90" Margin="100, 0, 100, 0">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Key}" Margin="3, -7, 10, 30" Foreground="#63A8BD"
-                                               Style="{StaticResource PageHeaderTextStyle}" />
-                                    <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol"
-                                               Margin="0, -7, 0, 30" Style="{StaticResource PageHeaderTextStyle}"
-                                               Foreground="#63A8BD" />
+                                    <TextBlock Text="{Binding Key}"
+                                               Style="{StaticResource GridViewHeaderTemplateKeyTextBlockStyle}"/>
+                                    <TextBlock Text="{StaticResource ChevronGlyph}"
+                                               Style="{StaticResource GridViewHeaderTemplateRightRowTextBlockStyle}"/>
                                 </StackPanel>
                             </Button>
                         </DataTemplate>
@@ -59,8 +57,7 @@
 
                     <GroupStyle.Panel>
                         <ItemsPanelTemplate>
-                            <VariableSizedWrapGrid ItemWidth="350" ItemHeight="210" Orientation="Vertical"
-                                                   MaxHeight="630" Margin="100, -150, 100, 0" />
+                            <VariableSizedWrapGrid Style="{StaticResource VariableSizedWrapGridTemplateStyle}" />
                         </ItemsPanelTemplate>
                     </GroupStyle.Panel>
                 </GroupStyle>

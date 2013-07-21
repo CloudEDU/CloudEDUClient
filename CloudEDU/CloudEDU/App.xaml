@@ -16,35 +16,64 @@
                 <ResourceDictionary Source="Common/StandardStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <!-- Various Brushes -->
+            <!-- Global Brush -->
             <SolidColorBrush x:Key="LoginPageBackgroundThemeBrush" Color="#53A1B8" />
             <SolidColorBrush x:Key="StorePageBackgroundThemeBrush" Color="White" />
-
-            <ItemsPanelTemplate x:Key="VariableSizedItemTemplate">
-                <VariableSizedWrapGrid Orientation="Vertical" />
-            </ItemsPanelTemplate>
-
-            <Style x:Key="DefaultGridViewItemStyle" TargetType="GridViewItem"></Style>
+            
+            <!-- GridViewItem Style -->
+            <Style x:Key="DefaultGridViewItemStyle" TargetType="GridViewItem" />
             <Style x:Key="DoubleHeightGridViewItemStyle" TargetType="GridViewItem"
-               BasedOn="{StaticResource DefaultGridViewItemStyle}">
+                   BasedOn="{StaticResource DefaultGridViewItemStyle}">
                 <Setter Property="VariableSizedWrapGrid.RowSpan" Value="2" />
             </Style>
             <Style x:Key="DoubleWidthGridViewItemStyle" TargetType="GridViewItem"
-               BasedOn="{StaticResource DefaultGridViewItemStyle}">
+                   BasedOn="{StaticResource DefaultGridViewItemStyle}">
                 <Setter Property="VariableSizedWrapGrid.ColumnSpan" Value="2" />
             </Style>
             <Style x:Key="SquareGridViewItemStyle" TargetType="GridViewItem"
-               BasedOn="{StaticResource DefaultGridViewItemStyle}">
+                   BasedOn="{StaticResource DefaultGridViewItemStyle}">
                 <Setter Property="VariableSizedWrapGrid.RowSpan" Value="2" />
                 <Setter Property="VariableSizedWrapGrid.ColumnSpan" Value="2" />
             </Style>
-
+            
+            <!-- Some styles used in GridView -->
+            <Style x:Key="GridViewHeaderTemplateKeyTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource PageHeaderTextStyle}">
+                <Setter Property="Foreground" Value="#63A8BD" />
+                <Setter Property="Margin" Value="3, -7, 10, 30" />
+            </Style>
+            <Style x:Key="GridViewHeaderTemplateRightRowTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource PageHeaderTextStyle}">
+                <Setter Property="Text" Value="{StaticResource ChevronGlyph}" />
+                <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+                <Setter Property="Foreground" Value="#63A8BD" />
+                <Setter Property="Margin" Value="0, -7, 0, 30" />
+            </Style>
+            <Style x:Key="GridViewDataTemplateNameTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource GroupHeaderTextStyle}">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Height" Value="50" />
+                <Setter Property="Margin" Value="15,0,15,0" />
+            </Style>
+            <Style x:Key="VariableSizedWrapGridTemplateStyle" TargetType="VariableSizedWrapGrid">
+                <Setter Property="ItemWidth" Value="350" />
+                <Setter Property="ItemHeight" Value="210" />
+                <Setter Property="Orientation" Value="Vertical" />
+                <Setter Property="MaxHeight" Value="630" />
+                <Setter Property="Margin" Value="100, -150, 100, 0" />
+            </Style>
+            <Style x:Key="GridViewOpacityRectangleStyle" TargetType="Rectangle">
+                <Setter Property="Fill" Value="Black" />
+                <Setter Property="Height" Value="100" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+                <Setter Property="Opacity" Value="0.5" />
+            </Style>
+            
             <local:VariableSizedStyleSelector x:Key="VariableSizedStyleSelector"
-                                          NormalStyle="{StaticResource DefaultGridViewItemStyle}"
-                                          DoubleHeightStyle="{StaticResource DoubleHeightGridViewItemStyle}"
-                                          DoubleWidthStyle="{StaticResource DoubleWidthGridViewItemStyle}"
-                                          SquareStyle="{StaticResource SquareGridViewItemStyle}" />
-
+                                              NormalStyle="{StaticResource DefaultGridViewItemStyle}"
+                                              DoubleHeightStyle="{StaticResource DoubleHeightGridViewItemStyle}"
+                                              DoubleWidthStyle="{StaticResource DoubleWidthGridViewItemStyle}"
+                                              SquareStyle="{StaticResource SquareGridViewItemStyle}" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
