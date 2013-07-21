@@ -94,6 +94,40 @@ namespace CloudEDU.CourseStore
             }
         }
 
+        private bool _isBuy = false;
+        public bool IsBuy
+        {
+            get
+            {
+                return _isBuy;
+            }
+            set
+            {
+                if (this._isBuy != value)
+                {
+                    this._isBuy = value;
+                    this.OnPropertyChanged("IsBuy");
+                }
+            }
+        }
+
+        private bool _isTeach = false;
+        public bool IsTeach
+        {
+            get
+            {
+                return _isTeach;
+            }
+            set
+            {
+                if (this._isTeach != value)
+                {
+                    this._isTeach = value;
+                    this.OnPropertyChanged("IsTeaching");
+                }
+            }
+        }
+
         public void setImage(Uri baseUri, string path)
         {
             ImageSource = new BitmapImage(new Uri(baseUri, path));
@@ -101,11 +135,11 @@ namespace CloudEDU.CourseStore
     }
 
     // Workaround: data binding works best with an enumeration of objects that does not implement IList
-    public class CourseCollection : IEnumerable<Object>
+    public class CourseCollection : IEnumerable<object>
     {
         private ObservableCollection<Course> courseCollection = new ObservableCollection<Course>();
 
-        public IEnumerator<Object> GetEnumerator()
+        public IEnumerator<object> GetEnumerator()
         {
             return courseCollection.GetEnumerator();
         }
@@ -121,13 +155,13 @@ namespace CloudEDU.CourseStore
         }
     }
 
-    public class GroupInfoList<T> : List<Object>
+    public class GroupInfoList<T> : List<object>
     {
         public object Key { get; set; }
 
-        public new IEnumerator<Object> GetEnumerator()
+        public new IEnumerator<object> GetEnumerator()
         {
-            return (IEnumerator<Object>)base.GetEnumerator();
+            return (IEnumerator<object>)base.GetEnumerator();
         }
     }
 }

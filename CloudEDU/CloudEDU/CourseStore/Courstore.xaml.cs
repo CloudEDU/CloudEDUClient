@@ -27,10 +27,6 @@ namespace CloudEDU.CourseStore
         public Courstore()
         {
             this.InitializeComponent();
-
-            storeSampleData = new StoreData();
-            dataCategory = storeSampleData.GetGroupsByCategory();
-            cvs1.Source = dataCategory;
         }
 
         /// <summary>
@@ -40,6 +36,9 @@ namespace CloudEDU.CourseStore
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            storeSampleData = new StoreData();
+            dataCategory = storeSampleData.GetGroupsByCategory();
+            cvs1.Source = dataCategory;
         }
     }
 }

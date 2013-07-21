@@ -113,9 +113,12 @@
     <Compile Include="CourseStore\Courstore.xaml.cs">
       <DependentUpon>Courstore.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CourseStore\StoreData.cs" />
-    <Compile Include="MyCourses.xaml.cs">
+    <Compile Include="CourseStore\MyCourses.xaml.cs">
       <DependentUpon>MyCourses.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CourseStore\StoreData.cs" />
+    <Compile Include="Coursing.xaml.cs">
+      <DependentUpon>Coursing.xaml</DependentUpon>
     </Compile>
     <Compile Include="CourseStore\CourseOverview.xaml.cs">
       <DependentUpon>CourseOverview.xaml</DependentUpon>
@@ -171,7 +174,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MyCourses.xaml">
+    <Page Include="CourseStore\MyCourses.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Coursing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
