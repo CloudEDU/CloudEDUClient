@@ -6,6 +6,25 @@ using System.Threading.Tasks;
 
 namespace CloudEDU.CourseStore
 {
+    /// <summary>
+    /// The Model used to group the data according to the category, provide 
+    /// GetSingleGroupByCategoryName() and GetGroupsByCategory() two methods.
+    /// The Demo.
+    /// <code>
+    /// Course course = new Course();
+    /// List<Course> courses = new List<Course>();
+    /// for (int i = 0; i < 10; ++)
+    /// {
+    ///     Course tmpCourse = new Course();
+    ///     courses.Add(tempCourse);
+    /// }
+    /// StoreData storeData = new Store();
+    /// storeData.Add(course);
+    /// storeData.Add(courses);
+    /// List<GroupInfoList<Object>> singleGroupByPhysics = storeData.GetSingleGroupByCategoryName("Physics");
+    /// List<GroupInfoList<Object>> GroupedData = storeData.GetGroupsByCategory();
+    /// </code>
+    /// </summary>
     public class StoreData
     {
         public StoreData()
@@ -121,6 +140,27 @@ namespace CloudEDU.CourseStore
             }
         }
 
+        /// <summary>
+        /// Add course to the list used to display.
+        /// </summary>
+        /// <param name="course">The course to be added.</param>
+        public void AddCourse(Course course)
+        {
+            Collection.Add(course);
+        }
+
+        /// <summary>
+        /// Add a group of courses to the list used to display.
+        /// </summary>
+        /// <param name="courses">The course list to be added.</param>
+        public void AddCourses(List<Course> courses)
+        {
+            foreach (Course course in courses)
+            {
+                Collection.Add(course);
+            }
+        }
+
         //internal List<Object> GetCoursesByCategoryName(string categoryName)
         //{
         //    List<Object> courses = new List<Object>();
@@ -137,6 +177,12 @@ namespace CloudEDU.CourseStore
         //    return courses;
         //}
 
+        /// <summary>
+        /// Get the single group classified by the category name.
+        /// </summary>
+        /// <param name="categoryName">The category name need to be group.</param>
+        /// <returns>A list only contain a single GroupInfoList, which contain the 
+        /// elements that had been grouped.</returns>
         internal List<GroupInfoList<Object>> GetSingleGroupByCategoryName(string categoryName)
         {
             List<GroupInfoList<Object>> groups = new List<GroupInfoList<Object>>();
@@ -160,6 +206,11 @@ namespace CloudEDU.CourseStore
             return groups;
         }
 
+        /// <summary>
+        /// Get the list that has been grouped by the category.
+        /// </summary>
+        /// <returns>A list of GroupInfoList, each GroupInfoList contains the data 
+        /// classified according to the category.</returns>
         internal List<GroupInfoList<Object>> GetGroupsByCategory()
         {
             List<GroupInfoList<Object>> groups = new List<GroupInfoList<Object>>();

@@ -45,22 +45,27 @@
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90" Margin="100, 0, 100, 0">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Key}" Margin="3, -7, 10, 30" Foreground="#63A8BD"
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource BackButtonStyle}" Click="BackButton_Click"
+                                        HorizontalAlignment="Left" VerticalAlignment="Top"
+                                        Margin="36, 36, 18, 36" />
+                                <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90" Margin="0, 0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Key}" Margin="3, -7, 10, 30" Foreground="#63A8BD"
                                                Style="{StaticResource PageHeaderTextStyle}" />
-                                    <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol"
+                                        <TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol"
                                                Margin="0, -7, 0, 30" Style="{StaticResource PageHeaderTextStyle}"
                                                Foreground="#63A8BD" />
-                                </StackPanel>
-                            </Button>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
 
                     <GroupStyle.Panel>
                         <ItemsPanelTemplate>
                             <VariableSizedWrapGrid ItemWidth="350" ItemHeight="210" Orientation="Vertical"
-                                                   MaxHeight="630" Margin="100, 0, 100, 0" />
+                                                   MaxHeight="630" Margin="100, -150, 100, 0" />
                         </ItemsPanelTemplate>
                     </GroupStyle.Panel>
                 </GroupStyle>

@@ -60,7 +60,7 @@
                     <GroupStyle.Panel>
                         <ItemsPanelTemplate>
                             <VariableSizedWrapGrid ItemWidth="350" ItemHeight="210" Orientation="Vertical"
-                                                   MaxHeight="630" Margin="100, 0, 100, 0" />
+                                                   MaxHeight="630" Margin="100, -150, 100, 0" />
                         </ItemsPanelTemplate>
                     </GroupStyle.Panel>
                 </GroupStyle>
