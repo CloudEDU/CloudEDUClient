@@ -1,0 +1,72 @@
+﻿<common:GlobalPage
+    x:Class="CloudEDU.CourseStore.CategoryForNewest"
+    xmlns:common="using:CloudEDU.Common"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CloudEDU.CourseStore"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="cvs1" IsSourceGrouped="True" />
+    </Page.Resources>
+
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <GridView Grid.Row="1" SelectionMode="None"
+                  ItemsSource="{Binding Source={StaticResource cvs1}}"
+                  ItemTemplate="{StaticResource GridViewItemTemplate}"
+                  ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}"
+                  IsItemClickEnabled="True" ItemClick="Course_ItemClick">
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+            
+            <GridView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource BackButtonStyle}" Click="BackButton_Click"
+                                        HorizontalAlignment="Left" VerticalAlignment="Top"
+                                        Margin="36, 36, 18, 36" />
+                                <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90" Margin="0, 0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Key}"
+                                                   Style="{StaticResource GridViewHeaderTemplateKeyTextBlockStyle}" />
+                                        <TextBlock Text="{StaticResource ChevronGlyph}"
+                                                   Style="{StaticResource GridViewHeaderTemplateRightRowTextBlockStyle}"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <VariableSizedWrapGrid Style="{StaticResource VariableSizedWrapGridTemplateStyle}" />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </GridView.GroupStyle>
+        </GridView>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="1150*" />
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"
+                       HorizontalAlignment="Left" Text="Newest" VerticalAlignment="Center"
+                       FontSize="100" Margin="0, -10"/>
+        </Grid>
+    </Grid>
+</common:GlobalPage>

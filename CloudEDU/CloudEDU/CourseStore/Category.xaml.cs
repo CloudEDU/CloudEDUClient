@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -25,6 +26,8 @@ namespace CloudEDU.CourseStore
         private StoreData storeSampleData;
         private List<GroupInfoList<Object>> dataCategory;
 
+        string categoryName = null;
+
         public Category()
         {
             this.InitializeComponent();
@@ -37,10 +40,12 @@ namespace CloudEDU.CourseStore
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            string key = e.Parameter as string;
+            categoryName = e.Parameter as string;
+            Title.Text = UpperInitialChar(categoryName);
+
 
             storeSampleData = new StoreData();
-            dataCategory = storeSampleData.GetSingleGroupByCategoryName(key);
+            dataCategory = storeSampleData.GetSingleGroupByCategoryName(categoryName);
             cvs1.Source = dataCategory;
         }
 
@@ -57,12 +62,12 @@ namespace CloudEDU.CourseStore
             }
             else
             {
-                Frame.Navigate(typeof(Courstore));
+                Frame.Navigate(typeof(MainPage));
             }
         }
 
         /// <summary>
-        /// Invoked when a course within this category is clicked.
+        /// Invoked when a course within a category is clicked.
         /// </summary>
         /// <param name="sender">The GridView displaying the course clicked.</param>
         /// <param name="e">Event data that describes the course clicked.</param>
@@ -71,6 +76,42 @@ namespace CloudEDU.CourseStore
             var courseName = ((Course)e.ClickedItem).Name;
 
             Frame.Navigate(typeof(CourseOverview), courseName);
+        }
+
+        /// <summary>
+        /// Invoked when a category is clicked.
+        /// </summary>
+        /// <param name="sender">The Button used as a category for the selected category.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
+        private void HeaderButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (categoryName == "newest")
+            {
+                Frame.Navigate(typeof(CategoryForNewest));
+            }
+        }
+
+        /// <summary>
+        /// Cast the first character of every word in a string from lower to upper.
+        /// </summary>
+        /// <param name="v">The string to be transformed.</param>
+        /// <returns>The string after transformed.</returns>
+        private string UpperInitialChar(string v)
+        {
+            string[] words = null;
+            StringBuilder strBuff = null;
+
+            words = System.Text.RegularExpressions.Regex.Split(v, @"\s+");
+
+            strBuff = new StringBuilder();
+            for (int i = 0; i < words.Length; ++i)
+            {
+                words[0] = words[i].ToLower();
+                strBuff.AppendFormat("{0}{1}", Char.ToUpper(words[i][0]), words[i].Substring(1));
+                strBuff.Append(' ');
+            }
+
+            return strBuff.ToString();
         }
     }
 }
