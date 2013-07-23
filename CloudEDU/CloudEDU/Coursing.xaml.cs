@@ -35,6 +35,11 @@ namespace CloudEDU
         {
         }
 
+        /// <summary>
+        /// Invoked when back button is clicked and return the last page.
+        /// </summary>
+        /// <param name="sender">The back button clicked.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             if (Frame.CanGoBack)

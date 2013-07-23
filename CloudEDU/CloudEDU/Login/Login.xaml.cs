@@ -35,7 +35,12 @@ namespace CloudEDU.Login
         {
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Invoked when back button is clicked and navigate to sign up page.
+        /// </summary>
+        /// <param name="sender">The sign up button clicked.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(SignUp));
         }

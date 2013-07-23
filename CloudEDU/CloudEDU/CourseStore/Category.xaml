@@ -17,29 +17,17 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <GridView Grid.Row="1" x:Name="CategoryDetails" SelectionMode="None"
+        <GridView Grid.Row="1" SelectionMode="None"
                   ItemsSource="{Binding Source={StaticResource cvs1}}"
-                  ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}">
+                  ItemTemplate="{StaticResource GridViewItemTemplate}"
+                  ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}"
+                  IsItemClickEnabled="True" ItemClick="Course_ItemClick">
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <VirtualizingStackPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </GridView.ItemsPanel>
-
-            <GridView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Image Source="{Binding ImageSource}" Stretch="UniformToFill"/>
-                        <Rectangle Style="{StaticResource GridViewOpacityRectangleStyle}" />
-                        <StackPanel VerticalAlignment="Bottom">
-                            <TextBlock Text="{Binding Name}" Style="{StaticResource GridViewDataTemplateNameTextBlockStyle}" />
-                            <TextBlock Text="{Binding Rate}" Foreground="White"
-                                       Style="{StaticResource PageHeaderTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10" />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-
+            
             <GridView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>

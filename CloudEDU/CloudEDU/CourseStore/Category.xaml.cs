@@ -43,6 +43,11 @@ namespace CloudEDU.CourseStore
             cvs1.Source = dataCategory;
         }
 
+        /// <summary>
+        /// Invoked when back button is clicked and return the last page.
+        /// </summary>
+        /// <param name="sender">The back button clicked.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             if (Frame.CanGoBack)
@@ -53,6 +58,18 @@ namespace CloudEDU.CourseStore
             {
                 Frame.Navigate(typeof(Courstore));
             }
+        }
+
+        /// <summary>
+        /// Invoked when a course within this category is clicked.
+        /// </summary>
+        /// <param name="sender">The GridView displaying the course clicked.</param>
+        /// <param name="e">Event data that describes the course clicked.</param>
+        private void Course_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var courseName = ((Course)e.ClickedItem).Name;
+
+            Frame.Navigate(typeof(CourseOverview), courseName);
         }
     }
 }

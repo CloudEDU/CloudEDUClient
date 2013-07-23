@@ -41,12 +41,29 @@ namespace CloudEDU.CourseStore
             cvs1.Source = dataCategory;
         }
 
+        /// <summary>
+        /// Invoked when a category is clicked.
+        /// </summary>
+        /// <param name="sender">The Button used as a category for the selected category.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
         private void CategoryButton_Click(object sender, RoutedEventArgs e)
         {
-            var data = (sender as FrameworkElement).DataContext;
-            string key = ((GroupInfoList<Object>)data).Key.ToString();
+            var category = (sender as FrameworkElement).DataContext;
+            string categoryName = ((GroupInfoList<Object>)category).Key.ToString();
 
-            Frame.Navigate(typeof(Category), key);
+            Frame.Navigate(typeof(Category), categoryName);
+        }
+
+        /// <summary>
+        /// Invoked when a course within a category is clicked.
+        /// </summary>
+        /// <param name="sender">The GridView displaying the course clicked.</param>
+        /// <param name="e">Event data that describes the course clicked.</param>
+        private void Course_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var courseName = ((Course)e.ClickedItem).Name;
+
+            Frame.Navigate(typeof(CourseOverview), courseName);
         }
     }
 }
