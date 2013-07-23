@@ -40,5 +40,13 @@ namespace CloudEDU.CourseStore
             dataCategory = storeSampleData.GetGroupsByCategory();
             cvs1.Source = dataCategory;
         }
+
+        private void CategoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            var data = (sender as FrameworkElement).DataContext;
+            string key = ((GroupInfoList<Object>)data).Key.ToString();
+
+            Frame.Navigate(typeof(Category), key);
+        }
     }
 }

@@ -44,7 +44,8 @@
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90" Margin="100, 0, 100, 0">
+                            <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90" Margin="100, 0, 100, 0"
+                                    Click="CategoryButton_Click">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Key}"
                                                Style="{StaticResource GridViewHeaderTemplateKeyTextBlockStyle}"/>

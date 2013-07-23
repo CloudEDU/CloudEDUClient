@@ -170,6 +170,7 @@ namespace CloudEDU.CourseStore
             }
         }
 
+        #region Add
         /// <summary>
         /// Add course to the list used to display.
         /// </summary>
@@ -190,6 +191,7 @@ namespace CloudEDU.CourseStore
                 Collection.Add(course);
             }
         }
+        #endregion
 
         //internal List<object> GetCoursesByCategoryName(string categoryName)
         //{
@@ -207,6 +209,7 @@ namespace CloudEDU.CourseStore
         //    return courses;
         //}
 
+        #region Different ways used to get the groups
         /// <summary>
         /// Get the single group classified by the category name.
         /// </summary>
@@ -294,5 +297,6 @@ namespace CloudEDU.CourseStore
 
             return groups;
         }
+        #endregion
     }
 }
