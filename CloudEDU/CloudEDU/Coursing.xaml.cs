@@ -35,7 +35,7 @@ namespace CloudEDU
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             List<string> courseInfo = e.Parameter as List<string>;
-            CourseTitle.Text = courseInfo[0];
+            CourseTitle.Text = Constants.UpperInitialChar(courseInfo[0]);
             NavigateText.Text = courseInfo[1];
         }
 

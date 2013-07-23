@@ -109,6 +109,7 @@
     <Compile Include="Common\AppbarContent.xaml.cs">
       <DependentUpon>AppbarContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\GlobalPage.cs" />
     <Compile Include="CourseStore\Category.xaml.cs">
       <DependentUpon>Category.xaml</DependentUpon>

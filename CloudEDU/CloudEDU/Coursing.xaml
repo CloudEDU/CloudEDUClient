@@ -16,8 +16,7 @@
 
     <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*" />
-            <ColumnDefinition Width="1150*" />
+            <ColumnDefinition />
             <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -26,17 +25,26 @@
             <RowDefinition Height="60*" />
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="CourseTitle" Grid.Column="1" Grid.Row="0" Style="{StaticResource PageHeaderTextStyle}"
-                   HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="100" Margin="0, -10"/>
-        <Grid Grid.Column="1" Grid.Row="1">
+        <Grid Grid.Column="0" Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="270" />
-                <ColumnDefinition Width="500*" />
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="1150*" />
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0" Orientation="Vertical">
+            <TextBlock x:Name="CourseTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"
+                       HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="100" Margin="0, -10"
+                       Text="Coursing" />
+        </Grid>
+        
+        <Grid Grid.Column="0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*" />
+                <ColumnDefinition Width="250*" />
+                <ColumnDefinition Width="800*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 50">
                     <Button Style="{StaticResource BackButtonStyle}" Click="BackButton_Click" Margin="-5, 10" />
-                    <TextBlock x:Name="NavigateText" Style="{StaticResource PageHeaderTextStyle}" Text=""
+                    <TextBlock x:Name="NavigateText" Style="{StaticResource PageHeaderTextStyle}" Text="attending"
                                HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Margin="10, 20" />
                 </StackPanel>
                 <Border x:Name="HomeBorder" Background="{StaticResource PageRed}" >
@@ -52,7 +60,7 @@
                                Margin="5, 15, 0, 15" Foreground="White"/>
                 </Border>
             </StackPanel>
-            <Rectangle Grid.Column="1" Fill="#96DC00" />
+            <Rectangle Grid.Column="2" Fill="#96DC00" />
         </Grid>
     </Grid>
 </common:GlobalPage>

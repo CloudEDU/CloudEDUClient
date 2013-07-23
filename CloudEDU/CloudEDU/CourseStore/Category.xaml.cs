@@ -41,7 +41,7 @@ namespace CloudEDU.CourseStore
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             categoryName = e.Parameter as string;
-            Title.Text = UpperInitialChar(categoryName);
+            Title.Text = Constants.UpperInitialChar(categoryName);
 
 
             storeSampleData = new StoreData();
@@ -89,29 +89,6 @@ namespace CloudEDU.CourseStore
             {
                 Frame.Navigate(typeof(CategoryForNewest));
             }
-        }
-
-        /// <summary>
-        /// Cast the first character of every word in a string from lower to upper.
-        /// </summary>
-        /// <param name="v">The string to be transformed.</param>
-        /// <returns>The string after transformed.</returns>
-        private string UpperInitialChar(string v)
-        {
-            string[] words = null;
-            StringBuilder strBuff = null;
-
-            words = System.Text.RegularExpressions.Regex.Split(v, @"\s+");
-
-            strBuff = new StringBuilder();
-            for (int i = 0; i < words.Length; ++i)
-            {
-                words[0] = words[i].ToLower();
-                strBuff.AppendFormat("{0}{1}", Char.ToUpper(words[i][0]), words[i].Substring(1));
-                strBuff.Append(' ');
-            }
-
-            return strBuff.ToString();
         }
     }
 }
