@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudEDU.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace CloudEDU
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Coursing : Page
+    public sealed partial class Coursing : GlobalPage
     {
         public Coursing()
         {

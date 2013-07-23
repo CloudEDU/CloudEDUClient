@@ -1,5 +1,6 @@
-﻿<Page
+﻿<common:GlobalPage
     x:Class="CloudEDU.CourseStore.Courstore"
+    xmlns:common="using:CloudEDU.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CloudEDU.CourseStore"
@@ -78,4 +79,4 @@
                        FontSize="100" Margin="0, -10"/>
         </Grid>
     </Grid>
-</Page>
+</common:GlobalPage>

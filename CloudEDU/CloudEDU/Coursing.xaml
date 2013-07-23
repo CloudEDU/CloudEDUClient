@@ -1,5 +1,6 @@
-﻿<Page
+﻿<common:GlobalPage
     x:Class="CloudEDU.Coursing"
+    xmlns:common="using:CloudEDU.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CloudEDU"
@@ -55,4 +56,4 @@
             <Rectangle Grid.Column="1" Fill="#96DC00" />
         </Grid>
     </Grid>
-</Page>
+</common:GlobalPage>
