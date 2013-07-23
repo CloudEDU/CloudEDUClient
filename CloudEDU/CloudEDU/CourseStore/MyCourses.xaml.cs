@@ -58,5 +58,28 @@ namespace CloudEDU.CourseStore
                 Frame.Navigate(typeof(Courstore));
             }
         }
+
+        /// <summary>
+        /// Invoked when a course within attending or teaching column is clicked.
+        /// </summary>
+        /// <param name="sender">The GridView displaying the course clicked.</param>
+        /// <param name="e">Event data that describes the course clicked.</param>
+        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Course course = (Course)e.ClickedItem;
+            List<string> courseInfo = new List<string>();
+            courseInfo.Add(course.Name);
+
+            if (course.IsTeach)
+            {
+                courseInfo.Add("teaching");
+            }
+            else
+            {
+                courseInfo.Add("attending");
+            }
+
+            Frame.Navigate(typeof(Coursing), courseInfo);
+        }
     }
 }

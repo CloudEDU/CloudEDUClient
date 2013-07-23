@@ -27,8 +27,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock x:Name="CourseTitle" Grid.Column="1" Grid.Row="0" Style="{StaticResource PageHeaderTextStyle}"
-                   HorizontalAlignment="Left" Text="Computer Network" VerticalAlignment="Center"
-                   FontSize="100" Margin="0, -10"/>
+                   HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="100" Margin="0, -10"/>
         <Grid Grid.Column="1" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="270" />
@@ -37,7 +36,7 @@
             <StackPanel Grid.Column="0" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 50">
                     <Button Style="{StaticResource BackButtonStyle}" Click="BackButton_Click" Margin="-5, 10" />
-                    <TextBlock x:Name="NavigateText" Style="{StaticResource PageHeaderTextStyle}" Text="attending"
+                    <TextBlock x:Name="NavigateText" Style="{StaticResource PageHeaderTextStyle}" Text=""
                                HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50" Margin="10, 20" />
                 </StackPanel>
                 <Border x:Name="HomeBorder" Background="{StaticResource PageRed}" >

@@ -21,7 +21,9 @@
         <GridView Grid.Row="1" SelectionMode="None"
                   ItemsSource="{Binding Source={StaticResource cvs1}}"
                   ItemTemplate="{StaticResource GridViewItemTemplate}"
-                  ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}">
+                  ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}"
+                  IsItemClickEnabled="True"
+                  ItemClick="GridView_ItemClick">
 
             <GridView.ItemsPanel>
                 <ItemsPanelTemplate>

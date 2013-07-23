@@ -34,6 +34,9 @@ namespace CloudEDU
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            List<string> courseInfo = e.Parameter as List<string>;
+            CourseTitle.Text = courseInfo[0];
+            NavigateText.Text = courseInfo[1];
         }
 
         /// <summary>
