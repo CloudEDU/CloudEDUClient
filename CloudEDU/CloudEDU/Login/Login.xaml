@@ -5,17 +5,19 @@
     xmlns:local="using:CloudEDU.Login"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:JulMar.Windows.Interactivity.Interactivity"
     mc:Ignorable="d">
 
     <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource LoginPageBackgroundThemeBrush}">
 
         <TextBox x:Name="InputUsername" HorizontalAlignment="Center" Margin="-120, -70, 0, 0" VerticalAlignment="Center"
                  Width="300" Height="50" Background="#DDECF1" FontFamily="Candara" TextAlignment="Center" FontSize="25"
-                 BorderThickness="0" />
+                 BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxLength="16"
+                 i:WatermarkTextBehavior.Text="Username"/>
         <PasswordBox x:Name="InputPassword" HorizontalAlignment="Center" Margin="-120, 90, 0, 0" BorderThickness="0"
                      VerticalAlignment="Center" Width="300" Height="50" Background="#DDECF1" FontFamily="Candara"
                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="25"
-                     local:PasswordBoxBehavior.Watermark="Password" />
+                     MaxLength="16" local:PasswordBoxBehavior.Watermark="Password" />
         <CheckBox x:Name="CheckAutoLogin" Content="Auto-Log" HorizontalAlignment="center" Margin="300, -70, 0, 0"
                   VerticalAlignment="Center" />
         <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}" Margin="300, 130, 0, 0"

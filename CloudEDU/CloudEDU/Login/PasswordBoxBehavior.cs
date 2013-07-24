@@ -158,7 +158,8 @@ namespace CloudEDU.Login
                         {
                             Name = WatermarkId,
                             Text = text,
-                            HorizontalAlignment = HorizontalAlignment.Left,
+                            TextAlignment = TextAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center,
                             VerticalAlignment = VerticalAlignment.Center,
                             Margin = new Thickness(3, 0, 0, 0),
                             Foreground = new SolidColorBrush(Colors.Gray)
