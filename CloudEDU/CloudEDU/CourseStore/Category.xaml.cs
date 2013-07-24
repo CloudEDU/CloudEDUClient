@@ -62,7 +62,7 @@ namespace CloudEDU.CourseStore
             }
             else
             {
-                Frame.Navigate(typeof(MainPage));
+                Frame.Navigate(typeof(Courstore));
             }
         }
 

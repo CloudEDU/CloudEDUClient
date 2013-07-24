@@ -14,7 +14,8 @@
                  BorderThickness="0" />
         <PasswordBox x:Name="InputPassword" HorizontalAlignment="Center" Margin="-120, 90, 0, 0" BorderThickness="0"
                      VerticalAlignment="Center" Width="300" Height="50" Background="#DDECF1" FontFamily="Candara"
-                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="25" />
+                     VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="25"
+                     local:PasswordBoxBehavior.Watermark="Password" />
         <CheckBox x:Name="CheckAutoLogin" Content="Auto-Log" HorizontalAlignment="center" Margin="300, -70, 0, 0"
                   VerticalAlignment="Center" />
         <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}" Margin="300, 130, 0, 0"
@@ -22,6 +23,6 @@
         <Button Content="Sign Up?" HorizontalAlignment="Center" Margin="0, 200, 0, 0" VerticalAlignment="Center"
                 FontFamily="Candara" FontSize="20" BorderThickness="0" Background="Transparent"
                 Foreground="White" Click="SignUpButton_Click" />
-        
+
     </Grid>
 </Page>

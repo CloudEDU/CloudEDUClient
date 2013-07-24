@@ -17,7 +17,7 @@
             <RowDefinition Height="150"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        
+
         <GridView Grid.Row="1" SelectionMode="None"
                   ItemsSource="{Binding Source={StaticResource cvs1}}"
                   ItemTemplate="{StaticResource GridViewItemTemplate}"
@@ -54,7 +54,7 @@
                 </GroupStyle>
             </GridView.GroupStyle>
         </GridView>
-        
+
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

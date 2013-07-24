@@ -52,7 +52,7 @@ namespace CloudEDU
             }
             else
             {
-                Frame.Navigate(typeof(MainPage));
+                Frame.Navigate(typeof(CourseStore.Courstore));
             }
         }
     }
