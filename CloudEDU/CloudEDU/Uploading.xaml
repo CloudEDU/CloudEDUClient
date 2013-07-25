@@ -96,23 +96,17 @@
                              TextWrapping="Wrap" Margin="40, 20, 0, 0" Text="Description..." />
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Documentation" IsReadOnly="True" />
-                        <StackPanel x:Name="docsPanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
-                            
-                        </StackPanel>
+                        <StackPanel x:Name="docsPanel" Orientation="Horizontal" Margin="10, 35, 0, 15" />
                         <Button Style="{StaticResource AddElementButtonStyle}" Click="DocUploadButton_Click" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Audio Records" IsReadOnly="True" />
-                        <StackPanel x:Name="audiosPanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
-                            
-                        </StackPanel>
+                        <StackPanel x:Name="audiosPanel" Orientation="Horizontal" Margin="10, 35, 0, 15" />
                         <Button Style="{StaticResource AddElementButtonStyle}" Click="AudioUploadButton_Click" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Videos" IsReadOnly="True" />
-                        <StackPanel x:Name="videosPanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
-                            
-                        </StackPanel>
+                        <StackPanel x:Name="videosPanel" Orientation="Horizontal" Margin="10, 35, 0, 15" />
                         <Button Style="{StaticResource AddElementButtonStyle}" Click="VideoUploadButton_Click" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 40">

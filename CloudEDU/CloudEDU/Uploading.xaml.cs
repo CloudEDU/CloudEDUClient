@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.BackgroundTransfer;
@@ -36,9 +38,13 @@ namespace CloudEDU
         IReadOnlyList<StorageFile> audios = null;
         IReadOnlyList<StorageFile> videos = null;
 
+        private CancellationTokenSource cts;
+
         public Uploading()
         {
             this.InitializeComponent();
+
+            cts = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -87,9 +93,25 @@ namespace CloudEDU
         /// </summary>
         /// <param name="sender">The upload button clicked.</param>
         /// <param name="e">Event data that describes how the click was initiated.</param>
-        private void UploadLessionButton_Click(object sender, RoutedEventArgs e)
+        private async void UploadLessionButton_Click(object sender, RoutedEventArgs e)
         {
+            List<BackgroundTransferContentPart> docParts = CreateBackgroundTransferContentPartList(docs);
+            List<BackgroundTransferContentPart> audioParts = CreateBackgroundTransferContentPartList(audios);
+            List<BackgroundTransferContentPart> videoParts = CreateBackgroundTransferContentPartList(videos);
 
+            Uri docsUri = new Uri("http://docs");
+            Uri audiosUri = new Uri("http://audios");
+            Uri videosUri = new Uri("http://videos");
+
+            BackgroundUploader uploader = new BackgroundUploader();
+            UploadOperation docsUpload = await uploader.CreateUploadAsync(docsUri, docParts);
+            UploadOperation audiosUpload = await uploader.CreateUploadAsync(audiosUri, audioParts);
+            UploadOperation videosUpload = await uploader.CreateUploadAsync(videosUri, videoParts);
+
+            // Attach progress and completion handlers.
+            await HandleUploadAsync(docsUpload, true);
+            await HandleUploadAsync(audiosUpload, true);
+            await HandleUploadAsync(videosUpload, true);
         }
 
         /// <summary>
@@ -216,6 +238,70 @@ namespace CloudEDU
             }
 
             return parts;
+        }
+
+        /// <summary>
+        /// Event is invoked on a background thread.
+        /// </summary>
+        /// <param name="upload">UploadOperation.</param>
+        private void UploadProgress(UploadOperation upload)
+        {
+            // Progress: upload.Guid; Statues: uplaod.Progress.Status
+
+            BackgroundUploadProgress progress = upload.Progress;
+
+            double percentSend = 100;
+            if (progress.TotalBytesToSend > 0)
+            {
+                percentSend = progress.BytesSent * 100 / progress.TotalBytesToSend;
+            }
+
+            // Send bytes: progress.BytesSend of progress.TotalBytesSend (percentSend%)
+            // Received bytes: progress.BytesReceived of progress.TotalBytesToReceive
+
+            if (progress.HasRestarted)
+            {
+                // Upload restarted
+            }
+
+            if (progress.HasResponseChanged)
+            {
+                // Response updated; Header count: upload.GetResponseInformation().Headers.Count
+            }
+        }
+
+        /// <summary>
+        /// Handle the upload.
+        /// </summary>
+        /// <param name="upload">UploadOperation handled.</param>
+        /// <param name="start">Whether uplaod is started.</param>
+        /// <returns>Represent the asynchronous operation.</returns>
+        private async Task HandleUploadAsync(UploadOperation upload, bool start)
+        {
+            try
+            {
+                Progress<UploadOperation> progressCallback = new Progress<UploadOperation>(UploadProgress);
+                if (start)
+                {
+                    // Start the upload and attach a progress handler.
+                    await upload.StartAsync().AsTask(cts.Token, progressCallback);
+                }
+                else
+                {
+                    // The upload was already running when the application started, re-attach the progress handler.
+                    await upload.AttachAsync().AsTask(cts.Token, progressCallback);
+                }
+
+                ResponseInformation response = upload.GetResponseInformation();
+            }
+            catch (TaskCanceledException)
+            {
+                // Canceled: upload.Guid
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

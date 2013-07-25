@@ -1,0 +1,631 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices m:DataServiceVersion="1.0" m:MaxDataServiceVersion="3.0" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
+    <Schema Namespace="CloudEDUModel" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityType Name="CATEGORY">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CATE_NAME" Type="Edm.String" MaxLength="10" FixedLength="true" Unicode="true" />
+        <NavigationProperty Name="COURSEs" Relationship="CloudEDUModel.FK_COURSE_CATEGORY" ToRole="COURSE" FromRole="CATEGORY" />
+      </EntityType>
+      <EntityType Name="COMMENT">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CUSTOMER_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="COURSE_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CONTENT" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="TITLE" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
+        <NavigationProperty Name="CUSTOMER" Relationship="CloudEDUModel.FK__COMMENT__CUSTOME__6E01572D" ToRole="CUSTOMER" FromRole="COMMENT" />
+        <NavigationProperty Name="COURSE" Relationship="CloudEDUModel.FK_COMMENT_COURSE" ToRole="COURSE" FromRole="COMMENT" />
+      </EntityType>
+      <EntityType Name="COURSE">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="PRICE" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
+        <Property Name="RATE" Type="Edm.Double" />
+        <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="INTRO" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="TEACHER" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CATEGORY" Type="Edm.Int32" />
+        <Property Name="COURSE_STATUS" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        <Property Name="PG" Type="Edm.Int32" />
+        <Property Name="ICON_URL" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <NavigationProperty Name="CATEGORY1" Relationship="CloudEDUModel.FK_COURSE_CATEGORY" ToRole="CATEGORY" FromRole="COURSE" />
+        <NavigationProperty Name="COMMENTs" Relationship="CloudEDUModel.FK_COMMENT_COURSE" ToRole="COMMENT" FromRole="COURSE" />
+        <NavigationProperty Name="SALEORDERs" Relationship="CloudEDUModel.FK__SALEORDER__COURS__534D60F1" ToRole="SALEORDER" FromRole="COURSE" />
+        <NavigationProperty Name="ATTENDs" Relationship="CloudEDUModel.FK_ATTEND_COURSE" ToRole="ATTEND" FromRole="COURSE" />
+        <NavigationProperty Name="PARENT_GUIDE" Relationship="CloudEDUModel.FK_COURSE_PG" ToRole="PARENT_GUIDE" FromRole="COURSE" />
+        <NavigationProperty Name="CUSTOMER" Relationship="CloudEDUModel.FK_COURSE_TEACHER" ToRole="CUSTOMER" FromRole="COURSE" />
+        <NavigationProperty Name="LESSONs" Relationship="CloudEDUModel.FK_LESSON_COURSE" ToRole="LESSON" FromRole="COURSE" />
+        <NavigationProperty Name="RECOMMENDATIONs" Relationship="CloudEDUModel.RECO_COURSE" ToRole="RECOMMENDATION" FromRole="COURSE" />
+        <NavigationProperty Name="CUSTOMERs" Relationship="CloudEDUModel.FAVORITE" ToRole="CUSTOMER" FromRole="COURSE" />
+      </EntityType>
+      <EntityType Name="DOCUMENT">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="LESSON_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="AUTHOR" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="CONTENT" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <NavigationProperty Name="LESSON" Relationship="CloudEDUModel.FK_DOCUMENT_LESSON" ToRole="LESSON" FromRole="DOCUMENT" />
+      </EntityType>
+      <EntityType Name="LESSON">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="COURSE_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="CONTENT" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <NavigationProperty Name="COURSE" Relationship="CloudEDUModel.FK_LESSON_COURSE" ToRole="COURSE" FromRole="LESSON" />
+        <NavigationProperty Name="DOCUMENTs" Relationship="CloudEDUModel.FK_DOCUMENT_LESSON" ToRole="DOCUMENT" FromRole="LESSON" />
+        <NavigationProperty Name="NOTEs" Relationship="CloudEDUModel.FK__NOTE__LESSON_ID__3A81B327" ToRole="NOTE" FromRole="LESSON" />
+        <NavigationProperty Name="ATTENDs" Relationship="CloudEDUModel.FK_ATTEND_CURRENTLESSON" ToRole="ATTEND" FromRole="LESSON" />
+        <NavigationProperty Name="RESOURCEs" Relationship="CloudEDUModel.FK_RESOURCE_LESSON" ToRole="RESOURCE" FromRole="LESSON" />
+      </EntityType>
+      <EntityType Name="PARENT_GUIDE">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="RESTRICT_AGE" Type="Edm.Int32" Nullable="false" />
+        <Property Name="DESCRIPTION" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <NavigationProperty Name="COURSEs" Relationship="CloudEDUModel.FK_COURSE_PG" ToRole="COURSE" FromRole="PARENT_GUIDE" />
+      </EntityType>
+      <EntityType Name="RECOMMENDATION">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="DESCRIPTION" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="ICON_URL" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <NavigationProperty Name="COURSEs" Relationship="CloudEDUModel.RECO_COURSE" ToRole="COURSE" FromRole="RECOMMENDATION" />
+      </EntityType>
+      <EntityType Name="RES_TYPE">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="DESCRIPTION" Type="Edm.String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+        <NavigationProperty Name="RESOURCEs" Relationship="CloudEDUModel.FK_RESOURCE_TYPE" ToRole="RESOURCE" FromRole="RES_TYPE" />
+      </EntityType>
+      <EntityType Name="RESOURCE">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="LESSON_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="INTRO" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="TYPE" Type="Edm.Int32" Nullable="false" />
+        <Property Name="URL" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        <NavigationProperty Name="LESSON" Relationship="CloudEDUModel.FK_RESOURCE_LESSON" ToRole="LESSON" FromRole="RESOURCE" />
+        <NavigationProperty Name="RES_TYPE" Relationship="CloudEDUModel.FK_RESOURCE_TYPE" ToRole="RES_TYPE" FromRole="RESOURCE" />
+      </EntityType>
+      <EntityType Name="ATTEND">
+        <Key>
+          <PropertyRef Name="CUSTOMER_ID" />
+          <PropertyRef Name="COURSE_ID" />
+        </Key>
+        <Property Name="CUSTOMER_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="COURSE_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="CURRENT_LESSON" Type="Edm.Int32" />
+        <NavigationProperty Name="COURSE" Relationship="CloudEDUModel.FK_ATTEND_COURSE" ToRole="COURSE" FromRole="ATTEND" />
+        <NavigationProperty Name="LESSON" Relationship="CloudEDUModel.FK_ATTEND_CURRENTLESSON" ToRole="LESSON" FromRole="ATTEND" />
+        <NavigationProperty Name="CUSTOMER" Relationship="CloudEDUModel.FK_ATTEND_CUSTOMER" ToRole="CUSTOMER" FromRole="ATTEND" />
+      </EntityType>
+      <EntityType Name="CUSTOMER">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="NAME" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="PASSWORD" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="BALANCE" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
+        <Property Name="EMAIL" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="DEGREE" Type="Edm.String" MaxLength="20" FixedLength="false" Unicode="false" />
+        <Property Name="LEARN_RATE" Type="Edm.Double" />
+        <Property Name="TEACH_RATE" Type="Edm.Double" />
+        <Property Name="BIRTHDAY" Type="Edm.DateTime" Nullable="false" Precision="0" />
+        <NavigationProperty Name="COMMENTs" Relationship="CloudEDUModel.FK__COMMENT__CUSTOME__6E01572D" ToRole="COMMENT" FromRole="CUSTOMER" />
+        <NavigationProperty Name="COURSEs" Relationship="CloudEDUModel.FK_COURSE_TEACHER" ToRole="COURSE" FromRole="CUSTOMER" />
+        <NavigationProperty Name="ATTENDs" Relationship="CloudEDUModel.FK_ATTEND_CUSTOMER" ToRole="ATTEND" FromRole="CUSTOMER" />
+        <NavigationProperty Name="NOTEs" Relationship="CloudEDUModel.FK__NOTE__CUSTOMER_I__2334397B" ToRole="NOTE" FromRole="CUSTOMER" />
+        <NavigationProperty Name="SALEORDERs" Relationship="CloudEDUModel.FK__SALEORDER__BUYER__5070F446" ToRole="SALEORDER" FromRole="CUSTOMER" />
+        <NavigationProperty Name="SALEORDERs1" Relationship="CloudEDUModel.FK__SALEORDER__SALER__5165187F" ToRole="SALEORDER" FromRole="CUSTOMER" />
+        <NavigationProperty Name="COURSEs1" Relationship="CloudEDUModel.FAVORITE" ToRole="COURSE" FromRole="CUSTOMER" />
+      </EntityType>
+      <EntityType Name="NOTE">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="TITLE" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="CONTENT" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="LESSON_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="DATE" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="CUSTOMER_ID" Type="Edm.Int32" />
+        <Property Name="SHARE" Type="Edm.Boolean" Nullable="false" />
+        <NavigationProperty Name="LESSON" Relationship="CloudEDUModel.FK__NOTE__LESSON_ID__3A81B327" ToRole="LESSON" FromRole="NOTE" />
+        <NavigationProperty Name="CUSTOMER" Relationship="CloudEDUModel.FK__NOTE__CUSTOMER_I__2334397B" ToRole="CUSTOMER" FromRole="NOTE" />
+      </EntityType>
+      <EntityType Name="OPR_LOG">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="OPR" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+        <Property Name="OPR_TIME" Type="Edm.Binary" Nullable="false" MaxLength="8" FixedLength="true" p6:StoreGeneratedPattern="Computed" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="MSG" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="true" />
+      </EntityType>
+      <EntityType Name="MANAGER">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="NAME" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="PASSWORD" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="MNGR_TYPE" Type="Edm.Int32" />
+        <NavigationProperty Name="TYPE" Relationship="CloudEDUModel.FK__MANAGER__MNGR_TY__44FF419A" ToRole="TYPE" FromRole="MANAGER" />
+        <NavigationProperty Name="PERMISSIONs" Relationship="CloudEDUModel.GRANTED" ToRole="PERMISSION" FromRole="MANAGER" />
+      </EntityType>
+      <EntityType Name="PERMISSION">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="NAME" Type="Edm.String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+        <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+        <NavigationProperty Name="MANAGERs" Relationship="CloudEDUModel.GRANTED" ToRole="MANAGER" FromRole="PERMISSION" />
+      </EntityType>
+      <EntityType Name="TYPE">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="DESCRIPTION" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <NavigationProperty Name="MANAGERs" Relationship="CloudEDUModel.FK__MANAGER__MNGR_TY__44FF419A" ToRole="MANAGER" FromRole="TYPE" />
+      </EntityType>
+      <EntityType Name="SALEORDER">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="BUYER" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SALER" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PRICE" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
+        <Property Name="COURSE" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <NavigationProperty Name="COURSE1" Relationship="CloudEDUModel.FK__SALEORDER__COURS__534D60F1" ToRole="COURSE" FromRole="SALEORDER" />
+        <NavigationProperty Name="CUSTOMER" Relationship="CloudEDUModel.FK__SALEORDER__BUYER__5070F446" ToRole="CUSTOMER" FromRole="SALEORDER" />
+        <NavigationProperty Name="CUSTOMER1" Relationship="CloudEDUModel.FK__SALEORDER__SALER__5165187F" ToRole="CUSTOMER" FromRole="SALEORDER" />
+      </EntityType>
+      <EntityType Name="COURSE_OK">
+        <Key>
+          <PropertyRef Name="ID" />
+          <PropertyRef Name="PRICE" />
+          <PropertyRef Name="TITLE" />
+          <PropertyRef Name="TEACHER" />
+          <PropertyRef Name="COURSE_STATUS" />
+          <PropertyRef Name="START_TIME" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="PRICE" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
+        <Property Name="RATE" Type="Edm.Double" />
+        <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="INTRO" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="TEACHER" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CATEGORY" Type="Edm.Int32" />
+        <Property Name="COURSE_STATUS" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        <Property Name="PG" Type="Edm.Int32" />
+        <Property Name="ICON_URL" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+      </EntityType>
+      <EntityType Name="COURSE_PENDING">
+        <Key>
+          <PropertyRef Name="ID" />
+          <PropertyRef Name="PRICE" />
+          <PropertyRef Name="TITLE" />
+          <PropertyRef Name="TEACHER" />
+          <PropertyRef Name="COURSE_STATUS" />
+          <PropertyRef Name="START_TIME" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="PRICE" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
+        <Property Name="RATE" Type="Edm.Double" />
+        <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="INTRO" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="TEACHER" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CATEGORY" Type="Edm.Int32" />
+        <Property Name="COURSE_STATUS" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        <Property Name="PG" Type="Edm.Int32" />
+        <Property Name="ICON_URL" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+      </EntityType>
+      <EntityType Name="COURSE_CANCEL">
+        <Key>
+          <PropertyRef Name="ID" />
+          <PropertyRef Name="PRICE" />
+          <PropertyRef Name="TITLE" />
+          <PropertyRef Name="TEACHER" />
+          <PropertyRef Name="COURSE_STATUS" />
+          <PropertyRef Name="START_TIME" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="PRICE" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
+        <Property Name="RATE" Type="Edm.Double" />
+        <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="INTRO" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="TEACHER" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CATEGORY" Type="Edm.Int32" />
+        <Property Name="COURSE_STATUS" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        <Property Name="PG" Type="Edm.Int32" />
+        <Property Name="ICON_URL" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+      </EntityType>
+      <Association Name="FK_COURSE_CATEGORY">
+        <End Type="CloudEDUModel.CATEGORY" Role="CATEGORY" Multiplicity="0..1" />
+        <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="CATEGORY">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="COURSE">
+            <PropertyRef Name="CATEGORY" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK__COMMENT__CUSTOME__6E01572D">
+        <End Type="CloudEDUModel.CUSTOMER" Role="CUSTOMER" Multiplicity="1" />
+        <End Type="CloudEDUModel.COMMENT" Role="COMMENT" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="CUSTOMER">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="COMMENT">
+            <PropertyRef Name="CUSTOMER_ID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_COMMENT_COURSE">
+        <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="CloudEDUModel.COMMENT" Role="COMMENT" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="COURSE">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="COMMENT">
+            <PropertyRef Name="COURSE_ID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK__SALEORDER__COURS__534D60F1">
+        <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="1" />
+        <End Type="CloudEDUModel.SALEORDER" Role="SALEORDER" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="COURSE">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="SALEORDER">
+            <PropertyRef Name="COURSE" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ATTEND_COURSE">
+        <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="CloudEDUModel.ATTEND" Role="ATTEND" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="COURSE">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="ATTEND">
+            <PropertyRef Name="COURSE_ID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_COURSE_PG">
+        <End Type="CloudEDUModel.PARENT_GUIDE" Role="PARENT_GUIDE" Multiplicity="0..1" />
+        <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="PARENT_GUIDE">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="COURSE">
+            <PropertyRef Name="PG" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_COURSE_TEACHER">
+        <End Type="CloudEDUModel.CUSTOMER" Role="CUSTOMER" Multiplicity="1" />
+        <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="CUSTOMER">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="COURSE">
+            <PropertyRef Name="TEACHER" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_LESSON_COURSE">
+        <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="CloudEDUModel.LESSON" Role="LESSON" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="COURSE">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="LESSON">
+            <PropertyRef Name="COURSE_ID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="RECO_COURSE">
+        <End Type="CloudEDUModel.RECOMMENDATION" Role="RECOMMENDATION" Multiplicity="*" />
+        <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="*" />
+      </Association>
+      <Association Name="FAVORITE">
+        <End Type="CloudEDUModel.CUSTOMER" Role="CUSTOMER" Multiplicity="*" />
+        <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="*" />
+      </Association>
+      <Association Name="FK_DOCUMENT_LESSON">
+        <End Type="CloudEDUModel.LESSON" Role="LESSON" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="CloudEDUModel.DOCUMENT" Role="DOCUMENT" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="LESSON">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="DOCUMENT">
+            <PropertyRef Name="LESSON_ID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK__NOTE__LESSON_ID__3A81B327">
+        <End Type="CloudEDUModel.LESSON" Role="LESSON" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="CloudEDUModel.NOTE" Role="NOTE" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="LESSON">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="NOTE">
+            <PropertyRef Name="LESSON_ID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ATTEND_CURRENTLESSON">
+        <End Type="CloudEDUModel.LESSON" Role="LESSON" Multiplicity="0..1" />
+        <End Type="CloudEDUModel.ATTEND" Role="ATTEND" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="LESSON">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="ATTEND">
+            <PropertyRef Name="CURRENT_LESSON" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_RESOURCE_LESSON">
+        <End Type="CloudEDUModel.LESSON" Role="LESSON" Multiplicity="1">
+          <OnDelete Action="Cascade" />
+        </End>
+        <End Type="CloudEDUModel.RESOURCE" Role="RESOURCE" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="LESSON">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="RESOURCE">
+            <PropertyRef Name="LESSON_ID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_RESOURCE_TYPE">
+        <End Type="CloudEDUModel.RES_TYPE" Role="RES_TYPE" Multiplicity="1" />
+        <End Type="CloudEDUModel.RESOURCE" Role="RESOURCE" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="RES_TYPE">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="RESOURCE">
+            <PropertyRef Name="TYPE" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK_ATTEND_CUSTOMER">
+        <End Type="CloudEDUModel.CUSTOMER" Role="CUSTOMER" Multiplicity="1" />
+        <End Type="CloudEDUModel.ATTEND" Role="ATTEND" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="CUSTOMER">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="ATTEND">
+            <PropertyRef Name="CUSTOMER_ID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK__NOTE__CUSTOMER_I__2334397B">
+        <End Type="CloudEDUModel.CUSTOMER" Role="CUSTOMER" Multiplicity="0..1" />
+        <End Type="CloudEDUModel.NOTE" Role="NOTE" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="CUSTOMER">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="NOTE">
+            <PropertyRef Name="CUSTOMER_ID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK__SALEORDER__BUYER__5070F446">
+        <End Type="CloudEDUModel.CUSTOMER" Role="CUSTOMER" Multiplicity="1" />
+        <End Type="CloudEDUModel.SALEORDER" Role="SALEORDER" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="CUSTOMER">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="SALEORDER">
+            <PropertyRef Name="BUYER" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK__SALEORDER__SALER__5165187F">
+        <End Type="CloudEDUModel.CUSTOMER" Role="CUSTOMER" Multiplicity="1" />
+        <End Type="CloudEDUModel.SALEORDER" Role="SALEORDER" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="CUSTOMER">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="SALEORDER">
+            <PropertyRef Name="SALER" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK__MANAGER__MNGR_TY__44FF419A">
+        <End Type="CloudEDUModel.TYPE" Role="TYPE" Multiplicity="0..1" />
+        <End Type="CloudEDUModel.MANAGER" Role="MANAGER" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="TYPE">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="MANAGER">
+            <PropertyRef Name="MNGR_TYPE" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="GRANTED">
+        <End Type="CloudEDUModel.PERMISSION" Role="PERMISSION" Multiplicity="*" />
+        <End Type="CloudEDUModel.MANAGER" Role="MANAGER" Multiplicity="*" />
+      </Association>
+    </Schema>
+    <Schema Namespace="CloudEDUServer" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <EntityContainer Name="CloudEDUEntities" m:IsDefaultEntityContainer="true" p6:LazyLoadingEnabled="true" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntitySet Name="CATEGORies" EntityType="CloudEDUModel.CATEGORY" />
+        <EntitySet Name="COMMENTs" EntityType="CloudEDUModel.COMMENT" />
+        <EntitySet Name="COURSEs" EntityType="CloudEDUModel.COURSE" />
+        <EntitySet Name="DOCUMENTs" EntityType="CloudEDUModel.DOCUMENT" />
+        <EntitySet Name="LESSONs" EntityType="CloudEDUModel.LESSON" />
+        <EntitySet Name="PARENT_GUIDE" EntityType="CloudEDUModel.PARENT_GUIDE" />
+        <EntitySet Name="RECOMMENDATIONs" EntityType="CloudEDUModel.RECOMMENDATION" />
+        <EntitySet Name="RES_TYPE" EntityType="CloudEDUModel.RES_TYPE" />
+        <EntitySet Name="RESOURCEs" EntityType="CloudEDUModel.RESOURCE" />
+        <EntitySet Name="ATTENDs" EntityType="CloudEDUModel.ATTEND" />
+        <EntitySet Name="CUSTOMERs" EntityType="CloudEDUModel.CUSTOMER" />
+        <EntitySet Name="NOTEs" EntityType="CloudEDUModel.NOTE" />
+        <EntitySet Name="OPR_LOG" EntityType="CloudEDUModel.OPR_LOG" />
+        <EntitySet Name="MANAGERs" EntityType="CloudEDUModel.MANAGER" />
+        <EntitySet Name="PERMISSIONs" EntityType="CloudEDUModel.PERMISSION" />
+        <EntitySet Name="TYPEs" EntityType="CloudEDUModel.TYPE" />
+        <EntitySet Name="SALEORDERs" EntityType="CloudEDUModel.SALEORDER" />
+        <EntitySet Name="COURSE_OK" EntityType="CloudEDUModel.COURSE_OK" />
+        <EntitySet Name="COURSE_PENDING" EntityType="CloudEDUModel.COURSE_PENDING" />
+        <EntitySet Name="COURSE_CANCEL" EntityType="CloudEDUModel.COURSE_CANCEL" />
+        <FunctionImport Name="GetAllCourses" ReturnType="Collection(CloudEDUModel.COURSE_OK)" EntitySet="COURSE_OK" m:HttpMethod="GET" />
+        <FunctionImport Name="GetCoursesByName" ReturnType="Collection(CloudEDUModel.COURSE_OK)" EntitySet="COURSE_OK" m:HttpMethod="GET">
+          <Parameter Name="name" Type="Edm.String" />
+        </FunctionImport>
+        <FunctionImport Name="GetCoursesByDate" ReturnType="Collection(CloudEDUModel.COURSE_OK)" EntitySet="COURSE_OK" m:HttpMethod="GET" />
+        <AssociationSet Name="FK_COURSE_CATEGORY" Association="CloudEDUModel.FK_COURSE_CATEGORY">
+          <End Role="CATEGORY" EntitySet="CATEGORies" />
+          <End Role="COURSE" EntitySet="COURSEs" />
+        </AssociationSet>
+        <AssociationSet Name="FK__COMMENT__CUSTOME__6E01572D" Association="CloudEDUModel.FK__COMMENT__CUSTOME__6E01572D">
+          <End Role="COMMENT" EntitySet="COMMENTs" />
+          <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+        </AssociationSet>
+        <AssociationSet Name="FK_COMMENT_COURSE" Association="CloudEDUModel.FK_COMMENT_COURSE">
+          <End Role="COMMENT" EntitySet="COMMENTs" />
+          <End Role="COURSE" EntitySet="COURSEs" />
+        </AssociationSet>
+        <AssociationSet Name="FK__SALEORDER__COURS__534D60F1" Association="CloudEDUModel.FK__SALEORDER__COURS__534D60F1">
+          <End Role="COURSE" EntitySet="COURSEs" />
+          <End Role="SALEORDER" EntitySet="SALEORDERs" />
+        </AssociationSet>
+        <AssociationSet Name="FK_ATTEND_COURSE" Association="CloudEDUModel.FK_ATTEND_COURSE">
+          <End Role="COURSE" EntitySet="COURSEs" />
+          <End Role="ATTEND" EntitySet="ATTENDs" />
+        </AssociationSet>
+        <AssociationSet Name="FK_COURSE_PG" Association="CloudEDUModel.FK_COURSE_PG">
+          <End Role="COURSE" EntitySet="COURSEs" />
+          <End Role="PARENT_GUIDE" EntitySet="PARENT_GUIDE" />
+        </AssociationSet>
+        <AssociationSet Name="FK_COURSE_TEACHER" Association="CloudEDUModel.FK_COURSE_TEACHER">
+          <End Role="COURSE" EntitySet="COURSEs" />
+          <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+        </AssociationSet>
+        <AssociationSet Name="FK_LESSON_COURSE" Association="CloudEDUModel.FK_LESSON_COURSE">
+          <End Role="COURSE" EntitySet="COURSEs" />
+          <End Role="LESSON" EntitySet="LESSONs" />
+        </AssociationSet>
+        <AssociationSet Name="RECO_COURSE" Association="CloudEDUModel.RECO_COURSE">
+          <End Role="COURSE" EntitySet="COURSEs" />
+          <End Role="RECOMMENDATION" EntitySet="RECOMMENDATIONs" />
+        </AssociationSet>
+        <AssociationSet Name="FAVORITE" Association="CloudEDUModel.FAVORITE">
+          <End Role="COURSE" EntitySet="COURSEs" />
+          <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+        </AssociationSet>
+        <AssociationSet Name="FK_DOCUMENT_LESSON" Association="CloudEDUModel.FK_DOCUMENT_LESSON">
+          <End Role="DOCUMENT" EntitySet="DOCUMENTs" />
+          <End Role="LESSON" EntitySet="LESSONs" />
+        </AssociationSet>
+        <AssociationSet Name="FK__NOTE__LESSON_ID__3A81B327" Association="CloudEDUModel.FK__NOTE__LESSON_ID__3A81B327">
+          <End Role="LESSON" EntitySet="LESSONs" />
+          <End Role="NOTE" EntitySet="NOTEs" />
+        </AssociationSet>
+        <AssociationSet Name="FK_ATTEND_CURRENTLESSON" Association="CloudEDUModel.FK_ATTEND_CURRENTLESSON">
+          <End Role="LESSON" EntitySet="LESSONs" />
+          <End Role="ATTEND" EntitySet="ATTENDs" />
+        </AssociationSet>
+        <AssociationSet Name="FK_RESOURCE_LESSON" Association="CloudEDUModel.FK_RESOURCE_LESSON">
+          <End Role="LESSON" EntitySet="LESSONs" />
+          <End Role="RESOURCE" EntitySet="RESOURCEs" />
+        </AssociationSet>
+        <AssociationSet Name="FK_RESOURCE_TYPE" Association="CloudEDUModel.FK_RESOURCE_TYPE">
+          <End Role="RES_TYPE" EntitySet="RES_TYPE" />
+          <End Role="RESOURCE" EntitySet="RESOURCEs" />
+        </AssociationSet>
+        <AssociationSet Name="FK_ATTEND_CUSTOMER" Association="CloudEDUModel.FK_ATTEND_CUSTOMER">
+          <End Role="ATTEND" EntitySet="ATTENDs" />
+          <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+        </AssociationSet>
+        <AssociationSet Name="FK__NOTE__CUSTOMER_I__2334397B" Association="CloudEDUModel.FK__NOTE__CUSTOMER_I__2334397B">
+          <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+          <End Role="NOTE" EntitySet="NOTEs" />
+        </AssociationSet>
+        <AssociationSet Name="FK__SALEORDER__BUYER__5070F446" Association="CloudEDUModel.FK__SALEORDER__BUYER__5070F446">
+          <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+          <End Role="SALEORDER" EntitySet="SALEORDERs" />
+        </AssociationSet>
+        <AssociationSet Name="FK__SALEORDER__SALER__5165187F" Association="CloudEDUModel.FK__SALEORDER__SALER__5165187F">
+          <End Role="CUSTOMER" EntitySet="CUSTOMERs" />
+          <End Role="SALEORDER" EntitySet="SALEORDERs" />
+        </AssociationSet>
+        <AssociationSet Name="FK__MANAGER__MNGR_TY__44FF419A" Association="CloudEDUModel.FK__MANAGER__MNGR_TY__44FF419A">
+          <End Role="MANAGER" EntitySet="MANAGERs" />
+          <End Role="TYPE" EntitySet="TYPEs" />
+        </AssociationSet>
+        <AssociationSet Name="GRANTED" Association="CloudEDUModel.GRANTED">
+          <End Role="MANAGER" EntitySet="MANAGERs" />
+          <End Role="PERMISSION" EntitySet="PERMISSIONs" />
+        </AssociationSet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
