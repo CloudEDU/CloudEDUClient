@@ -67,7 +67,7 @@
 
         <Border Grid.Row="1" BorderBrush="{x:Null}" Background="#7ECEF4" Width="1000"
                 HorizontalAlignment="Center" BorderThickness="0">
-            <TextBox TextAlignment="Center" i:WatermarkTextBehavior.Text="Course Name" FontSize="60" BorderThickness="0"/>
+            <TextBox TextAlignment="Center" i:WatermarkTextBehavior.Text="Course Name" FontSize="60" BorderThickness="0" />
         </Border>
 
         <ScrollViewer Grid.Row="2" Style="{StaticResource VerticalScrollViewerStyle}"
@@ -80,43 +80,46 @@
             </StackPanel>
         </ScrollViewer>
 
-        <Popup  Grid.RowSpan="3" x:Name="addLessonPopup" IsOpen="False" IsLightDismissEnabled="False">
+        <Popup Grid.RowSpan="3" Name="addLessonPopup" IsOpen="False" IsLightDismissEnabled="False">
             <Popup.ChildTransitions>
                 <TransitionCollection>
                     <PaneThemeTransition />
                 </TransitionCollection>
             </Popup.ChildTransitions>
 
-            <Grid Width="1366" Height="680" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Margin="0, 130, 0, 80">
+            <Grid Width="1366" Height="680" Background="White"
+                  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 130, 0, 80">
                 <StackPanel Orientation="Vertical" Margin="20, 20">
-                    <TextBox Style="{StaticResource PopupTextBoxStyle}" MaxLength="30"
-                             i:WatermarkTextBehavior.Text="Lesson Name" />
+                    <TextBox Style="{StaticResource PopupTextBoxStyle}" MaxLength="30" Text="Lesson Name" />
                     <TextBox Background="{StaticResource PopupTextBackgroundBrush}" BorderThickness="0"
-                             FontSize="45" Height="140" Width="1286" HorizontalAlignment="Left"
-                             TextWrapping="Wrap" i:WatermarkTextBehavior.Text="Description..."
-                             Margin="40, 20, 0, 0" />
+                             FontSize="45" Height="140" Width="1250" HorizontalAlignment="Left"
+                             TextWrapping="Wrap" Margin="40, 20, 0, 0" Text="Description..." />
                     <StackPanel Orientation="Horizontal">
-                        <StackPanel x:Name="documentations" Orientation="Horizontal">
-                            <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Documentation" IsReadOnly="True" />
+                        <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Documentation" IsReadOnly="True" />
+                        <StackPanel x:Name="docsPanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
+                            
                         </StackPanel>
-                        <Button Style="{StaticResource AddElementButtonStyle}" />
+                        <Button Style="{StaticResource AddElementButtonStyle}" Click="DocUploadButton_Click" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <StackPanel x:Name="audios" Orientation="Horizontal">
-                            <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Audio Records" IsReadOnly="True" />
+                        <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Audio Records" IsReadOnly="True" />
+                        <StackPanel x:Name="audiosPanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
+                            
                         </StackPanel>
-                        <Button Style="{StaticResource AddElementButtonStyle}" />
+                        <Button Style="{StaticResource AddElementButtonStyle}" Click="AudioUploadButton_Click" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <StackPanel x:Name="videos" Orientation="Horizontal">
-                            <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Videos" IsReadOnly="True" />
+                        <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Videos" IsReadOnly="True" />
+                        <StackPanel x:Name="videosPanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
+                            
                         </StackPanel>
-                        <Button Style="{StaticResource AddElementButtonStyle}" />
+                        <Button Style="{StaticResource AddElementButtonStyle}" Click="VideoUploadButton_Click" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 40">
-                        <Button Style="{StaticResource UploadCheckButtonStyle}" Content="Upload" />
-                        <Button Style="{StaticResource UploadCheckButtonStyle}" Content="Cancel" />
+                        <Button x:Name="UploadLessionButton" Style="{StaticResource UploadCheckButtonStyle}" Content="Upload"
+                                Click="UploadLessionButton_Click" />
+                        <Button x:Name="CancelUploadButton" Style="{StaticResource UploadCheckButtonStyle}" Content="Cancel"
+                                Click="CancelUploadButton_Click" />
                     </StackPanel>
                 </StackPanel>
             </Grid>
