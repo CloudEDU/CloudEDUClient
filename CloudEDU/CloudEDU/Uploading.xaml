@@ -8,10 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:i="using:JulMar.Windows.Interactivity.Interactivity"
     mc:Ignorable="d">
-    
+
     <Page.Resources>
         <SolidColorBrush x:Key="PopupTextBackgroundBrush" Color="#C8F3FF" />
-        
+
         <Style x:Key="PopupTextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="{StaticResource PopupTextBackgroundBrush}" />
             <Setter Property="BorderThickness" Value="0" />
@@ -21,9 +21,25 @@
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Margin" Value="40, 20, 0, 0" />
         </Style>
-        
+
         <Style x:Key="PopupTextBlockStyle" TargetType="TextBlock">
-            
+            <Setter Property="FontSize" Value="45" />
+            <Setter Property="Height" Value="70" />
+            <Setter Property="Width" Value="420" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+        </Style>
+
+        <Style x:Key="AddElementButtonStyle" TargetType="Button"
+               BasedOn="{StaticResource AddAppBarButtonStyle}">
+            <Setter Property="Height" Value="70" />
+            <Setter Property="AutomationProperties.Name" Value="" />
+            <Setter Property="Margin" Value="0, 20, 0, 0" />
+        </Style>
+        
+        <Style x:Key="UploadCheckButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PopupTextBackgroundBrush}" />
+            <Setter Property="FontSize" Value="45" />
+            <Setter Property="Margin" Value="20, 0" />
         </Style>
     </Page.Resources>
 
@@ -53,7 +69,7 @@
                 HorizontalAlignment="Center" BorderThickness="0">
             <TextBox TextAlignment="Center" i:WatermarkTextBehavior.Text="Course Name" FontSize="60" BorderThickness="0"/>
         </Border>
-        
+
         <ScrollViewer Grid.Row="2" Style="{StaticResource VerticalScrollViewerStyle}"
                       HorizontalAlignment="Center" Margin="0, 20, 0, 0">
             <StackPanel Orientation="Vertical" Width="1000">
@@ -64,23 +80,44 @@
             </StackPanel>
         </ScrollViewer>
 
-        <Popup  Grid.RowSpan="3" x:Name="addLessonPopup" IsOpen="False" IsLightDismissEnabled="True">
+        <Popup  Grid.RowSpan="3" x:Name="addLessonPopup" IsOpen="False" IsLightDismissEnabled="False">
             <Popup.ChildTransitions>
                 <TransitionCollection>
                     <PaneThemeTransition />
                 </TransitionCollection>
             </Popup.ChildTransitions>
 
-            <Grid Width="1366" Height="768" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center"
-                  Margin="0, 100, 0, 80">
+            <Grid Width="1366" Height="680" Background="White" HorizontalAlignment="Center" VerticalAlignment="Center"
+                  Margin="0, 130, 0, 80">
                 <StackPanel Orientation="Vertical" Margin="20, 20">
-                    <TextBox Style="{StaticResource PopupTextBoxStyle}"
+                    <TextBox Style="{StaticResource PopupTextBoxStyle}" MaxLength="30"
                              i:WatermarkTextBehavior.Text="Lesson Name" />
                     <TextBox Background="{StaticResource PopupTextBackgroundBrush}" BorderThickness="0"
                              FontSize="45" Height="140" Width="1286" HorizontalAlignment="Left"
                              TextWrapping="Wrap" i:WatermarkTextBehavior.Text="Description..."
                              Margin="40, 20, 0, 0" />
-                    <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Documentation" />
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel x:Name="documentations" Orientation="Horizontal">
+                            <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Documentation" IsReadOnly="True" />
+                        </StackPanel>
+                        <Button Style="{StaticResource AddElementButtonStyle}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel x:Name="audios" Orientation="Horizontal">
+                            <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Audio Records" IsReadOnly="True" />
+                        </StackPanel>
+                        <Button Style="{StaticResource AddElementButtonStyle}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel x:Name="videos" Orientation="Horizontal">
+                            <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Videos" IsReadOnly="True" />
+                        </StackPanel>
+                        <Button Style="{StaticResource AddElementButtonStyle}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 40">
+                        <Button Style="{StaticResource UploadCheckButtonStyle}" Content="Upload" />
+                        <Button Style="{StaticResource UploadCheckButtonStyle}" Content="Cancel" />
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Popup>
