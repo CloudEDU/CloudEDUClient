@@ -11,6 +11,7 @@ using Windows.Networking.BackgroundTransfer;
 using Windows.Security.Credentials.UI;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -40,11 +41,11 @@ namespace CloudEDU
 
         private CancellationTokenSource cts;
 
+        int lessonCount = 0;
+
         public Uploading()
         {
             this.InitializeComponent();
-
-            cts = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -54,8 +55,13 @@ namespace CloudEDU
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            lessonCount = 0;
+            cts = new CancellationTokenSource();
+            lessonInfo.Children.Clear();
+            lessonRes.Children.Clear();
         }
 
+        #region Button Click Action
         /// <summary>
         /// Invoked when back button is clicked and return the last page.
         /// </summary>
@@ -83,6 +89,8 @@ namespace CloudEDU
             wholeFrame.Opacity = 0.5;
             addLessonPopup.IsOpen = true;
 
+            ResetPopup();
+
             // Reset button visual state
             VisualStateManager.GoToState(UploadLessionButton, "Normal", false);
             VisualStateManager.GoToState(CancelUploadButton, "Normal", false);
@@ -107,20 +115,23 @@ namespace CloudEDU
             if (docParts != null)
             {
                 UploadOperation docsUpload = await uploader.CreateUploadAsync(docsUri, docParts);
-                await HandleUploadAsync(docsUpload, true);
+                // Attach progress and completion handlers.
+                //await HandleUploadAsync(docsUpload, true);
             }
             if (audioParts != null)
             {
                 UploadOperation audiosUpload = await uploader.CreateUploadAsync(audiosUri, audioParts);
-                await HandleUploadAsync(audiosUpload, true);
+                //await HandleUploadAsync(audiosUpload, true);
             }
             if (videoParts != null)
             {
                 UploadOperation videosUpload = await uploader.CreateUploadAsync(videosUri, videoParts);
-                await HandleUploadAsync(videosUpload, true);
+                //await HandleUploadAsync(videosUpload, true);
             }
 
-            // Attach progress and completion handlers.
+            AddLessonInfo();
+            wholeFrame.Opacity = 1;
+            addLessonPopup.IsOpen = false;
         }
 
         /// <summary>
@@ -205,7 +216,9 @@ namespace CloudEDU
                 videosPanel.Children.Add(videoImg);
             }
         }
+        #endregion
 
+        #region Background Upload
         /// <summary>
         /// Create FileOpenPicker and set file filter.
         /// </summary>
@@ -308,10 +321,95 @@ namespace CloudEDU
             {
                 // Canceled: upload.Guid
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
+        }
+        #endregion
+
+        private void AddLessonInfo()
+        {
+            TextBlock newLessonName = new TextBlock
+            {
+                Text = ++lessonCount + ". " + lessonName.Text,
+                FontSize = 50,
+                Height = 70,
+                Margin = new Thickness(5, 0, 0, 0),
+                Foreground = new SolidColorBrush(Colors.White)
+            };
+
+            StackPanel newLessonRes = new StackPanel()
+            {
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
+
+            if (docs != null)
+            {
+                for (int i = 0; i < docs.Count; ++i)
+                {
+                    Image docImg = new Image
+                    {
+                        Source = new BitmapImage(new Uri("ms-appx:///Images/Upload/doc.png")),
+                        Height = 70,
+                        Width = 35,
+                        Margin = new Thickness(2, 0, 2, 0),
+                        HorizontalAlignment = HorizontalAlignment.Right
+                    };
+                    newLessonRes.Children.Add(docImg);
+                }
+            }
+
+            if (audios != null)
+            {
+                for (int i = 0; i < audios.Count; ++i)
+                {
+                    Image audioImg = new Image
+                    {
+                        Source = new BitmapImage(new Uri("ms-appx:///Images/Upload/audio.png")),
+                        Height = 70,
+                        Width = 35,
+                        Margin = new Thickness(2, 0, 2, 0),
+                        HorizontalAlignment = HorizontalAlignment.Right
+                    };
+                    newLessonRes.Children.Add(audioImg);
+                }
+            }
+
+            if (videos != null)
+            {
+                for (int i = 0; i < videos.Count; ++i)
+                {
+                    Image videoImg = new Image
+                    {
+                        Source = new BitmapImage(new Uri("ms-appx:///Images/Upload/video.png")),
+                        Height = 70,
+                        Width = 35,
+                        Margin = new Thickness(2, 0, 2, 0),
+                        HorizontalAlignment = HorizontalAlignment.Right
+                    };
+                    newLessonRes.Children.Add(videoImg);
+                }
+            }
+
+            lessonInfo.Children.Add(newLessonName);
+            lessonRes.Children.Add(newLessonRes);
+        }
+
+        /// <summary>
+        /// Reset the popup.
+        /// </summary>
+        private void ResetPopup()
+        {
+            lessonName.Text = "Lesson Name";
+            lessonDescription.Text = "Description...";
+            docsPanel.Children.Clear();
+            audiosPanel.Children.Clear();
+            videosPanel.Children.Clear();
+            docs = null;
+            audios = null;
+            videos = null;
         }
     }
 }

@@ -35,7 +35,7 @@
             <Setter Property="AutomationProperties.Name" Value="" />
             <Setter Property="Margin" Value="0, 20, 0, 0" />
         </Style>
-        
+
         <Style x:Key="UploadCheckButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="{StaticResource PopupTextBackgroundBrush}" />
             <Setter Property="FontSize" Value="45" />
@@ -73,10 +73,20 @@
         <ScrollViewer Grid.Row="2" Style="{StaticResource VerticalScrollViewerStyle}"
                       HorizontalAlignment="Center" Margin="0, 20, 0, 0">
             <StackPanel Orientation="Vertical" Width="1000">
-                <StackPanel x:Name="lessons" Orientation="Vertical">
+                <StackPanel Orientation="Vertical">
+                    <Grid Background="#00B7EE">
+                        <StackPanel x:Name="lessonInfo" Orientation="Vertical" HorizontalAlignment="Left" />
+                        <StackPanel x:Name="lessonRes" Orientation="Vertical" HorizontalAlignment="Right" />
+                    </Grid>
                 </StackPanel>
-                <Button Style="{StaticResource AddAppBarButtonStyle}" HorizontalAlignment="Center"
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Style="{StaticResource AddAppBarButtonStyle}" HorizontalAlignment="Center"
                         AutomationProperties.Name="" Click="AddLessonButton_Click" />
+                    <Button Style="{StaticResource AppBarButtonStyle}" HorizontalAlignment="Center"
+                            AutomationProperties.Name="" />
+                    <Button Style="{StaticResource AppBarButtonStyle}" HorizontalAlignment="Center"
+                            AutomationProperties.Name="" />
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 
@@ -90,9 +100,10 @@
             <Grid Width="1366" Height="680" Background="White"
                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 130, 0, 80">
                 <StackPanel Orientation="Vertical" Margin="20, 20">
-                    <TextBox Style="{StaticResource PopupTextBoxStyle}" MaxLength="30" Text="Lesson Name" />
-                    <TextBox Background="{StaticResource PopupTextBackgroundBrush}" BorderThickness="0"
-                             FontSize="45" Height="140" Width="1250" HorizontalAlignment="Left"
+                    <TextBox x:Name="lessonName" Style="{StaticResource PopupTextBoxStyle}"
+                             MaxLength="30" Text="Lesson Name" />
+                    <TextBox x:Name="lessonDescription" Background="{StaticResource PopupTextBackgroundBrush}"
+                             BorderThickness="0" FontSize="45" Height="140" Width="1250" HorizontalAlignment="Left"
                              TextWrapping="Wrap" Margin="40, 20, 0, 0" Text="Description..." />
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Documentation" IsReadOnly="True" />
