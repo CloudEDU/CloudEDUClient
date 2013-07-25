@@ -104,14 +104,23 @@ namespace CloudEDU
             Uri videosUri = new Uri("http://videos");
 
             BackgroundUploader uploader = new BackgroundUploader();
-            UploadOperation docsUpload = await uploader.CreateUploadAsync(docsUri, docParts);
-            UploadOperation audiosUpload = await uploader.CreateUploadAsync(audiosUri, audioParts);
-            UploadOperation videosUpload = await uploader.CreateUploadAsync(videosUri, videoParts);
+            if (docParts != null)
+            {
+                UploadOperation docsUpload = await uploader.CreateUploadAsync(docsUri, docParts);
+                await HandleUploadAsync(docsUpload, true);
+            }
+            if (audioParts != null)
+            {
+                UploadOperation audiosUpload = await uploader.CreateUploadAsync(audiosUri, audioParts);
+                await HandleUploadAsync(audiosUpload, true);
+            }
+            if (videoParts != null)
+            {
+                UploadOperation videosUpload = await uploader.CreateUploadAsync(videosUri, videoParts);
+                await HandleUploadAsync(videosUpload, true);
+            }
 
             // Attach progress and completion handlers.
-            await HandleUploadAsync(docsUpload, true);
-            await HandleUploadAsync(audiosUpload, true);
-            await HandleUploadAsync(videosUpload, true);
         }
 
         /// <summary>
@@ -230,6 +239,7 @@ namespace CloudEDU
         {
             List<BackgroundTransferContentPart> parts = new List<BackgroundTransferContentPart>();
 
+            if (files == null) return null;
             for (int i = 0; i < files.Count; ++i)
             {
                 BackgroundTransferContentPart part = new BackgroundTransferContentPart("File " + i, files[i].Name);
