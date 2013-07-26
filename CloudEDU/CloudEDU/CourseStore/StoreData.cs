@@ -160,9 +160,9 @@ namespace CloudEDU.CourseStore
             course.IsTeach = true;
             Collection.Add(course);
 
-            for (int j = 0; j < 50; ++j)
+            for (int j = 0; j < 15; ++j)
             {
-                for (int i = 0; i < 2; ++i)
+                for (int i = 0; i < 1; ++i)
                 {
                     course = new Course();
                     course.Name = "the power of smile";
@@ -186,7 +186,7 @@ namespace CloudEDU.CourseStore
                     Collection.Add(course);
                 }
 
-                for (int i = 0; i < 2; ++i)
+                for (int i = 0; i < 4; ++i)
                 {
                     course = new Course();
                     course.Name = "the evolution";

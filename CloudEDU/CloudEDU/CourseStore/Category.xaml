@@ -18,7 +18,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         
-        <SemanticZoom Grid.Row="1">
+        <SemanticZoom Grid.Row="1" x:Name="SemanticZoom">
             <SemanticZoom.ZoomedOutView>
                 <ListView Grid.Row="1" SelectionMode="None"
                           ItemsSource="{Binding Source={StaticResource cvs1}}"
@@ -59,7 +59,8 @@
                           ItemsSource="{Binding Source={StaticResource cvs1}}"
                           ItemTemplate="{StaticResource GridViewItemTemplate}"
                           ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}"
-                          IsItemClickEnabled="True" ItemClick="Course_ItemClick">
+                          IsItemClickEnabled="True" ItemClick="Course_ItemClick"
+                          IsSwipeEnabled="True">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel Orientation="Horizontal"/>

@@ -43,7 +43,6 @@ namespace CloudEDU.CourseStore
             categoryName = e.Parameter as string;
             Title.Text = Constants.UpperInitialChar(categoryName);
 
-
             storeSampleData = new StoreData();
             dataCategory = storeSampleData.GetSingleGroupByCategoryName(categoryName);
             cvs1.Source = dataCategory;
