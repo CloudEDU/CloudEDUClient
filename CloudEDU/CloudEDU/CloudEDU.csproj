@@ -119,6 +119,15 @@
       <DependentUpon>CategoryForNewest.xaml</DependentUpon>
     </Compile>
     <Compile Include="CourseStore\Course.cs" />
+    <Compile Include="CourseStore\CourseDetail\Comment.xaml.cs">
+      <DependentUpon>Comment.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CourseStore\CourseDetail\Detail.xaml.cs">
+      <DependentUpon>Detail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CourseStore\CourseDetail\Overview.xaml.cs">
+      <DependentUpon>Overview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CourseStore\Courstore.xaml.cs">
       <DependentUpon>Courstore.xaml</DependentUpon>
     </Compile>
@@ -199,6 +208,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CourseStore\CategoryForNewest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CourseStore\CourseDetail\Comment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CourseStore\CourseDetail\Detail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CourseStore\CourseDetail\Overview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

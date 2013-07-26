@@ -41,6 +41,24 @@ namespace CloudEDU.CourseStore
             dataCategory = storeSampleData.GetGroupsByCategory();
             cvs1.Source = dataCategory;
             (SemanticZoom.ZoomedOutView as ListViewBase).ItemsSource = cvs1.View.CollectionGroups;
+
+            Uri uri = new Uri("http://10.0.1.16:8080/cloudeduserver/courseservice.svc");
+            CloudEDU.CourseService.CloudEDUEntities ctx = new CloudEDU.CourseService.CloudEDUEntities(uri);
+           //System.Diagnostics.Debug.WriteLine(ctx.CUSTOMERs.Where(c => c.ID == 1).FirstOrDefault().NAME);
+            var query = ctx.CreateQuery<Category>("GetAllCategory");
+            System.Diagnostics.Debug.WriteLine(query.ToString());
+            try
+            {
+                System.Diagnostics.Debug.WriteLine(query.ToString());
+                foreach (var res in query)
+                {
+                    System.Diagnostics.Debug.WriteLine(res.ToString());
+                }
+            }
+            catch
+            {
+            }
+
         }
 
         /// <summary>
