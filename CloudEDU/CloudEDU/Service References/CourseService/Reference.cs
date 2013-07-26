@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 7/25/2013 5:35:26 PM
+// Generation date: 7/26/2013 3:03:19 PM
 namespace CloudEDU.CourseService
 {
     
