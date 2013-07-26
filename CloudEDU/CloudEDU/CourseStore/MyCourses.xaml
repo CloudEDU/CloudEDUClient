@@ -38,9 +38,9 @@
                             <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90" Margin="100, 0, 100, 0">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Key}"
-                                               Style="{StaticResource GridViewHeaderTemplateKeyTextBlockStyle}"/>
+                                               Style="{StaticResource HeaderTemplateKeyTextBlockStyle}"/>
                                     <TextBlock Text="{StaticResource ChevronGlyph}"
-                                               Style="{StaticResource GridViewHeaderTemplateRightRowTextBlockStyle}"/>
+                                               Style="{StaticResource HeaderTemplateRightRowTextBlockStyle}"/>
                                 </StackPanel>
                             </Button>
                         </DataTemplate>

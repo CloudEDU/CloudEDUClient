@@ -33,6 +33,7 @@ namespace CloudEDU.CourseStore.CourseDetail
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            string courseName = e.Parameter as string;
         }
     }
 }

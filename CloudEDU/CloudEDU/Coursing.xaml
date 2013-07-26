@@ -49,18 +49,18 @@
                 </StackPanel>
                 <Border x:Name="HomeBorder" Background="{StaticResource PageRed}" >
                     <TextBlock x:Name="HomeText" Style="{StaticResource PageHeaderTextStyle}" Text="Home"
-                               Margin="5, 15, 0, 15" Foreground="White" />
+                               Margin="5, 15, 0, 15" Foreground="White" IsTapEnabled="True" Tapped="HomeText_Tapped" />
                 </Border>
                 <Border x:Name="LecturesBorder" Background="{StaticResource PageBlue}" >
                     <TextBlock x:Name="LecturesText" Style="{StaticResource PageHeaderTextStyle}" Text="Lectures"
-                               Margin="5, 15, 0, 15" Foreground="White" />
+                               Margin="5, 15, 0, 15" Foreground="White" IsTapEnabled="True" Tapped="LecturesText_Tapped" />
                 </Border>
                 <Border x:Name="NotesBorder" Background="{StaticResource PageGreen}" >
                     <TextBlock x:Name="NotesText" Style="{StaticResource PageHeaderTextStyle}" Text="Notes"
-                               Margin="5, 15, 0, 15" Foreground="White"/>
+                               Margin="5, 15, 0, 15" Foreground="White" IsTapEnabled="True" Tapped="NotesText_Tapped" />
                 </Border>
             </StackPanel>
-            <Rectangle Grid.Column="2" Fill="#96DC00" />
+            <Rectangle Grid.Column="2" x:Name="ContentBackgroundRect" Fill="{StaticResource PageRed}" />
         </Grid>
     </Grid>
 </common:GlobalPage>
