@@ -159,6 +159,45 @@ namespace CloudEDU.CourseStore
             course.IsBuy = false;
             course.IsTeach = true;
             Collection.Add(course);
+
+            for (int j = 0; j < 50; ++j)
+            {
+                for (int i = 0; i < 2; ++i)
+                {
+                    course = new Course();
+                    course.Name = "the power of smile";
+                    course.Rate = 4.0;
+                    course.setImage(baseUri, "Images/Courses/course1.png");
+                    course.Category = "Psychology";
+                    course.IsBuy = false;
+                    course.IsTeach = true;
+                    Collection.Add(course);
+                }
+
+                for (int i = 0; i < 2; ++i)
+                {
+                    course = new Course();
+                    course.Name = "sun shower";
+                    course.Rate = 4.0;
+                    course.setImage(baseUri, "Images/Courses/course2.png");
+                    course.Category = "Psychology";
+                    course.IsBuy = true;
+                    course.IsTeach = false;
+                    Collection.Add(course);
+                }
+
+                for (int i = 0; i < 2; ++i)
+                {
+                    course = new Course();
+                    course.Name = "the evolution";
+                    course.Rate = 4.0;
+                    course.setImage(baseUri, "Images/Courses/course3.png");
+                    course.Category = "Psychology";
+                    course.IsBuy = false;
+                    course.IsTeach = true;
+                    Collection.Add(course);
+                }
+            }
         }
 
         private CourseCollection _collection = new CourseCollection();

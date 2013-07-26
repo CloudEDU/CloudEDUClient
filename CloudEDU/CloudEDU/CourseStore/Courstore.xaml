@@ -18,9 +18,9 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         
-        <SemanticZoom Grid.Row="1" x:Name="semanticZoom">
+        <SemanticZoom Grid.Row="1" x:Name="SemanticZoom">
             <SemanticZoom.ZoomedOutView>
-                <GridView SelectionMode="None"
+                <GridView x:Name="ZoomedOutGV" SelectionMode="None"
                           ScrollViewer.IsHorizontalScrollChainingEnabled="False"
                           ItemsSource="{Binding Source={StaticResource cvs1}}">
                     <GridView.ItemsPanel>
@@ -48,7 +48,7 @@
                 </GridView>
             </SemanticZoom.ZoomedOutView>
             <SemanticZoom.ZoomedInView>
-                <GridView SelectionMode="None"
+                <GridView x:Name="ZoomedInGV" SelectionMode="None"
                           ItemsSource="{Binding Source={StaticResource cvs1}}"
                           ItemTemplate="{StaticResource GridViewItemTemplate}"
                           ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}"
@@ -67,9 +67,9 @@
                                             Margin="100, 0, 100, 0" Click="CategoryButton_Click">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="{Binding Key}"
-                                                       Style="{StaticResource GridViewHeaderTemplateKeyTextBlockStyle}"/>
+                                                       Style="{StaticResource HeaderTemplateKeyTextBlockStyle}"/>
                                             <TextBlock Text="{StaticResource ChevronGlyph}"
-                                                       Style="{StaticResource GridViewHeaderTemplateRightRowTextBlockStyle}"/>
+                                                       Style="{StaticResource HeaderTemplateRightRowTextBlockStyle}"/>
                                         </StackPanel>
                                     </Button>
                                 </DataTemplate>
