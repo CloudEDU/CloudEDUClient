@@ -40,6 +40,7 @@ namespace CloudEDU.CourseStore
             storeSampleData = new StoreData();
             dataCategory = storeSampleData.GetGroupsByCategory();
             cvs1.Source = dataCategory;
+            (semanticZoom.ZoomedOutView as ListViewBase).ItemsSource = cvs1.View.CollectionGroups;
         }
 
         /// <summary>

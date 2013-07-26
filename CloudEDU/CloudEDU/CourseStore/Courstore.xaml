@@ -17,43 +17,75 @@
             <RowDefinition Height="150" />
             <RowDefinition />
         </Grid.RowDefinitions>
-
-        <GridView Grid.Row="1" SelectionMode="None"
-                  ItemsSource="{Binding Source={StaticResource cvs1}}"
-                  ItemTemplate="{StaticResource GridViewItemTemplate}"
-                  ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}"
-                  IsItemClickEnabled="True" ItemClick="Course_ItemClick">
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-            
-            <GridView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90" Margin="100, 0, 100, 0"
-                                    Click="CategoryButton_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Key}"
-                                               Style="{StaticResource GridViewHeaderTemplateKeyTextBlockStyle}"/>
-                                    <TextBlock Text="{StaticResource ChevronGlyph}"
-                                               Style="{StaticResource GridViewHeaderTemplateRightRowTextBlockStyle}"/>
-                                </StackPanel>
-                            </Button>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-
-                    <GroupStyle.Panel>
+        
+        <SemanticZoom Grid.Row="1" x:Name="semanticZoom">
+            <SemanticZoom.ZoomedOutView>
+                <GridView SelectionMode="None"
+                          ScrollViewer.IsHorizontalScrollChainingEnabled="False"
+                          ItemsSource="{Binding Source={StaticResource cvs1}}">
+                    <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <VariableSizedWrapGrid Style="{StaticResource VariableSizedWrapGridTemplateStyle}" />
+                            <WrapGrid ItemHeight="200" ItemWidth="400"
+                                      MaximumRowsOrColumns="1" VerticalChildrenAlignment="Center" />
                         </ItemsPanelTemplate>
-                    </GroupStyle.Panel>
-                </GroupStyle>
-            </GridView.GroupStyle>
-        </GridView>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Text="{Binding Group.Key}" FontFamily="Segoe UI Light" FontSize="40"/>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <Setter Property="Margin" Value="4" />
+                            <Setter Property="Padding" Value="10" />
+                            <Setter Property="BorderBrush" Value="Gray" />
+                            <Setter Property="BorderThickness" Value="1" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                </GridView>
+            </SemanticZoom.ZoomedOutView>
+            <SemanticZoom.ZoomedInView>
+                <GridView SelectionMode="None"
+                          ItemsSource="{Binding Source={StaticResource cvs1}}"
+                          ItemTemplate="{StaticResource GridViewItemTemplate}"
+                          ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}"
+                          IsItemClickEnabled="True" ItemClick="Course_ItemClick">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
 
+                    <GridView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90"
+                                            Margin="100, 0, 100, 0" Click="CategoryButton_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Key}"
+                                                       Style="{StaticResource GridViewHeaderTemplateKeyTextBlockStyle}"/>
+                                            <TextBlock Text="{StaticResource ChevronGlyph}"
+                                                       Style="{StaticResource GridViewHeaderTemplateRightRowTextBlockStyle}"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <VariableSizedWrapGrid Style="{StaticResource VariableSizedWrapGridTemplateStyle}" />
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                        </GroupStyle>
+                    </GridView.GroupStyle>
+                </GridView>
+            </SemanticZoom.ZoomedInView>
+        </SemanticZoom>
+     
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*" />

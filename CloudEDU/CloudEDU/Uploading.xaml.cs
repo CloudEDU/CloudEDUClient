@@ -421,7 +421,7 @@ namespace CloudEDU
             lessonRes.Children.Add(newLessonRes);
         }
 
-        #region Reset
+        #region Reset Page and Popup methods
         /// <summary>
         /// Reset the popup.
         /// </summary>
