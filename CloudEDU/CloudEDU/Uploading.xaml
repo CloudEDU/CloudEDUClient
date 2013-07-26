@@ -15,7 +15,7 @@
         <Style x:Key="PopupTextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="{StaticResource PopupTextBackgroundBrush}" />
             <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="FontSize" Value="45" />
+            <Setter Property="FontSize" Value="47" />
             <Setter Property="Height" Value="70" />
             <Setter Property="Width" Value="420" />
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -82,9 +82,7 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Style="{StaticResource AddAppBarButtonStyle}" HorizontalAlignment="Center"
                         AutomationProperties.Name="" Click="AddLessonButton_Click" />
-                    <Button Style="{StaticResource AppBarButtonStyle}" HorizontalAlignment="Center"
-                            AutomationProperties.Name="" />
-                    <Button Style="{StaticResource AppBarButtonStyle}" HorizontalAlignment="Center"
+                    <Button Style="{StaticResource YesAppBarButtonStyle}" HorizontalAlignment="Center"
                             AutomationProperties.Name="" />
                 </StackPanel>
             </StackPanel>

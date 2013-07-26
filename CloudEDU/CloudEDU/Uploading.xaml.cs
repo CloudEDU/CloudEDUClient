@@ -55,10 +55,7 @@ namespace CloudEDU
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            lessonCount = 0;
-            cts = new CancellationTokenSource();
-            lessonInfo.Children.Clear();
-            lessonRes.Children.Clear();
+            ResetPage();
         }
 
         #region Button Click Action
@@ -165,6 +162,10 @@ namespace CloudEDU
                     Margin = new Thickness(5, 0, 5, 0)
                 };
 
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = docs[i].Name;
+                ToolTipService.SetToolTip(docImg, toolTip);
+
                 docsPanel.Children.Add(docImg);
             }
         }
@@ -189,6 +190,10 @@ namespace CloudEDU
                     Margin = new Thickness(5, 0, 5, 0)
                 };
 
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = audios[i].Name;
+                ToolTipService.SetToolTip(audioImg, toolTip);
+
                 audiosPanel.Children.Add(audioImg);
             }
         }
@@ -212,6 +217,10 @@ namespace CloudEDU
                     Source = new BitmapImage(new Uri("ms-appx:///Images/Upload/video.png")),
                     Margin = new Thickness(5, 0, 5, 0)
                 };
+
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = videos[i].Name;
+                ToolTipService.SetToolTip(videoImg, toolTip);
 
                 videosPanel.Children.Add(videoImg);
             }
@@ -328,6 +337,9 @@ namespace CloudEDU
         }
         #endregion
 
+        /// <summary>
+        /// Add lesson info to page after uploading button clicked.
+        /// </summary>
         private void AddLessonInfo()
         {
             TextBlock newLessonName = new TextBlock
@@ -358,6 +370,10 @@ namespace CloudEDU
                         HorizontalAlignment = HorizontalAlignment.Right
                     };
                     newLessonRes.Children.Add(docImg);
+
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Content = docs[i].Name;
+                    ToolTipService.SetToolTip(docImg, toolTip);
                 }
             }
 
@@ -374,6 +390,10 @@ namespace CloudEDU
                         HorizontalAlignment = HorizontalAlignment.Right
                     };
                     newLessonRes.Children.Add(audioImg);
+
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Content = audios[i].Name;
+                    ToolTipService.SetToolTip(audioImg, toolTip);
                 }
             }
 
@@ -390,6 +410,10 @@ namespace CloudEDU
                         HorizontalAlignment = HorizontalAlignment.Right
                     };
                     newLessonRes.Children.Add(videoImg);
+
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Content = videos[i].Name;
+                    ToolTipService.SetToolTip(videoImg, toolTip);
                 }
             }
 
@@ -397,6 +421,7 @@ namespace CloudEDU
             lessonRes.Children.Add(newLessonRes);
         }
 
+        #region Reset
         /// <summary>
         /// Reset the popup.
         /// </summary>
@@ -411,5 +436,17 @@ namespace CloudEDU
             audios = null;
             videos = null;
         }
+
+        private void ResetPage()
+        {
+            lessonCount = 0;
+            cts = new CancellationTokenSource();
+            lessonInfo.Children.Clear();
+            lessonRes.Children.Clear();
+            docs = null;
+            audios = null;
+            videos = null;
+        }
+        #endregion
     }
 }
