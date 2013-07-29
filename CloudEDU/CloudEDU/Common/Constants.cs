@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CloudEDU.CourseStore;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +10,8 @@ namespace CloudEDU.Common
 {
     public class Constants
     {
+        public static string BaseURI = "ms-appx:///";
+        public static string WCFUri = "http://10.0.1.39:8080/CloudEDUServer/Service.svc/";
         /// <summary>
         /// Cast the first character of every word in a string from lower to upper.
         /// </summary>
@@ -30,5 +34,16 @@ namespace CloudEDU.Common
 
             return strBuff.ToString();
         }
+    }
+
+    /// <summary>
+    /// Used as selector to select container size.
+    /// </summary>
+    public enum GridViewItemContainerType
+    {
+        DefaultGridViewItemContainerSize = 0,
+        DoubleHeightGridViewItemContainerSize = 1,
+        DoubleWidthGridViewItemContsinerSize = 2,
+        SquareGridViewItemContainerSize = 3,
     }
 }

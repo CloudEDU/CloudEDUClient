@@ -40,7 +40,7 @@
             <Grid Grid.Column="1" Background="#046EDA">
                 <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical"
                             Margin="20, 20, 0, 0">
-                    <TextBlock x:Name="RateStar" Style="{StaticResource SubheaderTextStyle}" Text="*****"
+                    <TextBlock x:Name="RateStar" Style="{StaticResource SubheaderTextStyle}" Text="&#x2605;&#x2605;&#x2605;&#x2605;&#x2606;"
                                Foreground="{StaticResource CourseInfoFontForegroundBrush}" />
                     <TextBlock x:Name="Rate" Style="{StaticResource SubheaderTextStyle}" Text="12343rates"
                                Foreground="{StaticResource CourseInfoFontForegroundBrush}" />
@@ -88,47 +88,19 @@
             
                 <StackPanel Grid.Row="0" Orientation="Horizontal">
                     <Button x:Name="OverviewButton" Style="{StaticResource TextPrimaryButtonStyle}" Content="Overview"
-                            Margin="20, 0" FontSize="20" />
+                            Margin="20, 0" FontSize="20" Click="OverviewButton_Click" />
                     <Button x:Name="DetailsButton" Style="{StaticResource TextSecondaryButtonStyle}" Content="Details" 
-                            Margin="10, 0" FontSize="20" />
+                            Margin="10, 0" FontSize="20" Click="DetailsButton_Click" />
                     <Button x:Name="CommentsButton" Style="{StaticResource TextSecondaryButtonStyle}" Content="Comments"
-                            Margin="20, 0" FontSize="20" />
+                            Margin="20, 0" FontSize="20" Click="CommentsButton_Click" />
                 </StackPanel>
-                <ScrollViewer Grid.Row="1" x:Name="OverviewScroll" Style="{StaticResource VerticalScrollViewerStyle}"
-                              VerticalScrollBarVisibility="Auto">
-                    <StackPanel Orientation="Vertical" Margin="20, 20">
-                        <Image Width="550" Stretch="Fill" Source="ms-appx:///Images/Courses/ComputerNetworking.png"
-                           HorizontalAlignment="Left"/>
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Computer Network is ..."
-                               Margin="0, 20"/>
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
-                    </StackPanel>
-                </ScrollViewer>
+                <Frame x:Name="frame" Grid.Row="1">
+                    <Frame.Transitions>
+                        <TransitionCollection>
+                            <ContentThemeTransition />
+                        </TransitionCollection>
+                    </Frame.Transitions>
+                </Frame>
             </Grid>
         </Grid>
     </Grid>

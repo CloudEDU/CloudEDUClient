@@ -1,5 +1,4 @@
-﻿using CloudEDU.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,14 +14,14 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace CloudEDU
+namespace CloudEDU.CourseStore.CourseDetail
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Coursing : GlobalPage
+    public sealed partial class Overview : Page
     {
-        public Coursing()
+        public Overview()
         {
             this.InitializeComponent();
         }
@@ -34,26 +33,7 @@ namespace CloudEDU
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            List<string> courseInfo = e.Parameter as List<string>;
-            CourseTitle.Text = Constants.UpperInitialChar(courseInfo[0]);
-            NavigateText.Text = courseInfo[1];
-        }
-
-        /// <summary>
-        /// Invoked when back button is clicked and return the last page.
-        /// </summary>
-        /// <param name="sender">The back button clicked.</param>
-        /// <param name="e">Event data that describes how the click was initiated.</param>
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Frame.CanGoBack)
-            {
-                Frame.GoBack();
-            }
-            else
-            {
-                Frame.Navigate(typeof(CourseStore.Courstore));
-            }
+            string courseName = e.Parameter as string;
         }
     }
 }

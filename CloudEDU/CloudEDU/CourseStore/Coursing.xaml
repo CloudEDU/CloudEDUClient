@@ -1,13 +1,14 @@
 ﻿<common:GlobalPage
-    x:Class="CloudEDU.Coursing"
+    x:Class="CloudEDU.CourseStore.Coursing"
     xmlns:common="using:CloudEDU.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:CloudEDU"
+    xmlns:local="using:CloudEDU.CourseStore"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+
+
     <Page.Resources>
         <SolidColorBrush x:Key="PageRed" Color="#DC0000" />
         <SolidColorBrush x:Key="PageBlue" Color="#008CDC" />
@@ -34,7 +35,7 @@
                        HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="100" Margin="0, -10"
                        Text="Coursing" />
         </Grid>
-        
+
         <Grid Grid.Column="0" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*" />
@@ -49,18 +50,19 @@
                 </StackPanel>
                 <Border x:Name="HomeBorder" Background="{StaticResource PageRed}" >
                     <TextBlock x:Name="HomeText" Style="{StaticResource PageHeaderTextStyle}" Text="Home"
-                               Margin="5, 15, 0, 15" Foreground="White" />
+                               Margin="5, 15, 0, 15" Foreground="White" IsTapEnabled="True" Tapped="HomeText_Tapped" />
                 </Border>
                 <Border x:Name="LecturesBorder" Background="{StaticResource PageBlue}" >
                     <TextBlock x:Name="LecturesText" Style="{StaticResource PageHeaderTextStyle}" Text="Lectures"
-                               Margin="5, 15, 0, 15" Foreground="White" />
+                               Margin="5, 15, 0, 15" Foreground="White" IsTapEnabled="True" Tapped="LecturesText_Tapped" />
                 </Border>
                 <Border x:Name="NotesBorder" Background="{StaticResource PageGreen}" >
                     <TextBlock x:Name="NotesText" Style="{StaticResource PageHeaderTextStyle}" Text="Notes"
-                               Margin="5, 15, 0, 15" Foreground="White"/>
+                               Margin="5, 15, 0, 15" Foreground="White" IsTapEnabled="True" Tapped="NotesText_Tapped" />
                 </Border>
             </StackPanel>
-            <Rectangle Grid.Column="2" Fill="#96DC00" />
+            <Rectangle Grid.Column="2" x:Name="ContentBackgroundRect" Fill="{StaticResource PageRed}" />
+            <Frame Grid.Column="2" x:Name="detailFrame" Margin="30" />
         </Grid>
     </Grid>
 </common:GlobalPage>

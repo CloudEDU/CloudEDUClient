@@ -9,10 +9,16 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-        <Button x:Name="CourstoreButton" Style="{StaticResource HomeAppBarButtonStyle}" AutomationProperties.Name="Courstore"
-                Click="CourstoreButton_Click" />
-        <Button x:Name="MyCoursesButton" Style="{StaticResource ListAppBarButtonStyle}" AutomationProperties.Name="My Courses"
-                Click="MyCoursesButton_Click" />
-    </StackPanel>
+    <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button x:Name="CourstoreButton" Style="{StaticResource HomeAppBarButtonStyle}" AutomationProperties.Name="Courstore"
+                    Click="CourstoreButton_Click" />
+            <Button x:Name="MyCoursesButton" Style="{StaticResource ListAppBarButtonStyle}" AutomationProperties.Name="My Courses"
+                    Click="MyCoursesButton_Click" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="UploadCourseButton" Style="{StaticResource UploadAppBarButtonStyle}" AutomationProperties.Name="Upload Course"
+                    Click="UploadCourseButton_Click" />
+        </StackPanel>
+    </Grid>    
 </UserControl>

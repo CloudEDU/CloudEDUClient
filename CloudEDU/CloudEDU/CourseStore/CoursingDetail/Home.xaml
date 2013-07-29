@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="CloudEDU.CourseStore.CoursingDetail.Home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CloudEDU.CourseStore.CoursingDetail"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="552"
+    d:DesignWidth="884">
+
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="253*"/>
+            <ColumnDefinition Width="189*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="355*"/>
+            <RowDefinition Height="197*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
+            <Grid Width="auto" Background="White">
+                <Image Stretch="UniformToFill" Source="ms-appx:///Images/Courses/ComputerNetworking.png" />
+            </Grid>
+            <Grid VerticalAlignment="Bottom">
+                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="&#x2605;&#x2605;&#x2605;&#x2605;&#x2606;" HorizontalAlignment="Left" Foreground="White" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="By" Foreground="White" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" FontWeight="Bold" Text="Yeye Jin" Margin="15, 0, 0, 0" Foreground="White" />
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Right" Width="132">
+            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Info" FontWeight="Bold" Margin="0, 30, 0, 10" HorizontalAlignment="Right" FontSize="35" Foreground="White" />
+            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="20 Students" HorizontalAlignment="Right" Foreground="White" />
+            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="10 Lessons" HorizontalAlignment="Right" Foreground="White" />
+            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="1+ PG" HorizontalAlignment="Right" Foreground="White" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="20, 0, 0, 0" Width="358">
+            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Overview" FontWeight="Bold" Margin="0, 20, 0, 10" HorizontalAlignment="Left" FontSize="35" Foreground="White" />
+            <ScrollViewer Style="{StaticResource VerticalScrollViewerStyle}" Height="268">
+                <TextBlock Style="{StaticResource SubheaderTextStyle}"  Width="400" HorizontalAlignment="Left" TextWrapping="Wrap" Foreground="White"
+                           Text="laskjfopwqjfpwqjoqihfihowqiohfwqiohwfqohiwqffwiohqfqwohwqfhoihoihiohqwfiohfwqiohwqfiokqwfhhwqhfoqiwhfiwqofhiowqhiofwqiohhfwqoihfhwqiofhiowqhfiqwohifhoqiwiohfwqohifwqoihfiohwqfhwiqofhiwqfwquhifwqhqwfohifwqfqhiowwofwqfwqfwqpjfojpwq" />
+            </ScrollViewer>
+        </StackPanel>
+        
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="Black" Opacity="0.2" Margin="50" />
+        <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource TextButtonStyle}" Content="Start Learning!" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI Light"/>
+    </Grid>
+</Page>
