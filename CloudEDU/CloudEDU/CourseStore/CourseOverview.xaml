@@ -94,7 +94,13 @@
                     <Button x:Name="CommentsButton" Style="{StaticResource TextSecondaryButtonStyle}" Content="Comments"
                             Margin="20, 0" FontSize="20" Click="CommentsButton_Click" />
                 </StackPanel>
-                <Frame x:Name="frame" Grid.Row="1" />
+                <Frame x:Name="frame" Grid.Row="1">
+                    <Frame.Transitions>
+                        <TransitionCollection>
+                            <ContentThemeTransition />
+                        </TransitionCollection>
+                    </Frame.Transitions>
+                </Frame>
             </Grid>
         </Grid>
     </Grid>
