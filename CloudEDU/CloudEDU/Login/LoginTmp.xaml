@@ -8,41 +8,87 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <ControlTemplate TargetType="Button" x:Key="UserImage">
-            <Border Background="#75B3C5" Width="150" Height="150" CornerRadius="1000">
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Height="140" Width="140" Stretch="Fill" Source="{TemplateBinding Content}" />
-            </Border>
-        </ControlTemplate>
-        <ControlTemplate TargetType="Button" x:Key="AddUser">
-            <Border Background="#75B3C5" Width="150" Height="150" CornerRadius="1000">
-                <TextBlock Text="{TemplateBinding Content}"
-                           Height="300" Width="200" FontSize="210" Foreground="#BDDBE4" Margin="0, -90, 0, 0" />
-            </Border>
-        </ControlTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
     </Page.Resources>
 
     <Grid Background="{StaticResource LoginPageBackgroundThemeBrush}">
+        <Canvas Width="1366" Height="768">
 
-        <ListView Name="UserList" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <Button Template="{StaticResource UserImage}" Content="{Binding ImageSource}" />
-                        <TextBlock FontSize="25" Text="{Binding Username}" Width="150" Height="50"
-                                   FontFamily="Candara" TextAlignment="Center"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            <StackPanel x:Name="UsersStack" Canvas.Left="613" Width="Auto" 
+                        Orientation="Horizontal" HorizontalAlignment ="Center" 
+                        Canvas.Top="270" >
+                <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>
+                <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>
+                <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>
+                <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>
 
-        <StackPanel Orientation="Horizontal" >
-            <Button Template="{StaticResource UserImage}" Content="../Images/Users/ania.png" />
-            <Button Template="{StaticResource UserImage}" Content="../Images/Users/ania.png" />
-            <Button Template="{StaticResource UserImage}" Content="../Images/Users/ania.png" />
-            <Button Template="{StaticResource UserImage}" Content="../Images/Users/ania.png" />
-            <Button Template="{StaticResource AddUser}" Content="+" />
-        </StackPanel>
+                <!--<local:UserSelButtonControl Width="200" Background="Wheat" Content="../Images/Users/ania.png" />
+                <local:UserSelButtonControl Width="200" Background="Wheat" Content="../Images/Users/ania.png" />
+                <local:UserSelButtonControl Width="200" Background="Wheat" Content="../Images/Users/ania.png" />
 
+                <Button Template="{StaticResource UserImage}" Width="Auto" Content="../Images/Users/ania.png" Click="Button_Click" GotFocus="Focused" />
+                <Button Template="{StaticResource UserImage}" Width="Auto" Content="../Images/Users/ania.png" Click="Button_Click"/>
+                <Button Template="{StaticResource UserImage}" Width="Auto" Content="../Images/Users/ania.png"  Click="Button_Click"/>
+                <Button Template="{StaticResource UserImage}" Width="Auto" Content="../Images/Users/ania.png" Click="Button_Click"/>
+                -->
+                <Button Template="{StaticResource AddUser}"  Width="Auto" Content="+"  />
+
+            </StackPanel>
+            
+            <!--<Button Content="This is the Content" Height="200" Width="200" Background="#FFFB6C09" FontSize="20">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <CompositeTransform/>
+                            </Grid.RenderTransform>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.5" To="0.9"
+Storyboard.TargetProperty= "(UIElement.RenderTransform). (CompositeTransform.ScaleX)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                            <DoubleAnimation Duration="0:0:0.5" To="0.9" Storyboard.TargetProperty= "(UIElement.RenderTransform). (CompositeTransform.ScaleY)" Storyboard.TargetName="grid" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames
+Storyboard.TargetProperty=" (UIElement.Visibility)" Storyboard.TargetName="mouseOverEllipse">
+                                                <DiscreteObjectKeyFrame KeyTime="0">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <Visibility>Visible</Visibility>
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates"/>
+                            </VisualStateManager.VisualStateGroups>
+                            <Ellipse Fill="{TemplateBinding Background}"/>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding
+HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <Ellipse x:Name="mouseOverEllipse" Visibility="Collapsed">
+                                <Ellipse.Fill>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFFFE800" Offset="1"/>
+                                        <GradientStop Color="Transparent" Offset="0"/>
+                                    </LinearGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>-->
+            
+        </Canvas>
     </Grid>
 </Page>
