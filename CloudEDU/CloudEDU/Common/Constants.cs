@@ -10,6 +10,7 @@ namespace CloudEDU.Common
 {
     public class Constants
     {
+        public static string BaseURI = "ms-appx:///";
         /// <summary>
         /// Cast the first character of every word in a string from lower to upper.
         /// </summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudEDU.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,7 @@ namespace CloudEDU.CourseStore
         public StoreData()
         {
             Course course;
-            Uri baseUri = new Uri("ms-appx:///");
+            Uri baseUri = new Uri(Constants.BaseURI);
 
             course = new Course();
             course.Title = "the power of smile";

@@ -75,15 +75,39 @@
             <StackPanel Orientation="Vertical" Width="1000">
                 <StackPanel Orientation="Vertical">
                     <Grid Background="#00B7EE">
-                        <StackPanel x:Name="lessonInfo" Orientation="Vertical" HorizontalAlignment="Left" />
-                        <StackPanel x:Name="lessonRes" Orientation="Vertical" HorizontalAlignment="Right" />
+                        <StackPanel x:Name="lessonInfo" Orientation="Vertical" HorizontalAlignment="Left">
+                            <StackPanel.ChildrenTransitions>
+                                <TransitionCollection>
+                                    <AddDeleteThemeTransition />
+                                </TransitionCollection>
+                            </StackPanel.ChildrenTransitions>
+                        </StackPanel>
+                        <StackPanel x:Name="lessonRes" Orientation="Vertical" HorizontalAlignment="Right">
+                            <StackPanel.ChildrenTransitions>
+                                <TransitionCollection>
+                                    <AddDeleteThemeTransition />
+                                </TransitionCollection>
+                            </StackPanel.ChildrenTransitions>
+                        </StackPanel>
                     </Grid>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Style="{StaticResource AddAppBarButtonStyle}" HorizontalAlignment="Center"
-                        AutomationProperties.Name="" Click="AddLessonButton_Click" />
+                        AutomationProperties.Name="" Click="AddLessonButton_Click">
+                        <Button.Transitions>
+                            <TransitionCollection>
+                                <RepositionThemeTransition />
+                            </TransitionCollection>
+                        </Button.Transitions>
+                    </Button>
                     <Button Style="{StaticResource YesAppBarButtonStyle}" HorizontalAlignment="Center"
-                            AutomationProperties.Name="" />
+                            AutomationProperties.Name="">
+                        <Button.Transitions>
+                            <TransitionCollection>
+                                <RepositionThemeTransition />
+                            </TransitionCollection>
+                        </Button.Transitions>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
@@ -105,18 +129,54 @@
                              TextWrapping="Wrap" Margin="40, 20, 0, 0" Text="Description..." />
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Documentation" IsReadOnly="True" />
-                        <StackPanel x:Name="docsPanel" Orientation="Horizontal" Margin="10, 35, 0, 15" />
-                        <Button Style="{StaticResource AddElementButtonStyle}" Click="DocUploadButton_Click" />
+                        <StackPanel x:Name="docsPanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
+                            <StackPanel.ChildrenTransitions>
+                                <TransitionCollection>
+                                    <AddDeleteThemeTransition />
+                                </TransitionCollection>
+                            </StackPanel.ChildrenTransitions>
+                        </StackPanel>
+                        <Button Style="{StaticResource AddElementButtonStyle}" Click="DocUploadButton_Click">
+                            <Button.Transitions>
+                                <TransitionCollection>
+                                    <RepositionThemeTransition />
+                                </TransitionCollection>
+                            </Button.Transitions>
+                        </Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Audio Records" IsReadOnly="True" />
-                        <StackPanel x:Name="audiosPanel" Orientation="Horizontal" Margin="10, 35, 0, 15" />
-                        <Button Style="{StaticResource AddElementButtonStyle}" Click="AudioUploadButton_Click" />
+                        <StackPanel x:Name="audiosPanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
+                            <StackPanel.ChildrenTransitions>
+                                <TransitionCollection>
+                                    <AddDeleteThemeTransition />
+                                </TransitionCollection>
+                            </StackPanel.ChildrenTransitions>
+                        </StackPanel>
+                        <Button Style="{StaticResource AddElementButtonStyle}" Click="AudioUploadButton_Click">
+                            <Button.Transitions>
+                                <TransitionCollection>
+                                    <RepositionThemeTransition />
+                                </TransitionCollection>
+                            </Button.Transitions>
+                        </Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Videos" IsReadOnly="True" />
-                        <StackPanel x:Name="videosPanel" Orientation="Horizontal" Margin="10, 35, 0, 15" />
-                        <Button Style="{StaticResource AddElementButtonStyle}" Click="VideoUploadButton_Click" />
+                        <StackPanel x:Name="videosPanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
+                            <StackPanel.ChildrenTransitions>
+                                <TransitionCollection>
+                                    <AddDeleteThemeTransition />
+                                </TransitionCollection>
+                            </StackPanel.ChildrenTransitions>
+                        </StackPanel>
+                        <Button Style="{StaticResource AddElementButtonStyle}" Click="VideoUploadButton_Click">
+                            <Button.Transitions>
+                                <TransitionCollection>
+                                    <RepositionThemeTransition />
+                                </TransitionCollection>
+                            </Button.Transitions>
+                        </Button>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 40">
                         <Button x:Name="UploadLessionButton" Style="{StaticResource UploadCheckButtonStyle}" Content="Upload"

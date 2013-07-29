@@ -17,7 +17,7 @@
                        HorizontalAlignment="Left"/>
                 <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Computer Network is ..."
                            Margin="0, 20"/>
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
+                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="圆" />
                 <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
                 <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
                 <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Info" />
