@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,9 +23,21 @@ namespace CloudEDU
     /// </summary>
     public sealed partial class Coursing : GlobalPage
     {
+        SolidColorBrush pageRed;
+        SolidColorBrush pageBlue;
+        SolidColorBrush pageGreen;
+        SolidColorBrush pageWhite;
+        SolidColorBrush pageBlack;
+
         public Coursing()
         {
             this.InitializeComponent();
+
+            pageRed = this.Resources["PageRed"] as SolidColorBrush;
+            pageBlue = this.Resources["PageBlue"] as SolidColorBrush;
+            pageGreen = this.Resources["PageGreen"] as SolidColorBrush;
+            pageWhite = new SolidColorBrush(Colors.White);
+            pageBlack = new SolidColorBrush(Colors.Black);
         }
 
         /// <summary>
@@ -37,6 +50,14 @@ namespace CloudEDU
             List<string> courseInfo = e.Parameter as List<string>;
             CourseTitle.Text = Constants.UpperInitialChar(courseInfo[0]);
             NavigateText.Text = courseInfo[1];
+
+            HomeBorder.Background = pageRed;
+            LecturesBorder.Background = pageWhite;
+            NotesBorder.Background = pageWhite;
+
+            HomeText.Foreground = pageWhite;
+            LecturesText.Foreground = pageBlack;
+            NotesText.Foreground = pageBlack;
         }
 
         /// <summary>
@@ -54,6 +75,60 @@ namespace CloudEDU
             {
                 Frame.Navigate(typeof(CourseStore.Courstore));
             }
+        }
+
+        /// <summary>
+        /// Invoked when home text is tapped and navigating to the home fame
+        /// </summary>
+        /// <param name="sender">The home text tapped.</param>
+        /// <param name="e">Event data that describes how the tap was initiated.</param>
+        private void HomeText_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            HomeBorder.Background = pageRed;
+            LecturesBorder.Background = pageWhite;
+            NotesBorder.Background = pageWhite;
+
+            HomeText.Foreground = pageWhite;
+            LecturesText.Foreground = pageBlack;
+            NotesText.Foreground = pageBlack;
+
+            ContentBackgroundRect.Fill = pageRed;
+        }
+
+        /// <summary>
+        /// Invoked when lecture text is tapped and navigating to the lecture fame
+        /// </summary>
+        /// <param name="sender">The lecture text tapped.</param>
+        /// <param name="e">Event data that describes how the tap was initiated.</param>
+        private void LecturesText_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            HomeBorder.Background = pageWhite;
+            LecturesBorder.Background = pageBlue;
+            NotesBorder.Background = pageWhite;
+
+            HomeText.Foreground = pageBlack;
+            LecturesText.Foreground = pageWhite;
+            NotesText.Foreground = pageBlack;
+
+            ContentBackgroundRect.Fill = pageBlue;
+        }
+
+        /// <summary>
+        /// Invoked when note text is tapped and navigating to the note fame
+        /// </summary>
+        /// <param name="sender">The note text tapped.</param>
+        /// <param name="e">Event data that describes how the tap was initiated.</param>
+        private void NotesText_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            HomeBorder.Background = pageWhite;
+            LecturesBorder.Background = pageWhite;
+            NotesBorder.Background = pageGreen;
+
+            HomeText.Foreground = pageBlack;
+            LecturesText.Foreground = pageBlack;
+            NotesText.Foreground = pageWhite;
+
+            ContentBackgroundRect.Fill = pageGreen;
         }
     }
 }

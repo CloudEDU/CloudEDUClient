@@ -37,18 +37,6 @@
             </Style>
 
             <!-- Some styles used in GridView -->
-            <Style x:Key="GridViewHeaderTemplateKeyTextBlockStyle" TargetType="TextBlock"
-                   BasedOn="{StaticResource PageHeaderTextStyle}">
-                <Setter Property="Foreground" Value="#63A8BD" />
-                <Setter Property="Margin" Value="3, -7, 10, 30" />
-            </Style>
-            <Style x:Key="GridViewHeaderTemplateRightRowTextBlockStyle" TargetType="TextBlock"
-                   BasedOn="{StaticResource PageHeaderTextStyle}">
-                <Setter Property="Text" Value="{StaticResource ChevronGlyph}" />
-                <Setter Property="FontFamily" Value="Segoe UI Symbol" />
-                <Setter Property="Foreground" Value="#63A8BD" />
-                <Setter Property="Margin" Value="0, -7, 0, 30" />
-            </Style>
             <Style x:Key="GridViewDataTemplateNameTextBlockStyle" TargetType="TextBlock"
                    BasedOn="{StaticResource GroupHeaderTextStyle}">
                 <Setter Property="Foreground" Value="White" />
@@ -73,9 +61,9 @@
                     <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
                     <Rectangle Style="{StaticResource GridViewOpacityRectangleStyle}" />
                     <StackPanel VerticalAlignment="Bottom">
-                        <TextBlock Text="{Binding Name}" Style="{StaticResource GridViewDataTemplateNameTextBlockStyle}" />
+                        <TextBlock Text="{Binding Title}" Style="{StaticResource GridViewDataTemplateNameTextBlockStyle}" />
                         <TextBlock Text="{Binding Rate}" Foreground="White"
-                                       Style="{StaticResource PageHeaderTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
+                                   Style="{StaticResource PageHeaderTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
                     </StackPanel>
                 </Grid>
             </DataTemplate>
@@ -85,6 +73,55 @@
                                               DoubleHeightStyle="{StaticResource DoubleHeightGridViewItemStyle}"
                                               DoubleWidthStyle="{StaticResource DoubleWidthGridViewItemStyle}"
                                               SquareStyle="{StaticResource SquareGridViewItemStyle}" />
+
+            <!-- Some styles used in ListView -->
+            <Style x:Key="VariableSizedWrapListTemplateStyle" TargetType="VariableSizedWrapGrid">
+                <Setter Property="ItemWidth" Value="300" />
+                <Setter Property="ItemHeight" Value="100" />
+                <Setter Property="Orientation" Value="Vertical" />
+                <Setter Property="MaxHeight" Value="630" />
+                <Setter Property="Margin" Value="100, -150, 100, 0" />
+            </Style>
+            <Style x:Key="ListViewOpacityRectangleStyle" TargetType="Rectangle">
+                <Setter Property="Fill" Value="Black" />
+                <Setter Property="Width" Value="300" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Opacity" Value="0.5" />
+            </Style>
+            <Style x:Key="ListViewDataTemplateNameTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource GroupHeaderTextStyle}">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Height" Value="50" />
+                <Setter Property="Margin" Value="15,0,15,0" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="TextAlignment" Value="Left" />
+            </Style>
+            <DataTemplate x:Key="ListVewItemTemplate">
+                <Grid>
+                    <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+                    <Rectangle Style="{StaticResource ListViewOpacityRectangleStyle}" />
+                    <StackPanel HorizontalAlignment="Left">
+                        <TextBlock Text="{Binding Title}" Style="{StaticResource ListViewDataTemplateNameTextBlockStyle}" />
+                        <TextBlock Text="{Binding Rate}" Foreground="White" TextAlignment="Left"
+                                   Style="{StaticResource PageHeaderTextStyle}" Margin="15,-5,5,10"/>
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
+
+            <!-- Common styles used in GridView and ListView -->
+            <Style x:Key="HeaderTemplateKeyTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource PageHeaderTextStyle}">
+                <Setter Property="Foreground" Value="#63A8BD" />
+                <Setter Property="Margin" Value="3, -7, 10, 30" />
+            </Style>
+            <Style x:Key="HeaderTemplateRightRowTextBlockStyle" TargetType="TextBlock"
+                   BasedOn="{StaticResource PageHeaderTextStyle}">
+                <Setter Property="Text" Value="{StaticResource ChevronGlyph}" />
+                <Setter Property="FontFamily" Value="Segoe UI Symbol" />
+                <Setter Property="Foreground" Value="#63A8BD" />
+                <Setter Property="Margin" Value="0, -7, 0, 30" />
+            </Style>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
