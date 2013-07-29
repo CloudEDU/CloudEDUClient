@@ -14,12 +14,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
-namespace CloudEDU
+namespace CloudEDU.CourseStore
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
     public sealed partial class Coursing : GlobalPage
     {
@@ -58,6 +58,8 @@ namespace CloudEDU
             HomeText.Foreground = pageWhite;
             LecturesText.Foreground = pageBlack;
             NotesText.Foreground = pageBlack;
+
+            detailFrame.Navigate(typeof(CoursingDetail.Home));
         }
 
         /// <summary>
