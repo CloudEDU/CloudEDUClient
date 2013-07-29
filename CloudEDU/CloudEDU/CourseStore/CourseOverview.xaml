@@ -1,4 +1,4 @@
-﻿<common:GlobalPage
+<common:GlobalPage
     x:Class="CloudEDU.CourseStore.CourseOverview"
     xmlns:common="using:CloudEDU.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -27,7 +27,7 @@
             <Button Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Click="BackButton_Click" />
             <TextBlock x:Name="Title" Style="{StaticResource PageHeaderTextStyle}" HorizontalAlignment="Center"
-                       Text="Computer Network" VerticalAlignment="Center" FontSize="100" Margin="0,46,0,55" Height="49"/>
+                       Text="Computer Network" VerticalAlignment="Center" FontSize="100" Margin="0, -10"/>
         </StackPanel>
 
         <Grid Grid.Column="0" Grid.Row="1">
