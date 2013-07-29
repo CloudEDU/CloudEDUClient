@@ -1,5 +1,4 @@
 ﻿using CloudEDU.Common;
-using CloudEDU.CourseService;
 using System;
 using System.Collections;
 using System.Collections.Generic;

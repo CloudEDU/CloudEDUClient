@@ -1,5 +1,4 @@
-﻿using CloudEDU.CourseService;
-using CloudEDU.CourseStore;
+﻿using CloudEDU.CourseStore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,6 +11,7 @@ namespace CloudEDU.Common
     public class Constants
     {
         public static string BaseURI = "ms-appx:///";
+        public static string WCFUri = "http://10.0.1.39:8080/CloudEDUServer/Service.svc/";
         /// <summary>
         /// Cast the first character of every word in a string from lower to upper.
         /// </summary>

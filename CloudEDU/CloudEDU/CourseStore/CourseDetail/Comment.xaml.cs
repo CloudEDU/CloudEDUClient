@@ -1,6 +1,8 @@
 ﻿using CloudEDU.Common;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
@@ -26,6 +28,8 @@ namespace CloudEDU.CourseStore.CourseDetail
     {
         private int globalRate;
 
+        private DataServiceQuery<COMMENT> dps;
+
         public Comment()
         {
             this.InitializeComponent();
@@ -39,8 +43,34 @@ namespace CloudEDU.CourseStore.CourseDetail
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             string courseName = e.Parameter as string;
-
             globalRate = 0;
+
+            //var query = from comment in DataServiceContextSingleton.SharedDataServiceContext().COMMENTs select comment;
+
+            //COMMENT comment1 = new COMMENT();
+            //comment1.CONTENT = "sadfasdf";
+            //comment1.COURSE_ID = 1;
+            //comment1.CUSTOMER_ID = 1;
+
+            DataServiceContextSingleton.SharedDataServiceContext().BeginExecute<COMMENT>(new Uri("C", UriKind.Relative), OnComplete, null);
+
+
+            //DataServiceContextSingleton.SharedDataServiceContext().AddToCOMMENTs(comment1);
+            //DataServiceContextSingleton.SharedDataServiceContext().BeginSaveChanges(OnComplete, null);
+            //dps = (DataServiceQuery<COMMENT>)(query);
+            //dps.BeginExecute(OnComplete, query);
+        }
+
+        private void OnComplete(IAsyncResult result)
+        {
+            //foreach (var c in dps.EndExecute(result))
+            //{
+            //    System.Diagnostics.Debug.WriteLine(c.CONTENT);
+            //}
+            System.Diagnostics.Debug.WriteLine(result.AsyncState);
+            System.Diagnostics.Debug.WriteLine(result.CompletedSynchronously);
+            System.Diagnostics.Debug.WriteLine(result.IsCompleted);
+            System.Diagnostics.Debug.WriteLine(result.GetType());
         }
 
         /// <summary>
