@@ -1,4 +1,5 @@
-﻿using CloudEDU.CourseService;
+﻿using CloudEDU.Common;
+using CloudEDU.CourseService;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -210,6 +211,23 @@ namespace CloudEDU.CourseStore
                 {
                     this._startTime = value;
                     this.OnPropertyChanged("START_TIME");
+                }
+            }
+        }
+
+        private GridViewItemContainerType _itemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+        public GridViewItemContainerType ItemContainerType
+        {
+            get
+            {
+                return _itemContainerType;
+            }
+            set
+            {
+                if (this._itemContainerType != value)
+                {
+                    this._itemContainerType = value;
+                    this.OnPropertyChanged("ITEM_CONTAINER_TYPE");
                 }
             }
         }

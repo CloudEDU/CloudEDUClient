@@ -1,4 +1,5 @@
-﻿using CloudEDU.CourseStore;
+﻿using CloudEDU.Common;
+using CloudEDU.CourseStore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -107,14 +108,19 @@ namespace CloudEDU
         /// <returns>An application-specific style to apply</returns>
         protected override Style SelectStyleCore(object item, DependencyObject container)
         {
-            //if (this.NormalStyle == null || this.DoubleHeightStyle == null ||
-            //    this.DoubleWidthStyle == null || this.SquareStyle == null)
-            //    return base.SelectStyleCore(item, container);
+            GridViewItemContainerType containerType = ((Course)item).ItemContainerType;
 
-            if (((Course)item).Title == "the power of smile")
-                return DoubleHeightStyle;
-            else
-                return NormalStyle;
+            switch (containerType)
+            {
+                case GridViewItemContainerType.DoubleHeightGridViewItemContainerSize:
+                    return DoubleHeightStyle;
+                case GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize:
+                    return DoubleWidthStyle;
+                case GridViewItemContainerType.SquareGridViewItemContainerSize:
+                    return SquareStyle;
+                default:
+                    return NormalStyle;
+            }
         }
     }
 }

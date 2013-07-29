@@ -32,12 +32,16 @@ namespace CloudEDU.Common
 
             return strBuff.ToString();
         }
+    }
 
-        //public static Course CourseOkToCourse(COURSE_OK course_ok)
-        //{
-        //    Course course = new Course();
-            
-            
-        //}
+    /// <summary>
+    /// Used as selector to select container size.
+    /// </summary>
+    public enum GridViewItemContainerType
+    {
+        DefaultGridViewItemContainerSize = 0,
+        DoubleHeightGridViewItemContainerSize = 1,
+        DoubleWidthGridViewItemContsinerSize = 2,
+        SquareGridViewItemContainerSize = 3,
     }
 }
