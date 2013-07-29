@@ -135,7 +135,7 @@
       <DependentUpon>MyCourses.xaml</DependentUpon>
     </Compile>
     <Compile Include="CourseStore\StoreData.cs" />
-    <Compile Include="Coursing.xaml.cs">
+    <Compile Include="CourseStore\Coursing.xaml.cs">
       <DependentUpon>Coursing.xaml</DependentUpon>
     </Compile>
     <Compile Include="CourseStore\CourseOverview.xaml.cs">
@@ -231,7 +231,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Coursing.xaml">
+    <Page Include="CourseStore\Coursing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

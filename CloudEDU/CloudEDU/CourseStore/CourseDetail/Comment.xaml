@@ -44,7 +44,8 @@
                                Text="I laskdjjlqwj jpfwqjof wq ojpwqojp jo wfqopj fwekwjfoqjop" Margin="10, 0, 0, 15" />
                     </StackPanel>
                 </StackPanel>
-                <Button Content="Add Comment" Click="AddCommentButton_Click">
+                <Button Style="{StaticResource CommentAppBarButtonStyle}" Click="AddCommentButton_Click"
+                        HorizontalAlignment="Center" AutomationProperties.Name="Add Comment">
                     <Button.Transitions>
                         <TransitionCollection>
                             <RepositionThemeTransition />

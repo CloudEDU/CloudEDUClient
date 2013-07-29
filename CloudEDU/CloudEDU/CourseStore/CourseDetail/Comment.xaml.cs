@@ -94,7 +94,7 @@ namespace CloudEDU.CourseStore.CourseDetail
             TextBlock contentTextBlock = new TextBlock
             {
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
-                Width = 450,
+                Width = 500,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 Margin = new Thickness(10, 0, 0, 15),
                 Text = "klasfjklasjfwqpojfojpqojpfwojp qwojpf jowqf jpof ojpwqopfj wqjopfw ojpfwq ojw fqojwf qpfow pqjofpw qjo pqfw"
@@ -104,7 +104,7 @@ namespace CloudEDU.CourseStore.CourseDetail
             {
                 Orientation = Orientation.Vertical,
                 Background = new SolidColorBrush(Colors.Bisque),
-                Margin = new Thickness(0, 0, 0 ,5),
+                Margin = new Thickness(0, 0, 0 ,5)
             };
             outsidePanel.Children.Add(insidePanel);
             outsidePanel.Children.Add(titleTextBlock);
