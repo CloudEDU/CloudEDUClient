@@ -13,36 +13,31 @@
         <ScrollViewer x:Name="OverviewScroll" Style="{StaticResource VerticalScrollViewerStyle}"
                       VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" Margin="20, 20">
-                <Image Width="550" Stretch="Fill" Source="ms-appx:///Images/Courses/ComputerNetworking.png"
-                       HorizontalAlignment="Left"/>
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Computer Network is ..."
-                           Margin="0, 20"/>
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="More Detail" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Course Name:" FontWeight="Bold" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Computer Network" Margin="20, 0, 0, 0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Course Number:" FontWeight="Bold" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="*$874217" Margin="20, 0, 0, 0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Instructor:" FontWeight="Bold" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Shaw" Margin="20, 0, 0, 0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Abstract:" FontWeight="Bold" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" Margin="20, 0, 0, 0"
+                               Width="200" TextWrapping="Wrap" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Total Lessons:" FontWeight="Bold" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="10" Margin="20, 0, 0, 0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Time of Submit:" FontWeight="Bold" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="2013.7.29" Margin="20, 0, 0, 0" />
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

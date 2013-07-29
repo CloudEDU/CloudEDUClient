@@ -351,7 +351,7 @@ namespace CloudEDU
                 Foreground = new SolidColorBrush(Colors.White)
             };
 
-            StackPanel newLessonRes = new StackPanel()
+            StackPanel newLessonRes = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
                 HorizontalAlignment = HorizontalAlignment.Right
