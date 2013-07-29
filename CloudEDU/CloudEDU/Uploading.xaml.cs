@@ -104,7 +104,7 @@ namespace CloudEDU
             List<BackgroundTransferContentPart> audioParts = CreateBackgroundTransferContentPartList(audios);
             List<BackgroundTransferContentPart> videoParts = CreateBackgroundTransferContentPartList(videos);
 
-            Uri docsUri = new Uri("http://docs");
+            Uri docsUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=haohao");
             Uri audiosUri = new Uri("http://audios");
             Uri videosUri = new Uri("http://videos");
 
@@ -113,7 +113,7 @@ namespace CloudEDU
             {
                 UploadOperation docsUpload = await uploader.CreateUploadAsync(docsUri, docParts);
                 // Attach progress and completion handlers.
-                //await HandleUploadAsync(docsUpload, true);
+                await HandleUploadAsync(docsUpload, true);
             }
             if (audioParts != null)
             {
@@ -265,6 +265,7 @@ namespace CloudEDU
             for (int i = 0; i < files.Count; ++i)
             {
                 BackgroundTransferContentPart part = new BackgroundTransferContentPart("File " + i, files[i].Name);
+                part.SetHeader("Username", "Lazy");
                 part.SetFile(files[i]);
                 parts.Add(part);
             }
@@ -278,6 +279,7 @@ namespace CloudEDU
         /// <param name="upload">UploadOperation.</param>
         private void UploadProgress(UploadOperation upload)
         {
+            System.Diagnostics.Debug.WriteLine(upload);
             // Progress: upload.Guid; Statues: uplaod.Progress.Status
 
             BackgroundUploadProgress progress = upload.Progress;
@@ -294,11 +296,17 @@ namespace CloudEDU
             if (progress.HasRestarted)
             {
                 // Upload restarted
+                System.Diagnostics.Debug.WriteLine("Upload restarted");
             }
 
             if (progress.HasResponseChanged)
             {
                 // Response updated; Header count: upload.GetResponseInformation().Headers.Count
+                IReadOnlyDictionary<string, string> dic = upload.GetResponseInformation().Headers;
+                foreach (KeyValuePair<string, string> c in dic)
+                {
+                    System.Diagnostics.Debug.WriteLine(c);
+                }
             }
         }
 

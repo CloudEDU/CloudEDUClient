@@ -5,9 +5,40 @@
     xmlns:local="using:CloudEDU.CourseStore.CoursingDetail"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    d:DesignHeight="552"
+    d:DesignWidth="884">
 
-    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <SolidColorBrush x:Key="LessonBackgroundBrush" Color="#0075B9" />
+    </Page.Resources>
 
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent">
+        <ScrollViewer Style="{StaticResource VerticalScrollViewerStyle}">
+            <StackPanel x:Name="allLessonsStackPanel" Orientation="Vertical">
+                <StackPanel.Transitions>
+                    <TransitionCollection>
+                        <AddDeleteThemeTransition />
+                    </TransitionCollection>
+                </StackPanel.Transitions>
+
+                <Grid Background="#0075B9" Margin="2">
+                    <TextBlock Text="Lesson 1 xxx dsa" FontSize="50" Height="65" Margin="5, 0, 0, 0" Foreground="White" HorizontalAlignment="Left" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Image Source="ms-appx:///Images/Upload/doc_white.png"  Margin="4, 0, 4, 0" />
+                        <Image Source="ms-appx:///Images/Upload/audio_white.png"   Margin="4, 0, 4, 0" />
+                        <Image Source="ms-appx:///Images/Upload/video_white.png"  Margin="8, 0, 8, 0" />
+                    </StackPanel>
+                </Grid>
+                <Grid Background="#0075B9" Margin="2">
+                    <TextBlock Text="Lesson 2 xxx dsa" FontSize="50" Height="65" Margin="5, 0, 0, 0" Foreground="White" HorizontalAlignment="Left" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Image Source="ms-appx:///Images/Upload/doc_white.png"  Margin="4, 0, 4, 0" />
+                        <Image Source="ms-appx:///Images/Upload/audio_white.png"   Margin="4, 0, 4, 0" />
+                        <Image Source="ms-appx:///Images/Upload/video_white.png"  Margin="8, 0, 8, 0" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

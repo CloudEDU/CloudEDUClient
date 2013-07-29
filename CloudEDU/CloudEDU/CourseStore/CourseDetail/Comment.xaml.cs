@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudEDU.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace CloudEDU.CourseStore.CourseDetail
     /// </summary>
     public sealed partial class Comment : Page
     {
+        private int globalRate;
+
         public Comment()
         {
             this.InitializeComponent();
@@ -36,15 +39,26 @@ namespace CloudEDU.CourseStore.CourseDetail
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             string courseName = e.Parameter as string;
+
+            globalRate = 0;
         }
 
+        /// <summary>
+        /// Invoked when Add Comment button clicked and add comment.
+        /// </summary>
+        /// <param name="sender">The Add Comment button clicked.</param>
+        /// <param name="e"></param>
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
         {
-            StackPanel newComment = GenerateACommentBox();
+            StackPanel newComment = GenerateACommentBox(newTitleTextBox.Text, globalRate, newContentTextBox.Text);
             commentsStackPanel.Children.Add(newComment);
+
+            newTitleTextBox.Text = newContentTextBox.Text = "";
+            globalRate = 0;
+            SetStarTextBlock(globalRate);
         }
 
-        private StackPanel GenerateACommentBox()
+        private StackPanel GenerateACommentBox(string title, int rate, string content)
         {
             TextBlock userTextBlock = new TextBlock
             {
@@ -70,8 +84,12 @@ namespace CloudEDU.CourseStore.CourseDetail
             {
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(30, 0, 0, 0),
-                Text = "&#x2605;&#x2605;&#x2605;&#x2605;"
+                Text = ""
             };
+            for (int i = 0; i < rate; ++i)
+            {
+                rateTextBlock.Text += "$#x2605;";
+            }
 
             StackPanel insidePanel = new StackPanel
             {
@@ -88,7 +106,7 @@ namespace CloudEDU.CourseStore.CourseDetail
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(10, 3, 3, 3),
-                Text = "It's awesome!"
+                Text = title
             };
 
             TextBlock contentTextBlock = new TextBlock
@@ -97,7 +115,7 @@ namespace CloudEDU.CourseStore.CourseDetail
                 Width = 500,
                 HorizontalAlignment = HorizontalAlignment.Left,
                 Margin = new Thickness(10, 0, 0, 15),
-                Text = "klasfjklasjfwqpojfojpqojpfwojp qwojpf jowqf jpof ojpwqopfj wqjopfw ojpfwq ojw fqojwf qpfow pqjofpw qjo pqfw"
+                Text = content
             };
 
             StackPanel outsidePanel = new StackPanel
@@ -111,6 +129,95 @@ namespace CloudEDU.CourseStore.CourseDetail
             outsidePanel.Children.Add(contentTextBlock);
 
             return outsidePanel;
+        }
+
+        private void star_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            TextBlock targetTextBlock = sender as TextBlock;
+            if (targetTextBlock.Name == "star1")
+            {
+                SetStarTextBlock(1);
+            }
+            else if (targetTextBlock.Name == "star2")
+            {
+                SetStarTextBlock(2);
+            }
+            else if (targetTextBlock.Name == "star3")
+            {
+                SetStarTextBlock(3);
+            }
+            else if (targetTextBlock.Name == "star4")
+            {
+                SetStarTextBlock(4);
+            }
+            else if (targetTextBlock.Name == "star5")
+            {
+                SetStarTextBlock(5);
+            }
+        }
+
+        private void star_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            SetStarTextBlock(globalRate);
+        }
+        
+        private void star_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            TextBlock targetTextBlock = sender as TextBlock;
+            globalRate = targetTextBlock.Name[targetTextBlock.Name.Length - 1] - '0';
+            System.Diagnostics.Debug.WriteLine(globalRate);
+        }
+
+        private void SetStarTextBlock(int num)
+        {
+            if (num == 0)
+            {
+                star1.Text = "$#x2606;";
+                star2.Text = "$#x2606;";
+                star3.Text = "$#x2606;";
+                star4.Text = "$#x2606;";
+                star5.Text = "$#x2606;";
+            }
+            else if (num == 1)
+            {
+                star1.Text = "$#x2605;";
+                star2.Text = "$#x2606;";
+                star3.Text = "$#x2606;";
+                star4.Text = "$#x2606;";
+                star5.Text = "$#x2606;";
+            }
+            else if (num == 2)
+            {
+                star1.Text = "$#x2605;";
+                star2.Text = "$#x2605;";
+                star3.Text = "$#x2606;";
+                star4.Text = "$#x2606;";
+                star5.Text = "$#x2606;";
+            }
+            else if (num == 3)
+            {
+                star1.Text = "$#x2605;";
+                star2.Text = "$#x2605;";
+                star3.Text = "$#x2605;";
+                star4.Text = "$#x2606;";
+                star5.Text = "$#x2606;";
+            }
+            else if (num == 4)
+            {
+                star1.Text = "$#x2605;";
+                star2.Text = "$#x2605;";
+                star3.Text = "$#x2605;";
+                star4.Text = "$#x2605;";
+                star5.Text = "$#x2606;";
+            }
+            else if (num == 5)
+            {
+                star1.Text = "$#x2605;";
+                star2.Text = "$#x2605;";
+                star3.Text = "$#x2605;";
+                star4.Text = "$#x2605;";
+                star5.Text = "$#x2605;";
+            }
         }
     }
 }

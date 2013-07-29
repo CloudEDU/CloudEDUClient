@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
@@ -59,7 +60,9 @@ namespace CloudEDU.CourseStore
             LecturesText.Foreground = pageBlack;
             NotesText.Foreground = pageBlack;
 
-            detailFrame.Navigate(typeof(CoursingDetail.Home));
+            detailFrame.Navigate(typeof(CoursingDetail.Lecture));
+
+
         }
 
         /// <summary>

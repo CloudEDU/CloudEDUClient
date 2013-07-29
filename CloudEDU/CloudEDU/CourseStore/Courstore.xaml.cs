@@ -55,7 +55,7 @@ namespace CloudEDU.CourseStore
             Uri uri = new Uri("http://10.0.1.39:8080/CloudEDUServer/CourseService.svc/");
             ctx = new CloudEDUEntities(uri);
 
-            ctx.BeginExecute<COURSE_OK>(new Uri("GetCoursesByName?name='Test Title2'", UriKind.Relative), OnComplete, null);
+            //ctx.BeginExecute<COURSE_OK>(new Uri("GetCoursesByName?name='Test Title2'", UriKind.Relative), OnComplete, null);
 
             //DataServiceQuery<COURSE_OK> dps = (DataServiceQuery<COURSE_OK>)(from c in ctx.COURSE_OK where c.TITLE == "Test Title2" select c);
             
@@ -80,14 +80,14 @@ namespace CloudEDU.CourseStore
             //}
         }
 
-        public void OnComplete(IAsyncResult result)
-        {
-            var courses = ctx.EndExecute<COURSE_OK>(result);
-            foreach (var c in courses)
-            {
-                System.Diagnostics.Debug.WriteLine(c.TITLE);
-            }
-        }
+        //public void OnComplete(IAsyncResult result)
+        //{
+        //    var courses = ctx.EndExecute<COURSE_OK>(result);
+        //    foreach (var c in courses)
+        //    {
+        //        System.Diagnostics.Debug.WriteLine(c.TITLE);
+        //    }
+        //}
 
         //private void OnComplete(object sender, LoadCompletedEventArgs e)
         //{

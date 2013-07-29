@@ -134,6 +134,9 @@
     <Compile Include="CourseStore\CoursingDetail\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseStore\CoursingDetail\Lecture.xaml.cs">
+      <DependentUpon>Lecture.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CourseStore\Courstore.xaml.cs">
       <DependentUpon>Courstore.xaml</DependentUpon>
     </Compile>
@@ -188,8 +191,11 @@
     <Content Include="Images\Courses\star.png" />
     <Content Include="Images\Courses\transparent.png" />
     <Content Include="Images\Upload\audio.png" />
+    <Content Include="Images\Upload\audio_white.png" />
     <Content Include="Images\Upload\doc.png" />
+    <Content Include="Images\Upload\doc_white.png" />
     <Content Include="Images\Upload\video.png" />
+    <Content Include="Images\Upload\video_white.png" />
     <Content Include="Images\Users\ania.png" />
     <Content Include="Images\Users\shadow.png" />
     <None Include="Service References\CourseService\Reference.datasvcmap">
@@ -231,6 +237,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CourseStore\CoursingDetail\Home.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CourseStore\CoursingDetail\Lecture.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
