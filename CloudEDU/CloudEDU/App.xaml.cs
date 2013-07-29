@@ -111,7 +111,7 @@ namespace CloudEDU
             //    this.DoubleWidthStyle == null || this.SquareStyle == null)
             //    return base.SelectStyleCore(item, container);
 
-            if (((Course)item).Name == "the power of smile")
+            if (((Course)item).Title == "the power of smile")
                 return DoubleHeightStyle;
             else
                 return NormalStyle;

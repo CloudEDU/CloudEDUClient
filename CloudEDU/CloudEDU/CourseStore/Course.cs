@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudEDU.CourseService;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,53 +27,104 @@ namespace CloudEDU.CourseStore
             }
         }
 
-        private string _name = String.Empty;
-        public string Name
+        private int? _id = null;
+        public int ID
         {
             get
             {
-                return _name;
+                return _id.HasValue ? _id.Value : int.MaxValue;
             }
             set
             {
-                if (this._name != value)
+                if (this._id != value)
                 {
-                    this._name = value;
-                    this.OnPropertyChanged("Name");
+                    this._id = value;
+                    this.OnPropertyChanged("ID");
                 }
             }
         }
 
-        private double _rate;
+        private decimal? _price = null;
+        public decimal Price
+        {
+            get
+            {
+                return _price.HasValue ? _price.Value : decimal.MaxValue;
+            }
+            set
+            {
+                if (this._price != value)
+                {
+                   this._price = value;
+                    this.OnPropertyChanged("PRICE");
+                }
+            }
+        }
+
+        private double? _rate = null;
         public double Rate
         {
             get
             {
-                return _rate;
+                return _rate.HasValue ? _rate.Value : double.MaxValue;
             }
             set
             {
                 if (this._rate != value)
                 {
                     this._rate = value;
-                    this.OnPropertyChanged("Rate");
+                    this.OnPropertyChanged("RATE");
                 }
             }
         }
 
-        private ImageSource _imageSource = null;
-        public ImageSource ImageSource
+        private string _title = String.Empty;
+        public string Title
         {
             get
             {
-                return _imageSource;
+                return _title;
             }
             set
             {
-                if (this._imageSource != value)
+                if (this._title != value)
                 {
-                    this._imageSource = value;
-                    this.OnPropertyChanged("ImageSource");
+                    this._title = value;
+                    this.OnPropertyChanged("TITLE");
+                }
+            }
+        }
+
+        private string _intro = String.Empty;
+        public string Intro
+        {
+            get
+            {
+                return _intro;
+            }
+            set
+            {
+                if (this._intro != value)
+                {
+                    this._intro = value;
+                    this.OnPropertyChanged("INTRO");
+                }
+            }
+        }
+
+        private string _teacher = String.Empty;
+        public string Teacher
+        {
+            get
+            {
+                return _teacher;
+            }
+            set
+            {
+                if (this._teacher != value)
+                {
+                    this._teacher = value;
+                    this.OnPropertyChanged("TEACHER");
                 }
             }
         }
@@ -89,11 +141,85 @@ namespace CloudEDU.CourseStore
                 if (this._category != value)
                 {
                     this._category = value;
-                    this.OnPropertyChanged("Category");
+                    this.OnPropertyChanged("CATEGORY");
                 }
             }
         }
 
+        private string _courseState = String.Empty;
+        public string CourseState
+        {
+            get
+            {
+                return _courseState;
+            }
+            set
+            {
+                if (this._courseState != value)
+                {
+                    this._courseState = value;
+                    this.OnPropertyChanged("COURSE_STATE");
+                }
+            }
+        }
+
+        private int? _pg = null;
+        public int PG
+        {
+            get
+            {
+                return _pg.HasValue ? _pg.Value : int.MaxValue;
+            }
+            set
+            {
+                if (this._pg != value)
+                {
+                    this._pg = value;
+                    this.OnPropertyChanged("PG");
+                }
+            }
+        }
+
+        private ImageSource _imageSource = null;
+        public ImageSource ImageSource
+        {
+            get
+            {
+                return _imageSource;
+            }
+            set
+            {
+                if (this._imageSource != value)
+                {
+                    this._imageSource = value;
+                    this.OnPropertyChanged("ICON_URL");
+                }
+            }
+        }
+
+        private DateTime? _startTime = null;
+        public DateTime StartTime
+        {
+            get
+            {
+                return _startTime.HasValue ? _startTime.Value : DateTime.Now;
+            }
+            set
+            {
+                if (this._startTime != value)
+                {
+                    this._startTime = value;
+                    this.OnPropertyChanged("START_TIME");
+                }
+            }
+        }
+
+        public void setImage(Uri baseUri, string path)
+        {
+            ImageSource = new BitmapImage(new Uri(baseUri, path));
+        }
+
+        #region Will be cast off
         private bool _isBuy = false;
         public bool IsBuy
         {
@@ -127,11 +253,7 @@ namespace CloudEDU.CourseStore
                 }
             }
         }
-
-        public void setImage(Uri baseUri, string path)
-        {
-            ImageSource = new BitmapImage(new Uri(baseUri, path));
-        }
+        #endregion
     }
 
     // Workaround: data binding works best with an enumeration of objects that does not implement IList

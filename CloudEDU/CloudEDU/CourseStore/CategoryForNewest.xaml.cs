@@ -38,7 +38,7 @@ namespace CloudEDU.CourseStore
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             storeSampleData = new StoreData();
-            dataCategory = storeSampleData.GetSingleGroupByCategoryName("newest");
+            dataCategory = storeSampleData.GetSingleGroupByCategoryTitle("newest");
             cvs1.Source = dataCategory;
         }
 
@@ -66,7 +66,7 @@ namespace CloudEDU.CourseStore
         /// <param name="e">Event data that describes the course clicked.</param>
         private void Course_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var courseName = ((Course)e.ClickedItem).Name;
+            var courseName = ((Course)e.ClickedItem).Title;
 
             Frame.Navigate(typeof(CourseOverview), courseName);
         }

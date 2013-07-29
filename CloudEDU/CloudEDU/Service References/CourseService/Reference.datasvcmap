@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="10d3d31f-521b-4446-9ebf-17a4ca91b01c" xmlns="urn:schemas-microsoft-com:xml-dataservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="dde7e01d-d98d-4ab4-af44-12007c1c5ef6" xmlns="urn:schemas-microsoft-com:xml-dataservicemap">
   <MetadataSources>
-    <MetadataSource Address="http://10.0.1.16:8080/cloudeduserver/courseservice.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://10.0.1.39:8080/CloudEDUServer/CourseService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="26c02ee9-4bab-42a8-959f-6c21c1c74e9a" SourceId="1" SourceUrl="http://10.0.1.16:8080/cloudeduserver/courseservice.svc" />
+    <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="4070bad7-30d8-40f6-b507-9f5d5cafacc9" SourceId="1" SourceUrl="http://10.0.1.39:8080/CloudEDUServer/CourseService.svc" />
   </Metadata>
   <Extensions />
   <Parameters>

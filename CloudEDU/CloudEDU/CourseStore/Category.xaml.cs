@@ -44,7 +44,7 @@ namespace CloudEDU.CourseStore
             Title.Text = Constants.UpperInitialChar(categoryName);
 
             storeSampleData = new StoreData();
-            dataCategory = storeSampleData.GetSingleGroupByCategoryName(categoryName);
+            dataCategory = storeSampleData.GetSingleGroupByCategoryTitle(categoryName);
             cvs1.Source = dataCategory;
         }
 
@@ -72,7 +72,7 @@ namespace CloudEDU.CourseStore
         /// <param name="e">Event data that describes the course clicked.</param>
         private void Course_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var courseName = ((Course)e.ClickedItem).Name;
+            var courseName = ((Course)e.ClickedItem).Title;
 
             Frame.Navigate(typeof(CourseOverview), courseName);
         }

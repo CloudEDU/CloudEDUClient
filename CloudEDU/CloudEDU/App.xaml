@@ -61,7 +61,7 @@
                     <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
                     <Rectangle Style="{StaticResource GridViewOpacityRectangleStyle}" />
                     <StackPanel VerticalAlignment="Bottom">
-                        <TextBlock Text="{Binding Name}" Style="{StaticResource GridViewDataTemplateNameTextBlockStyle}" />
+                        <TextBlock Text="{Binding Title}" Style="{StaticResource GridViewDataTemplateNameTextBlockStyle}" />
                         <TextBlock Text="{Binding Rate}" Foreground="White"
                                    Style="{StaticResource PageHeaderTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
                     </StackPanel>
@@ -101,7 +101,7 @@
                     <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
                     <Rectangle Style="{StaticResource ListViewOpacityRectangleStyle}" />
                     <StackPanel HorizontalAlignment="Left">
-                        <TextBlock Text="{Binding Name}" Style="{StaticResource ListViewDataTemplateNameTextBlockStyle}" />
+                        <TextBlock Text="{Binding Title}" Style="{StaticResource ListViewDataTemplateNameTextBlockStyle}" />
                         <TextBlock Text="{Binding Rate}" Foreground="White" TextAlignment="Left"
                                    Style="{StaticResource PageHeaderTextStyle}" Margin="15,-5,5,10"/>
                     </StackPanel>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CloudEDU.CourseService;
+using CloudEDU.CourseStore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,5 +32,12 @@ namespace CloudEDU.Common
 
             return strBuff.ToString();
         }
+
+        //public static Course CourseOkToCourse(COURSE_OK course_ok)
+        //{
+        //    Course course = new Course();
+            
+            
+        //}
     }
 }
