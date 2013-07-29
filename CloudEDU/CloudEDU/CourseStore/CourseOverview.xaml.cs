@@ -22,6 +22,8 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public sealed partial class CourseOverview : GlobalPage
     {
+        string courseName;
+
         public CourseOverview()
         {
             this.InitializeComponent();
@@ -34,6 +36,9 @@ namespace CloudEDU.CourseStore
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            courseName = e.Parameter as string;
+
+            frame.Navigate(typeof(CourseDetail.Overview), courseName);
         }
 
         /// <summary>
@@ -50,6 +55,66 @@ namespace CloudEDU.CourseStore
             else
             {
                 Frame.Navigate(typeof(CourseStore.Courstore));
+            }
+        }
+
+        /// <summary>
+        /// Invoked when overview button is clicked and navigating to the overview part.
+        /// </summary>
+        /// <param name="sender">The overview button clicked.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
+        private void OverviewButton_Click(object sender, RoutedEventArgs e)
+        {
+            var primaryStyle = Application.Current.Resources["TextPrimaryButtonStyle"] as Style;
+            var secondaryStyle = Application.Current.Resources["TextSecondaryButtonStyle"] as Style;
+
+            if (OverviewButton.Style != primaryStyle)
+            {
+                frame.Navigate(typeof(CourseDetail.Overview), courseName);
+
+                OverviewButton.Style = primaryStyle;
+                DetailsButton.Style = secondaryStyle;
+                CommentsButton.Style = secondaryStyle;
+            }
+        }
+
+        /// <summary>
+        /// Invoked when detail button is clicked and navigating to the detail part.
+        /// </summary>
+        /// <param name="sender">The detail button clicked.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
+        private void DetailsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var primaryStyle = Application.Current.Resources["TextPrimaryButtonStyle"] as Style;
+            var secondaryStyle = Application.Current.Resources["TextSecondaryButtonStyle"] as Style;
+
+            if (DetailsButton.Style != primaryStyle)
+            {
+                frame.Navigate(typeof(CourseDetail.Detail), courseName);
+
+                OverviewButton.Style = secondaryStyle;
+                DetailsButton.Style = primaryStyle;
+                CommentsButton.Style = secondaryStyle;
+            }
+        }
+
+        /// <summary>
+        /// Invoked when comment button is clicked and navigating to the comment part.
+        /// </summary>
+        /// <param name="sender">The comment button clicked.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
+        private void CommentsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var primaryStyle = Application.Current.Resources["TextPrimaryButtonStyle"] as Style;
+            var secondaryStyle = Application.Current.Resources["TextSecondaryButtonStyle"] as Style;
+
+            if (CommentsButton.Style != primaryStyle)
+            {
+                frame.Navigate(typeof(CourseDetail.Comment), courseName);
+
+                OverviewButton.Style = secondaryStyle;
+                DetailsButton.Style = secondaryStyle;
+                CommentsButton.Style = primaryStyle;
             }
         }
     }

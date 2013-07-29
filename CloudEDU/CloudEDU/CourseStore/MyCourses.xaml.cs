@@ -68,7 +68,7 @@ namespace CloudEDU.CourseStore
         {
             Course course = (Course)e.ClickedItem;
             List<string> courseInfo = new List<string>();
-            courseInfo.Add(course.Name);
+            courseInfo.Add(course.Title);
 
             if (course.IsTeach)
             {

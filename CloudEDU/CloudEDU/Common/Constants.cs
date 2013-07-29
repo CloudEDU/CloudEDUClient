@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CloudEDU.CourseService;
+using CloudEDU.CourseStore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,5 +32,16 @@ namespace CloudEDU.Common
 
             return strBuff.ToString();
         }
+    }
+
+    /// <summary>
+    /// Used as selector to select container size.
+    /// </summary>
+    public enum GridViewItemContainerType
+    {
+        DefaultGridViewItemContainerSize = 0,
+        DoubleHeightGridViewItemContainerSize = 1,
+        DoubleWidthGridViewItemContsinerSize = 2,
+        SquareGridViewItemContainerSize = 3,
     }
 }

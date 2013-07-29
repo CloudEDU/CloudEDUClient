@@ -17,42 +17,82 @@
             <RowDefinition Height="150" />
             <RowDefinition />
         </Grid.RowDefinitions>
-
-        <GridView Grid.Row="1" SelectionMode="None"
-                  ItemsSource="{Binding Source={StaticResource cvs1}}"
-                  ItemTemplate="{StaticResource GridViewItemTemplate}"
-                  ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}"
-                  IsItemClickEnabled="True" ItemClick="Course_ItemClick">
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-
-            <GridView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90"
-                                    Margin="100, 0, 100, 0" Click="HeaderButton_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Key}"
-                                               Style="{StaticResource GridViewHeaderTemplateKeyTextBlockStyle}"/>
-                                    <TextBlock Text="{StaticResource ChevronGlyph}"
-                                               Style="{StaticResource GridViewHeaderTemplateRightRowTextBlockStyle}"/>
-                                </StackPanel>
-                            </Button>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-
-                    <GroupStyle.Panel>
+        
+        <SemanticZoom Grid.Row="1" x:Name="SemanticZoom">
+            <SemanticZoom.ZoomedOutView>
+                <ListView Grid.Row="1" SelectionMode="None"
+                          ItemsSource="{Binding Source={StaticResource cvs1}}"
+                          ItemTemplate="{StaticResource ListVewItemTemplate}"
+                          IsItemClickEnabled="True" ItemClick="Course_ItemClick">
+                    <ListView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <VariableSizedWrapGrid Style="{StaticResource VariableSizedWrapGridTemplateStyle}" />
+                            <VirtualizingStackPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
-                    </GroupStyle.Panel>
-                </GroupStyle>
-            </GridView.GroupStyle>
-        </GridView>
+                    </ListView.ItemsPanel>
+
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90"
+                                            Margin="100, 0, 100, 0" Click="HeaderButton_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Key}"
+                                                       Style="{StaticResource HeaderTemplateKeyTextBlockStyle}"/>
+                                            <TextBlock Text="{StaticResource ChevronGlyph}"
+                                                       Style="{StaticResource HeaderTemplateRightRowTextBlockStyle}"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <VariableSizedWrapGrid Style="{StaticResource VariableSizedWrapListTemplateStyle}" />
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                </ListView>
+            </SemanticZoom.ZoomedOutView>
+            <SemanticZoom.ZoomedInView>
+                <GridView Grid.Row="1" SelectionMode="None"
+                          ItemsSource="{Binding Source={StaticResource cvs1}}"
+                          ItemTemplate="{StaticResource GridViewItemTemplate}"
+                          ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}"
+                          IsItemClickEnabled="True" ItemClick="Course_ItemClick"
+                          IsSwipeEnabled="True">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+
+                    <GridView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Button Style="{StaticResource TextPrimaryButtonStyle}" Height="90"
+                                            Margin="100, 0, 100, 0" Click="HeaderButton_Click">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Key}"
+                                                       Style="{StaticResource HeaderTemplateKeyTextBlockStyle}"/>
+                                            <TextBlock Text="{StaticResource ChevronGlyph}"
+                                                       Style="{StaticResource HeaderTemplateRightRowTextBlockStyle}"/>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+
+                            <GroupStyle.Panel>
+                                <ItemsPanelTemplate>
+                                    <VariableSizedWrapGrid Style="{StaticResource VariableSizedWrapGridTemplateStyle}" />
+                                </ItemsPanelTemplate>
+                            </GroupStyle.Panel>
+                        </GroupStyle>
+                    </GridView.GroupStyle>
+                </GridView>
+            </SemanticZoom.ZoomedInView>
+        </SemanticZoom>
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>

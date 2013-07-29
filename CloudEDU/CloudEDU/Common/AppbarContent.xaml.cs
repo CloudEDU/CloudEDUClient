@@ -23,14 +23,34 @@ namespace CloudEDU.Common
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// AppBar Button used to navigate to Courstore Page.
+        /// </summary>
+        /// <param name="sender">The Courstore button clicked.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
         private void CourstoreButton_Click(object sender, RoutedEventArgs e)
         {
             ((Frame)Window.Current.Content).Navigate(typeof(CourseStore.Courstore));
         }
 
+        /// <summary>
+        /// AppBar Button used to navigate to MyCourses Page.
+        /// </summary>
+        /// <param name="sender">My Courses button clicked.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
         private void MyCoursesButton_Click(object sender, RoutedEventArgs e)
         {
             ((Frame)Window.Current.Content).Navigate(typeof(CourseStore.MyCourses));
+        }
+
+        /// <summary>
+        /// AppBar Button used to navigate to Uploading Page.
+        /// </summary>
+        /// <param name="sender">The Uploading Course button clicked.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
+        private void UploadCourseButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((Frame)Window.Current.Content).Navigate(typeof(Uploading));
         }
     }
 }

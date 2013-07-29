@@ -1,4 +1,5 @@
-﻿using CloudEDU.CourseStore;
+﻿using CloudEDU.Common;
+using CloudEDU.CourseStore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -65,7 +66,7 @@ namespace CloudEDU
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!rootFrame.Navigate(typeof(Uploading), args.Arguments))
+                if (!rootFrame.Navigate(typeof(CourseStore.Courstore), args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }
@@ -107,14 +108,19 @@ namespace CloudEDU
         /// <returns>An application-specific style to apply</returns>
         protected override Style SelectStyleCore(object item, DependencyObject container)
         {
-            //if (this.NormalStyle == null || this.DoubleHeightStyle == null ||
-            //    this.DoubleWidthStyle == null || this.SquareStyle == null)
-            //    return base.SelectStyleCore(item, container);
+            GridViewItemContainerType containerType = ((Course)item).ItemContainerType;
 
-            if (((Course)item).Name == "the power of smile")
-                return DoubleHeightStyle;
-            else
-                return NormalStyle;
+            switch (containerType)
+            {
+                case GridViewItemContainerType.DoubleHeightGridViewItemContainerSize:
+                    return DoubleHeightStyle;
+                case GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize:
+                    return DoubleWidthStyle;
+                case GridViewItemContainerType.SquareGridViewItemContainerSize:
+                    return SquareStyle;
+                default:
+                    return NormalStyle;
+            }
         }
     }
 }

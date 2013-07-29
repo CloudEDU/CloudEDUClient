@@ -8,7 +8,7 @@ namespace CloudEDU.CourseStore
 {
     /// <summary>
     /// The Model used to group the data according to the category, provide 
-    /// GetSingleGroupByCategoryName(), GetGroupsByCategory(string categoryName) 
+    /// GetSingleGroupByCategoryTitle(), GetGroupsByCategory(string categoryTitle) 
     /// and GetGroupsByAttendingOrTeaching() three methods.
     /// Here is the Demo.
     /// <code>
@@ -22,7 +22,7 @@ namespace CloudEDU.CourseStore
     /// StoreData storeData = new Store();
     /// storeData.Add(course);
     /// storeData.Add(courses);
-    /// List<GroupInfoList<object>> singleGroupByPhysics = storeData.GetSingleGroupByCategoryName("Physics");
+    /// List<GroupInfoList<object>> singleGroupByPhysics = storeData.GetSingleGroupByCategoryTitle("Physics");
     /// List<GroupInfoList<object>> GroupedData = storeData.GetGroupsByCategory();
     /// List<GroupInfoList<object>> MyCourses = storeData.GetGroupsByAttendingOrTeaching();
     /// </code>
@@ -35,7 +35,7 @@ namespace CloudEDU.CourseStore
             Uri baseUri = new Uri("ms-appx:///");
 
             course = new Course();
-            course.Name = "the power of smile";
+            course.Title = "the power of smile";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course1.png");
             course.Category = "newest";
@@ -44,7 +44,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "sun shower";
+            course.Title = "sun shower";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course2.png");
             course.Category = "newest";
@@ -53,7 +53,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "the evolution";
+            course.Title = "the evolution";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course3.png");
             course.Category = "newest";
@@ -62,7 +62,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "the power of smile";
+            course.Title = "the power of smile";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course1.png");
             course.Category = "newest";
@@ -71,7 +71,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "sun shower";
+            course.Title = "sun shower";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course2.png");
             course.Category = "hottest";
@@ -80,7 +80,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "the power of smile";
+            course.Title = "the power of smile";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course1.png");
             course.Category = "hottest";
@@ -89,7 +89,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "the evolution";
+            course.Title = "the evolution";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course3.png");
             course.Category = "hottest";
@@ -98,7 +98,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "sun shower";
+            course.Title = "sun shower";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course2.png");
             course.Category = "Computer Science";
@@ -107,7 +107,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "the evolution";
+            course.Title = "the evolution";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course3.png");
             course.Category = "Computer Science";
@@ -116,7 +116,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "the power of smile";
+            course.Title = "the power of smile";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course1.png");
             course.Category = "Computer Science";
@@ -125,7 +125,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "sun shower";
+            course.Title = "sun shower";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course2.png");
             course.Category = "Psychology";
@@ -134,7 +134,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "the evolution";
+            course.Title = "the evolution";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course3.png");
             course.Category = "Psychology";
@@ -143,7 +143,7 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "the power of smile";
+            course.Title = "the power of smile";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course1.png");
             course.Category = "Psychology";
@@ -152,13 +152,52 @@ namespace CloudEDU.CourseStore
             Collection.Add(course);
 
             course = new Course();
-            course.Name = "the evolution";
+            course.Title = "the evolution";
             course.Rate = 4.0;
             course.setImage(baseUri, "Images/Courses/course3.png");
             course.Category = "Psychology";
             course.IsBuy = false;
             course.IsTeach = true;
             Collection.Add(course);
+
+            for (int j = 0; j < 15; ++j)
+            {
+                for (int i = 0; i < 1; ++i)
+                {
+                    course = new Course();
+                    course.Title = "the power of smile";
+                    course.Rate = 4.0;
+                    course.setImage(baseUri, "Images/Courses/course1.png");
+                    course.Category = "Psychology";
+                    course.IsBuy = false;
+                    course.IsTeach = true;
+                    Collection.Add(course);
+                }
+
+                for (int i = 0; i < 2; ++i)
+                {
+                    course = new Course();
+                    course.Title = "sun shower";
+                    course.Rate = 4.0;
+                    course.setImage(baseUri, "Images/Courses/course2.png");
+                    course.Category = "Psychology";
+                    course.IsBuy = true;
+                    course.IsTeach = false;
+                    Collection.Add(course);
+                }
+
+                for (int i = 0; i < 4; ++i)
+                {
+                    course = new Course();
+                    course.Title = "the evolution";
+                    course.Rate = 4.0;
+                    course.setImage(baseUri, "Images/Courses/course3.png");
+                    course.Category = "Psychology";
+                    course.IsBuy = false;
+                    course.IsTeach = true;
+                    Collection.Add(course);
+                }
+            }
         }
 
         private CourseCollection _collection = new CourseCollection();
@@ -174,7 +213,7 @@ namespace CloudEDU.CourseStore
         /// <summary>
         /// Add course to the list used to display.
         /// </summary>
-        /// <param name="course">The course to be added.</param>
+        /// <param Title="course">The course to be added.</param>
         public void AddCourse(Course course)
         {
             Collection.Add(course);
@@ -183,7 +222,7 @@ namespace CloudEDU.CourseStore
         /// <summary>
         /// Add a group of courses to the list used to display.
         /// </summary>
-        /// <param name="courses">The course list to be added.</param>
+        /// <param Title="courses">The course list to be added.</param>
         public void AddCourses(List<Course> courses)
         {
             foreach (Course course in courses)
@@ -193,12 +232,12 @@ namespace CloudEDU.CourseStore
         }
         #endregion
 
-        //internal List<object> GetCoursesByCategoryName(string categoryName)
+        //internal List<object> GetCoursesByCategoryTitle(string categoryTitle)
         //{
         //    List<object> courses = new List<object>();
 
         //    var query = from course in Collection
-        //                where ((Course)course).Category == categoryName
+        //                where ((Course)course).Category == categoryTitle
         //                select course;
 
         //    foreach (var g in query)
@@ -211,24 +250,24 @@ namespace CloudEDU.CourseStore
 
         #region Different ways used to get the groups
         /// <summary>
-        /// Get the single group classified by the category name.
+        /// Get the single group classified by the category Title.
         /// </summary>
-        /// <param name="categoryName">The category name need to be group.</param>
+        /// <param Title="categoryTitle">The category Title need to be group.</param>
         /// <returns>A list only contain a single GroupInfoList, which contain the 
         /// elements that had been grouped.</returns>
-        internal List<GroupInfoList<object>> GetSingleGroupByCategoryName(string categoryName)
+        internal List<GroupInfoList<object>> GetSingleGroupByCategoryTitle(string categoryTitle)
         {
             List<GroupInfoList<object>> group = new List<GroupInfoList<object>>();
 
             var query = from course in Collection
-                        where ((Course)course).Category == categoryName
+                        where ((Course)course).Category == categoryTitle
                         group course by ((Course)course).Category into g
-                        select new { GroupName = g.Key, Courses = g };
+                        select new { GroupTitle = g.Key, Courses = g };
 
             foreach (var g in query)
             {
                 GroupInfoList<object> info = new GroupInfoList<object>();
-                info.Key = g.GroupName;
+                info.Key = g.GroupTitle;
                 foreach (var course in g.Courses)
                 {
                     info.Add(course);
@@ -250,12 +289,12 @@ namespace CloudEDU.CourseStore
 
             var query = from course in Collection
                         group course by ((Course)course).Category into g
-                        select new { GroupName = g.Key, Courses = g };
+                        select new { GroupTitle = g.Key, Courses = g };
 
             foreach (var g in query)
             {
                 GroupInfoList<object> info = new GroupInfoList<object>();
-                info.Key = g.GroupName;
+                info.Key = g.GroupTitle;
                 foreach (var course in g.Courses)
                 {
                     info.Add(course);
