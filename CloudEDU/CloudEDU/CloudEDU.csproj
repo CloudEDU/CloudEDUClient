@@ -143,7 +143,6 @@
     <Compile Include="CourseStore\Courstore.xaml.cs">
       <DependentUpon>Courstore.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CourseStore\Lesson.cs" />
     <Compile Include="CourseStore\MyCourses.xaml.cs">
       <DependentUpon>MyCourses.xaml</DependentUpon>
     </Compile>

@@ -17,7 +17,7 @@
             <RowDefinition Height="150" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        
+
         <SemanticZoom Grid.Row="1" x:Name="SemanticZoom">
             <SemanticZoom.ZoomedOutView>
                 <GridView x:Name="ZoomedOutGV" SelectionMode="None"
@@ -31,8 +31,9 @@
                     </GridView.ItemsPanel>
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock
-                                Text="{Binding Group.Key}" FontFamily="Segoe UI Light" FontSize="40"/>
+                            <Grid>
+                                <TextBlock Text="{Binding Group.Key}" FontFamily="Segoe UI Light" FontSize="40"/>
+                            </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                     <GridView.ItemContainerStyle>
@@ -86,7 +87,7 @@
             </SemanticZoom.ZoomedInView>
         </SemanticZoom>
         <ProgressRing x:Name="loadingProgressRing" Grid.RowSpan="2" Width="100" Height="100" />
-     
+
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*" />
