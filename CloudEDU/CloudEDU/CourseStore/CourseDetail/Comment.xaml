@@ -71,6 +71,8 @@
                             </Button.Transitions>
                         </Button>
                     </StackPanel>
+                    <TextBlock x:Name="WarningTextBlock" Style="{StaticResource BasicTextStyle}" Text="Please input the title and content!!"
+                               Foreground="Red" FontFamily="Times New Roman" FontSize="20"  Visibility="Collapsed" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

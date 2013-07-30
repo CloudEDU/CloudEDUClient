@@ -25,6 +25,9 @@ namespace CloudEDU.CourseStore
         private StoreData storeSampleData;
         private List<GroupInfoList<Object>> dataCategory;
 
+        /// <summary>
+        /// Constructor, initialized the components.
+        /// </summary>
         public MyCourses()
         {
             this.InitializeComponent();
@@ -67,8 +70,8 @@ namespace CloudEDU.CourseStore
         private void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             Course course = (Course)e.ClickedItem;
-            List<string> courseInfo = new List<string>();
-            courseInfo.Add(course.Title);
+            List<object> courseInfo = new List<object>();
+            courseInfo.Add(course);
 
             if (course.IsTeach)
             {

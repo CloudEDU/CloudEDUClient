@@ -32,18 +32,27 @@
             </Grid>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Right" Width="132">
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Right">
             <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Info" FontWeight="Bold" Margin="0, 30, 0, 10" HorizontalAlignment="Right" FontSize="35" Foreground="White" />
-            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="20 Students" HorizontalAlignment="Right" Foreground="White" />
-            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="10 Lessons" HorizontalAlignment="Right" Foreground="White" />
-            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="1+ PG" HorizontalAlignment="Right" Foreground="White" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="20" HorizontalAlignment="Right" Foreground="White" />
+                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Students" HorizontalAlignment="Right" Foreground="White" Margin="10, 0, 0, 0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="10" HorizontalAlignment="Right" Foreground="White" />
+                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Lessons" HorizontalAlignment="Right" Foreground="White" Margin="10, 0, 0, 0" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="{Binding PG}" HorizontalAlignment="Right" Foreground="White" />
+                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="PG" HorizontalAlignment="Right" Foreground="White" Margin="10, 0, 0, 0" />
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Left" Margin="20, 0, 0, 0" Width="358">
             <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Overview" FontWeight="Bold" Margin="0, 20, 0, 10" HorizontalAlignment="Left" FontSize="35" Foreground="White" />
             <ScrollViewer Style="{StaticResource VerticalScrollViewerStyle}" Height="268">
                 <TextBlock Style="{StaticResource SubheaderTextStyle}"  Width="400" HorizontalAlignment="Left" TextWrapping="Wrap" Foreground="White"
-                           Text="laskjfopwqjfpwqjoqihfihowqiohfwqiohwfqohiwqffwiohqfqwohwqfhoihoihiohqwfiohfwqiohwqfiokqwfhhwqhfoqiwhfiwqofhiowqhiofwqiohhfwqoihfhwqiofhiowqhfiqwohifhoqiwiohfwqohifwqoihfiohwqfhwiqofhiwqfwquhifwqhqwfohifwqfqhiowwofwqfwqfwqpjfojpwq" />
+                           Text="{Binding Intro}" />
             </ScrollViewer>
         </StackPanel>
         

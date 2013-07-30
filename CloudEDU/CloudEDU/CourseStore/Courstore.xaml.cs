@@ -108,7 +108,6 @@ namespace CloudEDU.CourseStore
             {
                 ShowMessageDialog();
                 // Network Connection error.
-                System.Diagnostics.Debug.WriteLine(ex.StackTrace);
             }
         }
 

@@ -30,6 +30,9 @@ namespace CloudEDU.CourseStore.CourseDetail
 
         private DataServiceQuery<COMMENT> dps;
 
+        /// <summary>
+        /// Constructor, initialize the components.
+        /// </summary>
         public Comment()
         {
             this.InitializeComponent();
@@ -53,14 +56,28 @@ namespace CloudEDU.CourseStore.CourseDetail
         /// <param name="e"></param>
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine(newTitleTextBox.Text);
+            if (newTitleTextBox.Text == "" || newContentTextBox.Text == "" || newTitleTextBox.Text.Trim() == "Title")
+            {
+                WarningTextBlock.Visibility = Visibility.Visible;
+                return;
+            }
             StackPanel newComment = GenerateACommentBox(newTitleTextBox.Text, globalRate, newContentTextBox.Text);
             commentsStackPanel.Children.Add(newComment);
 
             newTitleTextBox.Text = newContentTextBox.Text = "";
             globalRate = 0;
             SetStarTextBlock(globalRate);
+            WarningTextBlock.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Create a stackpanel representing a comment.
+        /// </summary>
+        /// <param name="title">Comment title.</param>
+        /// <param name="rate">Comment rate.</param>
+        /// <param name="content">Comment content.</param>
+        /// <returns>Comment Stackpanel created.</returns>
         private StackPanel GenerateACommentBox(string title, int rate, string content)
         {
             TextBlock userTextBlock = new TextBlock
