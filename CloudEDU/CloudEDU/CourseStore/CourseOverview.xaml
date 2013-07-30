@@ -22,6 +22,7 @@
             <RowDefinition Height="500*"/>
             <RowDefinition Height="60*" />
         </Grid.RowDefinitions>
+        <common:UserProfileButton x:Name="UserProfileBt" Grid.Column="1" DataContext="{Binding Mode=OneWay}" Content="{Binding ImageSource}" Click="UserProfileButton_Click" UserName="{Binding Username}"/>
 
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
             <Button Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"

@@ -115,6 +115,7 @@
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\GlobalPage.cs" />
     <Compile Include="Common\StarConverter.cs" />
+    <Compile Include="Common\UserProfileButton.cs" />
     <Compile Include="CourseStore\Category.xaml.cs">
       <DependentUpon>Category.xaml</DependentUpon>
     </Compile>
@@ -218,6 +219,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Common\AppDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="CourseStore\Category.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -278,7 +284,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Login\Dictionary.xaml">
+    <Page Include="Login\LoginDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

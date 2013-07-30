@@ -10,8 +10,33 @@
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionary.xaml" />
+                <ResourceDictionary Source="LoginDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <ControlTemplate TargetType="local:UserSelButtonControl" x:Key="temp" >
+                <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" Height="Auto">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.RenderTransform>
+                        <CompositeTransform/>
+                    </Grid.RenderTransform>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal"/>
+                            <VisualState x:Name="Pressed"/>
+                            <VisualState x:Name="Disabled"/>
+                            <VisualState x:Name="PointerOver"/>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <Border Background="#75B3C5" Width="150" Height="150" CornerRadius="1000" Margin="5,0,0,0">
+                        <Image HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Height="140" Width="140" Stretch="Fill" Source="{TemplateBinding Content}"/>
+                    </Border>
+                    <TextBlock Text="{TemplateBinding UserName}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" Foreground="White" Margin="0,10,0,10"/>
+
+                </Grid>
+            </ControlTemplate>
         </ResourceDictionary>
 
     </Page.Resources>
@@ -21,10 +46,11 @@
 
             <StackPanel x:Name="UsersStack" Canvas.Left="613" Width="Auto" 
                         Orientation="Horizontal" HorizontalAlignment ="Center" 
-                        Canvas.Top="215" >
+                        Canvas.Top="215" Height="199" >
+                <local:UserSelButtonControl Template="{StaticResource ResourceKey=temp}" Content="../Images/Users/ania.png" Click="Button_Click" UserName="Shania" Margin="0,0,0,-20"/>
+                <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click" UserName="Shania"/>
+                <Button Template="{StaticResource AddUser}"  Width="Auto" Content="+"  Click="SignUpButton_Click" Margin="0,0,0,40"/>
                 <!--<local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>
-                <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>
-                <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>
                 <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>-->
 
                 <!--<local:UserSelButtonControl Width="200" Background="Wheat" Content="../Images/Users/ania.png" />
@@ -36,13 +62,15 @@
                 <Button Template="{StaticResource UserImage}" Width="Auto" Content="../Images/Users/ania.png"  Click="Button_Click"/>
                 <Button Template="{StaticResource UserImage}" Width="Auto" Content="../Images/Users/ania.png" Click="Button_Click"/>
                 -->
-                <Button Template="{StaticResource AddUser}"  Width="Auto" Content="+"  Click="SignUpButton_Click"/>
 
             </StackPanel>
             <PasswordBox x:Name="InputPassword" Style="{StaticResource ResourceKey=PasswordBox}" Canvas.Left="575" Margin="0" Canvas.Top="441" Width="239">
-                
-            </PasswordBox>
 
+            </PasswordBox>
+            <CheckBox x:Name="CheckAutoLogin" Content="Auto-Log" HorizontalAlignment="center"
+                  VerticalAlignment="Center" Canvas.Left="648" Canvas.Top="496" Foreground="White"/>
+            <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}"
+                Width="100" Height="100" VerticalAlignment="Center" AutomationProperties.Name="" Click="LoginButton_Click" Canvas.Left="797" Canvas.Top="441" Foreground="white" />
         </Canvas>
     </Grid>
 </Page>

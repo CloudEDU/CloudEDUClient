@@ -11,7 +11,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionary.xaml" />
+                <ResourceDictionary Source="LoginDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -26,7 +26,7 @@
         <PasswordBox x:Name="ReInputPassword" Style="{StaticResource ResourceKey=PasswordBox}"
                      Margin="0, 105, 0, 0" local:PasswordBoxBehavior.Watermark="Retype-Password" />
         <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}" Margin="0, 250, 0, 0"
-                VerticalAlignment="Center" AutomationProperties.Name="" />
+                VerticalAlignment="Center" AutomationProperties.Name="" Click="Button_Click" Foreground="white"/>
 
     </Grid>
 </Page>

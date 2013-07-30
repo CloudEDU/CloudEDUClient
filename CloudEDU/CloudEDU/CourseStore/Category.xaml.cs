@@ -56,6 +56,8 @@ namespace CloudEDU.CourseStore
                                                          where course_avail.CATE_NAME == categoryName
                                                          select course_avail);
             courseDsq.BeginExecute(OnCategoryCoursesComplete, null);
+            UserProfileBt.DataContext = Constants.User;
+
         }
 
         /// <summary>
@@ -151,5 +153,10 @@ namespace CloudEDU.CourseStore
                 Frame.Navigate(typeof(CategoryForNewest));
             }
         }
+        private void UserProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Frame.Navigate(typeof());
+        }
+        
     }
 }

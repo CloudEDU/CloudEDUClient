@@ -32,6 +32,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:UserSelButtonControl">
                     <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
                         <Grid.RenderTransform>
                             <CompositeTransform/>
                         </Grid.RenderTransform>
@@ -45,8 +49,9 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border Background="#75B3C5" Width="150" Height="150" CornerRadius="1000" Margin="5,0,0,0">
                             <Image HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Height="140" Width="140" Stretch="Fill" Source="{TemplateBinding Content}" Tapped="TapOnImage" />
+                       Height="140" Width="140" Stretch="Fill" Source="{TemplateBinding Content}"/>
                         </Border>
+                        <TextBlock Text="{TemplateBinding UserName}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" Foreground="White" Margin="0,10,0,10"/>
 
                     </Grid>
                 </ControlTemplate>

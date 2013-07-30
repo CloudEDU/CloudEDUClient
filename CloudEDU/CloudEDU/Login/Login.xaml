@@ -11,7 +11,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionary.xaml" />
+                <ResourceDictionary Source="LoginDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -23,9 +23,9 @@
                  i:WatermarkTextBehavior.Text="Username" />
         <PasswordBox x:Name="InputPassword" Style="{StaticResource ResourceKey=PasswordBox}" />
         <CheckBox x:Name="CheckAutoLogin" Content="Auto-Log" HorizontalAlignment="center" Margin="300, -70, 0, 0"
-                  VerticalAlignment="Center" />
+                  VerticalAlignment="Center" Foreground="White"/>
         <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}" Margin="300, 130, 0, 0"
-                Width="100" Height="100" VerticalAlignment="Center" AutomationProperties.Name="" Click="LoginButton_Click" />
+                Width="100" Height="100" VerticalAlignment="Center" AutomationProperties.Name="" Click="LoginButton_Click" Foreground="white" />
         <Button Content="Sign Up?" HorizontalAlignment="Center" Margin="0, 200, 0, 0" VerticalAlignment="Center"
                 FontFamily="Candara" FontSize="20" BorderThickness="0" Background="Transparent"
                 Foreground="White" Click="SignUpButton_Click" />

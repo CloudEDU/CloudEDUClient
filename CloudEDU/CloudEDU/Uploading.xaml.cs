@@ -78,7 +78,7 @@ namespace CloudEDU
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            categoryDsq = (DataServiceQuery<CATEGORY>)(from category in ctx.CATEGORies select category);
+            categoryDsq = (DataServiceQuery<CATEGORY>)(from category in ctx.CATEGORY select category);
             categoryDsq.BeginExecute(OnCategoryComplete, null);
 
             pgDsq = (DataServiceQuery<PARENT_GUIDE>)(from pg in ctx.PARENT_GUIDE select pg);

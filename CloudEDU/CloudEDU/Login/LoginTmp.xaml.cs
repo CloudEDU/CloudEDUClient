@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Media;
 using Windows.UI.Xaml.Media.Animation;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace CloudEDU.Login
@@ -45,6 +46,7 @@ namespace CloudEDU.Login
                 bt.Content = user.ImageSource;
                 bt.user = user;
                 bt.Click += Button_Click;
+                bt.UserName = user.Username;
                 UsersStack.Children.Insert(0,bt);
             }
             
@@ -53,9 +55,9 @@ namespace CloudEDU.Login
         private void SetUsers()
         {
             users = new List<User>();
-            users.Add(new User("Beauty", "123", "../Images/Users/ania.png"));
-            users.Add(new User("Ugly", "123", "../Images/Users/ania.png"));
-            users.Add(new User("Soso", "123", "../Images/Users/ania.png"));
+            users.Add(new User("Beauty", "../Images/Users/ania.png"));
+            users.Add(new User("Ugly", "../Images/Users/ania.png"));
+            users.Add(new User("Soso", "../Images/Users/ania.png"));
         }
         /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.
@@ -143,5 +145,10 @@ namespace CloudEDU.Login
         {
             Frame.Navigate(typeof(SignUp));
         }
+        private void LoginButton_Click(object sende, RoutedEventArgs e)
+        {
+ 
+        }
+
     }
 }
