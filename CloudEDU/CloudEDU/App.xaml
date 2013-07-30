@@ -59,7 +59,7 @@
             </Style>
             <DataTemplate x:Key="GridViewItemTemplate">
                 <Grid>
-                    <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+                    <Image Source="{Binding ImageUri}" Stretch="UniformToFill" />
                     <Rectangle Style="{StaticResource GridViewOpacityRectangleStyle}" />
                     <StackPanel VerticalAlignment="Bottom">
                         <TextBlock Text="{Binding Title}" Style="{StaticResource GridViewDataTemplateNameTextBlockStyle}" />
@@ -128,7 +128,7 @@
             </Style>
             <DataTemplate x:Key="ListVewItemTemplate">
                 <Grid>
-                    <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+                    <Image Source="{Binding ImageUri}" Stretch="UniformToFill" />
                     <Rectangle Style="{StaticResource ListViewOpacityRectangleStyle}" />
                     <StackPanel HorizontalAlignment="Left">
                         <TextBlock Text="{Binding Title}" Style="{StaticResource ListViewDataTemplateNameTextBlockStyle}" />

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,13 +26,16 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public sealed partial class Courstore : GlobalPage
     {
-        private StoreData storeSampleData;
+        private StoreData coursesData;
         private List<GroupInfoList<object>> dataCategory;
-        private DataServiceQuery<COURSE_AVAIL> courseDsq;
+        private CloudEDUEntities ctx = null;
+        private DataServiceQuery<COURSE_AVAIL> courseDsq = null;
 
         public Courstore()
         {
             this.InitializeComponent();
+
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 
         /// <summary>
@@ -39,35 +43,28 @@ namespace CloudEDU.CourseStore
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            storeSampleData = new StoreData();
-            dataCategory = storeSampleData.GetGroupsByCategory();
-            cvs1.Source = dataCategory;
-            (SemanticZoom.ZoomedOutView as ListViewBase).ItemsSource = cvs1.View.CollectionGroups;
-
             ProgressBar progressBar = new ProgressBar()
             {
-                
+
             };
 
-            DataServiceQuery<COURSE> dps = (DataServiceQuery<COURSE>)(from c in DataServiceContextSingleton.SharedDataServiceContext().COURSEs where c.TITLE == "Test Title2" select c);
-            
-            TaskFactory<IEnumerable<COURSE>> tf = new TaskFactory<IEnumerable<COURSE>>();
-            IEnumerable<COURSE> courses = await tf.FromAsync(dps.BeginExecute(null, null), ira => dps.EndExecute(ira));
+            courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in ctx.COURSE_AVAIL select course_avail);
+            courseDsq.BeginExecute(OnCourseAvailComplete, null);
 
-            COURSE co = courses.FirstOrDefault();
-            System.Diagnostics.Debug.WriteLine(co.TITLE);
-            co.TITLE = "Haohaodiaobaole";
-            DataServiceContextSingleton.SharedDataServiceContext().UpdateObject(co);
+            //DataServiceQuery<COURSE> dps = (DataServiceQuery<COURSE>)(from c in DataServiceContextSingleton.SharedDataServiceContext().COURSEs where c.TITLE == "Test Title2" select c);
 
-            DataServiceContextSingleton.SharedDataServiceContext().BeginSaveChanges(OnComplete, null);
+            //TaskFactory<IEnumerable<COURSE>> tf = new TaskFactory<IEnumerable<COURSE>>();
+            //IEnumerable<COURSE> courses = await tf.FromAsync(dps.BeginExecute(null, null), ira => dps.EndExecute(ira));
+
+
             //courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in DataServiceContextSingleton.SharedDataServiceContext().COURSE_AVAIL select course_avail);
             //DataServiceContextSingleton.SharedDataServiceContext().BeginExecute<int?>(new Uri("CreateCourse?teacher_id=3&title='HaoHaoDBL'&intro='HaoHaoYouDBL'&category_id=3&price=0&pg_id=1&icon_url='www.HaoHaoDBL.com'", UriKind.Relative), OnComplete, null);
 
             //ctx.BeginExecute<COURSE_OK>(new Uri("GetCoursesByName?name='Test Title2'", UriKind.Relative), OnComplete, null);
 
-            
+
 
             //foreach (COURSE_OK c in courses)
             //{
@@ -87,16 +84,20 @@ namespace CloudEDU.CourseStore
             //}
         }
 
-        private void OnComplete(IAsyncResult result)
+        private async void OnCourseAvailComplete(IAsyncResult result)
         {
-            //IEnumerable<int?> op = DataServiceContextSingleton.SharedDataServiceContext().EndExecute<int?>(result);
-            //System.Diagnostics.Debug.WriteLine(op.FirstOrDefault());
-            //DataServiceResponse dsq  = DataServiceContextSingleton.SharedDataServiceContext().EndSaveChanges(result);
-            
-            //foreach (var c in dps.EndExecute(result))
-            //{
-            //    System.Diagnostics.Debug.WriteLine(c.CONTENT);
-            //}
+            coursesData = new StoreData();
+            IEnumerable<COURSE_AVAIL> courses = courseDsq.EndExecute(result);
+            foreach (var c in courses)
+            {
+                coursesData.AddCourse(Constants.CourseAvail2Course(c));
+            }
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    dataCategory = coursesData.GetGroupsByCategory();
+                    cvs1.Source = dataCategory;
+                    (SemanticZoom.ZoomedOutView as ListViewBase).ItemsSource = cvs1.View.CollectionGroups;
+                });
         }
 
         //public void OnComplete(IAsyncResult result)
@@ -106,16 +107,6 @@ namespace CloudEDU.CourseStore
         //    {
         //        System.Diagnostics.Debug.WriteLine(c.TITLE);
         //    }
-        //}
-
-        //private void OnComplete(object sender, LoadCompletedEventArgs e)
-        //{
-        //    System.Diagnostics.Debug.WriteLine("==============================================================================");
-        //    System.Diagnostics.Debug.WriteLine(e.Cancelled);
-        //    System.Diagnostics.Debug.WriteLine("==============================================================================");
-        //    System.Diagnostics.Debug.WriteLine(e.Error);
-        //    System.Diagnostics.Debug.WriteLine("==============================================================================");
-        //    System.Diagnostics.Debug.WriteLine(sender.ToString());
         //}
 
         /// <summary>

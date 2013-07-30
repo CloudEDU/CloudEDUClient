@@ -1,4 +1,5 @@
 ﻿using CloudEDU.CourseStore;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -38,6 +39,27 @@ namespace CloudEDU.Common
             }
 
             return strBuff.ToString();
+        }
+
+        /// <summary>
+        /// Convert a dataservice COURSE_AVAIL view to Course model.
+        /// </summary>
+        /// <param name="c">COURSE_AVAIL to be converted.</param>
+        /// <returns>Course after converted.</returns>
+        public static Course CourseAvail2Course(COURSE_AVAIL c)
+        {
+            Course course = new Course();
+
+            course.Title = c.TITLE;
+            course.Intro = c.INTRO;
+            course.ID = c.ID;
+            course.Category = c.CATE_NAME;
+            course.Price = c.PRICE;
+            course.Rate = c.RATE;
+            course.PG = c.RESTRICT_AGE;
+            course.ImageUri = BaseURI + "Images/Courses/course1.png";
+
+            return course;
         }
     }
 

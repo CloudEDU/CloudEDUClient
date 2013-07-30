@@ -1,6 +1,8 @@
 ﻿using CloudEDU.Common;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,8 +25,10 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public sealed partial class Category : GlobalPage
     {
-        private StoreData storeSampleData;
+        private StoreData categoryCourses;
         private List<GroupInfoList<Object>> dataCategory;
+        private CloudEDUEntities ctx = null;
+        private DataServiceQuery<COURSE_AVAIL> courseDsq = null;
 
         string categoryName = null;
 
@@ -42,10 +46,6 @@ namespace CloudEDU.CourseStore
         {
             categoryName = e.Parameter as string;
             Title.Text = Constants.UpperInitialChar(categoryName);
-
-            storeSampleData = new StoreData();
-            dataCategory = storeSampleData.GetSingleGroupByCategoryTitle(categoryName);
-            cvs1.Source = dataCategory;
         }
 
         /// <summary>
