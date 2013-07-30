@@ -119,7 +119,7 @@
                 </TransitionCollection>
             </Popup.ChildTransitions>
 
-            <Grid Width="1366" Height="780" Background="White"
+            <Grid Width="1366" Height="768" Background="White"
                   HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 0, 0">
                 <StackPanel Orientation="Vertical" Margin="20, 20">
                     <StackPanel Orientation="Horizontal">
@@ -148,9 +148,14 @@
                              TextWrapping="Wrap" Margin="40, 20, 0, 0" Text="Description..." />
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}"
-                                 MaxLength="30" Text="Lesson Name" />
-                        <!--<ComboBox Name="categoryComboBox"-->
-                        <TextBox Style="{StaticResource PopupTextBoxStyle}" IsReadOnly="True" Text="Lesson Image" />
+                                 MaxLength="30" Text="Price" />
+                        <ComboBox Name="categoryComboBox" Margin="100, 0, 0, 0" Width="400" Height="70" VerticalAlignment="Bottom">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding CATE_NAME}" FontSize="30" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Documentation" IsReadOnly="True" />

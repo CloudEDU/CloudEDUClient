@@ -32,6 +32,9 @@ namespace CloudEDU.CourseStore
         private CloudEDUEntities ctx = null;
         private DataServiceQuery<COURSE_AVAIL> courseDsq = null;
 
+        /// <summary>
+        /// Constructor, initialize the components
+        /// </summary>
         public Courstore()
         {
             this.InitializeComponent();

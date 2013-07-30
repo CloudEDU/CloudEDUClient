@@ -1,6 +1,8 @@
 ﻿using CloudEDU.Common;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -12,6 +14,8 @@ using Windows.Security.Credentials.UI;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -31,6 +35,10 @@ namespace CloudEDU
     /// </summary>
     public sealed partial class Uploading : GlobalPage
     {
+        private List<CATEGORY> categories;
+        private CloudEDUEntities ctx = null;
+        private DataServiceQuery<CATEGORY> categoryDsq = null;
+
         List<string> imagesFilterTypeList = new List<string> { ".png", ".jpg", ".bmp" };
         List<string> docsFilterTypeList = new List<string> { ".doc", ".docx", ".pdf" };
         List<string> audiosFilterTypeList = new List<string> { ".mp3", ".wmv" };
@@ -54,6 +62,7 @@ namespace CloudEDU
         {
             this.InitializeComponent();
 
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
             addImageButton = imageAddButton;
         }
 
@@ -64,7 +73,51 @@ namespace CloudEDU
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            categoryDsq = (DataServiceQuery<CATEGORY>)(from category in ctx.CATEGORies select category);
+            categoryDsq.BeginExecute(OnCategoryComplete, null);
+
             ResetPage();
+        }
+
+        private async void OnCategoryComplete(IAsyncResult result)
+        {
+            try
+            {
+                IEnumerable<CATEGORY> cts = categoryDsq.EndExecute(result);
+                categories = new List<CATEGORY>(cts);
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    categoryComboBox.ItemsSource = categories;
+                });
+            }
+            catch
+            {
+                ShowMessageDialog();
+            }
+        }
+
+        /// <summary>
+        /// Network Connection error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    var messageDialog = new MessageDialog("No Network has been found!");
+                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                    {
+                        Frame.Navigate(typeof(Uploading));
+                    }));
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    await messageDialog.ShowAsync();
+                }
+                catch
+                {
+                    ShowMessageDialog();
+                }
+            });
         }
 
         #region Button Click Action
