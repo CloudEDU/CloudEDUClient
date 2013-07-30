@@ -255,24 +255,6 @@
         <Property Name="CUSTOMER_ID" Type="Edm.Int32" />
         <Property Name="SHARE" Type="Edm.Boolean" Nullable="false" />
       </EntityType>
-      <EntityType Name="COMMENT_DET">
-        <Key>
-          <PropertyRef Name="ID" />
-          <PropertyRef Name="CUSTOMER_ID" />
-          <PropertyRef Name="COURSE_ID" />
-          <PropertyRef Name="CONTENT" />
-          <PropertyRef Name="TIME" />
-          <PropertyRef Name="USERNAME" />
-        </Key>
-        <Property Name="ID" Type="Edm.Int32" Nullable="false" />
-        <Property Name="CUSTOMER_ID" Type="Edm.Int32" Nullable="false" />
-        <Property Name="COURSE_ID" Type="Edm.Int32" Nullable="false" />
-        <Property Name="CONTENT" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-        <Property Name="TITLE" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
-        <Property Name="TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
-        <Property Name="RATE" Type="Edm.Double" />
-        <Property Name="USERNAME" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-      </EntityType>
       <Association Name="FK_COURSE_CATEGORY">
         <End Type="CloudEDUModel.CATEGORY" Role="CATEGORY" Multiplicity="0..1" />
         <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="*" />
@@ -481,7 +463,6 @@
         <EntitySet Name="COURSE_OK" EntityType="CloudEDUModel.COURSE_OK" />
         <EntitySet Name="COURSE_PENDING" EntityType="CloudEDUModel.COURSE_PENDING" />
         <EntitySet Name="NOTE_SHARABLE" EntityType="CloudEDUModel.NOTE_SHARABLE" />
-        <EntitySet Name="COMMENT_DET" EntityType="CloudEDUModel.COMMENT_DET" />
         <FunctionImport Name="EnrollCourse" ReturnType="Edm.Int32" m:HttpMethod="GET">
           <Parameter Name="customer_id" Type="Edm.Int32" Nullable="false" />
           <Parameter Name="course_id" Type="Edm.Int32" Nullable="false" />

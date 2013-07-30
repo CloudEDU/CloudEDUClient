@@ -69,6 +69,7 @@ namespace CloudEDU
                 if (!rootFrame.Navigate(typeof(Courstore), args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
+
                 }
             }
             // Ensure the current window is active

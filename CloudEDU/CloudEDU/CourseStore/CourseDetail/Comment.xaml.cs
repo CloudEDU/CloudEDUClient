@@ -32,7 +32,6 @@ namespace CloudEDU.CourseStore.CourseDetail
         private int globalRate;
         private List<COMMENT_DET> allComments;
 
-        private StoreData comments;
         private CloudEDUEntities ctx = null;
         private DataServiceQuery<COMMENT_DET> commentDsq = null;
 
@@ -55,9 +54,9 @@ namespace CloudEDU.CourseStore.CourseDetail
         {
             course = e.Parameter as Course;
             globalRate = 0;
-            commentDsq = (DataServiceQuery<COMMENT>)(from cmt in ctx.COMMENT
-                                                     where cmt.COURSE_ID == course.ID
-                                                     select cmt);
+
+            commentDsq = (DataServiceQuery<COMMENT_DET>)(from comment in ctx.COMMENT_DET select comment);
+            commentDsq.BeginExecute(OnCommentComplete, null);
         }
 
         private async void OnCommentComplete(IAsyncResult result)
@@ -65,14 +64,11 @@ namespace CloudEDU.CourseStore.CourseDetail
             //try
             //{
                 IEnumerable<COMMENT_DET> coms = commentDsq.EndExecute(result);
-                System.Diagnostics.Debug.WriteLine(coms.Count());
-                foreach (var c in coms)
-                {
-                    StackPanel newComment = GenerateACommentBox(c.USERNAME, c.TITLE, Convert.ToInt32(c.RATE), c.CONTENT);
-                }
+                List<COMMENT_DET> comsl = new List<COMMENT_DET>(coms);
+                System.Diagnostics.Debug.WriteLine(comsl.Count);
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        foreach (COMMENT_DET c in coms)
+                        foreach (COMMENT_DET c in comsl)
                         {
                             StackPanel newComment = GenerateACommentBox(c.USERNAME ,c.TITLE, Convert.ToInt32(c.RATE), c.CONTENT);
                             commentsStackPanel.Children.Add(newComment);
@@ -125,32 +121,10 @@ namespace CloudEDU.CourseStore.CourseDetail
             StackPanel newComment = GenerateACommentBox(Constants.Username, newTitleTextBox.Text, globalRate, newContentTextBox.Text);
             commentsStackPanel.Children.Add(newComment);
 
-            COMMENT comment = new COMMENT();
-            comment.TITLE = newTitleTextBox.Text;
-            comment.CONTENT = newContentTextBox.Text;
-            comment.RATE = globalRate;
-            comment.COURSE_ID = (int)course.ID;
-            comment.TIME = new DateTime();
-            // rewrite
-            comment.CUSTOMER_ID = 14; 
-
-            ctx.AddToCOMMENT(comment);
-
             newTitleTextBox.Text = newContentTextBox.Text = "";
             globalRate = 0;
             SetStarTextBlock(globalRate);
             WarningTextBlock.Visibility = Visibility.Collapsed;
-
-            ctx.BeginSaveChanges(OnCommentUpdateComplete, null);
-        }
-
-        /// <summary>
-        /// DataServiceQuery callback method to refresh the UI.
-        /// </summary>
-        /// <param name="result">Async operation result.</param>
-        private void OnCommentUpdateComplete(IAsyncResult result)
-        {
-            DataServiceResponse dsr = ctx.EndSaveChanges(result);
         }
 
         /// <summary>

@@ -1,0 +1,119 @@
+﻿<Page
+    x:Class="CloudEDU.Login.Profile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CloudEDU.Login"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Margin="60, 0, 60, 200">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            
+            <Grid Grid.Column="0" Background="#53A1B8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="1" Margin="20, 50, 20, 50">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <AddDeleteThemeTransition />
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
+                    <StackPanel Orientation="Horizontal" Margin="0, 5">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Name:" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Ania" Margin="20, 0, 0, 0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0, 5">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Learning Level:" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Lv.10" Margin="20, 0, 0, 0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0, 5">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Teaching Level:" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Lv.2" Margin="20, 0, 0, 0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0, 5">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Balance:" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="200" Margin="20, 0, 0, 0" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 30, 0, 5">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Course Attending:" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="10" Margin="20, 0, 0, 0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0, 5">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Course Teaching:" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="2" Margin="20, 0, 0, 0" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Column="1" Background="#EDF5F8">
+                <StackPanel Margin="20, 30, 20, 40" Orientation="Vertical">
+                    <StackPanel.ChildrenTransitions>
+                        <TransitionCollection>
+                            <AddDeleteThemeTransition />
+                        </TransitionCollection>
+                    </StackPanel.ChildrenTransitions>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Degree:" Margin="0, 7, 0, 0" FontSize="30" />
+                        <ComboBox FontSize="30" Width="350" BorderBrush="Transparent" Background="Transparent" Height="60" Padding="10, 0, 10, 7">
+                            <x:String>Grad</x:String>
+                            <x:String>Undergrad</x:String>
+                            <x:String>Senior High</x:String>
+                            <x:String>Junior High</x:String>
+                            <x:String>Primary School or Lower</x:String>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Password:" Margin="0, 7, 0, 0" FontSize="30" />
+                        <PasswordBox FontSize="30" Password="xxx@xsian.com" Width="445" BorderBrush="Transparent" Background="Transparent"
+                                     Height="60" PasswordChanged="Password_PasswordChanged" MaxLength="14" />
+                    </StackPanel>
+                    <StackPanel x:Name="retypePasswordStackPanel" Orientation="Horizontal" Visibility="Collapsed">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Retype Password:" Margin="0, 7, 0, 0" FontSize="30" />
+                        <PasswordBox FontSize="30" Password="" Width="445" BorderBrush="Transparent" Background="Transparent" Height="60"
+                                     MaxLength="14" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="EMAIL:" Margin="0, 7, 0, 0" FontSize="30" />
+                        <TextBox FontSize="30" Text="xxx@xsian.com" Width="445" BorderBrush="Transparent" Background="Transparent" Height="60" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Birthday:" Margin="0, 7, 0, 0" FontSize="30" />
+                        <TextBox FontSize="30" Text="2012-01-03" Width="445" BorderBrush="Transparent" Background="Transparent" Height="60" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <Image Source="ms-appx:///Images/Users/save.png" Width="32" Height="32" Margin="5, 0" IsTapEnabled="True" Tapped="SaveImage_Tapped" />
+                        <Image Source="ms-appx:///Images/Users/reset.png" Width="32" Height="32" Margin="5, 0" IsTapEnabled="True" Tapped="ResetImage_Tapped" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="150" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Click="BackButton_Click" />
+                <TextBlock x:Name="Title" Style="{StaticResource PageHeaderTextStyle}" HorizontalAlignment="Center"
+                           Text="Profile" VerticalAlignment="Center" FontSize="100" Margin="0, -10"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

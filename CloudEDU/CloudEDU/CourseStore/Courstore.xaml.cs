@@ -92,8 +92,8 @@ namespace CloudEDU.CourseStore
         private async void OnCourseAvailComplete(IAsyncResult result)
         {
             coursesData = new StoreData();
-            //try
-            //{
+            try
+            {
                 IEnumerable<COURSE_AVAIL> courses = courseDsq.EndExecute(result);
                 foreach (var c in courses)
                 {
@@ -106,12 +106,12 @@ namespace CloudEDU.CourseStore
                     (SemanticZoom.ZoomedOutView as ListViewBase).ItemsSource = cvs1.View.CollectionGroups;
                     loadingProgressRing.IsActive = false;
                 });
-            //}
-            //catch
-            //{
-            //    ShowMessageDialog();
-            //    // Network Connection error.
-            //}
+            }
+            catch
+            {
+                ShowMessageDialog();
+                // Network Connection error.
+            }
         }
 
         /// <summary>

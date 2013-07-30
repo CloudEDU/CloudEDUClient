@@ -36,9 +36,6 @@ namespace CloudEDU.Login
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMERs select user);
-            CUSTOMER c = CUSTOMER.CreateCUSTOMER(2150521, "safj", "saiofwqpjf", decimal.MinValue, DateTime.MinValue, true);
-            ctx.AddToCUSTOMERs(c);
         }
 
         /// <summary>
