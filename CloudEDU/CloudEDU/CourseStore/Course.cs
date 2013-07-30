@@ -231,6 +231,23 @@ namespace CloudEDU.CourseStore
             }
         }
 
+        private int? _ratedUser = null;
+        public int? RatedUser
+        {
+            get
+            {
+                return _ratedUser.HasValue ? _ratedUser.Value : 0;
+            }
+            set
+            {
+                if (this._ratedUser != value)
+                {
+                    this._ratedUser = value;
+                    this.OnPropertyChanged("RATED_USER");
+                }
+            }
+        }
+
         private GridViewItemContainerType _itemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
         public GridViewItemContainerType ItemContainerType
         {
