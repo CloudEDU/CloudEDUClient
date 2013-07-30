@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // 原始文件名:
-// 生成日期: 7/30/2013 6:57:09 PM
+// 生成日期: 7/30/2013 7:46:29 PM
 namespace CloudEDU.Service
 {
     
@@ -331,6 +331,23 @@ namespace CloudEDU.Service
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<NOTE_SHARABLE> _NOTE_SHARABLE;
         /// <summary>
+        /// 架构中不存在 COMMENT_DET 的注释。
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<COMMENT_DET> COMMENT_DET
+        {
+            get
+            {
+                if ((this._COMMENT_DET == null))
+                {
+                    this._COMMENT_DET = base.CreateQuery<COMMENT_DET>("COMMENT_DET");
+                }
+                return this._COMMENT_DET;
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<COMMENT_DET> _COMMENT_DET;
+        /// <summary>
         /// 架构中不存在 CATEGORies 的注释。
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -457,6 +474,14 @@ namespace CloudEDU.Service
         public void AddToNOTE_SHARABLE(NOTE_SHARABLE nOTE_SHARABLE)
         {
             base.AddObject("NOTE_SHARABLE", nOTE_SHARABLE);
+        }
+        /// <summary>
+        /// 架构中不存在 COMMENT_DET 的注释。
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToCOMMENT_DET(COMMENT_DET cOMMENT_DET)
+        {
+            base.AddObject("COMMENT_DET", cOMMENT_DET);
         }
     }
     /// <summary>
@@ -2371,16 +2396,20 @@ namespace CloudEDU.Service
         /// <param name="nAME">NAME 的初始值。</param>
         /// <param name="pASSWORD">PASSWORD 的初始值。</param>
         /// <param name="bALANCE">BALANCE 的初始值。</param>
+        /// <param name="lEARN_RATE">LEARN_RATE 的初始值。</param>
+        /// <param name="tEACH_RATE">TEACH_RATE 的初始值。</param>
         /// <param name="bIRTHDAY">BIRTHDAY 的初始值。</param>
         /// <param name="aLLOW">ALLOW 的初始值。</param>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static CUSTOMER CreateCUSTOMER(int ID, string nAME, string pASSWORD, decimal bALANCE, global::System.DateTime bIRTHDAY, bool aLLOW)
+        public static CUSTOMER CreateCUSTOMER(int ID, string nAME, string pASSWORD, decimal bALANCE, double lEARN_RATE, double tEACH_RATE, global::System.DateTime bIRTHDAY, bool aLLOW)
         {
             CUSTOMER cUSTOMER = new CUSTOMER();
             cUSTOMER.ID = ID;
             cUSTOMER.NAME = nAME;
             cUSTOMER.PASSWORD = pASSWORD;
             cUSTOMER.BALANCE = bALANCE;
+            cUSTOMER.LEARN_RATE = lEARN_RATE;
+            cUSTOMER.TEACH_RATE = tEACH_RATE;
             cUSTOMER.BIRTHDAY = bIRTHDAY;
             cUSTOMER.ALLOW = aLLOW;
             return cUSTOMER;
@@ -2521,7 +2550,7 @@ namespace CloudEDU.Service
         /// 架构中不存在属性 LEARN_RATE 的注释。
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<double> LEARN_RATE
+        public double LEARN_RATE
         {
             get
             {
@@ -2536,14 +2565,14 @@ namespace CloudEDU.Service
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<double> _LEARN_RATE;
-        partial void OnLEARN_RATEChanging(global::System.Nullable<double> value);
+        private double _LEARN_RATE;
+        partial void OnLEARN_RATEChanging(double value);
         partial void OnLEARN_RATEChanged();
         /// <summary>
         /// 架构中不存在属性 TEACH_RATE 的注释。
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<double> TEACH_RATE
+        public double TEACH_RATE
         {
             get
             {
@@ -2558,8 +2587,8 @@ namespace CloudEDU.Service
             }
         }
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<double> _TEACH_RATE;
-        partial void OnTEACH_RATEChanging(global::System.Nullable<double> value);
+        private double _TEACH_RATE;
+        partial void OnTEACH_RATEChanging(double value);
         partial void OnTEACH_RATEChanged();
         /// <summary>
         /// 架构中不存在属性 BIRTHDAY 的注释。
@@ -4003,6 +4032,229 @@ namespace CloudEDU.Service
         private bool _SHARE;
         partial void OnSHAREChanging(bool value);
         partial void OnSHAREChanged();
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        protected virtual void OnPropertyChanged(string property)
+        {
+            if ((this.PropertyChanged != null))
+            {
+                this.PropertyChanged(this, new global::System.ComponentModel.PropertyChangedEventArgs(property));
+            }
+        }
+    }
+    /// <summary>
+    /// 架构中不存在 CloudEDUModel.COMMENT_DET 的注释。
+    /// </summary>
+    /// <KeyProperties>
+    /// ID
+    /// CUSTOMER_ID
+    /// COURSE_ID
+    /// CONTENT
+    /// TIME
+    /// USERNAME
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.EntitySetAttribute("COMMENT_DET")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("ID", "CUSTOMER_ID", "COURSE_ID", "CONTENT", "TIME", "USERNAME")]
+    public partial class COMMENT_DET : global::System.ComponentModel.INotifyPropertyChanged
+    {
+        /// <summary>
+        /// 创建新的 COMMENT_DET 对象。
+        /// </summary>
+        /// <param name="ID">ID 的初始值。</param>
+        /// <param name="cUSTOMER_ID">CUSTOMER_ID 的初始值。</param>
+        /// <param name="cOURSE_ID">COURSE_ID 的初始值。</param>
+        /// <param name="cONTENT">CONTENT 的初始值。</param>
+        /// <param name="tIME">TIME 的初始值。</param>
+        /// <param name="uSERNAME">USERNAME 的初始值。</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static COMMENT_DET CreateCOMMENT_DET(int ID, int cUSTOMER_ID, int cOURSE_ID, string cONTENT, global::System.DateTime tIME, string uSERNAME)
+        {
+            COMMENT_DET cOMMENT_DET = new COMMENT_DET();
+            cOMMENT_DET.ID = ID;
+            cOMMENT_DET.CUSTOMER_ID = cUSTOMER_ID;
+            cOMMENT_DET.COURSE_ID = cOURSE_ID;
+            cOMMENT_DET.CONTENT = cONTENT;
+            cOMMENT_DET.TIME = tIME;
+            cOMMENT_DET.USERNAME = uSERNAME;
+            return cOMMENT_DET;
+        }
+        /// <summary>
+        /// 架构中不存在属性 ID 的注释。
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public int ID
+        {
+            get
+            {
+                return this._ID;
+            }
+            set
+            {
+                this.OnIDChanging(value);
+                this._ID = value;
+                this.OnIDChanged();
+                this.OnPropertyChanged("ID");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private int _ID;
+        partial void OnIDChanging(int value);
+        partial void OnIDChanged();
+        /// <summary>
+        /// 架构中不存在属性 CUSTOMER_ID 的注释。
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public int CUSTOMER_ID
+        {
+            get
+            {
+                return this._CUSTOMER_ID;
+            }
+            set
+            {
+                this.OnCUSTOMER_IDChanging(value);
+                this._CUSTOMER_ID = value;
+                this.OnCUSTOMER_IDChanged();
+                this.OnPropertyChanged("CUSTOMER_ID");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private int _CUSTOMER_ID;
+        partial void OnCUSTOMER_IDChanging(int value);
+        partial void OnCUSTOMER_IDChanged();
+        /// <summary>
+        /// 架构中不存在属性 COURSE_ID 的注释。
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public int COURSE_ID
+        {
+            get
+            {
+                return this._COURSE_ID;
+            }
+            set
+            {
+                this.OnCOURSE_IDChanging(value);
+                this._COURSE_ID = value;
+                this.OnCOURSE_IDChanged();
+                this.OnPropertyChanged("COURSE_ID");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private int _COURSE_ID;
+        partial void OnCOURSE_IDChanging(int value);
+        partial void OnCOURSE_IDChanged();
+        /// <summary>
+        /// 架构中不存在属性 CONTENT 的注释。
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CONTENT
+        {
+            get
+            {
+                return this._CONTENT;
+            }
+            set
+            {
+                this.OnCONTENTChanging(value);
+                this._CONTENT = value;
+                this.OnCONTENTChanged();
+                this.OnPropertyChanged("CONTENT");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CONTENT;
+        partial void OnCONTENTChanging(string value);
+        partial void OnCONTENTChanged();
+        /// <summary>
+        /// 架构中不存在属性 TITLE 的注释。
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string TITLE
+        {
+            get
+            {
+                return this._TITLE;
+            }
+            set
+            {
+                this.OnTITLEChanging(value);
+                this._TITLE = value;
+                this.OnTITLEChanged();
+                this.OnPropertyChanged("TITLE");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _TITLE;
+        partial void OnTITLEChanging(string value);
+        partial void OnTITLEChanged();
+        /// <summary>
+        /// 架构中不存在属性 TIME 的注释。
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.DateTime TIME
+        {
+            get
+            {
+                return this._TIME;
+            }
+            set
+            {
+                this.OnTIMEChanging(value);
+                this._TIME = value;
+                this.OnTIMEChanged();
+                this.OnPropertyChanged("TIME");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.DateTime _TIME;
+        partial void OnTIMEChanging(global::System.DateTime value);
+        partial void OnTIMEChanged();
+        /// <summary>
+        /// 架构中不存在属性 RATE 的注释。
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<double> RATE
+        {
+            get
+            {
+                return this._RATE;
+            }
+            set
+            {
+                this.OnRATEChanging(value);
+                this._RATE = value;
+                this.OnRATEChanged();
+                this.OnPropertyChanged("RATE");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<double> _RATE;
+        partial void OnRATEChanging(global::System.Nullable<double> value);
+        partial void OnRATEChanged();
+        /// <summary>
+        /// 架构中不存在属性 USERNAME 的注释。
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string USERNAME
+        {
+            get
+            {
+                return this._USERNAME;
+            }
+            set
+            {
+                this.OnUSERNAMEChanging(value);
+                this._USERNAME = value;
+                this.OnUSERNAMEChanged();
+                this.OnPropertyChanged("USERNAME");
+            }
+        }
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _USERNAME;
+        partial void OnUSERNAMEChanging(string value);
+        partial void OnUSERNAMEChanged();
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
