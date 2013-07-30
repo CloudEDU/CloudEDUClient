@@ -26,9 +26,11 @@ namespace CloudEDU.CourseStore.CourseDetail
     /// </summary>
     public sealed partial class Comment : Page
     {
+        private Course course;
         private int globalRate;
 
-        private DataServiceQuery<COMMENT> dps;
+        private CloudEDUEntities ctx = null;
+        private DataServiceQuery<COMMENT> commentDsq = null;
 
         /// <summary>
         /// Constructor, initialize the components.
@@ -36,6 +38,8 @@ namespace CloudEDU.CourseStore.CourseDetail
         public Comment()
         {
             this.InitializeComponent();
+
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 
         /// <summary>
@@ -45,7 +49,7 @@ namespace CloudEDU.CourseStore.CourseDetail
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            string courseName = e.Parameter as string;
+            course = e.Parameter as Course;
             globalRate = 0;
         }
 
@@ -84,21 +88,21 @@ namespace CloudEDU.CourseStore.CourseDetail
             {
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
-                Text = "Boyi"
+                Text = Constants.Username
             };
             TextBlock dateTextBlock = new TextBlock
             {
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(40, 0, 0, 0),
-                Text = "2013.7.03"
+                Text = DateTime.Now.Date.ToString()
             };
             TextBlock timeTextBlock = new TextBlock
             {
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(20, 0, 0, 0),
-                Text = "14:23"
+                Text = DateTime.Now.TimeOfDay.ToString()
             };
             TextBlock rateTextBlock = new TextBlock
             {

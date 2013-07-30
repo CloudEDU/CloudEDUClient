@@ -100,6 +100,7 @@ namespace CloudEDU
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     categoryComboBox.ItemsSource = categories;
+                    categoryComboBox.SelectedIndex = 0;
                 });
             }
             catch
@@ -117,36 +118,14 @@ namespace CloudEDU
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         pgComboBox.ItemsSource = pgs;
+
+                        pgComboBox.SelectedIndex = 0;
                     });
             }
             catch
             {
                 ShowMessageDialog();
             }
-        }
-
-        /// <summary>
-        /// Network Connection error MessageDialog.
-        /// </summary>
-        private async void ShowMessageDialog()
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
-            {
-                try
-                {
-                    var messageDialog = new MessageDialog("No Network has been found!");
-                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
-                    {
-                        Frame.Navigate(typeof(Uploading));
-                    }));
-                    messageDialog.Commands.Add(new UICommand("Close"));
-                    await messageDialog.ShowAsync();
-                }
-                catch
-                {
-                    ShowMessageDialog();
-                }
-            });
         }
 
         #region Button Click Action
@@ -191,9 +170,11 @@ namespace CloudEDU
         /// <param name="e">Event data that describes how the click was initiated.</param>
         private async void UploadLessionButton_Click(object sender, RoutedEventArgs e)
         {
-            CheckAllInfomation();
-
-            List<BackgroundTransferContentPart> imageParts = CreateBackgroundTransferContentPartList(images);
+            if (!CheckAllInfomation())
+            {
+                ShowUploadMessageDialog();
+                return;
+            }
             List<BackgroundTransferContentPart> docParts = CreateBackgroundTransferContentPartList(docs);
             List<BackgroundTransferContentPart> audioParts = CreateBackgroundTransferContentPartList(audios);
             List<BackgroundTransferContentPart> videoParts = CreateBackgroundTransferContentPartList(videos);
@@ -201,11 +182,6 @@ namespace CloudEDU
             Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=Boyi");
 
             BackgroundUploader uploader = new BackgroundUploader();
-            if (imageParts != null)
-            {
-                UploadOperation imagesUpload = await uploader.CreateUploadAsync(uploadUri, imageParts);
-                await HandleUploadAsync(imagesUpload, true);
-            }
             if (docParts != null)
             {
                 UploadOperation docsUpload = await uploader.CreateUploadAsync(uploadUri, docParts);
@@ -346,6 +322,25 @@ namespace CloudEDU
                 ToolTipService.SetToolTip(videoImg, toolTip);
 
                 videosPanel.Children.Add(videoImg);
+            }
+        }
+
+        /// <summary>
+        /// Invoked when all uplaod button is clicked.
+        /// </summary>
+        /// <param name="sender">The all upload button clicked.</param>
+        /// <param name="e">Event data that describes how the click was initiated.</param>
+        private async void allUploadButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<BackgroundTransferContentPart> imageParts = CreateBackgroundTransferContentPartList(images);
+
+            Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=Boyi");
+
+            BackgroundUploader uploader = new BackgroundUploader();
+            if (imageParts != null)
+            {
+                UploadOperation imagesUpload = await uploader.CreateUploadAsync(uploadUri, imageParts);
+                await HandleUploadAsync(imagesUpload, true);
             }
         }
         #endregion
@@ -559,9 +554,6 @@ namespace CloudEDU
 
             lessonName.Text = "Lesson Name";
             lessonDescription.Text = "Description...";
-            priceTextBox.Text = "Price";
-            categoryComboBox.SelectedIndex = 0;
-            pgComboBox.SelectedIndex = 0;
             imagePanel.Children.Clear();
             docsPanel.Children.Clear();
             audiosPanel.Children.Clear();
@@ -590,6 +582,7 @@ namespace CloudEDU
         {
             lessonCount = 0;
             cts = new CancellationTokenSource();
+            priceTextBox.Text = "Price";
             lessonInfo.Children.Clear();
             lessonRes.Children.Clear();
             images = null;
@@ -604,10 +597,55 @@ namespace CloudEDU
         {
             bool result = true;
 
-            if (String.IsNullOrWhiteSpace(lessonName.Text)) result = false;
-            //if (String.IsNullOrWhiteSpace
+            try
+            {
+                if (String.IsNullOrWhiteSpace(lessonName.Text)) result = false;
+                if (images == null || images.Count == 0) result = false;
+                if (lessonDescription.Text == "Description...") result = false;
+                if (Convert.ToDouble(priceTextBox.Text) < 0.0) result = false; 
+            }
+            catch
+            {
+                result = false;
+            }
 
             return result;
         }
+
+        #region Message Dialog
+        /// <summary>
+        /// Network Connection error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    var messageDialog = new MessageDialog("No Network has been found!");
+                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                    {
+                        Frame.Navigate(typeof(Uploading));
+                    }));
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    await messageDialog.ShowAsync();
+                }
+                catch
+                {
+                    ShowMessageDialog();
+                }
+            });
+        }
+
+        /// <summary>
+        /// Upload information error MessageDialog.
+        /// </summary>
+        private async void ShowUploadMessageDialog()
+        {
+            var messageDialog = new MessageDialog("Format error! Please check your upload infomation.");
+            messageDialog.Commands.Add(new UICommand("Close"));
+            await messageDialog.ShowAsync();
+        }
+        #endregion
     }
 }

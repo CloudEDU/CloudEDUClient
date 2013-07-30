@@ -17,7 +17,7 @@
                        HorizontalAlignment="Left" Margin="10" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="By" />
-                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Yeye Jin" Margin="20, 0, 0, 0" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="{Binding Teacher}" Margin="20, 0, 0, 0" />
                 </StackPanel>
                 <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="{Binding Intro}" TextWrapping="Wrap"
                            Margin="0, 20, 20, 0"/>

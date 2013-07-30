@@ -197,6 +197,23 @@ namespace CloudEDU.CourseStore
             }
         }
 
+        private int? _lessonNum = null;
+        public int? LessonNum
+        {
+            get
+            {
+                return _lessonNum.HasValue ? _lessonNum.Value : 0;
+            }
+            set
+            {
+                if (this._lessonNum != value)
+                {
+                    this._lessonNum = value;
+                    this.OnPropertyChanged("LESSON_NUM");
+                }
+            }
+        }
+
         private DateTime? _startTime = null;
         public DateTime StartTime
         {

@@ -19,20 +19,20 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Course Number:" FontWeight="Bold" />
-                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="*$874217" Margin="20, 0, 0, 0" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="{Binding ID}" Margin="20, 0, 0, 0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Instructor:" FontWeight="Bold" />
-                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Shaw" Margin="20, 0, 0, 0" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="{Binding Teacher}" Margin="20, 0, 0, 0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Abstract:" FontWeight="Bold" />
-                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" Margin="20, 0, 0, 0"
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="{Binding Intro}" Margin="20, 0, 0, 0"
                                Width="200" TextWrapping="Wrap" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Total Lessons:" FontWeight="Bold" />
-                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="10" Margin="20, 0, 0, 0" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="{Binding LessonNum}" Margin="20, 0, 0, 0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Time of Submit:" FontWeight="Bold" />

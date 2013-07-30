@@ -19,6 +19,8 @@ namespace CloudEDU.Common
         public static string BlankStar = "\x2606";
         public static double StarWidth = 22.2133331298828;
 
+        public static string Username = "Test";
+
         /// <summary>
         /// Cast the first character of every word in a string from lower to upper.
         /// </summary>
@@ -51,14 +53,16 @@ namespace CloudEDU.Common
         public static Course CourseAvail2Course(COURSE_AVAIL c)
         {
             Course course = new Course();
-
+ 
             course.Title = c.TITLE;
             course.Intro = c.INTRO;
             course.ID = c.ID;
+            course.Teacher = c.TEACHER_NAME;
             course.Category = c.CATE_NAME;
             course.Price = c.PRICE;
             course.Rate = c.RATE;
             course.PG = c.RESTRICT_AGE;
+            course.LessonNum = c.LESSON_NUM;
             course.ImageUri = BaseURI + "Images/Courses/course1.png";
             course.IsBuy = true;
             course.IsTeach = true;
