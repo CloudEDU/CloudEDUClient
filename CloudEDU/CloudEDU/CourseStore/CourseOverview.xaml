@@ -44,7 +44,7 @@
                     <StackPanel x:Name="rateStarsPanel" Orientation="Horizontal">
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="12343"
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="{Binding RatedUser}"
                                    Foreground="{StaticResource CourseInfoFontForegroundBrush}" />
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="rates" Margin="10, 0, 0, 0"
                                    Foreground="{StaticResource CourseInfoFontForegroundBrush}" />

@@ -8,6 +8,8 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,9 +30,10 @@ namespace CloudEDU.CourseStore.CourseDetail
     {
         private Course course;
         private int globalRate;
+        private List<COMMENT_DET> allComments;
 
         private CloudEDUEntities ctx = null;
-        private DataServiceQuery<COMMENT> commentDsq = null;
+        private DataServiceQuery<COMMENT_DET> commentDsq = null;
 
         /// <summary>
         /// Constructor, initialize the components.
@@ -51,6 +54,57 @@ namespace CloudEDU.CourseStore.CourseDetail
         {
             course = e.Parameter as Course;
             globalRate = 0;
+
+            commentDsq = (DataServiceQuery<COMMENT_DET>)(from comment in ctx.COMMENT_DET
+                                                         where comment.CUSTOMER_ID == course.ID
+                                                         select comment);
+            commentDsq.BeginExecute(OnCommentComplete, null);
+        }
+
+        private async void OnCommentComplete(IAsyncResult result)
+        {
+            try
+            {
+                IEnumerable<COMMENT_DET> coms = commentDsq.EndExecute(result);
+                allComments = new List<COMMENT_DET>(coms);
+                System.Diagnostics.Debug.WriteLine(allComments.Count);
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        foreach (COMMENT_DET c in allComments)
+                        {
+                            StackPanel newComment = GenerateACommentBox(c.USERNAME ,c.TITLE, Convert.ToInt32(c.RATE), c.CONTENT);
+                            commentsStackPanel.Children.Add(newComment);
+                        }
+                    });
+            }
+            catch
+            {
+                ShowMessageDialog();
+            }
+        }
+
+        /// <summary>
+        /// Network Connection error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    var messageDialog = new MessageDialog("No Network has been found!");
+                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                    {
+                        Frame.Navigate(typeof(Comment));
+                    }));
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    await messageDialog.ShowAsync();
+                }
+                catch
+                {
+                    ShowMessageDialog();
+                }
+            });
         }
 
         /// <summary>
@@ -66,7 +120,7 @@ namespace CloudEDU.CourseStore.CourseDetail
                 WarningTextBlock.Visibility = Visibility.Visible;
                 return;
             }
-            StackPanel newComment = GenerateACommentBox(newTitleTextBox.Text, globalRate, newContentTextBox.Text);
+            StackPanel newComment = GenerateACommentBox(Constants.Username, newTitleTextBox.Text, globalRate, newContentTextBox.Text);
             commentsStackPanel.Children.Add(newComment);
 
             newTitleTextBox.Text = newContentTextBox.Text = "";
@@ -82,20 +136,20 @@ namespace CloudEDU.CourseStore.CourseDetail
         /// <param name="rate">Comment rate.</param>
         /// <param name="content">Comment content.</param>
         /// <returns>Comment Stackpanel created.</returns>
-        private StackPanel GenerateACommentBox(string title, int rate, string content)
+        private StackPanel GenerateACommentBox(string username, string title, int rate, string content)
         {
             TextBlock userTextBlock = new TextBlock
             {
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
-                Text = Constants.Username
+                Text = username
             };
             TextBlock dateTextBlock = new TextBlock
             {
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(40, 0, 0, 0),
-                Text = DateTime.Now.Date.ToString()
+                Text = DateTime.Now.ToString()
             };
             TextBlock timeTextBlock = new TextBlock
             {

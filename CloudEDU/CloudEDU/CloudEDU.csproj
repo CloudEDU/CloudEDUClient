@@ -144,7 +144,6 @@
     <Compile Include="CourseStore\Courstore.xaml.cs">
       <DependentUpon>Courstore.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CourseStore\Lesson.cs" />
     <Compile Include="CourseStore\MyCourses.xaml.cs">
       <DependentUpon>MyCourses.xaml</DependentUpon>
     </Compile>
@@ -159,6 +158,9 @@
       <DependentUpon>LoginTmp.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\PasswordBoxBehavior.cs" />
+    <Compile Include="Login\Profile.xaml.cs">
+      <DependentUpon>Profile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Login\SignUp.xaml.cs">
       <DependentUpon>SignUp.xaml</DependentUpon>
     </Compile>
@@ -204,6 +206,8 @@
     <Content Include="Images\Upload\video.png" />
     <Content Include="Images\Upload\video_white.png" />
     <Content Include="Images\Users\ania.png" />
+    <Content Include="Images\Users\reset.png" />
+    <Content Include="Images\Users\save.png" />
     <Content Include="Images\Users\shadow.png" />
     <None Include="Service References\Service\Reference.datasvcmap">
       <Generator>DataServicesCoreClientGenerator</Generator>
@@ -277,6 +281,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Login\LoginTmp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login\Profile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

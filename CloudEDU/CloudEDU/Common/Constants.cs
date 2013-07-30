@@ -1,4 +1,4 @@
-﻿using CloudEDU.CourseStore;
+using CloudEDU.CourseStore;
 using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
@@ -86,3 +86,4 @@ namespace CloudEDU.Common
         SquareGridViewItemContainerSize = 3,
     }
 }
+

@@ -1,4 +1,4 @@
-﻿using CloudEDU.Common;
+using CloudEDU.Common;
 using CloudEDU.Service;
 using CloudEDU.CourseStore;
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Security.Cryptography;
@@ -19,8 +19,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-//md5 Cryptography
-//using System.;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 

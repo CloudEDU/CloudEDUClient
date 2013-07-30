@@ -70,6 +70,7 @@ namespace CloudEDU
                 if (!rootFrame.Navigate(typeof(Login.Login), args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
+
                 }
             }
             // Ensure the current window is active
