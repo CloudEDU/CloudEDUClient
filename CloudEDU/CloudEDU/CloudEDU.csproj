@@ -134,6 +134,9 @@
     <Compile Include="CourseStore\Coursing.xaml.cs">
       <DependentUpon>Coursing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseStore\CoursingDetail\note.xaml.cs">
+      <DependentUpon>note.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CourseStore\CoursingDetail\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,7 @@
     </AppxManifest>
     <None Include="CloudEDU_TemporaryKey.pfx" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\CloudEDU.Service.CloudEDUEntities.datasource" />
     <None Include="Service References\Service\service.edmx" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +199,7 @@
     <Content Include="Images\Courses\course3.png" />
     <Content Include="Images\Courses\star.png" />
     <Content Include="Images\Courses\transparent.png" />
+    <Content Include="Images\CoursingNote\delete.png" />
     <Content Include="Images\Upload\audio.png" />
     <Content Include="Images\Upload\audio_white.png" />
     <Content Include="Images\Upload\doc.png" />
@@ -241,6 +246,10 @@
     <Page Include="CourseStore\Coursing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CourseStore\CoursingDetail\note.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="CourseStore\CoursingDetail\Home.xaml">
       <SubType>Designer</SubType>

@@ -24,16 +24,9 @@ namespace CloudEDU.Login
     /// </summary>
     public sealed partial class Login : Page
     {
-        private CloudEDUEntities ctx = null;
-        private DataServiceQuery<CUSTOMER> customerDsq = null;
-
-        private List<CUSTOMER> csl;
-
         public Login()
         {
             this.InitializeComponent();
-
-            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 
         /// <summary>
@@ -43,25 +36,9 @@ namespace CloudEDU.Login
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
-            customerDsq.BeginExecute(OnCustomerComplete, null);
-        }
-
-        private void OnCustomerComplete(IAsyncResult result)
-        {
-            IEnumerable<CUSTOMER> cs = customerDsq.EndExecute(result);
-            csl = new List<CUSTOMER>(cs);
-            System.Diagnostics.Debug.WriteLine(csl[0].NAME);
-
-            //CUSTOMER c = CUSTOMER.CreateCUSTOMER(2150521, "safj", "saiofwqpjf", decimal.MinValue, DateTime.MinValue, true);
-
-            //ctx.AddToCUSTOMERs(c);
-            ctx.BeginSaveChanges(OnFinish, null);
-        }
-
-        private void OnFinish(IAsyncResult result)
-        {
-            DataServiceResponse dsr = ctx.EndSaveChanges(result);
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMERs select user);
+            CUSTOMER c = CUSTOMER.CreateCUSTOMER(2150521, "safj", "saiofwqpjf", decimal.MinValue, DateTime.MinValue, true);
+            ctx.AddToCUSTOMERs(c);
         }
 
         /// <summary>
