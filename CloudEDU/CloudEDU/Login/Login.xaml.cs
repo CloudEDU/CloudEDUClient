@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -24,9 +25,28 @@ namespace CloudEDU.Login
     /// </summary>
     public sealed partial class Login : Page
     {
+        private CloudEDUEntities ctx = null;
+        private DataServiceQuery<CUSTOMER> customerDsq = null;
+
         public Login()
         {
             this.InitializeComponent();
+
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
+        }
+
+        //private void OnCallback(IAsyncResult ar)
+        //{
+        //    CUSTOMER a = customerDsq.EndExecute(ar).FirstOrDefault();
+        //    System.Diagnostics.Debug.WriteLine(a.NAME);
+        //    a.NAME = "hhdbl";
+        //    ctx.UpdateObject(a);
+        //    ctx.BeginSaveChanges(OnSave, null);
+        //}
+
+        private void OnSave(IAsyncResult ar)
+        {
+            var d = ctx.EndExecute(ar);
         }
 
         /// <summary>
@@ -36,6 +56,18 @@ namespace CloudEDU.Login
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from cu in ctx.CUSTOMER select cu);
+            //customerDsq.BeginExecute(OnCallback, null
+            
+            //TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();
+            //IEnumerable<CUSTOMER> courses = await tf.FromAsync(customerDsq.BeginExecute(null, null), ira => customerDsq.EndExecute(ira));
+            //CUSTOMER c = courses.FirstOrDefault();
+            //c.NAME = "dldbl";
+            CUSTOMER c = CUSTOMER.CreateCUSTOMER(0, "siafjksla", "sfajklasfj", 213, 2.2, 4.2, DateTime.Now, true);
+
+
+            ctx.AddToCUSTOMER(c);
+            ctx.BeginSaveChanges(OnSave, ctx);
         }
 
         /// <summary>
