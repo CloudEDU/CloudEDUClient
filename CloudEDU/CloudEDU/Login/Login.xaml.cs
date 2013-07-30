@@ -44,5 +44,11 @@ namespace CloudEDU.Login
         {
             Frame.Navigate(typeof(SignUp));
         }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            //login
+
+        }
     }
 }

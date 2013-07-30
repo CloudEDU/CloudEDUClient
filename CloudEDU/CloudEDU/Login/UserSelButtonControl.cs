@@ -16,7 +16,11 @@ namespace CloudEDU.Login
     public sealed class UserSelButtonControl : Button
     {
         public Grid grid;
-        
+        public User user
+        {
+            get;
+            set;
+        }
 
    
 
