@@ -26,21 +26,20 @@ namespace CloudEDU.CourseStore
     public sealed partial class Courstore : GlobalPage
     {
         private StoreData storeSampleData;
-        private List<GroupInfoList<Object>> dataCategory;
+        private List<GroupInfoList<object>> dataCategory;
+        private DataServiceQuery<COURSE_AVAIL> courseDsq;
 
         public Courstore()
         {
             this.InitializeComponent();
         }
 
-        CloudEDUEntities ctx;
-
         /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             storeSampleData = new StoreData();
             dataCategory = storeSampleData.GetGroupsByCategory();
@@ -52,15 +51,23 @@ namespace CloudEDU.CourseStore
                 
             };
 
-            Uri uri = new Uri("http://10.0.1.39:8080/CloudEDUServer/CourseService.svc/");
-            ctx = new CloudEDUEntities(uri);
+            DataServiceQuery<COURSE> dps = (DataServiceQuery<COURSE>)(from c in DataServiceContextSingleton.SharedDataServiceContext().COURSEs where c.TITLE == "Test Title2" select c);
+            
+            TaskFactory<IEnumerable<COURSE>> tf = new TaskFactory<IEnumerable<COURSE>>();
+            IEnumerable<COURSE> courses = await tf.FromAsync(dps.BeginExecute(null, null), ira => dps.EndExecute(ira));
+
+            COURSE co = courses.FirstOrDefault();
+            System.Diagnostics.Debug.WriteLine(co.TITLE);
+            co.TITLE = "Haohaodiaobaole";
+            DataServiceContextSingleton.SharedDataServiceContext().UpdateObject(co);
+
+            DataServiceContextSingleton.SharedDataServiceContext().BeginSaveChanges(OnComplete, null);
+            //courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in DataServiceContextSingleton.SharedDataServiceContext().COURSE_AVAIL select course_avail);
+            //DataServiceContextSingleton.SharedDataServiceContext().BeginExecute<int?>(new Uri("CreateCourse?teacher_id=3&title='HaoHaoDBL'&intro='HaoHaoYouDBL'&category_id=3&price=0&pg_id=1&icon_url='www.HaoHaoDBL.com'", UriKind.Relative), OnComplete, null);
 
             //ctx.BeginExecute<COURSE_OK>(new Uri("GetCoursesByName?name='Test Title2'", UriKind.Relative), OnComplete, null);
 
-            //DataServiceQuery<COURSE_OK> dps = (DataServiceQuery<COURSE_OK>)(from c in ctx.COURSE_OK where c.TITLE == "Test Title2" select c);
             
-            //TaskFactory<IEnumerable<COURSE_OK>> tf = new TaskFactory<IEnumerable<COURSE_OK>>();
-            //IEnumerable<COURSE_OK> courses = await tf.FromAsync(dps.BeginExecute(null, null), ira => dps.EndExecute(ira));
 
             //foreach (COURSE_OK c in courses)
             //{
@@ -77,6 +84,18 @@ namespace CloudEDU.CourseStore
             //catch (Exception ex)
             //{
             //    System.Diagnostics.Debug.WriteLine(ex.StackTrace);
+            //}
+        }
+
+        private void OnComplete(IAsyncResult result)
+        {
+            //IEnumerable<int?> op = DataServiceContextSingleton.SharedDataServiceContext().EndExecute<int?>(result);
+            //System.Diagnostics.Debug.WriteLine(op.FirstOrDefault());
+            //DataServiceResponse dsq  = DataServiceContextSingleton.SharedDataServiceContext().EndSaveChanges(result);
+            
+            //foreach (var c in dps.EndExecute(result))
+            //{
+            //    System.Diagnostics.Debug.WriteLine(c.CONTENT);
             //}
         }
 
@@ -107,7 +126,7 @@ namespace CloudEDU.CourseStore
         private void CategoryButton_Click(object sender, RoutedEventArgs e)
         {
             var category = (sender as FrameworkElement).DataContext;
-            string categoryName = ((GroupInfoList<Object>)category).Key.ToString();
+            string categoryName = ((GroupInfoList<object>)category).Key.ToString();
 
             Frame.Navigate(typeof(Category), categoryName);
         }

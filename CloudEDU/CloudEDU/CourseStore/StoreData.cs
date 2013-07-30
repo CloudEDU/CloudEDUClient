@@ -37,7 +37,7 @@ namespace CloudEDU.CourseStore
 
             course = new Course();
             course.Title = "the power of smile";
-            course.Rate = 4.0;
+            course.Rate = 3.4;
             course.setImage(baseUri, "Images/Courses/course1.png");
             course.Category = "newest";
             course.IsBuy = false;
@@ -55,7 +55,7 @@ namespace CloudEDU.CourseStore
 
             course = new Course();
             course.Title = "the evolution";
-            course.Rate = 4.0;
+            course.Rate = 2.6;
             course.setImage(baseUri, "Images/Courses/course3.png");
             course.Category = "newest";
             course.IsBuy = false;

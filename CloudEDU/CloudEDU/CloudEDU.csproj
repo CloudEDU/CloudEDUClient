@@ -113,6 +113,7 @@
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\DataServiceContextSingleton.cs" />
     <Compile Include="Common\GlobalPage.cs" />
+    <Compile Include="Common\StarConverter.cs" />
     <Compile Include="CourseStore\Category.xaml.cs">
       <DependentUpon>Category.xaml</DependentUpon>
     </Compile>

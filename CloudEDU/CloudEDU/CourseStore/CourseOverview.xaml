@@ -40,8 +40,8 @@
             <Grid Grid.Column="1" Background="#046EDA">
                 <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Vertical"
                             Margin="20, 20, 0, 0">
-                    <TextBlock x:Name="RateStar" Style="{StaticResource SubheaderTextStyle}" Text="&#x2605;&#x2605;&#x2605;&#x2605;&#x2606;"
-                               Foreground="{StaticResource CourseInfoFontForegroundBrush}" />
+                    <StackPanel x:Name="rateStarsPanel" Orientation="Horizontal">
+                    </StackPanel>
                     <TextBlock x:Name="Rate" Style="{StaticResource SubheaderTextStyle}" Text="12343rates"
                                Foreground="{StaticResource CourseInfoFontForegroundBrush}" />
                     <TextBlock x:Name="Price" Style="{StaticResource HeaderTextStyle}" Text="Free"

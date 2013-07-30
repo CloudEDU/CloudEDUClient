@@ -52,7 +52,7 @@ namespace CloudEDU.CourseStore.CourseDetail
             //comment1.COURSE_ID = 1;
             //comment1.CUSTOMER_ID = 1;
 
-            DataServiceContextSingleton.SharedDataServiceContext().BeginExecute<COMMENT>(new Uri("C", UriKind.Relative), OnComplete, null);
+            DataServiceContextSingleton.SharedDataServiceContext().BeginExecute<int?>(new Uri("EnrollCourse?customer_id=1&course_id=1", UriKind.Relative), OnComplete, null);
 
 
             //DataServiceContextSingleton.SharedDataServiceContext().AddToCOMMENTs(comment1);
@@ -63,14 +63,12 @@ namespace CloudEDU.CourseStore.CourseDetail
 
         private void OnComplete(IAsyncResult result)
         {
+            IEnumerable<int?> op = DataServiceContextSingleton.SharedDataServiceContext().EndExecute<int?>(result);
+            System.Diagnostics.Debug.WriteLine(op.FirstOrDefault());
             //foreach (var c in dps.EndExecute(result))
             //{
             //    System.Diagnostics.Debug.WriteLine(c.CONTENT);
             //}
-            System.Diagnostics.Debug.WriteLine(result.AsyncState);
-            System.Diagnostics.Debug.WriteLine(result.CompletedSynchronously);
-            System.Diagnostics.Debug.WriteLine(result.IsCompleted);
-            System.Diagnostics.Debug.WriteLine(result.GetType());
         }
 
         /// <summary>
@@ -112,13 +110,14 @@ namespace CloudEDU.CourseStore.CourseDetail
             };
             TextBlock rateTextBlock = new TextBlock
             {
+                Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(30, 0, 0, 0),
                 Text = ""
             };
             for (int i = 0; i < rate; ++i)
             {
-                rateTextBlock.Text += "$#x2605;";
+                rateTextBlock.Text += Constants.FillStar;
             }
 
             StackPanel insidePanel = new StackPanel
@@ -152,7 +151,7 @@ namespace CloudEDU.CourseStore.CourseDetail
             {
                 Orientation = Orientation.Vertical,
                 Background = new SolidColorBrush(Colors.Bisque),
-                Margin = new Thickness(0, 0, 0 ,5)
+                Margin = new Thickness(0, 0, 0, 5)
             };
             outsidePanel.Children.Add(insidePanel);
             outsidePanel.Children.Add(titleTextBlock);
@@ -190,7 +189,7 @@ namespace CloudEDU.CourseStore.CourseDetail
         {
             SetStarTextBlock(globalRate);
         }
-        
+
         private void star_Tapped(object sender, TappedRoutedEventArgs e)
         {
             TextBlock targetTextBlock = sender as TextBlock;
@@ -202,51 +201,51 @@ namespace CloudEDU.CourseStore.CourseDetail
         {
             if (num == 0)
             {
-                star1.Text = "$#x2606;";
-                star2.Text = "$#x2606;";
-                star3.Text = "$#x2606;";
-                star4.Text = "$#x2606;";
-                star5.Text = "$#x2606;";
+                star1.Text = Constants.BlankStar;
+                star2.Text = Constants.BlankStar;
+                star3.Text = Constants.BlankStar;
+                star4.Text = Constants.BlankStar;
+                star5.Text = Constants.BlankStar;
             }
             else if (num == 1)
             {
-                star1.Text = "$#x2605;";
-                star2.Text = "$#x2606;";
-                star3.Text = "$#x2606;";
-                star4.Text = "$#x2606;";
-                star5.Text = "$#x2606;";
+                star1.Text = Constants.FillStar;
+                star2.Text = Constants.BlankStar;
+                star3.Text = Constants.BlankStar;
+                star4.Text = Constants.BlankStar;
+                star5.Text = Constants.BlankStar;
             }
             else if (num == 2)
             {
-                star1.Text = "$#x2605;";
-                star2.Text = "$#x2605;";
-                star3.Text = "$#x2606;";
-                star4.Text = "$#x2606;";
-                star5.Text = "$#x2606;";
+                star1.Text = Constants.FillStar;
+                star2.Text = Constants.FillStar;
+                star3.Text = Constants.BlankStar;
+                star4.Text = Constants.BlankStar;
+                star5.Text = Constants.BlankStar;
             }
             else if (num == 3)
             {
-                star1.Text = "$#x2605;";
-                star2.Text = "$#x2605;";
-                star3.Text = "$#x2605;";
-                star4.Text = "$#x2606;";
-                star5.Text = "$#x2606;";
+                star1.Text = Constants.FillStar;
+                star2.Text = Constants.FillStar;
+                star3.Text = Constants.FillStar;
+                star4.Text = Constants.BlankStar;
+                star5.Text = Constants.BlankStar;
             }
             else if (num == 4)
             {
-                star1.Text = "$#x2605;";
-                star2.Text = "$#x2605;";
-                star3.Text = "$#x2605;";
-                star4.Text = "$#x2605;";
-                star5.Text = "$#x2606;";
+                star1.Text = Constants.FillStar;
+                star2.Text = Constants.FillStar;
+                star3.Text = Constants.FillStar;
+                star4.Text = Constants.FillStar;
+                star5.Text = Constants.BlankStar;
             }
             else if (num == 5)
             {
-                star1.Text = "$#x2605;";
-                star2.Text = "$#x2605;";
-                star3.Text = "$#x2605;";
-                star4.Text = "$#x2605;";
-                star5.Text = "$#x2605;";
+                star1.Text = Constants.FillStar;
+                star2.Text = Constants.FillStar;
+                star3.Text = Constants.FillStar;
+                star4.Text = Constants.FillStar;
+                star5.Text = Constants.FillStar;
             }
         }
     }
