@@ -12,23 +12,29 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
+// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
-namespace CloudEDU
+namespace CloudEDU.CourseStore
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
     public sealed partial class Coursing : GlobalPage
     {
+        Course course;
+
         SolidColorBrush pageRed;
         SolidColorBrush pageBlue;
         SolidColorBrush pageGreen;
         SolidColorBrush pageWhite;
         SolidColorBrush pageBlack;
 
+        /// <summary>
+        /// Constructor, initialize the components.
+        /// </summary>
         public Coursing()
         {
             this.InitializeComponent();
@@ -47,9 +53,10 @@ namespace CloudEDU
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            List<string> courseInfo = e.Parameter as List<string>;
-            CourseTitle.Text = Constants.UpperInitialChar(courseInfo[0]);
-            NavigateText.Text = courseInfo[1];
+            List<object> courseInfo = e.Parameter as List<object>;
+            course = courseInfo[0] as Course;
+            NavigateText.Text = courseInfo[1] as string;
+            CourseTitle.Text = Constants.UpperInitialChar(course.Title);
 
             HomeBorder.Background = pageRed;
             LecturesBorder.Background = pageWhite;
@@ -58,6 +65,8 @@ namespace CloudEDU
             HomeText.Foreground = pageWhite;
             LecturesText.Foreground = pageBlack;
             NotesText.Foreground = pageBlack;
+
+            detailFrame.Navigate(typeof(CoursingDetail.Home), course);
         }
 
         /// <summary>
@@ -84,15 +93,20 @@ namespace CloudEDU
         /// <param name="e">Event data that describes how the tap was initiated.</param>
         private void HomeText_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            HomeBorder.Background = pageRed;
-            LecturesBorder.Background = pageWhite;
-            NotesBorder.Background = pageWhite;
+            if (ContentBackgroundRect.Fill != pageRed)
+            {
+                HomeBorder.Background = pageRed;
+                LecturesBorder.Background = pageWhite;
+                NotesBorder.Background = pageWhite;
 
-            HomeText.Foreground = pageWhite;
-            LecturesText.Foreground = pageBlack;
-            NotesText.Foreground = pageBlack;
+                HomeText.Foreground = pageWhite;
+                LecturesText.Foreground = pageBlack;
+                NotesText.Foreground = pageBlack;
 
-            ContentBackgroundRect.Fill = pageRed;
+                ContentBackgroundRect.Fill = pageRed;
+
+                detailFrame.Navigate(typeof(CoursingDetail.Home), course);
+            }
         }
 
         /// <summary>
@@ -102,15 +116,20 @@ namespace CloudEDU
         /// <param name="e">Event data that describes how the tap was initiated.</param>
         private void LecturesText_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            HomeBorder.Background = pageWhite;
-            LecturesBorder.Background = pageBlue;
-            NotesBorder.Background = pageWhite;
+            if (ContentBackgroundRect.Fill != pageBlue)
+            {
+                HomeBorder.Background = pageWhite;
+                LecturesBorder.Background = pageBlue;
+                NotesBorder.Background = pageWhite;
 
-            HomeText.Foreground = pageBlack;
-            LecturesText.Foreground = pageWhite;
-            NotesText.Foreground = pageBlack;
+                HomeText.Foreground = pageBlack;
+                LecturesText.Foreground = pageWhite;
+                NotesText.Foreground = pageBlack;
 
-            ContentBackgroundRect.Fill = pageBlue;
+                ContentBackgroundRect.Fill = pageBlue;
+
+                detailFrame.Navigate(typeof(CoursingDetail.Lecture), course);
+            }
         }
 
         /// <summary>
@@ -120,15 +139,18 @@ namespace CloudEDU
         /// <param name="e">Event data that describes how the tap was initiated.</param>
         private void NotesText_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            HomeBorder.Background = pageWhite;
-            LecturesBorder.Background = pageWhite;
-            NotesBorder.Background = pageGreen;
+            if (ContentBackgroundRect.Fill != pageGreen)
+            {
+                HomeBorder.Background = pageWhite;
+                LecturesBorder.Background = pageWhite;
+                NotesBorder.Background = pageGreen;
 
-            HomeText.Foreground = pageBlack;
-            LecturesText.Foreground = pageBlack;
-            NotesText.Foreground = pageWhite;
+                HomeText.Foreground = pageBlack;
+                LecturesText.Foreground = pageBlack;
+                NotesText.Foreground = pageWhite;
 
-            ContentBackgroundRect.Fill = pageGreen;
+                ContentBackgroundRect.Fill = pageGreen;
+            }
         }
     }
 }

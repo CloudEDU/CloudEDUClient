@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -18,6 +19,7 @@ namespace CloudEDU.Common
             // Create the global appbar
             globalAppBar = new AppBar();
             globalAppBar.Content = new AppbarContent();
+            globalAppBar.Background = Application.Current.Resources["LoginPageBackgroundThemeBrush"] as SolidColorBrush;
             
             this.BottomAppBar = globalAppBar;
         }

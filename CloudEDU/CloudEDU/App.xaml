@@ -1,6 +1,7 @@
 ﻿<Application
     x:Class="CloudEDU.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:common="using:CloudEDU.Common"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CloudEDU"
     RequestedTheme="Light">
@@ -44,11 +45,11 @@
                 <Setter Property="Margin" Value="15,0,15,0" />
             </Style>
             <Style x:Key="VariableSizedWrapGridTemplateStyle" TargetType="VariableSizedWrapGrid">
-                <Setter Property="ItemWidth" Value="350" />
-                <Setter Property="ItemHeight" Value="210" />
+                <Setter Property="ItemWidth" Value="270" />
+                <Setter Property="ItemHeight" Value="180" />
                 <Setter Property="Orientation" Value="Vertical" />
                 <Setter Property="MaxHeight" Value="630" />
-                <Setter Property="Margin" Value="100, -150, 100, 0" />
+                <Setter Property="Margin" Value="100, 0, 100, 0" />
             </Style>
             <Style x:Key="GridViewOpacityRectangleStyle" TargetType="Rectangle">
                 <Setter Property="Fill" Value="Black" />
@@ -58,12 +59,41 @@
             </Style>
             <DataTemplate x:Key="GridViewItemTemplate">
                 <Grid>
-                    <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+                    <Image Source="{Binding ImageUri}" Stretch="UniformToFill" />
                     <Rectangle Style="{StaticResource GridViewOpacityRectangleStyle}" />
                     <StackPanel VerticalAlignment="Bottom">
                         <TextBlock Text="{Binding Title}" Style="{StaticResource GridViewDataTemplateNameTextBlockStyle}" />
-                        <TextBlock Text="{Binding Rate}" Foreground="White"
-                                   Style="{StaticResource PageHeaderTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
+                        <StackPanel Orientation="Horizontal" Margin="15, -10, 0, 10">
+                            <StackPanel.Resources>
+                                <common:StarTextConverter x:Key="TextConverter" />
+                                <common:StarWidthConverter x:Key="WidthConverter" />
+                                <common:StarMarginConverter x:Key="MarginConverter" />
+                            </StackPanel.Resources>
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=1}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=1}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=1}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=2}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=2}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=2}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=3}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=3}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=3}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=4}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=4}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=4}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=5}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=5}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=5}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=6}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=6}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=6}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </DataTemplate>
@@ -80,7 +110,7 @@
                 <Setter Property="ItemHeight" Value="100" />
                 <Setter Property="Orientation" Value="Vertical" />
                 <Setter Property="MaxHeight" Value="630" />
-                <Setter Property="Margin" Value="100, -150, 100, 0" />
+                <Setter Property="Margin" Value="100, 0, 100, 0" />
             </Style>
             <Style x:Key="ListViewOpacityRectangleStyle" TargetType="Rectangle">
                 <Setter Property="Fill" Value="Black" />
@@ -98,12 +128,41 @@
             </Style>
             <DataTemplate x:Key="ListVewItemTemplate">
                 <Grid>
-                    <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+                    <Image Source="{Binding ImageUri}" Stretch="UniformToFill" />
                     <Rectangle Style="{StaticResource ListViewOpacityRectangleStyle}" />
                     <StackPanel HorizontalAlignment="Left">
                         <TextBlock Text="{Binding Title}" Style="{StaticResource ListViewDataTemplateNameTextBlockStyle}" />
-                        <TextBlock Text="{Binding Rate}" Foreground="White" TextAlignment="Left"
-                                   Style="{StaticResource PageHeaderTextStyle}" Margin="15,-5,5,10"/>
+                        <StackPanel Orientation="Horizontal" Margin="15, -10, 0, 10">
+                            <StackPanel.Resources>
+                                <common:StarTextConverter x:Key="TextConverter" />
+                                <common:StarWidthConverter x:Key="WidthConverter" />
+                                <common:StarMarginConverter x:Key="MarginConverter" />
+                            </StackPanel.Resources>
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=1}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=1}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=1}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=2}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=2}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=2}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=3}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=3}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=3}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=4}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=4}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=4}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=5}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=5}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=5}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                            <TextBlock Text="{Binding Rate, Converter={StaticResource TextConverter}, ConverterParameter=6}"
+                                       Width="{Binding Rate, Converter={StaticResource WidthConverter}, ConverterParameter=6}"
+                                       Margin="{Binding Rate, Converter={StaticResource MarginConverter}, ConverterParameter=6}"
+                                       Foreground="White" Style="{StaticResource SubheaderTextStyle}" />
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </DataTemplate>

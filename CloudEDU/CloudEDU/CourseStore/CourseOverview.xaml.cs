@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,8 +23,11 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public sealed partial class CourseOverview : GlobalPage
     {
-        string courseName;
+        Course course;
 
+        /// <summary>
+        /// Constructor, initialize the components
+        /// </summary>
         public CourseOverview()
         {
             this.InitializeComponent();
@@ -36,9 +40,19 @@ namespace CloudEDU.CourseStore
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            courseName = e.Parameter as string;
+            course = e.Parameter as Course;
+            DataContext = course;
+            frame.Navigate(typeof(CourseDetail.Overview), course);
 
-            frame.Navigate(typeof(CourseDetail.Overview), courseName);
+            if (course.Price == null || course.Price.Value == 0)
+            {
+                PriceTextBlock.Text = "Free";
+            }
+            else
+            {
+                PriceTextBlock.Text = "$ " + Math.Round(course.Price.Value, 2);
+            }
+            SetStarsStackPanel(course.Rate ?? 0);
         }
 
         /// <summary>
@@ -70,7 +84,7 @@ namespace CloudEDU.CourseStore
 
             if (OverviewButton.Style != primaryStyle)
             {
-                frame.Navigate(typeof(CourseDetail.Overview), courseName);
+                frame.Navigate(typeof(CourseDetail.Overview), course);
 
                 OverviewButton.Style = primaryStyle;
                 DetailsButton.Style = secondaryStyle;
@@ -90,7 +104,7 @@ namespace CloudEDU.CourseStore
 
             if (DetailsButton.Style != primaryStyle)
             {
-                frame.Navigate(typeof(CourseDetail.Detail), courseName);
+                frame.Navigate(typeof(CourseDetail.Detail), course);
 
                 OverviewButton.Style = secondaryStyle;
                 DetailsButton.Style = primaryStyle;
@@ -110,11 +124,61 @@ namespace CloudEDU.CourseStore
 
             if (CommentsButton.Style != primaryStyle)
             {
-                frame.Navigate(typeof(CourseDetail.Comment), courseName);
+                frame.Navigate(typeof(CourseDetail.Comment), course);
 
                 OverviewButton.Style = secondaryStyle;
                 DetailsButton.Style = secondaryStyle;
                 CommentsButton.Style = primaryStyle;
+            }
+        }
+
+        /// <summary>
+        /// Set the rate star according the rate.
+        /// </summary>
+        /// <param name="rate">The rate of course.</param>
+        private void SetStarsStackPanel(double rate)
+        {
+            int fillInt = (int)rate;
+            int blankInt = 5 - fillInt - 1;
+            double percentFill = rate - (double)fillInt;
+
+            for (int i = 0; i < fillInt; ++i)
+            {
+                TextBlock fillStarTextBlock = new TextBlock
+                {
+                    Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
+                    Foreground = new SolidColorBrush(Colors.White),
+                    Text = Constants.FillStar
+                };
+                rateStarsPanel.Children.Add(fillStarTextBlock);
+            }
+            if (rate == 5) return;
+            double width = Constants.StarWidth * percentFill;
+            TextBlock halfFillStarTextBlock = new TextBlock
+            {
+                Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
+                Foreground = new SolidColorBrush(Colors.White),
+                Text = Constants.FillStar,
+                Width = width
+            };
+            TextBlock halfBlankStarTextBlock = new TextBlock
+            {
+                Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
+                Foreground = new SolidColorBrush(Colors.White),
+                Text = Constants.BlankStar,
+                Margin = new Thickness(-width, 0, 0, 0)
+            };
+            rateStarsPanel.Children.Add(halfFillStarTextBlock);
+            rateStarsPanel.Children.Add(halfBlankStarTextBlock);
+            for (int i = 0; i < blankInt; ++i)
+            {
+                TextBlock blankStarTextBlock = new TextBlock
+                {
+                    Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
+                    Foreground = new SolidColorBrush(Colors.White),
+                    Text = Constants.BlankStar,
+                };
+                rateStarsPanel.Children.Add(blankStarTextBlock);
             }
         }
     }

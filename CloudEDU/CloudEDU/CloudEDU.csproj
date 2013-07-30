@@ -23,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -112,6 +114,7 @@
     </Compile>
     <Compile Include="Common\Constants.cs" />
     <Compile Include="Common\GlobalPage.cs" />
+    <Compile Include="Common\StarConverter.cs" />
     <Compile Include="CourseStore\Category.xaml.cs">
       <DependentUpon>Category.xaml</DependentUpon>
     </Compile>
@@ -128,16 +131,23 @@
     <Compile Include="CourseStore\CourseDetail\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseStore\Coursing.xaml.cs">
+      <DependentUpon>Coursing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CourseStore\CoursingDetail\Home.xaml.cs">
+      <DependentUpon>Home.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CourseStore\CoursingDetail\Lecture.xaml.cs">
+      <DependentUpon>Lecture.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CourseStore\Courstore.xaml.cs">
       <DependentUpon>Courstore.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseStore\Lesson.cs" />
     <Compile Include="CourseStore\MyCourses.xaml.cs">
       <DependentUpon>MyCourses.xaml</DependentUpon>
     </Compile>
     <Compile Include="CourseStore\StoreData.cs" />
-    <Compile Include="Coursing.xaml.cs">
-      <DependentUpon>Coursing.xaml</DependentUpon>
-    </Compile>
     <Compile Include="CourseStore\CourseOverview.xaml.cs">
       <DependentUpon>CourseOverview.xaml</DependentUpon>
     </Compile>
@@ -153,7 +163,7 @@
     </Compile>
     <Compile Include="Login\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\CourseService\Reference.cs">
+    <Compile Include="Service References\Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
@@ -164,6 +174,7 @@
     <Compile Include="Uploading.xaml.cs">
       <DependentUpon>Uploading.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Login\UserSelButtonControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -171,7 +182,7 @@
     </AppxManifest>
     <None Include="CloudEDU_TemporaryKey.pfx" />
     <None Include="packages.config" />
-    <None Include="Service References\CourseService\service.edmx" />
+    <None Include="Service References\Service\service.edmx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Logo.png" />
@@ -185,11 +196,15 @@
     <Content Include="Images\Courses\star.png" />
     <Content Include="Images\Courses\transparent.png" />
     <Content Include="Images\Upload\audio.png" />
+    <Content Include="Images\Upload\audio_white.png" />
     <Content Include="Images\Upload\doc.png" />
+    <Content Include="Images\Upload\doc_white.png" />
+    <Content Include="Images\Upload\image.png" />
     <Content Include="Images\Upload\video.png" />
+    <Content Include="Images\Upload\video_white.png" />
     <Content Include="Images\Users\ania.png" />
     <Content Include="Images\Users\shadow.png" />
-    <None Include="Service References\CourseService\Reference.datasvcmap">
+    <None Include="Service References\Service\Reference.datasvcmap">
       <Generator>DataServicesCoreClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -223,15 +238,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CourseStore\Coursing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CourseStore\CoursingDetail\Home.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CourseStore\CoursingDetail\Lecture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CourseStore\Courstore.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CourseStore\MyCourses.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Coursing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -255,6 +278,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Login\Dictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
     <Page Include="StandardStylePreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -274,9 +302,18 @@
     <Reference Include="JulMar.Windows.Interactivity">
       <HintPath>..\packages\MVVMHelpers.Metro.2013.1.09.00\lib\winrt45\JulMar.Windows.Interactivity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Data.Edm.WindowsStore, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Data.OData.WindowsStore, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Data.Services.Client.WindowsStore, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Data.Edm.WindowsStore, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.WindowsStore.5.0.0\lib\.NETCore\Microsoft.Data.Edm.WindowsStore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData.WindowsStore, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.WindowsStore.5.0.0\lib\.NETCore\Microsoft.Data.OData.WindowsStore.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client.WindowsStore, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Services.Client.WindowsStore.5.0.0\lib\.NETCore\Microsoft.Data.Services.Client.WindowsStore.dll</HintPath>
+    </Reference>
     <Reference Include="System.Composition.AttributedModel, Version=1.0.16.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Composition.1.0.16\lib\netcore45\System.Composition.AttributedModel.dll</HintPath>
@@ -303,7 +340,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ServiceReferenceMetadataStorage Include="Service References\CourseService\">
+    <ServiceReferenceMetadataStorage Include="Service References\Service\">
       <Type>datasvcmap</Type>
     </ServiceReferenceMetadataStorage>
   </ItemGroup>

@@ -1,11 +1,15 @@
 ﻿using CloudEDU.Common;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
 using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,14 +27,18 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public sealed partial class Category : GlobalPage
     {
-        private StoreData storeSampleData;
+        private StoreData categoryCourses;
         private List<GroupInfoList<Object>> dataCategory;
+        private CloudEDUEntities ctx = null;
+        private DataServiceQuery<COURSE_AVAIL> courseDsq = null;
 
         string categoryName = null;
 
         public Category()
         {
             this.InitializeComponent();
+
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 
         /// <summary>
@@ -42,10 +50,64 @@ namespace CloudEDU.CourseStore
         {
             categoryName = e.Parameter as string;
             Title.Text = Constants.UpperInitialChar(categoryName);
+            loadingProgressRing.IsActive = true;
 
-            storeSampleData = new StoreData();
-            dataCategory = storeSampleData.GetSingleGroupByCategoryTitle(categoryName);
-            cvs1.Source = dataCategory;
+            courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in ctx.COURSE_AVAIL
+                                                         where course_avail.CATE_NAME == categoryName
+                                                         select course_avail);
+            courseDsq.BeginExecute(OnCategoryCoursesComplete, null);
+        }
+
+        /// <summary>
+        /// DataServiceQuery callback method to refresh the UI.
+        /// </summary>
+        /// <param name="result">Async operation result.</param>
+        private async void OnCategoryCoursesComplete(IAsyncResult result)
+        {
+            categoryCourses = new StoreData();
+            try
+            {
+                IEnumerable<COURSE_AVAIL> courses = courseDsq.EndExecute(result);
+                foreach (var c in courses)
+                {
+                    categoryCourses.AddCourse(Constants.CourseAvail2Course(c));
+                }
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        dataCategory = categoryCourses.GetSingleGroupByCategoryTitle(categoryName);
+                        cvs1.Source = dataCategory;
+                        loadingProgressRing.IsActive = false;
+                    });
+            }
+            catch
+            {
+                ShowMessageDialog();
+            }
+        }
+
+        /// <summary>
+        /// Network Connection error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    var messageDialog = new MessageDialog("No Network has been found!");
+                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                    {
+                        Frame.Navigate(typeof(Courstore));
+                    }));
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    loadingProgressRing.IsActive = false;
+                    await messageDialog.ShowAsync();
+                }
+                catch
+                {
+                    ShowMessageDialog();
+                }
+            });
         }
 
         /// <summary>
@@ -72,9 +134,9 @@ namespace CloudEDU.CourseStore
         /// <param name="e">Event data that describes the course clicked.</param>
         private void Course_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var courseName = ((Course)e.ClickedItem).Title;
+            Course course = (Course)e.ClickedItem;
 
-            Frame.Navigate(typeof(CourseOverview), courseName);
+            Frame.Navigate(typeof(CourseOverview), course);
         }
 
         /// <summary>
