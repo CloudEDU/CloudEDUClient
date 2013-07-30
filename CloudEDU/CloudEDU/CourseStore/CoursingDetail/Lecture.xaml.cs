@@ -23,6 +23,9 @@ namespace CloudEDU.CourseStore.CoursingDetail
     /// </summary>
     public sealed partial class Lecture : Page
     {
+        /// <summary>
+        /// Constructor, initilize the components.
+        /// </summary>
         public Lecture()
         {
             this.InitializeComponent();
@@ -35,6 +38,8 @@ namespace CloudEDU.CourseStore.CoursingDetail
         /// 属性通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            Course course = e.Parameter as Course;
+
             allLessonsStackPanel.Children.Add(GenerateALessonBox());
             allLessonsStackPanel.Children.Add(GenerateALessonBox());
         }

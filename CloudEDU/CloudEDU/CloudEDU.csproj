@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -23,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -111,8 +113,8 @@
       <DependentUpon>AppbarContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Constants.cs" />
-    <Compile Include="Common\DataServiceContextSingleton.cs" />
     <Compile Include="Common\GlobalPage.cs" />
+    <Compile Include="Common\StarConverter.cs" />
     <Compile Include="CourseStore\Category.xaml.cs">
       <DependentUpon>Category.xaml</DependentUpon>
     </Compile>
@@ -141,6 +143,7 @@
     <Compile Include="CourseStore\Courstore.xaml.cs">
       <DependentUpon>Courstore.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseStore\Lesson.cs" />
     <Compile Include="CourseStore\MyCourses.xaml.cs">
       <DependentUpon>MyCourses.xaml</DependentUpon>
     </Compile>
@@ -196,6 +199,7 @@
     <Content Include="Images\Upload\audio_white.png" />
     <Content Include="Images\Upload\doc.png" />
     <Content Include="Images\Upload\doc_white.png" />
+    <Content Include="Images\Upload\image.png" />
     <Content Include="Images\Upload\video.png" />
     <Content Include="Images\Upload\video_white.png" />
     <Content Include="Images\Users\ania.png" />
@@ -340,7 +344,6 @@
       <Type>datasvcmap</Type>
     </ServiceReferenceMetadataStorage>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
   </PropertyGroup>

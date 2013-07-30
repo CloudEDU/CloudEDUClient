@@ -28,7 +28,7 @@ namespace CloudEDU.CourseStore
         }
 
         private int? _id = null;
-        public int ID
+        public int? ID
         {
             get
             {
@@ -45,7 +45,7 @@ namespace CloudEDU.CourseStore
         }
 
         private decimal? _price = null;
-        public decimal Price
+        public decimal? Price
         {
             get
             {
@@ -62,7 +62,7 @@ namespace CloudEDU.CourseStore
         }
 
         private double? _rate = null;
-        public double Rate
+        public double? Rate
         {
             get
             {
@@ -164,7 +164,7 @@ namespace CloudEDU.CourseStore
         }
 
         private int? _pg = null;
-        public int PG
+        public int? PG
         {
             get
             {
@@ -180,19 +180,36 @@ namespace CloudEDU.CourseStore
             }
         }
 
-        private ImageSource _imageSource = null;
-        public ImageSource ImageSource
+        private string _imageUri = null;
+        public string ImageUri
         {
             get
             {
-                return _imageSource;
+                return _imageUri;
             }
             set
             {
-                if (this._imageSource != value)
+                if (this._imageUri != value)
                 {
-                    this._imageSource = value;
+                    this._imageUri = value;
                     this.OnPropertyChanged("ICON_URL");
+                }
+            }
+        }
+
+        private int? _lessonNum = null;
+        public int? LessonNum
+        {
+            get
+            {
+                return _lessonNum.HasValue ? _lessonNum.Value : 0;
+            }
+            set
+            {
+                if (this._lessonNum != value)
+                {
+                    this._lessonNum = value;
+                    this.OnPropertyChanged("LESSON_NUM");
                 }
             }
         }
@@ -229,11 +246,6 @@ namespace CloudEDU.CourseStore
                     this.OnPropertyChanged("ITEM_CONTAINER_TYPE");
                 }
             }
-        }
-
-        public void setImage(Uri baseUri, string path)
-        {
-            ImageSource = new BitmapImage(new Uri(baseUri, path));
         }
 
         #region Will be cast off

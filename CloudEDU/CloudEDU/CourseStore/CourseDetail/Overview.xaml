@@ -13,13 +13,13 @@
         <ScrollViewer x:Name="OverviewScroll" Style="{StaticResource VerticalScrollViewerStyle}"
                       VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" Margin="20, 20">
-                <Image Width="auto" Stretch="Uniform" Source="ms-appx:///Images/Courses/ComputerNetworking.png"
+                <Image Height="280" Stretch="UniformToFill" Source="{Binding ImageUri}"
                        HorizontalAlignment="Left" Margin="10" />
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="By" />
-                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Teacher" Margin="20, 0, 0, 0" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="{Binding Teacher}" Margin="20, 0, 0, 0" />
                 </StackPanel>
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="IntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntroIntro" TextWrapping="Wrap"
+                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="{Binding Intro}" TextWrapping="Wrap"
                            Margin="0, 20, 20, 0"/>
             </StackPanel>
         </ScrollViewer>

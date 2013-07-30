@@ -21,6 +21,11 @@ namespace CloudEDU.CourseStore.CoursingDetail
     /// </summary>
     public sealed partial class Home : Page
     {
+        Course course;
+
+        /// <summary>
+        /// Constructor, initilize the components.
+        /// </summary>
         public Home()
         {
             this.InitializeComponent();
@@ -33,6 +38,8 @@ namespace CloudEDU.CourseStore.CoursingDetail
         /// 属性通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            course = e.Parameter as Course;
+            DataContext = course;
         }
     }
 }

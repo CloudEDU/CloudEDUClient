@@ -26,13 +26,20 @@ namespace CloudEDU.CourseStore.CourseDetail
     /// </summary>
     public sealed partial class Comment : Page
     {
+        private Course course;
         private int globalRate;
 
-        private DataServiceQuery<COMMENT> dps;
+        private CloudEDUEntities ctx = null;
+        private DataServiceQuery<COMMENT> commentDsq = null;
 
+        /// <summary>
+        /// Constructor, initialize the components.
+        /// </summary>
         public Comment()
         {
             this.InitializeComponent();
+
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 
         /// <summary>
@@ -42,35 +49,8 @@ namespace CloudEDU.CourseStore.CourseDetail
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            string courseName = e.Parameter as string;
+            course = e.Parameter as Course;
             globalRate = 0;
-
-            //var query = from comment in DataServiceContextSingleton.SharedDataServiceContext().COMMENTs select comment;
-
-            //COMMENT comment1 = new COMMENT();
-            //comment1.CONTENT = "sadfasdf";
-            //comment1.COURSE_ID = 1;
-            //comment1.CUSTOMER_ID = 1;
-
-            DataServiceContextSingleton.SharedDataServiceContext().BeginExecute<COMMENT>(new Uri("C", UriKind.Relative), OnComplete, null);
-
-
-            //DataServiceContextSingleton.SharedDataServiceContext().AddToCOMMENTs(comment1);
-            //DataServiceContextSingleton.SharedDataServiceContext().BeginSaveChanges(OnComplete, null);
-            //dps = (DataServiceQuery<COMMENT>)(query);
-            //dps.BeginExecute(OnComplete, query);
-        }
-
-        private void OnComplete(IAsyncResult result)
-        {
-            //foreach (var c in dps.EndExecute(result))
-            //{
-            //    System.Diagnostics.Debug.WriteLine(c.CONTENT);
-            //}
-            System.Diagnostics.Debug.WriteLine(result.AsyncState);
-            System.Diagnostics.Debug.WriteLine(result.CompletedSynchronously);
-            System.Diagnostics.Debug.WriteLine(result.IsCompleted);
-            System.Diagnostics.Debug.WriteLine(result.GetType());
         }
 
         /// <summary>
@@ -80,45 +60,60 @@ namespace CloudEDU.CourseStore.CourseDetail
         /// <param name="e"></param>
         private void AddCommentButton_Click(object sender, RoutedEventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine(newTitleTextBox.Text);
+            if (newTitleTextBox.Text == "" || newContentTextBox.Text == "" || newTitleTextBox.Text.Trim() == "Title")
+            {
+                WarningTextBlock.Visibility = Visibility.Visible;
+                return;
+            }
             StackPanel newComment = GenerateACommentBox(newTitleTextBox.Text, globalRate, newContentTextBox.Text);
             commentsStackPanel.Children.Add(newComment);
 
             newTitleTextBox.Text = newContentTextBox.Text = "";
             globalRate = 0;
             SetStarTextBlock(globalRate);
+            WarningTextBlock.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Create a stackpanel representing a comment.
+        /// </summary>
+        /// <param name="title">Comment title.</param>
+        /// <param name="rate">Comment rate.</param>
+        /// <param name="content">Comment content.</param>
+        /// <returns>Comment Stackpanel created.</returns>
         private StackPanel GenerateACommentBox(string title, int rate, string content)
         {
             TextBlock userTextBlock = new TextBlock
             {
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
-                Text = "Boyi"
+                Text = Constants.Username
             };
             TextBlock dateTextBlock = new TextBlock
             {
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(40, 0, 0, 0),
-                Text = "2013.7.03"
+                Text = DateTime.Now.Date.ToString()
             };
             TextBlock timeTextBlock = new TextBlock
             {
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(20, 0, 0, 0),
-                Text = "14:23"
+                Text = DateTime.Now.TimeOfDay.ToString()
             };
             TextBlock rateTextBlock = new TextBlock
             {
+                Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(30, 0, 0, 0),
                 Text = ""
             };
             for (int i = 0; i < rate; ++i)
             {
-                rateTextBlock.Text += "$#x2605;";
+                rateTextBlock.Text += Constants.FillStar;
             }
 
             StackPanel insidePanel = new StackPanel
@@ -152,7 +147,7 @@ namespace CloudEDU.CourseStore.CourseDetail
             {
                 Orientation = Orientation.Vertical,
                 Background = new SolidColorBrush(Colors.Bisque),
-                Margin = new Thickness(0, 0, 0 ,5)
+                Margin = new Thickness(0, 0, 0, 5)
             };
             outsidePanel.Children.Add(insidePanel);
             outsidePanel.Children.Add(titleTextBlock);
@@ -190,7 +185,7 @@ namespace CloudEDU.CourseStore.CourseDetail
         {
             SetStarTextBlock(globalRate);
         }
-        
+
         private void star_Tapped(object sender, TappedRoutedEventArgs e)
         {
             TextBlock targetTextBlock = sender as TextBlock;
@@ -202,51 +197,51 @@ namespace CloudEDU.CourseStore.CourseDetail
         {
             if (num == 0)
             {
-                star1.Text = "$#x2606;";
-                star2.Text = "$#x2606;";
-                star3.Text = "$#x2606;";
-                star4.Text = "$#x2606;";
-                star5.Text = "$#x2606;";
+                star1.Text = Constants.BlankStar;
+                star2.Text = Constants.BlankStar;
+                star3.Text = Constants.BlankStar;
+                star4.Text = Constants.BlankStar;
+                star5.Text = Constants.BlankStar;
             }
             else if (num == 1)
             {
-                star1.Text = "$#x2605;";
-                star2.Text = "$#x2606;";
-                star3.Text = "$#x2606;";
-                star4.Text = "$#x2606;";
-                star5.Text = "$#x2606;";
+                star1.Text = Constants.FillStar;
+                star2.Text = Constants.BlankStar;
+                star3.Text = Constants.BlankStar;
+                star4.Text = Constants.BlankStar;
+                star5.Text = Constants.BlankStar;
             }
             else if (num == 2)
             {
-                star1.Text = "$#x2605;";
-                star2.Text = "$#x2605;";
-                star3.Text = "$#x2606;";
-                star4.Text = "$#x2606;";
-                star5.Text = "$#x2606;";
+                star1.Text = Constants.FillStar;
+                star2.Text = Constants.FillStar;
+                star3.Text = Constants.BlankStar;
+                star4.Text = Constants.BlankStar;
+                star5.Text = Constants.BlankStar;
             }
             else if (num == 3)
             {
-                star1.Text = "$#x2605;";
-                star2.Text = "$#x2605;";
-                star3.Text = "$#x2605;";
-                star4.Text = "$#x2606;";
-                star5.Text = "$#x2606;";
+                star1.Text = Constants.FillStar;
+                star2.Text = Constants.FillStar;
+                star3.Text = Constants.FillStar;
+                star4.Text = Constants.BlankStar;
+                star5.Text = Constants.BlankStar;
             }
             else if (num == 4)
             {
-                star1.Text = "$#x2605;";
-                star2.Text = "$#x2605;";
-                star3.Text = "$#x2605;";
-                star4.Text = "$#x2605;";
-                star5.Text = "$#x2606;";
+                star1.Text = Constants.FillStar;
+                star2.Text = Constants.FillStar;
+                star3.Text = Constants.FillStar;
+                star4.Text = Constants.FillStar;
+                star5.Text = Constants.BlankStar;
             }
             else if (num == 5)
             {
-                star1.Text = "$#x2605;";
-                star2.Text = "$#x2605;";
-                star3.Text = "$#x2605;";
-                star4.Text = "$#x2605;";
-                star5.Text = "$#x2605;";
+                star1.Text = Constants.FillStar;
+                star2.Text = Constants.FillStar;
+                star3.Text = Constants.FillStar;
+                star4.Text = Constants.FillStar;
+                star5.Text = Constants.FillStar;
             }
         }
     }

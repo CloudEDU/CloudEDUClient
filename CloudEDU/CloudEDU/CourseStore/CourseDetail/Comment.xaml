@@ -62,7 +62,7 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0, 10, 0, 0">
-                        <TextBox x:Name="newContentTextBox" Width="400" TextWrapping="Wrap" />
+                        <TextBox x:Name="newContentTextBox" Width="400" Height="85" TextWrapping="Wrap" MaxLength="300" />
                         <Button Style="{StaticResource CommentAppBarButtonStyle}" AutomationProperties.Name="Add Comment" Click="AddCommentButton_Click">
                             <Button.Transitions>
                                 <TransitionCollection>
@@ -71,6 +71,8 @@
                             </Button.Transitions>
                         </Button>
                     </StackPanel>
+                    <TextBlock x:Name="WarningTextBlock" Style="{StaticResource BasicTextStyle}" Text="Please input the title and content!!"
+                               Foreground="Red" FontFamily="Times New Roman" FontSize="20"  Visibility="Collapsed" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

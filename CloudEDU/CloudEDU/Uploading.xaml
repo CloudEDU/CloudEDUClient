@@ -48,7 +48,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
             <RowDefinition Height="100" />
-            <RowDefinition />
+            <RowDefinition Height="100*" />
+            <RowDefinition Height="150*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -65,13 +66,52 @@
             </StackPanel>
         </Grid>
 
-        <Border Grid.Row="1" BorderBrush="{x:Null}" Background="#7ECEF4" Width="1000"
-                HorizontalAlignment="Center" BorderThickness="0">
+        <Border Grid.Row="1" BorderBrush="{x:Null}" Background="#7ECEF4" Width="925"
+                HorizontalAlignment="Center" BorderThickness="0" Margin="183,0,258,0">
             <TextBox TextAlignment="Center" i:WatermarkTextBehavior.Text="Course Name" FontSize="60" BorderThickness="0" />
         </Border>
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="90, 0">
+            <StackPanel Orientation="Horizontal" Margin="50, 0, 0, 0">
+                <TextBox x:Name="priceTextBox"  Style="{StaticResource PopupTextBoxStyle}"
+                         MaxLength="30" Text="Price" />
+                <StackPanel x:Name="totalImagePanel" Orientation="Horizontal" Margin="50, 0, 0, 0">
+                    <TextBox Style="{StaticResource PopupTextBoxStyle}" IsReadOnly="True" Text="Lesson Image" />
+                    <StackPanel x:Name="imagePanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
+                        <StackPanel.ChildrenTransitions>
+                            <TransitionCollection>
+                                <AddDeleteThemeTransition />
+                            </TransitionCollection>
+                        </StackPanel.ChildrenTransitions>
+                    </StackPanel>
+                    <Button x:Name="imageAddButton" Style="{StaticResource AddElementButtonStyle}" Click="ImageUploadButton_Click">
+                        <Button.Transitions>
+                            <TransitionCollection>
+                                <AddDeleteThemeTransition />
+                            </TransitionCollection>
+                        </Button.Transitions>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="50, 20, 0, 0">
+                <ComboBox Name="categoryComboBox" Margin="40, 0, 0, 0" Width="420" Height="70" VerticalAlignment="Bottom" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding CATE_NAME}" FontSize="30" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox Name="pgComboBox" Margin="90, 0, 0, 0" Width="420" Height="70" VerticalAlignment="Bottom">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DESCRIPTION}" FontSize="30" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
 
-        <ScrollViewer Grid.Row="2" Style="{StaticResource VerticalScrollViewerStyle}"
-                      HorizontalAlignment="Center" Margin="0, 20, 0, 0">
+        <ScrollViewer Grid.Row="3" Style="{StaticResource VerticalScrollViewerStyle}"
+                      HorizontalAlignment="Center" Margin="183,20,183,0" Grid.RowSpan="2">
             <StackPanel Orientation="Vertical" Width="1000">
                 <StackPanel Orientation="Vertical">
                     <Grid Background="#00B7EE">
@@ -91,7 +131,7 @@
                         </StackPanel>
                     </Grid>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="-80, 0, 0, 0">
                     <Button Style="{StaticResource AddAppBarButtonStyle}" HorizontalAlignment="Center"
                         AutomationProperties.Name="" Click="AddLessonButton_Click">
                         <Button.Transitions>
@@ -101,7 +141,7 @@
                         </Button.Transitions>
                     </Button>
                     <Button Style="{StaticResource YesAppBarButtonStyle}" HorizontalAlignment="Center"
-                            AutomationProperties.Name="">
+                            AutomationProperties.Name="" Click="allUploadButton_Click">
                         <Button.Transitions>
                             <TransitionCollection>
                                 <RepositionThemeTransition />
@@ -112,21 +152,22 @@
             </StackPanel>
         </ScrollViewer>
 
-        <Popup Grid.RowSpan="3" Name="addLessonPopup" IsOpen="False" IsLightDismissEnabled="False">
+        <Popup Grid.RowSpan="4" Name="addLessonPopup" IsOpen="False" IsLightDismissEnabled="False">
             <Popup.ChildTransitions>
                 <TransitionCollection>
                     <PaneThemeTransition />
                 </TransitionCollection>
             </Popup.ChildTransitions>
 
-            <Grid Width="1366" Height="680" Background="White"
-                  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 130, 0, 80">
+            <Grid Width="1366" Height="600" Background="White"
+                  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 70, 0, 70">
                 <StackPanel Orientation="Vertical" Margin="20, 20">
-                    <TextBox x:Name="lessonName" Style="{StaticResource PopupTextBoxStyle}"
-                             MaxLength="30" Text="Lesson Name" />
-                    <TextBox x:Name="lessonDescription" Background="{StaticResource PopupTextBackgroundBrush}"
-                             BorderThickness="0" FontSize="45" Height="140" Width="1250" HorizontalAlignment="Left"
-                             TextWrapping="Wrap" Margin="40, 20, 0, 0" Text="Description..." />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="lessonName" Style="{StaticResource PopupTextBoxStyle}"
+                                 MaxLength="30" Text="Lesson Name" />
+                    </StackPanel>
+                    <TextBox x:Name="lessonDescription" Style="{StaticResource PopupTextBoxStyle}" Width="930"
+                                 MaxLength="30" TextWrapping="Wrap" Text="Description..." />
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}" Text="Documentation" IsReadOnly="True" />
                         <StackPanel x:Name="docsPanel" Orientation="Horizontal" Margin="10, 35, 0, 15">
@@ -140,6 +181,7 @@
                             <Button.Transitions>
                                 <TransitionCollection>
                                     <RepositionThemeTransition />
+                                    <AddDeleteThemeTransition />
                                 </TransitionCollection>
                             </Button.Transitions>
                         </Button>
@@ -157,6 +199,7 @@
                             <Button.Transitions>
                                 <TransitionCollection>
                                     <RepositionThemeTransition />
+                                    <AddDeleteThemeTransition />
                                 </TransitionCollection>
                             </Button.Transitions>
                         </Button>
@@ -174,11 +217,12 @@
                             <Button.Transitions>
                                 <TransitionCollection>
                                     <RepositionThemeTransition />
+                                    <AddDeleteThemeTransition />
                                 </TransitionCollection>
                             </Button.Transitions>
                         </Button>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 40">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 20, 0, 0">
                         <Button x:Name="UploadLessionButton" Style="{StaticResource UploadCheckButtonStyle}" Content="Upload"
                                 Click="UploadLessionButton_Click" />
                         <Button x:Name="CancelUploadButton" Style="{StaticResource UploadCheckButtonStyle}" Content="Cancel"

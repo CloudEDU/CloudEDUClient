@@ -93,6 +93,7 @@
                 </GridView>
             </SemanticZoom.ZoomedInView>
         </SemanticZoom>
+        <ProgressRing x:Name="loadingProgressRing" Grid.RowSpan="2" Width="100" Height="100" />
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>

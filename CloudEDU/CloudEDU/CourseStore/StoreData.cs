@@ -32,173 +32,172 @@ namespace CloudEDU.CourseStore
     {
         public StoreData()
         {
-            Course course;
-            Uri baseUri = new Uri(Constants.BaseURI);
+            //Course course;
 
-            course = new Course();
-            course.Title = "the power of smile";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course1.png");
-            course.Category = "newest";
-            course.IsBuy = false;
-            course.IsTeach = true;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "the power of smile";
+            //course.Rate = 3.4;
+            //course.ImageUri = Constants.BaseURI + "Images/Courses/course1.png";
+            //course.Category = "newest";
+            //course.IsBuy = false;
+            //course.IsTeach = true;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "sun shower";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course2.png");
-            course.Category = "newest";
-            course.IsBuy = false;
-            course.IsTeach = true;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "sun shower";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI + "Images/Courses/course2.png";
+            //course.Category = "newest";
+            //course.IsBuy = false;
+            //course.IsTeach = true;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "the evolution";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course3.png");
-            course.Category = "newest";
-            course.IsBuy = false;
-            course.IsTeach = true;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "the evolution";
+            //course.Rate = 2.6;
+            //course.ImageUri = Constants.BaseURI + "Images/Courses/course3.png";
+            //course.Category = "newest";
+            //course.IsBuy = false;
+            //course.IsTeach = true;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "the power of smile";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course1.png");
-            course.Category = "newest";
-            course.IsBuy = false;
-            course.IsTeach = true;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "the power of smile";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI + "Images/Courses/course1.png";
+            //course.Category = "newest";
+            //course.IsBuy = false;
+            //course.IsTeach = true;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "sun shower";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course2.png");
-            course.Category = "hottest";
-            course.IsBuy = false;
-            course.IsTeach = true;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "sun shower";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI + "Images/Courses/course2.png";
+            //course.Category = "hottest";
+            //course.IsBuy = false;
+            //course.IsTeach = true;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "the power of smile";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course1.png");
-            course.Category = "hottest";
-            course.IsBuy = true;
-            course.IsTeach = false;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "the power of smile";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI + "Images/Courses/course1.png";
+            //course.Category = "hottest";
+            //course.IsBuy = true;
+            //course.IsTeach = false;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "the evolution";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course3.png");
-            course.Category = "hottest";
-            course.IsBuy = true;
-            course.IsTeach = false;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "the evolution";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI + "Images/Courses/course3.png";
+            //course.Category = "hottest";
+            //course.IsBuy = true;
+            //course.IsTeach = false;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "sun shower";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course2.png");
-            course.Category = "Computer Science";
-            course.IsBuy = true;
-            course.IsTeach = false;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "sun shower";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI, "Images/Courses/course2.png";
+            //course.Category = "Computer Science";
+            //course.IsBuy = true;
+            //course.IsTeach = false;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "the evolution";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course3.png");
-            course.Category = "Computer Science";
-            course.IsBuy = true;
-            course.IsTeach = false;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "the evolution";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI, "Images/Courses/course3.png";
+            //course.Category = "Computer Science";
+            //course.IsBuy = true;
+            //course.IsTeach = false;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "the power of smile";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course1.png");
-            course.Category = "Computer Science";
-            course.IsBuy = true;
-            course.IsTeach = false;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "the power of smile";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI, "Images/Courses/course1.png";
+            //course.Category = "Computer Science";
+            //course.IsBuy = true;
+            //course.IsTeach = false;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "sun shower";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course2.png");
-            course.Category = "Psychology";
-            course.IsBuy = true;
-            course.IsTeach = false;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "sun shower";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI, "Images/Courses/course2.png";
+            //course.Category = "Psychology";
+            //course.IsBuy = true;
+            //course.IsTeach = false;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "the evolution";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course3.png");
-            course.Category = "Psychology";
-            course.IsBuy = false;
-            course.IsTeach = true;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "the evolution";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI, "Images/Courses/course3.png";
+            //course.Category = "Psychology";
+            //course.IsBuy = false;
+            //course.IsTeach = true;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "the power of smile";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course1.png");
-            course.Category = "Psychology";
-            course.IsBuy = false;
-            course.IsTeach = true;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "the power of smile";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI, "Images/Courses/course1.png";
+            //course.Category = "Psychology";
+            //course.IsBuy = false;
+            //course.IsTeach = true;
+            //Collection.Add(course);
 
-            course = new Course();
-            course.Title = "the evolution";
-            course.Rate = 4.0;
-            course.setImage(baseUri, "Images/Courses/course3.png");
-            course.Category = "Psychology";
-            course.IsBuy = false;
-            course.IsTeach = true;
-            Collection.Add(course);
+            //course = new Course();
+            //course.Title = "the evolution";
+            //course.Rate = 4.0;
+            //course.ImageUri = Constants.BaseURI, "Images/Courses/course3.png";
+            //course.Category = "Psychology";
+            //course.IsBuy = false;
+            //course.IsTeach = true;
+            //Collection.Add(course);
 
-            for (int j = 0; j < 15; ++j)
-            {
-                for (int i = 0; i < 1; ++i)
-                {
-                    course = new Course();
-                    course.Title = "the power of smile";
-                    course.Rate = 4.0;
-                    course.setImage(baseUri, "Images/Courses/course1.png");
-                    course.Category = "Psychology";
-                    course.IsBuy = false;
-                    course.IsTeach = true;
-                    Collection.Add(course);
-                }
+            //for (int j = 0; j < 15; ++j)
+            //{
+            //    for (int i = 0; i < 1; ++i)
+            //    {
+            //        course = new Course();
+            //        course.Title = "the power of smile";
+            //        course.Rate = 4.0;
+            //        course.ImageUri = Constants.BaseURI, "Images/Courses/course1.png");
+            //        course.Category = "Psychology";
+            //        course.IsBuy = false;
+            //        course.IsTeach = true;
+            //        Collection.Add(course);
+            //    }
 
-                for (int i = 0; i < 2; ++i)
-                {
-                    course = new Course();
-                    course.Title = "sun shower";
-                    course.Rate = 4.0;
-                    course.setImage(baseUri, "Images/Courses/course2.png");
-                    course.Category = "Psychology";
-                    course.IsBuy = true;
-                    course.IsTeach = false;
-                    Collection.Add(course);
-                }
+            //    for (int i = 0; i < 2; ++i)
+            //    {
+            //        course = new Course();
+            //        course.Title = "sun shower";
+            //        course.Rate = 4.0;
+            //        course.ImageUri = Constants.BaseURI, "Images/Courses/course2.png");
+            //        course.Category = "Psychology";
+            //        course.IsBuy = true;
+            //        course.IsTeach = false;
+            //        Collection.Add(course);
+            //    }
 
-                for (int i = 0; i < 4; ++i)
-                {
-                    course = new Course();
-                    course.Title = "the evolution";
-                    course.Rate = 4.0;
-                    course.setImage(baseUri, "Images/Courses/course3.png");
-                    course.Category = "Psychology";
-                    course.IsBuy = false;
-                    course.IsTeach = true;
-                    Collection.Add(course);
-                }
-            }
+            //    for (int i = 0; i < 4; ++i)
+            //    {
+            //        course = new Course();
+            //        course.Title = "the evolution";
+            //        course.Rate = 4.0;
+            //        course.ImageUri = Constants.BaseURI, "Images/Courses/course3.png");
+            //        course.Category = "Psychology";
+            //        course.IsBuy = false;
+            //        course.IsTeach = true;
+            //        Collection.Add(course);
+            //    }
+            //}
         }
 
         private CourseCollection _collection = new CourseCollection();
