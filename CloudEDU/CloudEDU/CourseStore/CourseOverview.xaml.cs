@@ -25,6 +25,9 @@ namespace CloudEDU.CourseStore
     {
         Course course;
 
+        /// <summary>
+        /// Constructor, initialize the components
+        /// </summary>
         public CourseOverview()
         {
             this.InitializeComponent();
@@ -149,6 +152,7 @@ namespace CloudEDU.CourseStore
                 };
                 rateStarsPanel.Children.Add(fillStarTextBlock);
             }
+            if (rate == 5) return;
             double width = Constants.StarWidth * percentFill;
             TextBlock halfFillStarTextBlock = new TextBlock
             {

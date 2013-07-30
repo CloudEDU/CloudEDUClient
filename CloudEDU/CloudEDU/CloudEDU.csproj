@@ -197,6 +197,7 @@
     <Content Include="Images\Upload\audio_white.png" />
     <Content Include="Images\Upload\doc.png" />
     <Content Include="Images\Upload\doc_white.png" />
+    <Content Include="Images\Upload\image.png" />
     <Content Include="Images\Upload\video.png" />
     <Content Include="Images\Upload\video_white.png" />
     <Content Include="Images\Users\ania.png" />

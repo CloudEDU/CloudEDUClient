@@ -19,6 +19,7 @@
         <Property Name="CONTENT" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         <Property Name="TITLE" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
         <Property Name="TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="RATE" Type="Edm.Double" />
         <NavigationProperty Name="CUSTOMER" Relationship="CloudEDUModel.FK__COMMENT__CUSTOME__6E01572D" ToRole="CUSTOMER" FromRole="COMMENT" />
         <NavigationProperty Name="COURSE" Relationship="CloudEDUModel.FK_COMMENT_COURSE" ToRole="COURSE" FromRole="COMMENT" />
       </EntityType>
@@ -139,6 +140,7 @@
         <Property Name="LEARN_RATE" Type="Edm.Double" />
         <Property Name="TEACH_RATE" Type="Edm.Double" />
         <Property Name="BIRTHDAY" Type="Edm.DateTime" Nullable="false" Precision="0" />
+        <Property Name="ALLOW" Type="Edm.Boolean" Nullable="false" />
         <NavigationProperty Name="COMMENTs" Relationship="CloudEDUModel.FK__COMMENT__CUSTOME__6E01572D" ToRole="COMMENT" FromRole="CUSTOMER" />
         <NavigationProperty Name="COURSEs" Relationship="CloudEDUModel.FK_COURSE_TEACHER" ToRole="COURSE" FromRole="CUSTOMER" />
         <NavigationProperty Name="ATTENDs" Relationship="CloudEDUModel.FK_ATTEND_CUSTOMER" ToRole="ATTEND" FromRole="CUSTOMER" />
@@ -223,11 +225,13 @@
         <Property Name="RATE" Type="Edm.Double" />
         <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         <Property Name="INTRO" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        <Property Name="NAME" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
-        <Property Name="CATE_NAME" Type="Edm.String" MaxLength="10" FixedLength="true" Unicode="true" />
+        <Property Name="TEACHER_NAME" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="CATE_NAME" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="true" />
         <Property Name="RESTRICT_AGE" Type="Edm.Int32" />
         <Property Name="PG_DESCRIPTION" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
         <Property Name="ICON_URL" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="RATED_USERS" Type="Edm.Int32" />
+        <Property Name="LESSON_NUM" Type="Edm.Int32" />
       </EntityType>
       <EntityType Name="COURSE_OK">
         <Key>
@@ -584,15 +588,6 @@
           <Parameter Name="category_id" Type="Edm.Int32" Nullable="false" />
           <Parameter Name="price" Type="Edm.Double" Nullable="false" />
           <Parameter Name="pg_id" Type="Edm.Int32" Nullable="false" />
-          <Parameter Name="icon_url" Type="Edm.String" />
-        </FunctionImport>
-        <FunctionImport Name="Test" ReturnType="Edm.Int32" m:HttpMethod="GET">
-          <Parameter Name="teacher_id" Type="Edm.Int32" Nullable="false" />
-          <Parameter Name="category_id" Type="Edm.Int32" Nullable="false" />
-          <Parameter Name="pg_id" Type="Edm.Int32" Nullable="false" />
-          <Parameter Name="price" Type="Edm.Double" Nullable="false" />
-          <Parameter Name="title" Type="Edm.String" />
-          <Parameter Name="intro" Type="Edm.String" />
           <Parameter Name="icon_url" Type="Edm.String" />
         </FunctionImport>
         <AssociationSet Name="FK_COURSE_CATEGORY" Association="CloudEDUModel.FK_COURSE_CATEGORY">
