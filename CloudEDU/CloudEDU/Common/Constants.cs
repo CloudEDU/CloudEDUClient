@@ -13,7 +13,7 @@ namespace CloudEDU.Common
     public class Constants
     {
         public static string BaseURI = "ms-appx:///";
-        public static string DataServiceURI = "http://10.0.1.39:8080/CloudEDUServer/Service.svc/";
+        public static string DataServiceURI = "http://10.0.1.16/Service.svc/";
 
         public static string FillStar = "\x2605";
         public static string BlankStar = "\x2606";

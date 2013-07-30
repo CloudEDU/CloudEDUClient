@@ -1,4 +1,5 @@
 ﻿using CloudEDU.Common;
+using CloudEDU.CourseStore;
 using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,12 @@ namespace CloudEDU
     public sealed partial class Uploading : GlobalPage
     {
         private List<CATEGORY> categories;
+        private List<PARENT_GUIDE> pgs;
         private CloudEDUEntities ctx = null;
         private DataServiceQuery<CATEGORY> categoryDsq = null;
+        private DataServiceQuery<PARENT_GUIDE> pgDsq = null;
+
+        private List<Course> uploadCourses = null;
 
         List<string> imagesFilterTypeList = new List<string> { ".png", ".jpg", ".bmp" };
         List<string> docsFilterTypeList = new List<string> { ".doc", ".docx", ".pdf" };
@@ -76,9 +81,16 @@ namespace CloudEDU
             categoryDsq = (DataServiceQuery<CATEGORY>)(from category in ctx.CATEGORies select category);
             categoryDsq.BeginExecute(OnCategoryComplete, null);
 
+            pgDsq = (DataServiceQuery<PARENT_GUIDE>)(from pg in ctx.PARENT_GUIDE select pg);
+            pgDsq.BeginExecute(OnPGComplete, null);
+
             ResetPage();
         }
 
+        /// <summary>
+        /// DataServiceQuery callback method to refresh the UI.
+        /// </summary>
+        /// <param name="result">Async operation result.</param>
         private async void OnCategoryComplete(IAsyncResult result)
         {
             try
@@ -89,6 +101,23 @@ namespace CloudEDU
                 {
                     categoryComboBox.ItemsSource = categories;
                 });
+            }
+            catch
+            {
+                ShowMessageDialog();
+            }
+        }
+
+        private async void OnPGComplete(IAsyncResult result)
+        {
+            try
+            {
+                IEnumerable<PARENT_GUIDE> ps = pgDsq.EndExecute(result);
+                pgs = new List<PARENT_GUIDE>(ps);
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        pgComboBox.ItemsSource = pgs;
+                    });
             }
             catch
             {
@@ -162,7 +191,9 @@ namespace CloudEDU
         /// <param name="e">Event data that describes how the click was initiated.</param>
         private async void UploadLessionButton_Click(object sender, RoutedEventArgs e)
         {
-           List<BackgroundTransferContentPart> imageParts = CreateBackgroundTransferContentPartList(images);
+            CheckAllInfomation();
+
+            List<BackgroundTransferContentPart> imageParts = CreateBackgroundTransferContentPartList(images);
             List<BackgroundTransferContentPart> docParts = CreateBackgroundTransferContentPartList(docs);
             List<BackgroundTransferContentPart> audioParts = CreateBackgroundTransferContentPartList(audios);
             List<BackgroundTransferContentPart> videoParts = CreateBackgroundTransferContentPartList(videos);
@@ -528,6 +559,9 @@ namespace CloudEDU
 
             lessonName.Text = "Lesson Name";
             lessonDescription.Text = "Description...";
+            priceTextBox.Text = "Price";
+            categoryComboBox.SelectedIndex = 0;
+            pgComboBox.SelectedIndex = 0;
             imagePanel.Children.Clear();
             docsPanel.Children.Clear();
             audiosPanel.Children.Clear();
@@ -562,7 +596,18 @@ namespace CloudEDU
             docs = null;
             audios = null;
             videos = null;
+            uploadCourses = new List<Course>();
         }
         #endregion
+
+        private bool CheckAllInfomation()
+        {
+            bool result = true;
+
+            if (String.IsNullOrWhiteSpace(lessonName.Text)) result = false;
+            //if (String.IsNullOrWhiteSpace
+
+            return result;
+        }
     }
 }
