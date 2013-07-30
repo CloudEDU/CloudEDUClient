@@ -1,4 +1,4 @@
-﻿<common:GlobalPage
+<common:GlobalPage
     x:Class="CloudEDU.CourseStore.CourseOverview"
     xmlns:common="using:CloudEDU.Common"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
