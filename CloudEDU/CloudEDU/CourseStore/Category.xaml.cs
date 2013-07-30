@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,6 +36,8 @@ namespace CloudEDU.CourseStore
         public Category()
         {
             this.InitializeComponent();
+
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 
         /// <summary>
@@ -46,6 +49,26 @@ namespace CloudEDU.CourseStore
         {
             categoryName = e.Parameter as string;
             Title.Text = Constants.UpperInitialChar(categoryName);
+
+            courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in ctx.COURSE_AVAIL
+                                                         where course_avail.CATE_NAME == categoryName
+                                                         select course_avail);
+            courseDsq.BeginExecute(OnCategoryCoursesComplete, null);
+        }
+
+        private async void OnCategoryCoursesComplete(IAsyncResult result)
+        {
+            categoryCourses = new StoreData();
+            IEnumerable<COURSE_AVAIL> courses = courseDsq.EndExecute(result);
+            foreach (var c in courses)
+            {
+                categoryCourses.AddCourse(Constants.CourseAvail2Course(c));
+            }
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    dataCategory = categoryCourses.GetSingleGroupByCategoryTitle(categoryName);
+                    cvs1.Source = dataCategory;
+                });
         }
 
         /// <summary>

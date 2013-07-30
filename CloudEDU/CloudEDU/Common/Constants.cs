@@ -28,6 +28,7 @@ namespace CloudEDU.Common
             string[] words = null;
             StringBuilder strBuff = null;
 
+            v = v.Trim();
             words = System.Text.RegularExpressions.Regex.Split(v, @"\s+");
 
             strBuff = new StringBuilder();
