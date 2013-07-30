@@ -45,11 +45,11 @@
                 <Setter Property="Margin" Value="15,0,15,0" />
             </Style>
             <Style x:Key="VariableSizedWrapGridTemplateStyle" TargetType="VariableSizedWrapGrid">
-                <Setter Property="ItemWidth" Value="350" />
-                <Setter Property="ItemHeight" Value="210" />
+                <Setter Property="ItemWidth" Value="270" />
+                <Setter Property="ItemHeight" Value="180" />
                 <Setter Property="Orientation" Value="Vertical" />
                 <Setter Property="MaxHeight" Value="630" />
-                <Setter Property="Margin" Value="100, -150, 100, 0" />
+                <Setter Property="Margin" Value="100, 0, 100, 0" />
             </Style>
             <Style x:Key="GridViewOpacityRectangleStyle" TargetType="Rectangle">
                 <Setter Property="Fill" Value="Black" />
@@ -110,7 +110,7 @@
                 <Setter Property="ItemHeight" Value="100" />
                 <Setter Property="Orientation" Value="Vertical" />
                 <Setter Property="MaxHeight" Value="630" />
-                <Setter Property="Margin" Value="100, -150, 100, 0" />
+                <Setter Property="Margin" Value="100, 0, 100, 0" />
             </Style>
             <Style x:Key="ListViewOpacityRectangleStyle" TargetType="Rectangle">
                 <Setter Property="Fill" Value="Black" />

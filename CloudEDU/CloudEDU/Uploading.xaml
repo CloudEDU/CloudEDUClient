@@ -149,6 +149,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource PopupTextBoxStyle}"
                                  MaxLength="30" Text="Lesson Name" />
+                        <!--<ComboBox Name="categoryComboBox"-->
                         <TextBox Style="{StaticResource PopupTextBoxStyle}" IsReadOnly="True" Text="Lesson Image" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
