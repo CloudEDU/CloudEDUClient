@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -111,7 +111,6 @@
       <DependentUpon>AppbarContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\Constants.cs" />
-    <Compile Include="Common\DataServiceContextSingleton.cs" />
     <Compile Include="Common\GlobalPage.cs" />
     <Compile Include="Common\StarConverter.cs" />
     <Compile Include="CourseStore\Category.xaml.cs">

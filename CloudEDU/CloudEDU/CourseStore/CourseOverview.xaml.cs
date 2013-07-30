@@ -23,7 +23,7 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public sealed partial class CourseOverview : GlobalPage
     {
-        string courseName;
+        Course course;
 
         public CourseOverview()
         {
@@ -37,11 +37,19 @@ namespace CloudEDU.CourseStore
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            courseName = e.Parameter as string;
+            course = e.Parameter as Course;
+            DataContext = course;
+            frame.Navigate(typeof(CourseDetail.Overview), course);
 
-            frame.Navigate(typeof(CourseDetail.Overview), courseName);
-
-            SetStarsStackPanel(3.3);
+            if (course.Price == null || course.Price.Value == 0)
+            {
+                PriceTextBlock.Text = "Free";
+            }
+            else
+            {
+                PriceTextBlock.Text = "$ " + Math.Round(course.Price.Value, 2);
+            }
+            SetStarsStackPanel(course.Rate ?? 0);
         }
 
         /// <summary>
@@ -73,7 +81,7 @@ namespace CloudEDU.CourseStore
 
             if (OverviewButton.Style != primaryStyle)
             {
-                frame.Navigate(typeof(CourseDetail.Overview), courseName);
+                frame.Navigate(typeof(CourseDetail.Overview), course);
 
                 OverviewButton.Style = primaryStyle;
                 DetailsButton.Style = secondaryStyle;
@@ -93,7 +101,7 @@ namespace CloudEDU.CourseStore
 
             if (DetailsButton.Style != primaryStyle)
             {
-                frame.Navigate(typeof(CourseDetail.Detail), courseName);
+                frame.Navigate(typeof(CourseDetail.Detail), course);
 
                 OverviewButton.Style = secondaryStyle;
                 DetailsButton.Style = primaryStyle;
@@ -113,7 +121,7 @@ namespace CloudEDU.CourseStore
 
             if (CommentsButton.Style != primaryStyle)
             {
-                frame.Navigate(typeof(CourseDetail.Comment), courseName);
+                frame.Navigate(typeof(CourseDetail.Comment), course);
 
                 OverviewButton.Style = secondaryStyle;
                 DetailsButton.Style = secondaryStyle;

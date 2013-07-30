@@ -9,6 +9,7 @@ using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -49,6 +50,7 @@ namespace CloudEDU.CourseStore
         {
             categoryName = e.Parameter as string;
             Title.Text = Constants.UpperInitialChar(categoryName);
+            loadingProgressRing.IsActive = true;
 
             courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in ctx.COURSE_AVAIL
                                                          where course_avail.CATE_NAME == categoryName
@@ -56,19 +58,56 @@ namespace CloudEDU.CourseStore
             courseDsq.BeginExecute(OnCategoryCoursesComplete, null);
         }
 
+        /// <summary>
+        /// DataServiceQuery callback method to refresh the UI.
+        /// </summary>
+        /// <param name="result">Async operation result.</param>
         private async void OnCategoryCoursesComplete(IAsyncResult result)
         {
             categoryCourses = new StoreData();
-            IEnumerable<COURSE_AVAIL> courses = courseDsq.EndExecute(result);
-            foreach (var c in courses)
+            try
             {
-                categoryCourses.AddCourse(Constants.CourseAvail2Course(c));
-            }
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                IEnumerable<COURSE_AVAIL> courses = courseDsq.EndExecute(result);
+                foreach (var c in courses)
                 {
-                    dataCategory = categoryCourses.GetSingleGroupByCategoryTitle(categoryName);
-                    cvs1.Source = dataCategory;
-                });
+                    categoryCourses.AddCourse(Constants.CourseAvail2Course(c));
+                }
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        dataCategory = categoryCourses.GetSingleGroupByCategoryTitle(categoryName);
+                        cvs1.Source = dataCategory;
+                        loadingProgressRing.IsActive = false;
+                    });
+            }
+            catch
+            {
+                ShowMessageDialog();
+            }
+        }
+
+        /// <summary>
+        /// Network Connection error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    var messageDialog = new MessageDialog("No Network has been found!");
+                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                    {
+                        Frame.Navigate(typeof(Courstore));
+                    }));
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    loadingProgressRing.IsActive = false;
+                    await messageDialog.ShowAsync();
+                }
+                catch
+                {
+                    ShowMessageDialog();
+                }
+            });
         }
 
         /// <summary>
@@ -95,9 +134,9 @@ namespace CloudEDU.CourseStore
         /// <param name="e">Event data that describes the course clicked.</param>
         private void Course_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var courseName = ((Course)e.ClickedItem).Title;
+            Course course = (Course)e.ClickedItem;
 
-            Frame.Navigate(typeof(CourseOverview), courseName);
+            Frame.Navigate(typeof(CourseOverview), course);
         }
 
         /// <summary>

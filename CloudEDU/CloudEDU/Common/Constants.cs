@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Popups;
 
 namespace CloudEDU.Common
 {
@@ -59,6 +60,8 @@ namespace CloudEDU.Common
             course.Rate = c.RATE;
             course.PG = c.RESTRICT_AGE;
             course.ImageUri = BaseURI + "Images/Courses/course1.png";
+            course.IsBuy = true;
+            course.IsTeach = true;
 
             return course;
         }

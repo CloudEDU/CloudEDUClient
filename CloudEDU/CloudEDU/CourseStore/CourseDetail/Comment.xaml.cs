@@ -44,31 +44,6 @@ namespace CloudEDU.CourseStore.CourseDetail
         {
             string courseName = e.Parameter as string;
             globalRate = 0;
-
-            //var query = from comment in DataServiceContextSingleton.SharedDataServiceContext().COMMENTs select comment;
-
-            //COMMENT comment1 = new COMMENT();
-            //comment1.CONTENT = "sadfasdf";
-            //comment1.COURSE_ID = 1;
-            //comment1.CUSTOMER_ID = 1;
-
-            DataServiceContextSingleton.SharedDataServiceContext().BeginExecute<int?>(new Uri("EnrollCourse?customer_id=1&course_id=1", UriKind.Relative), OnComplete, null);
-
-
-            //DataServiceContextSingleton.SharedDataServiceContext().AddToCOMMENTs(comment1);
-            //DataServiceContextSingleton.SharedDataServiceContext().BeginSaveChanges(OnComplete, null);
-            //dps = (DataServiceQuery<COMMENT>)(query);
-            //dps.BeginExecute(OnComplete, query);
-        }
-
-        private void OnComplete(IAsyncResult result)
-        {
-            IEnumerable<int?> op = DataServiceContextSingleton.SharedDataServiceContext().EndExecute<int?>(result);
-            System.Diagnostics.Debug.WriteLine(op.FirstOrDefault());
-            //foreach (var c in dps.EndExecute(result))
-            //{
-            //    System.Diagnostics.Debug.WriteLine(c.CONTENT);
-            //}
         }
 
         /// <summary>
