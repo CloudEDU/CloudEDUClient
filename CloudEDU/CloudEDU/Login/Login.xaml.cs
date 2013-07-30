@@ -43,7 +43,7 @@ namespace CloudEDU.Login
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMERs select user);
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
             customerDsq.BeginExecute(OnCustomerComplete, null);
         }
 
@@ -53,9 +53,9 @@ namespace CloudEDU.Login
             csl = new List<CUSTOMER>(cs);
             System.Diagnostics.Debug.WriteLine(csl[0].NAME);
 
-            CUSTOMER c = CUSTOMER.CreateCUSTOMER(2150521, "safj", "saiofwqpjf", decimal.MinValue, DateTime.MinValue, true);
+            //CUSTOMER c = CUSTOMER.CreateCUSTOMER(2150521, "safj", "saiofwqpjf", decimal.MinValue, DateTime.MinValue, true);
 
-            ctx.AddToCUSTOMERs(c);
+            //ctx.AddToCUSTOMERs(c);
             ctx.BeginSaveChanges(OnFinish, null);
         }
 

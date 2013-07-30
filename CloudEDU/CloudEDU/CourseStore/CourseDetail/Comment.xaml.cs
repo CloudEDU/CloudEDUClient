@@ -29,6 +29,7 @@ namespace CloudEDU.CourseStore.CourseDetail
         private Course course;
         private int globalRate;
 
+        private StoreData comments;
         private CloudEDUEntities ctx = null;
         private DataServiceQuery<COMMENT> commentDsq = null;
 
@@ -51,6 +52,9 @@ namespace CloudEDU.CourseStore.CourseDetail
         {
             course = e.Parameter as Course;
             globalRate = 0;
+            commentDsq = (DataServiceQuery<COMMENT>)(from cmt in ctx.COMMENT
+                                                     where cmt.COURSE_ID == course.ID
+                                                     select cmt);
         }
 
         /// <summary>
@@ -69,10 +73,32 @@ namespace CloudEDU.CourseStore.CourseDetail
             StackPanel newComment = GenerateACommentBox(newTitleTextBox.Text, globalRate, newContentTextBox.Text);
             commentsStackPanel.Children.Add(newComment);
 
+            COMMENT comment = new COMMENT();
+            comment.TITLE = newTitleTextBox.Text;
+            comment.CONTENT = newContentTextBox.Text;
+            comment.RATE = globalRate;
+            comment.COURSE_ID = (int)course.ID;
+            comment.TIME = new DateTime();
+            // rewrite
+            comment.CUSTOMER_ID = 14; 
+
+            ctx.AddToCOMMENT(comment);
+
             newTitleTextBox.Text = newContentTextBox.Text = "";
             globalRate = 0;
             SetStarTextBlock(globalRate);
             WarningTextBlock.Visibility = Visibility.Collapsed;
+
+            ctx.BeginSaveChanges(OnCommentUpdateComplete, null);
+        }
+
+        /// <summary>
+        /// DataServiceQuery callback method to refresh the UI.
+        /// </summary>
+        /// <param name="result">Async operation result.</param>
+        private void OnCommentUpdateComplete(IAsyncResult result)
+        {
+            DataServiceResponse dsr = ctx.EndSaveChanges(result);
         }
 
         /// <summary>
