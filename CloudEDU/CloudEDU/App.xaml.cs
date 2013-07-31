@@ -92,7 +92,7 @@ namespace CloudEDU
                         Constants.User.ID, Constants.User.ATTEND_COUNT, Constants.User.TEACH_COUNT);
                     goalPage = typeof(CourseStore.Courstore);
                 }
-                goalPage = typeof(Login.Login);
+                //goalPage = typeof(Login.Login);
                 if (!rootFrame.Navigate(goalPage, args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");

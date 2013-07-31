@@ -62,6 +62,7 @@ namespace CloudEDU.Login
 
         private async void SetAttendTeachNumber()
         {
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
             teachDsq = (DataServiceQuery<COURSE_AVAIL>)(from course in ctx.COURSE_AVAIL
                                                         where course.TEACHER_NAME == this.NAME
                                                         select course);
@@ -123,6 +124,7 @@ namespace CloudEDU.Login
             {
                 System.Diagnostics.Debug.WriteLine("in SelectLastUser Function error:{0}", e.Message);
             }
+            u.SetAttendTeachNumber();
             return u;
         }
     }
