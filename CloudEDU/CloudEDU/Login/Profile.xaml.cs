@@ -35,6 +35,7 @@ namespace CloudEDU.Login
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             biggestGrid.DataContext = Constants.User;
+            //degreeBox.
         }
 
         /// <summary>
@@ -61,12 +62,14 @@ namespace CloudEDU.Login
 
         private void SaveImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            //save to remote database
         }
 
         private void ResetImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
             retypePasswordStackPanel.Visibility = Visibility.Collapsed;
+
+            //
         }
 
 
