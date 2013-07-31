@@ -142,7 +142,6 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 deleteImage = new Image
                 {
                     Tag = id.ToString(),
-                    Source = new BitmapImage(new Uri("ms-appx:///Images/Coursing/Note/delete.png")),
                     Margin = new Thickness(4, 0, -45, 0),
                     Height = 40,
                     Width = 40,
@@ -234,7 +233,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             ctx.BeginExecute<bool>(new Uri("/RemoveNote?id=" + Convert.ToInt32(toDelImage.Tag), UriKind.Relative), OnDeleteNoteComplete, null);
 
             Grid toDelGrid = toDelImage.Parent as Grid;
-            allSharedNotesStackPanel.Children.Remove(toDelGrid);
+            myNotesStackPanel.Children.Remove(toDelGrid);
         }
 
         private void OnDeleteNoteComplete(IAsyncResult result)
@@ -263,9 +262,9 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             Button bt = sender as Button;
             sharedNoteDsq = (DataServiceQuery<NOTE_AVAIL>)(from selectNote in ctx.NOTE_AVAIL
-                                                                     where selectNote.COURSE_ID == course.ID.Value
-                                                                     orderby selectNote.DATE descending
-                                                                     select selectNote);
+                                                           where selectNote.COURSE_ID == course.ID.Value && selectNote.SHARE == true
+                                                           orderby selectNote.DATE descending
+                                                           select selectNote);
             myNoteDsq = (DataServiceQuery<NOTE_AVAIL>)(from myNote in ctx.NOTE_AVAIL
                                                        where myNote.COURSE_ID == course.ID.Value && myNote.CUSTOMER_ID == Constants.User.ID
                                                        orderby myNote.DATE descending
@@ -293,10 +292,6 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
                 IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(sharedNoteDsq.BeginExecute(null, null), iar => sharedNoteDsq.EndExecute(iar));
                 sharedNotesList = nas.ToList();
-                foreach (var n in sharedNotesList)
-                {
-                    System.Diagnostics.Debug.WriteLine(n.ID);
-                }
                 foreach (var n in sharedNotesList)
                 {
                     allSharedNotesStackPanel.Children.Add(GenerateSharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER, n.CUSTOMER_ID.Value));

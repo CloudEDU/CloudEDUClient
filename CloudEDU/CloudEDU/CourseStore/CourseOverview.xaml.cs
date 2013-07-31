@@ -269,46 +269,61 @@ namespace CloudEDU.CourseStore
             }
             else if (bt.Content.ToString() == "Buy")
             {
+                bool isToBuy = false;
+                bool isHaveBuy = false;
+
                 var buySure = new MessageDialog("Are you sure to buy this course?", "Buy Course");
-                buySure.Commands.Add(new UICommand("Yes"));
+                buySure.Commands.Add(new UICommand("Yes", (command) =>
+                    {
+                        isToBuy = true;
+                    }));
                 buySure.Commands.Add(new UICommand("No", (command) =>
                     {
+                        isToBuy = false;
                         return;
                     }));
                 await buySure.ShowAsync();
 
-                try
+                if (isToBuy)
                 {
-                    string uri = "/EnrollCourse?customer_id=" + Constants.User.ID + "&course_id=" + course.ID;
-                    TaskFactory<IEnumerable<int>> tf = new TaskFactory<IEnumerable<int>>();
-                    IEnumerable<int> code = await tf.FromAsync(ctx.BeginExecute<int>(new Uri(uri, UriKind.Relative), null, null), iar => ctx.EndExecute<int>(iar));
-
-                    if (code.FirstOrDefault() != 0)
+                    try
                     {
-                        var buyError = new MessageDialog("You don't have enough money. Please contact Scott Zhao.", "Buy Failed");
-                        buyError.Commands.Add(new UICommand("Close"));
-                        await buyError.ShowAsync();
+                        string uri = "/EnrollCourse?customer_id=" + Constants.User.ID + "&course_id=" + course.ID;
+                        TaskFactory<IEnumerable<int>> tf = new TaskFactory<IEnumerable<int>>();
+                        IEnumerable<int> code = await tf.FromAsync(ctx.BeginExecute<int>(new Uri(uri, UriKind.Relative), null, null), iar => ctx.EndExecute<int>(iar));
+                        isHaveBuy = true;
+
+                        if (code.FirstOrDefault() != 0)
+                        {
+                            isHaveBuy = false;
+                            var buyError = new MessageDialog("You don't have enough money. Please contact Scott Zhao.", "Buy Failed");
+                            buyError.Commands.Add(new UICommand("Close"));
+                            await buyError.ShowAsync();
+                            return;
+                        }
+
+                    }
+                    catch
+                    {
+                        ShowMessageDialog("Network connection error!");
                         return;
                     }
-
                 }
-                catch
+
+                if (isHaveBuy)
                 {
-                    ShowMessageDialog("Network connection error!");
-                    return;
+                    var buyOkMsg = new MessageDialog("Do you want to start learning?", "Buy successfully");
+                    buyOkMsg.Commands.Add(new UICommand("Yes", (command) =>
+                        {
+                            courseInfo.Add("attending");
+                            Frame.Navigate(typeof(Coursing), courseInfo);
+                        }));
+                    buyOkMsg.Commands.Add(new UICommand("No", (command) =>
+                        {
+                            bt.Content = "Attend";
+                        }));
+                    await buyOkMsg.ShowAsync();
                 }
-
-                var buyOkMsg = new MessageDialog("Do you want to start learning?", "Buy successfully");
-                buyOkMsg.Commands.Add(new UICommand("Yes", (command) =>
-                    {
-                        courseInfo.Add("attending");
-                        Frame.Navigate(typeof(Coursing), courseInfo);
-                    }));
-                buyOkMsg.Commands.Add(new UICommand("No", (command) =>
-                    {
-                        bt.Content = "Attend";
-                    }));
-                await buyOkMsg.ShowAsync();
             }
         }
 

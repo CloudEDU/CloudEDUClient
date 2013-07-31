@@ -414,6 +414,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             note.CONTENT = this.noteContent.Text;
             note.LESSON_ID = lessons[selectLessonComboBox.SelectedIndex].ID;
             note.CUSTOMER_ID = Constants.User.ID;
+            note.SHARE = sharableCheckBox.IsChecked ?? false;
 
             if (note == null)
             {
@@ -441,6 +442,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             this.noteTitle.Text = "Title";
             this.noteContent.Text = "Note Content...";
             this.selectLessonComboBox.SelectedIndex = 0;
+            sharableCheckBox.IsChecked = false;
 
         }
 
