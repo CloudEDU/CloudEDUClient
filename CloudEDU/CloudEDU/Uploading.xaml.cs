@@ -56,6 +56,7 @@ namespace CloudEDU
         private List<Lesson> allLessons;
         private Course toBeUploadCourse;
         Dictionary<string, int> resourceDic;
+        private bool hasImage;
 
         private Button addImageButton;
 
@@ -178,6 +179,9 @@ namespace CloudEDU
                 ShowMessageDialog("Format error! Please check your upload infomation.");
                 return;
             }
+            lessonUploadProgressRing.IsActive = true;
+            UploadLessionButton.Visibility = Visibility.Collapsed;
+            CancelUploadButton.Visibility = Visibility.Collapsed;
             allLessons.Add(new Lesson(++lessonCount, lessonName.Text, lessonDescription.Text));
 
             List<BackgroundTransferContentPart> docParts = CreateBackgroundTransferContentPartList(docs);
@@ -189,17 +193,30 @@ namespace CloudEDU
             if (audioParts != null) allParts.AddRange(audioParts);
             if (videoParts != null) allParts.AddRange(videoParts);
 
-            Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=" + Constants.User.NAME.Trim());
+            Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=" + Constants.User.NAME);
 
             BackgroundUploader uploader = new BackgroundUploader();
-            if (allParts.Count != 0)
+            try
             {
-                UploadOperation uploadOperation = await uploader.CreateUploadAsync(uploadUri, allParts);
-                // Attach progress and completion handlers.
-                await HandleUploadAsync(uploadOperation, true);
+                if (allParts.Count != 0)
+                {
+                    UploadOperation uploadOperation = await uploader.CreateUploadAsync(uploadUri, allParts);
+                    // Attach progress and completion handlers.
+                    await HandleUploadAsync(uploadOperation, true);
+                }
+            }
+            catch
+            {
+                ShowMessageDialog("Network connection error!");
+                lessonCount--;
+                ResetPopup();
+                return;
             }
 
             AddLessonInfo();
+            lessonUploadProgressRing.IsActive = false;
+            UploadLessionButton.Visibility = Visibility.Visible;
+            CancelUploadButton.Visibility = Visibility.Visible;
             wholeFrame.Opacity = 1;
             addLessonPopup.IsOpen = false;
         }
@@ -213,6 +230,7 @@ namespace CloudEDU
         {
             wholeFrame.Opacity = 1;
             addLessonPopup.IsOpen = false;
+            ResetPopup();
         }
 
         /// <summary>
@@ -251,6 +269,7 @@ namespace CloudEDU
                 UploadOperation imagesUpload = await uploader.CreateUploadAsync(uploadUri, imageParts);
                 await HandleUploadAsync(imagesUpload, true);
             }
+            hasImage = true;
         }
 
         /// <summary>
@@ -350,6 +369,11 @@ namespace CloudEDU
                 return;
             }
 
+            addLessonButton.IsEnabled = false;
+            allUploadButton.IsEnabled = false;
+            resetUploadButton.IsEnabled = false;
+            uploadProgressBar.Visibility = Visibility.Visible;
+
             try
             {
                 resourceDic = new Dictionary<string, int>(Constants.ResourceType.Count);
@@ -395,7 +419,7 @@ namespace CloudEDU
             for (int i = 0; i < allLessons.Count; ++i)
             {
                 Lesson newLesson = allLessons[i];
-                string lessonUplaodUri = "/CreateLesson?course_id=" + newCourseID
+                string lessonUploadUri = "/CreateLesson?course_id=" + newCourseID
                     + "&content='" + newLesson.Content
                     + "'&title='" + newLesson.Title +
                     "'&number=" + newLesson.Number;
@@ -403,13 +427,13 @@ namespace CloudEDU
                 try
                 {
                     TaskFactory<IEnumerable<decimal>> tf = new TaskFactory<IEnumerable<decimal>>();
-                    IEnumerable<decimal> lessons = await tf.FromAsync(ctx.BeginExecute<decimal>(new Uri(lessonUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<decimal>(iar));
+                    IEnumerable<decimal> lessons = await tf.FromAsync(ctx.BeginExecute<decimal>(new Uri(lessonUploadUri, UriKind.Relative), null, null), iar => ctx.EndExecute<decimal>(iar));
                     newLessonID = Convert.ToInt32(lessons.FirstOrDefault());
                     if (newLessonID == 0) throw new InvalidDataException();
                 }
                 catch
                 {
-                    ShowMessageDialog("Lesson uplaod error! Please check your network.");
+                    ShowMessageDialog("Lesson error! Please check your network.");
                     return;
                 }
 
@@ -460,6 +484,21 @@ namespace CloudEDU
                     return;
                 }
             }
+            addLessonButton.IsEnabled = true;
+            allUploadButton.IsEnabled = true;
+            resetUploadButton.IsEnabled = true;
+            uploadProgressBar.Visibility = Visibility.Collapsed;
+
+            var finishMsg = new MessageDialog("Upload Finish! Please wait the check.", "Congratulation");
+            finishMsg.Commands.Add(new UICommand("Continue upload", (command) =>
+                {
+                    ResetPage();
+                }));
+            finishMsg.Commands.Add(new UICommand("Back", (command) =>
+                {
+                    Frame.Navigate(typeof(CourseStore.Courstore));
+                }));
+            await finishMsg.ShowAsync();
         }
 
         /// <summary>
@@ -577,9 +616,10 @@ namespace CloudEDU
                     System.Diagnostics.Debug.WriteLine("{0}, {1}", c.Key, c.Value);
                 }
 
-                if (images != null && images.Count != 0)
+                if (images != null && images.Count != 0 && hasImage == false)
                 {
                     toBeUploadCourse.ImageUri = response.Headers[images.FirstOrDefault().Name];
+                    hasImage = true;
                 }
                 SaveUploadLessonToListAsync(response);
             }
@@ -721,6 +761,9 @@ namespace CloudEDU
             docs = null;
             audios = null;
             videos = null;
+            lessonUploadProgressRing.IsActive = false;
+            UploadLessionButton.Visibility = Visibility.Visible;
+            CancelUploadButton.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -729,6 +772,7 @@ namespace CloudEDU
         private void ResetPage()
         {
             bool inFlag = false;
+            hasImage = false;
 
             categoryDsq = (DataServiceQuery<CATEGORY>)(from category in ctx.CATEGORY select category);
             categoryDsq.BeginExecute(OnCategoryComplete, null);

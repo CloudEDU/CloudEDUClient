@@ -16,7 +16,7 @@ namespace CloudEDU.Common
 {
     public class Constants
     {
-        public static string BaseURI = "ms-appx:///";
+        public static string BaseURI = "http://10.0.1.65/Upload/";
         public static string DataServiceURI = "http://10.0.1.16/Service.svc/";
 
         public static string FillStar = "\x2605";
@@ -25,7 +25,6 @@ namespace CloudEDU.Common
 
         public static List<string> ResourceType = new List<string> { "DOCUMENT", "VIDEO", "AUDIO" };
 
-        public static string Username = "Test";
         //public static CUSTOMER User;
         public static User User;
         /// <summary>
@@ -70,7 +69,7 @@ namespace CloudEDU.Common
             course.Rate = c.RATE;
             course.PG = c.RESTRICT_AGE;
             course.LessonNum = c.LESSON_NUM;
-            course.ImageUri = BaseURI + "Images/Courses/course1.png";
+            course.ImageUri = BaseURI + c.ICON_URL.Replace('\\', '/');
             course.IsBuy = true;
             course.IsTeach = true;
 

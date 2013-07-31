@@ -87,7 +87,7 @@ namespace CloudEDU.Login
                         //User
                         Constants.User = new User(c);
                         System.Diagnostics.Debug.WriteLine("login success");
-                        Frame.Navigate(typeof(CategoryForNewest));
+                        Frame.Navigate(typeof(Courstore));
                         // navigate 
                     }
                 }

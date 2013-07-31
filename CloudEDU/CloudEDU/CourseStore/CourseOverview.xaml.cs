@@ -29,11 +29,6 @@ namespace CloudEDU.CourseStore
     {
         Course course;
         CloudEDUEntities ctx = null;
-        DataServiceQuery<CUSTOMER> dsq = null;
-
-
-        CUSTOMER buyer;
-        CUSTOMER saler;
 
         DBAccessAPIs dba;
         /// <summary>
@@ -54,6 +49,7 @@ namespace CloudEDU.CourseStore
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             course = e.Parameter as Course;
+            UserProfileBt.DataContext = Constants.User;
             DataContext = course;
             frame.Navigate(typeof(CourseDetail.Overview), course);
 
@@ -66,8 +62,6 @@ namespace CloudEDU.CourseStore
                 PriceTextBlock.Text = "$ " + Math.Round(course.Price.Value, 2);
             }
             SetStarsStackPanel(course.Rate ?? 0);
-            UserProfileBt.DataContext = Constants.User;
-
         }
 
         /// <summary>
@@ -202,42 +196,9 @@ namespace CloudEDU.CourseStore
             Frame.Navigate(typeof(Login.Profile));
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            //Constants.User.BALANCE -= (decimal)course.Price;
-            //dsq = (DataServiceQuery<CUSTOMER>)(from cus in ctx.CUSTOMER where cus.ID == Constants.User.ID  select cus);
-            //dsq.BeginExecute(onUserQueryComplete, null);
-
-            dba.getUserById(Constants.User.ID,onUserQueryComplete);
-            System.Diagnostics.Debug.WriteLine(DBAccessAPIs.test(method));
-        }
-        string method(int c, string d)
-        {
-            return c + d;
-        }
-
-        
-
-
-        private void onUserQueryComplete(IAsyncResult result)
+        private void AttendButton_Click(object sender, RoutedEventArgs e)
         {
             
-            IEnumerable<CUSTOMER> customers = dba.customerDsq.EndExecute(result);
-            buyer=  customers.FirstOrDefault();
-
-            //System.Diagnostics.Debug.WriteLine("BINGO!!!");
-            //dsq = (DataServiceQuery<CUSTOMER>)(from cus in ctx.CUSTOMER where cus.ID == Constants.User.ID select cus);
-            
-
-        }
-
-        private void onUserBalanceSaved(IAsyncResult result)
-        {
-
-            //ctx.UpdateObject(user);
-
-            //ctx.BeginSaveChanges(onUserBalanceSaved, null);
-            //ctx.EndSaveChanges(result);
         }
     }
 }

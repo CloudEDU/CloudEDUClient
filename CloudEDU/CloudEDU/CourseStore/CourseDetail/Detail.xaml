@@ -36,7 +36,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0, 40, 0, 0">
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Time of Submit:" FontWeight="Bold" />
-                    <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="2013.7.29" Margin="20, 0, 0, 0" />
+                    <TextBlock x:Name="submitOfTimeTextBlock" Style="{StaticResource SubheaderTextStyle}" Text="" Margin="20, 0, 0, 0" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
