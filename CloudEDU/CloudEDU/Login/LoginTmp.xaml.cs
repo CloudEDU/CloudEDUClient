@@ -47,11 +47,11 @@ namespace CloudEDU.Login
                 bt.Content = user.ImageSource;
                 bt.user = user;
                 bt.Click += Button_Click;
-                bt.UserName = user.Username;
+                bt.UserName = user.NAME;
                 UsersStack.Children.Insert(0,bt);
             }
             test.user = new User("Fox", "http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328");
-            test.UserName = test.user.Username;
+            test.UserName = test.user.NAME;
             
         }
 

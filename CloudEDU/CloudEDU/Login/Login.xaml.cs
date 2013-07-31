@@ -85,7 +85,7 @@ namespace CloudEDU.Login
                         //Constants.User = c;
 
                         //User
-                        Constants.User = new User(c.NAME, "http://www.gravatar.com/avatar/" + Constants.ComputeMD5(c.EMAIL));
+                        Constants.User = new User(c);
                         System.Diagnostics.Debug.WriteLine("login success");
                         Frame.Navigate(typeof(CategoryForNewest));
                         // navigate 

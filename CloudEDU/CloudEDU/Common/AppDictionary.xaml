@@ -41,7 +41,7 @@
                                 </Border.Background>
                             </Border>
                         </Border>
-                        <TextBlock Text="{TemplateBinding UserName}" 
+                        <TextBlock Text="{Binding NAME}" 
                                    Grid.Column="1" VerticalAlignment="Center" 
                                    HorizontalAlignment="Center" FontSize="18" 
                                    Foreground="Black" Margin="5,0,0,0"/>
