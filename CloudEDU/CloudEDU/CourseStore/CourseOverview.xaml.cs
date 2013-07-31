@@ -102,6 +102,7 @@ namespace CloudEDU.CourseStore
             {
                 PriceTextBlock.Text = "$ " + Math.Round(course.Price.Value, 2);
             }
+            System.Diagnostics.Debug.WriteLine(course.Rate);
             SetStarsStackPanel(course.Rate ?? 0);
 
             if (isTeach)

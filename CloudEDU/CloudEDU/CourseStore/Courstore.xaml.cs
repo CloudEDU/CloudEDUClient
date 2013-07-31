@@ -101,6 +101,7 @@ namespace CloudEDU.CourseStore
                 {
                     coursesData.AddCourse(Constants.CourseAvail2Course(c));
                 }
+                
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     dataCategory = coursesData.GetGroupsByCategory();
@@ -171,6 +172,8 @@ namespace CloudEDU.CourseStore
         private void Course_ItemClick(object sender, ItemClickEventArgs e)
         {
             Course course = (Course)e.ClickedItem;
+
+            System.Diagnostics.Debug.WriteLine(course.Rate);
 
             Frame.Navigate(typeof(CourseOverview), course);
         }

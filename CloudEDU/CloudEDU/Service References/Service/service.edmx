@@ -255,7 +255,7 @@
         <Property Name="CUSTOMER_ID" Type="Edm.Int32" />
         <Property Name="SHARE" Type="Edm.Boolean" Nullable="false" />
       </EntityType>
-      <EntityType Name="NOTE_SHAREABLE_AVAIL">
+      <EntityType Name="NOTE_AVAIL">
         <Key>
           <PropertyRef Name="CONTENT" />
           <PropertyRef Name="LESSON_ID" />
@@ -511,7 +511,7 @@
         <EntitySet Name="COURSE_OK" EntityType="CloudEDUModel.COURSE_OK" />
         <EntitySet Name="COURSE_PENDING" EntityType="CloudEDUModel.COURSE_PENDING" />
         <EntitySet Name="NOTE_SHARABLE" EntityType="CloudEDUModel.NOTE_SHARABLE" />
-        <EntitySet Name="NOTE_SHAREABLE_AVAIL" EntityType="CloudEDUModel.NOTE_SHAREABLE_AVAIL" />
+        <EntitySet Name="NOTE_AVAIL" EntityType="CloudEDUModel.NOTE_AVAIL" />
         <EntitySet Name="NOTE_AVAIL" EntityType="CloudEDUModel.NOTE_AVAIL" />
         <FunctionImport Name="EnrollCourse" ReturnType="Edm.Int32" m:HttpMethod="GET">
           <Parameter Name="customer_id" Type="Edm.Int32" Nullable="false" />

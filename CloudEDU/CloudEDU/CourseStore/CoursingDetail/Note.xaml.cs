@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -30,9 +31,9 @@ namespace CloudEDU.CourseStore.CoursingDetail
     {
         Course course;
         CloudEDUEntities ctx = null;
-        DataServiceQuery<NOTE_SHAREABLE_AVAIL> sharedNoteDsq = null;
-        DataServiceQuery<NOTE_AVAIL> mySharedNoteDsq = null;
-        List<NOTE_SHAREABLE_AVAIL> sharedNotesList;
+        DataServiceQuery<NOTE_AVAIL> sharedNoteDsq = null;
+        DataServiceQuery<NOTE_AVAIL> myNoteDsq = null;
+        List<NOTE_AVAIL> sharedNotesList;
         List<NOTE_AVAIL> mySharedNotesList;
 
         public Note()
@@ -47,21 +48,23 @@ namespace CloudEDU.CourseStore.CoursingDetail
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             course = e.Parameter as Course;
 
-            
-            sharedNoteDsq = (DataServiceQuery<NOTE_SHAREABLE_AVAIL>)(from selectNote in ctx.NOTE_SHAREABLE_AVAIL
-                                                                     where selectNote.COURSE_ID == course.ID.Value
-                                                                     orderby selectNote.DATE descending
-                                                                     select selectNote);
-            mySharedNoteDsq = (DataServiceQuery<NOTE_AVAIL>)(from myNote in ctx.NOTE_AVAIL
-                                                              where myNote.COURSE_ID == course.ID.Value && myNote.CUSTOMER_ID == Constants.User.ID
-                                                              orderby myNote.DATE descending
-                                                              select myNote);
+
+            sharedNoteDsq = (DataServiceQuery<NOTE_AVAIL>)(from selectNote in ctx.NOTE_AVAIL
+                                                           where selectNote.COURSE_ID == course.ID.Value && selectNote.SHARE == true
+                                                           orderby selectNote.DATE descending
+                                                           select selectNote);
             switchButton.Content = "Mine";
-            sharedNoteDsq.BeginExecute(OnSharedNoteComplete, null);
+            TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
+            IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(sharedNoteDsq.BeginExecute(null, null), iar => sharedNoteDsq.EndExecute(iar));
+            sharedNotesList = nas.ToList();
+            foreach (var n in sharedNotesList)
+            {
+                allSharedNotesStackPanel.Children.Add(GenerateSharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER, n.CUSTOMER_ID.Value));
+            }
         }
 
         private async void OnSharedNoteComplete(IAsyncResult result)
@@ -84,11 +87,11 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
         }
 
-        private async void OnMySharedNoteComplete(IAsyncResult result)
+        private async void OnMyNoteComplete(IAsyncResult result)
         {
             try
             {
-                mySharedNotesList = mySharedNoteDsq.EndExecute(result).ToList();
+                mySharedNotesList = myNoteDsq.EndExecute(result).ToList();
 
                 foreach (var n in mySharedNotesList)
                 {
@@ -134,11 +137,11 @@ namespace CloudEDU.CourseStore.CoursingDetail
             ToolTipService.SetToolTip(noteInfo, toolTip);
 
             Image deleteImage = new Image();
-            if (customerID != Constants.User.ID)
-            {
+            //if (customerID != Constants.User.ID)
+            //{
                 deleteImage = new Image
                 {
-                    Name = id.ToString(),
+                    Tag = id.ToString(),
                     Source = new BitmapImage(new Uri("ms-appx:///Images/Coursing/Note/delete.png")),
                     Margin = new Thickness(4, 0, -45, 0),
                     Height = 40,
@@ -147,7 +150,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
                     IsTapEnabled = true
                 };
                 deleteImage.Tapped += deleteImage_Tapped;
-            }
+            //}
 
             TextBlock lesson = new TextBlock
             {
@@ -192,7 +195,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
 
             Image deleteImage = new Image
             {
-                Name = id.ToString(),
+                Tag = id.ToString(),
                 Source = new BitmapImage(new Uri("ms-appx:///Images/Coursing/Note/delete.png")),
                 Margin = new Thickness(4, 0, -45, 0),
                 Height = 40,
@@ -228,7 +231,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             Image toDelImage = sender as Image;
 
-            ctx.BeginExecute<bool>(new Uri("/RemoveNote?id=" + Convert.ToInt32(toDelImage.Name), UriKind.Relative), OnDeleteNoteComplete, null);
+            ctx.BeginExecute<bool>(new Uri("/RemoveNote?id=" + Convert.ToInt32(toDelImage.Tag), UriKind.Relative), OnDeleteNoteComplete, null);
 
             Grid toDelGrid = toDelImage.Parent as Grid;
             allSharedNotesStackPanel.Children.Remove(toDelGrid);
@@ -256,24 +259,48 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
         }
 
-        private void SwitchButton_Click(object sender, RoutedEventArgs e)
+        private async void SwitchButton_Click(object sender, RoutedEventArgs e)
         {
             Button bt = sender as Button;
+            sharedNoteDsq = (DataServiceQuery<NOTE_AVAIL>)(from selectNote in ctx.NOTE_AVAIL
+                                                                     where selectNote.COURSE_ID == course.ID.Value
+                                                                     orderby selectNote.DATE descending
+                                                                     select selectNote);
+            myNoteDsq = (DataServiceQuery<NOTE_AVAIL>)(from myNote in ctx.NOTE_AVAIL
+                                                       where myNote.COURSE_ID == course.ID.Value && myNote.CUSTOMER_ID == Constants.User.ID
+                                                       orderby myNote.DATE descending
+                                                       select myNote);
             if (bt.Content.ToString() == "Mine")
             {
                 bt.Content = "Shared";
                 myNotesStackPanel.Visibility = Visibility.Visible;
                 allSharedNotesStackPanel.Visibility = Visibility.Collapsed;
-                allSharedNotesStackPanel.Children.Clear();
-                mySharedNoteDsq.BeginExecute(OnMySharedNoteComplete, null);
+                myNotesStackPanel.Children.Clear();
+                TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
+                IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(myNoteDsq.BeginExecute(null, null), iar => myNoteDsq.EndExecute(iar));
+                mySharedNotesList = nas.ToList();
+                foreach (var n in mySharedNotesList)
+                {
+                    myNotesStackPanel.Children.Add(GenerateMySharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER));
+                }
             }
             else if (bt.Content.ToString() == "Shared")
             {
                 bt.Content = "Mine";
                 myNotesStackPanel.Visibility = Visibility.Collapsed;
                 allSharedNotesStackPanel.Visibility = Visibility.Visible;
-                myNotesStackPanel.Children.Clear();
-                sharedNoteDsq.BeginExecute(OnSharedNoteComplete, null);
+                allSharedNotesStackPanel.Children.Clear();
+                TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
+                IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(sharedNoteDsq.BeginExecute(null, null), iar => sharedNoteDsq.EndExecute(iar));
+                sharedNotesList = nas.ToList();
+                foreach (var n in sharedNotesList)
+                {
+                    System.Diagnostics.Debug.WriteLine(n.ID);
+                }
+                foreach (var n in sharedNotesList)
+                {
+                    allSharedNotesStackPanel.Children.Add(GenerateSharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER, n.CUSTOMER_ID.Value));
+                }
             }
         }
     }
