@@ -140,7 +140,7 @@ namespace CloudEDU.CourseStore.CourseDetail
                 WarningTextBlock.Visibility = Visibility.Visible;
                 return;
             }
-            StackPanel newComment = GenerateACommentBox(Constants.User.NAME, newTitleTextBox.Text, globalRate, newContentTextBox.Text);
+            
 
             COMMENT commentEntity = new COMMENT();
             commentEntity.COURSE_ID = course.ID.Value;
@@ -149,19 +149,54 @@ namespace CloudEDU.CourseStore.CourseDetail
             commentEntity.RATE = globalRate;
             commentEntity.CONTENT = newContentTextBox.Text;
             ctx.AddToCOMMENT(commentEntity);
-            ctx.BeginSaveChanges(OnAddCommentComplete, null);
-
-            commentsStackPanel.Children.Add(newComment);
-
-            newTitleTextBox.Text = newContentTextBox.Text = "";
-            globalRate = 0;
-            SetStarTextBlock(globalRate);
-            WarningTextBlock.Visibility = Visibility.Collapsed;
+            ctx.BeginSaveChanges(OnAddCommentComplete, null); 
         }
 
-        private void OnAddCommentComplete(IAsyncResult result)
+        private async void OnAddCommentComplete(IAsyncResult result)
         {
-            ctx.EndSaveChanges(result);
+            try
+            {
+                ctx.EndSaveChanges(result);
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                    {
+                        StackPanel newComment = GenerateACommentBox(Constants.User.NAME, newTitleTextBox.Text, globalRate, newContentTextBox.Text);
+                        commentsStackPanel.Children.Add(newComment);
+                        newTitleTextBox.Text = newContentTextBox.Text = "";
+                        globalRate = 0;
+                        SetStarTextBlock(globalRate);
+                        WarningTextBlock.Visibility = Visibility.Collapsed;
+                    });
+            }
+            catch (DataServiceRequestException e)
+            {
+                ShowMessageDialog("One user can only comment once.");
+                ResetAfterComment();
+            }
+            catch
+            {
+                ShowMessageDialog("Network connection error!");
+            }
+        }
+
+        private async void ResetAfterComment()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                newTitleTextBox.Text = newContentTextBox.Text = "";
+                globalRate = 0;
+                SetStarTextBlock(globalRate);
+                WarningTextBlock.Visibility = Visibility.Collapsed;
+            });
+        }
+
+        private async void ShowMessageDialog(string msg)
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                var messageDialog = new MessageDialog(msg);
+                messageDialog.Commands.Add(new UICommand("Close"));
+                await messageDialog.ShowAsync();
+            });
         }
 
         /// <summary>
@@ -235,7 +270,7 @@ namespace CloudEDU.CourseStore.CourseDetail
             StackPanel outsidePanel = new StackPanel
             {
                 Orientation = Orientation.Vertical,
-                Background = new SolidColorBrush(Colors.Bisque),
+                Background = new SolidColorBrush(Colors.Azure),
                 Margin = new Thickness(0, 0, 0, 5)
             };
             outsidePanel.Children.Add(insidePanel);

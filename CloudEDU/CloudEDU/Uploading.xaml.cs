@@ -55,7 +55,7 @@ namespace CloudEDU
 
         private List<Lesson> allLessons;
         private Course toBeUploadCourse;
-        Dictionary<string, int> resourceDic;
+        private Dictionary<string, int> resourceDic;
         private bool hasImage;
 
         private Button addImageButton;

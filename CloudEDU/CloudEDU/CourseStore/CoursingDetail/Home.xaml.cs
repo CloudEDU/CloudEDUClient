@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -41,11 +42,59 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             course = e.Parameter as Course;
             DataContext = course;
+
+            SetStarsStackPanel(course.Rate ?? 0);
         }
 
         private void Rectangle_Tapped_1(object sender, TappedRoutedEventArgs e)
         {
             Constants.coursing.NavigateToLecture();
+        }
+
+        private void SetStarsStackPanel(double rate)
+        {
+            int fillInt = (int)rate;
+            int blankInt = 5 - fillInt - 1;
+            double percentFill = rate - (double)fillInt;
+
+            for (int i = 0; i < fillInt; ++i)
+            {
+                TextBlock fillStarTextBlock = new TextBlock
+                {
+                    Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
+                    Foreground = new SolidColorBrush(Colors.White),
+                    Text = Constants.FillStar
+                };
+                rateStarsPanel.Children.Add(fillStarTextBlock);
+            }
+            if (rate == 5) return;
+            double width = Constants.StarWidth * percentFill;
+            TextBlock halfFillStarTextBlock = new TextBlock
+            {
+                Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
+                Foreground = new SolidColorBrush(Colors.White),
+                Text = Constants.FillStar,
+                Width = width
+            };
+            TextBlock halfBlankStarTextBlock = new TextBlock
+            {
+                Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
+                Foreground = new SolidColorBrush(Colors.White),
+                Text = Constants.BlankStar,
+                Margin = new Thickness(-width, 0, 0, 0)
+            };
+            rateStarsPanel.Children.Add(halfFillStarTextBlock);
+            rateStarsPanel.Children.Add(halfBlankStarTextBlock);
+            for (int i = 0; i < blankInt; ++i)
+            {
+                TextBlock blankStarTextBlock = new TextBlock
+                {
+                    Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
+                    Foreground = new SolidColorBrush(Colors.White),
+                    Text = Constants.BlankStar,
+                };
+                rateStarsPanel.Children.Add(blankStarTextBlock);
+            }
         }
     }
 }

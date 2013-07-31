@@ -13,31 +13,32 @@
         <SolidColorBrush x:Key="NoteBackgroundBrush" Color="#7eb900" />
         <SolidColorBrush x:Key="LessonForegroundBrush" Color="#424242" />
     </Page.Resources>
-  
-    <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent">
-        <ScrollViewer Style="{StaticResource VerticalScrollViewerStyle}">
-            <StackPanel x:Name="allNoteStackPanel" Orientation="Vertical">
-                <StackPanel.Transitions>
-                    <TransitionCollection>
-                        <AddDeleteThemeTransition />
-                    </TransitionCollection>
-                </StackPanel.Transitions>
 
-                <Grid Background="#7eb900" Margin="2,2,50,2" >
-                    <TextBlock Text="Lesson 1 xxx dsa" FontSize="45" Height="50" Margin="5, 0, 0, 0" Foreground="White" HorizontalAlignment="Left" />
-                    <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">-->
-                    <Image Source="ms-appx:///Images/Coursing/Note/delete.png" Height="40" Width="40" Margin="4, 0, -45, 0" HorizontalAlignment="Right" />
-                    <!--</StackPanel>-->
-                    <TextBlock Text="Lesson 1" FontSize="45" Height="50" Margin="5, 0, 5, 0" Foreground="#424242" HorizontalAlignment="Right" />
-                </Grid>
-                <Grid Background="#7eb900" Margin="2,2,50,2" >
-                    <TextBlock Text="Lesson 1 xxx dsa" FontSize="45" Height="50" Margin="5, 0, 0, 0" Foreground="White" HorizontalAlignment="Left" />
-                    <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">-->
-                    <Image Source="ms-appx:///Images/Coursing/Note/delete.png" Height="40" Width="40" Margin="4, 0, -45, 0" HorizontalAlignment="Right" />
-                    <!--</StackPanel>-->
-                    <TextBlock Text="Lesson 1" FontSize="45" Height="50" Margin="5, 0, 5, 0" Foreground="#424242" HorizontalAlignment="Right" />
-                </Grid>
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" Style="{StaticResource VerticalScrollViewerStyle}">
+            <StackPanel Orientation="Vertical">
+                <StackPanel x:Name="allSharedNotesStackPanel" Orientation="Vertical">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <AddDeleteThemeTransition />
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
+                </StackPanel>
+
+                <StackPanel x:Name="myNotesStackPanel" Orientation="Vertical">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <AddDeleteThemeTransition />
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
+        <Button x:Name="switchButton" Grid.Row="1" Height="65" Width="160" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Content="Mine" FontSize="40" Click="SwitchButton_Click" />
     </Grid>
 </Page>

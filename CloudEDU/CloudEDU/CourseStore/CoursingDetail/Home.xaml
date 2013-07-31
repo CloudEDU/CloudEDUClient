@@ -24,7 +24,7 @@
                 <Image Height="270" Stretch="UniformToFill" Source="{Binding ImageUri}" />
             </Grid>
             <Grid VerticalAlignment="Bottom">
-                <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="&#x2605;&#x2605;&#x2605;&#x2605;&#x2606;" HorizontalAlignment="Left" Foreground="White" />
+                <StackPanel x:Name="rateStarsPanel" Orientation="Horizontal" HorizontalAlignment="Left" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="By" Foreground="White" />
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" FontWeight="Bold" Text="{Binding Teacher}" Margin="15, 0, 0, 0" Foreground="White" />
@@ -56,7 +56,7 @@
             </ScrollViewer>
         </StackPanel>
         
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="Black" Opacity="0.2" Margin="50" Tapped="Rectangle_Tapped_1" />
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="#E64747" Margin="50" Tapped="Rectangle_Tapped_1" />
         <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource TextButtonStyle}" Content="Start Learning!" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI Light"/>
     </Grid>
 </Page>
