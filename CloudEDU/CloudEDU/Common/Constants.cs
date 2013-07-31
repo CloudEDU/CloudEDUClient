@@ -21,8 +21,9 @@ namespace CloudEDU.Common
         public static double StarWidth = 22.2133331298828;
 
         public static string Username = "Test";
-        //public static CUSTOMER User;
-        public static User User;
+        public static CUSTOMER User;
+        //public static User User;
+
         /// <summary>
         /// Cast the first character of every word in a string from lower to upper.
         /// </summary>

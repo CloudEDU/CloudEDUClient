@@ -19,7 +19,5 @@ namespace CloudEDU.Login
             Username = username;
             ImageSource = imageSource;
         }
-
-  
     }
 }
