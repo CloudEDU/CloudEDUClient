@@ -97,6 +97,7 @@
             <TextBlock Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"
                        HorizontalAlignment="Left" Text="Courstore" VerticalAlignment="Center"
                        FontSize="100" Margin="0, -10"/>
+            <common:UserProfileButton  Grid.Column="2" Content="../Images/Users/ania.png" Click="UserProfileButton_Click" UserName="Shania"/>
         </Grid>
     </Grid>
 </common:GlobalPage>

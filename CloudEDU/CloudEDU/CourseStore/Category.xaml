@@ -107,6 +107,8 @@
                 <TextBlock x:Name="Title" Style="{StaticResource PageHeaderTextStyle}" HorizontalAlignment="Center"
                            Text="Category" VerticalAlignment="Center" FontSize="100" Margin="0, -10"/>
             </StackPanel>
+            <common:UserProfileButton x:Name="UserProfileBt" Grid.Column="2" DataContext="{Binding Mode=OneWay}" Content="{Binding ImageSource}" Click="UserProfileButton_Click" UserName="{Binding Username}"/>
+
         </Grid>
     </Grid>
 </common:GlobalPage>

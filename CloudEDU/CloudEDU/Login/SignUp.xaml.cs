@@ -11,6 +11,10 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using CloudEDU.Common;
+using CloudEDU.Service;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -21,9 +25,12 @@ namespace CloudEDU.Login
     /// </summary>
     public sealed partial class SignUp : Page
     {
+        private CloudEDUEntities ctx = null;
+
         public SignUp()
         {
             this.InitializeComponent();
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 
         /// <summary>
@@ -33,6 +40,62 @@ namespace CloudEDU.Login
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (!InputPassword.Password.Equals(ReInputPassword.Password))
+            {
+                var dialog = new MessageDialog("Passwords are not same! Try again, thx!");
+                await dialog.ShowAsync();
+                return;
+            }
+            //CUSTOMER c = CUSTOMER.CreateCUSTOMER(null, InputUsername.Text, InputPassword.Password, null, null, null);
+            CUSTOMER c = new CUSTOMER()
+            {
+                NAME = InputUsername.Text,
+                PASSWORD = InputPassword.Password,
+            };
+            ctx.AddToCUSTOMER(c);
+            ctx.BeginSaveChanges(OnCustomerSaveChange, null);
+
+        }
+        private void OnCustomerSaveChange(IAsyncResult result)
+        {
+            //try
+            //{
+                ctx.EndSaveChanges(result);
+            //}
+            //catch
+            //{
+             //   ShowMessageDialog();
+                // Network Connection error.
+            //}
+        }
+
+        /// <summary>
+        /// Network Connection error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    var messageDialog = new MessageDialog("No Network has been found!");
+                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                    {
+                        Frame.Navigate(typeof(SignUp));
+                    }));
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    //loadingProgressRing.IsActive = false;
+                    await messageDialog.ShowAsync();
+                }
+                catch
+                {
+                    ShowMessageDialog();
+                }
+            });
         }
     }
 }

@@ -40,6 +40,7 @@ namespace CloudEDU.CourseStore
             storeSampleData = new StoreData();
             dataCategory = storeSampleData.GetSingleGroupByCategoryTitle("newest");
             cvs1.Source = dataCategory;
+            UserProfileBt.DataContext = Constants.User;
         }
 
         /// <summary>
@@ -69,6 +70,10 @@ namespace CloudEDU.CourseStore
             var courseName = ((Course)e.ClickedItem).Title;
 
             Frame.Navigate(typeof(CourseOverview), courseName);
+        }
+        private void UserProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Frame.Navigate(typeof());
         }
     }
 }

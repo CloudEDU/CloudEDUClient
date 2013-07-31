@@ -55,30 +55,32 @@ namespace CloudEDU.CourseStore.CourseDetail
             course = e.Parameter as Course;
             globalRate = 0;
 
-            commentDsq = (DataServiceQuery<COMMENT_DET>)(from comment in ctx.COMMENT_DET select comment);
+            commentDsq = (DataServiceQuery<COMMENT_DET>)(from comment in ctx.COMMENT_DET
+                                                         where comment.CUSTOMER_ID == course.ID
+                                                         select comment);
             commentDsq.BeginExecute(OnCommentComplete, null);
         }
 
         private async void OnCommentComplete(IAsyncResult result)
         {
-            //try
-            //{
+            try
+            {
                 IEnumerable<COMMENT_DET> coms = commentDsq.EndExecute(result);
-                List<COMMENT_DET> comsl = new List<COMMENT_DET>(coms);
-                System.Diagnostics.Debug.WriteLine(comsl.Count);
+                allComments = new List<COMMENT_DET>(coms);
+                System.Diagnostics.Debug.WriteLine(allComments.Count);
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
-                        foreach (COMMENT_DET c in comsl)
+                        foreach (COMMENT_DET c in allComments)
                         {
                             StackPanel newComment = GenerateACommentBox(c.USERNAME ,c.TITLE, Convert.ToInt32(c.RATE), c.CONTENT);
                             commentsStackPanel.Children.Add(newComment);
                         }
                     });
-            //}
-            //catch
-            //{
-            //    ShowMessageDialog();
-            //}
+            }
+            catch
+            {
+                ShowMessageDialog();
+            }
         }
 
         /// <summary>
@@ -147,7 +149,7 @@ namespace CloudEDU.CourseStore.CourseDetail
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(40, 0, 0, 0),
-                Text = DateTime.Now.Date.ToString()
+                Text = DateTime.Now.ToString()
             };
             TextBlock timeTextBlock = new TextBlock
             {

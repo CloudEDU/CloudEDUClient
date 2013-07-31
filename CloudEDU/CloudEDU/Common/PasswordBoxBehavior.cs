@@ -17,7 +17,8 @@ namespace CloudEDU.Login
     public static class PasswordBoxBehavior
     {
         private const string WatermarkId = "_pboxWatermark";
-
+       // private string specialId;
+      // private static int countOfPBox;
         /// <summary>
         /// Backing storage key for the text property.
         /// </summary>
@@ -143,7 +144,7 @@ namespace CloudEDU.Login
         /// <param name="text">The watermark text.</param>
         private static void AddWatermarkElement(PasswordBox pbox, string text)
         {
-            var watermarkTextBlock = pbox.FindVisualChildByName<TextBlock>(WatermarkId);
+            var watermarkTextBlock = pbox.FindVisualChildByName<TextBlock>(pbox.Name+pbox.Name+WatermarkId);
 
             if (watermarkTextBlock == null)
             {
@@ -156,7 +157,7 @@ namespace CloudEDU.Login
                         // Add the TextBlock
                         var textBlock = new TextBlock
                         {
-                            Name = WatermarkId,
+                            Name = pbox.Name + WatermarkId,
                             Text = text,
                             TextAlignment = TextAlignment.Center,
                             HorizontalAlignment = HorizontalAlignment.Center,
@@ -177,7 +178,7 @@ namespace CloudEDU.Login
         /// <param name="pbox">The target PasswordBox.</param>
         private static void RemoveWatermarkElement(PasswordBox pbox)
         {
-            var watermarkTextBlock = pbox.FindVisualChildByName<TextBlock>(WatermarkId);
+            var watermarkTextBlock = pbox.FindVisualChildByName<TextBlock>(pbox.Name+WatermarkId);
             if (watermarkTextBlock != null)
             {
                 var panelOwner = watermarkTextBlock.FindVisualParent<Panel>();

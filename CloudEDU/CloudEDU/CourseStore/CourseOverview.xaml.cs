@@ -53,6 +53,8 @@ namespace CloudEDU.CourseStore
                 PriceTextBlock.Text = "$ " + Math.Round(course.Price.Value, 2);
             }
             SetStarsStackPanel(course.Rate ?? 0);
+            UserProfileBt.DataContext = Constants.User;
+
         }
 
         /// <summary>
@@ -180,6 +182,11 @@ namespace CloudEDU.CourseStore
                 };
                 rateStarsPanel.Children.Add(blankStarTextBlock);
             }
+        }
+
+        private void UserProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Frame.Navigate(typeof());
         }
     }
 }

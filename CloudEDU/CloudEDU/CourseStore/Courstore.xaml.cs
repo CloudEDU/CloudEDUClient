@@ -53,13 +53,15 @@ namespace CloudEDU.CourseStore
 
             courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in ctx.COURSE_AVAIL select course_avail);
             courseDsq.BeginExecute(OnCourseAvailComplete, null);
+            //UserProfileBt.DataContext = Constants.User;
+
 
             //DataServiceQuery<COURSE> dps = (DataServiceQuery<COURSE>)(from c in DataServiceContextSingleton.SharedDataServiceContext().COURSEs where c.TITLE == "Test Title2" select c);
 
-            //TaskFactory<IEnumerable<COURSE>> tf = new TaskFactory<IEnumerable<COURSE>>();
+            
+
+//TaskFactory<IEnumerable<COURSE>> tf = new TaskFactory<IEnumerable<COURSE>>();
             //IEnumerable<COURSE> courses = await tf.FromAsync(dps.BeginExecute(null, null), ira => dps.EndExecute(ira));
-
-
             //courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in DataServiceContextSingleton.SharedDataServiceContext().COURSE_AVAIL select course_avail);
             //DataServiceContextSingleton.SharedDataServiceContext().BeginExecute<int?>(new Uri("CreateCourse?teacher_id=3&title='HaoHaoDBL'&intro='HaoHaoYouDBL'&category_id=3&price=0&pg_id=1&icon_url='www.HaoHaoDBL.com'", UriKind.Relative), OnComplete, null);
 
@@ -171,6 +173,13 @@ namespace CloudEDU.CourseStore
             Course course = (Course)e.ClickedItem;
 
             Frame.Navigate(typeof(CourseOverview), course);
+        }
+
+
+
+        private void UserProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Frame.Navigate(typeof());
         }
     }
 }

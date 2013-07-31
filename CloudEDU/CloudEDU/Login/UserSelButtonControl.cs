@@ -16,9 +16,27 @@ namespace CloudEDU.Login
     public sealed class UserSelButtonControl : Button
     {
         public Grid grid;
-        
+        public User user
+        {
+            get;
+            set;
+        }
 
-   
+        public string UserName
+        {
+            get
+            {
+                return (string)GetValue(UserNameProperty);
+            }
+            set 
+            {
+                SetValue(UserNameProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty UserNameProperty =
+  　　　　 DependencyProperty.Register("UserName", typeof(string), typeof(UserSelButtonControl),
+  　　　　　　　 null);
 
         public UserSelButtonControl()
         {

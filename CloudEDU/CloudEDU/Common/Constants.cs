@@ -1,4 +1,4 @@
-﻿using CloudEDU.CourseStore;
+using CloudEDU.CourseStore;
 using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
+using CloudEDU.Login;
 
 namespace CloudEDU.Common
 {
@@ -20,6 +21,8 @@ namespace CloudEDU.Common
         public static double StarWidth = 22.2133331298828;
 
         public static string Username = "Test";
+        public static CUSTOMER User;
+        //public static User User;
 
         /// <summary>
         /// Cast the first character of every word in a string from lower to upper.
@@ -63,13 +66,14 @@ namespace CloudEDU.Common
             course.Rate = c.RATE;
             course.PG = c.RESTRICT_AGE;
             course.LessonNum = c.LESSON_NUM;
-            course.RatedUser = c.RATED_USERS;
             course.ImageUri = BaseURI + "Images/Courses/course1.png";
             course.IsBuy = true;
             course.IsTeach = true;
 
             return course;
         }
+
+
     }
 
     /// <summary>
@@ -83,3 +87,4 @@ namespace CloudEDU.Common
         SquareGridViewItemContainerSize = 3,
     }
 }
+

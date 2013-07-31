@@ -9,10 +9,9 @@ namespace CloudEDU.Login
     /// <summary>
     /// User model
     /// </summary>
-    class User
+    public class User 
     {
         public string Username { get; set; }
-        public string Password { get; set; }
         public string ImageSource { get; set; }
 
         public User(string username, string imageSource)

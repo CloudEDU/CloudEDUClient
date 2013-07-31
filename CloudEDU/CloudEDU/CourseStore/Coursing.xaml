@@ -35,6 +35,7 @@
                        HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="100" Margin="0, -10"
                        Text="Coursing" />
         </Grid>
+        <common:UserProfileButton x:Name="UserProfileBt" Grid.Column="1" DataContext="{Binding Mode=OneWay}" Content="{Binding ImageSource}" Click="UserProfileButton_Click" UserName="{Binding Username}"/>
 
         <Grid Grid.Column="0" Grid.Row="1">
             <Grid.ColumnDefinitions>

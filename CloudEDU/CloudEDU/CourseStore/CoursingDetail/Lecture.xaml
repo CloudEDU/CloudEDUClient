@@ -22,23 +22,57 @@
                     </TransitionCollection>
                 </StackPanel.Transitions>
 
-                <Grid Background="#0075B9" Margin="2">
-                    <TextBlock Text="Lesson 1 xxx dsa" FontSize="50" Height="65" Margin="5, 0, 0, 0" Foreground="White" HorizontalAlignment="Left" />
+                <Grid Background="#0075B9" Margin="2,2,50,2">
+                    <TextBlock Text="Lesson 1 xxx dsa" FontSize="50" Height="65" Margin="5, 0,  0, 0" Foreground="White" HorizontalAlignment="Left" />
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Image Source="ms-appx:///Images/Upload/doc_white.png"  Margin="4, 0, 4, 0" />
                         <Image Source="ms-appx:///Images/Upload/audio_white.png"   Margin="4, 0, 4, 0" />
                         <Image Source="ms-appx:///Images/Upload/video_white.png"  Margin="8, 0, 8, 0" />
                     </StackPanel>
+                    <Image Source="ms-appx:///Images/Coursing/Lectures/newnote.png" Height="30" Width="30" HorizontalAlignment="Right" Margin="4, 0, -40, 0" />
+
                 </Grid>
-                <Grid Background="#0075B9" Margin="2">
+                <Grid Background="#0075B9" Margin="2,2,50,2">
                     <TextBlock Text="Lesson 2 xxx dsa" FontSize="50" Height="65" Margin="5, 0, 0, 0" Foreground="White" HorizontalAlignment="Left" />
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Image Source="ms-appx:///Images/Upload/doc_white.png"  Margin="4, 0, 4, 0" />
                         <Image Source="ms-appx:///Images/Upload/audio_white.png"   Margin="4, 0, 4, 0" />
                         <Image Source="ms-appx:///Images/Upload/video_white.png"  Margin="8, 0, 8, 0" />
                     </StackPanel>
+                    <Image Source="ms-appx:///Images/Coursing/Lectures/newnote.png" Height="30" Width="30" HorizontalAlignment="Right" Margin="4, 0, -40, 0" />
                 </Grid>
             </StackPanel>
         </ScrollViewer>
+
+
+
+        <Popup Grid.RowSpan="4" Name="addNotePopup" IsOpen="False" IsLightDismissEnabled="False">
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+
+            <Grid Width="500" Height="500" Background="White"
+                  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="300, 70, 0, 70">
+                <StackPanel Orientation="Vertical" Margin="20, 20">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="noteTitle"
+                                 MaxLength="30" Text="Title" GotFocus="noteTitle_GotFocus" />
+                    </StackPanel>
+                    <TextBox x:Name="noteContent"
+                                 MaxLength="2000" TextWrapping="Wrap" Text="Note Content..." Height="219" GotFocus="noteContent_GotFocus" />
+                    <ComboBox Width="200" HorizontalAlignment="Left" Name="selectLessonComboBox">
+                        <x:String>Lesson 1</x:String>
+                        <x:String>Lesson 2</x:String>
+                    </ComboBox>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 20, 0, 0">
+                        <Button x:Name="SaveNoteButton" Content="Save" Click="SaveNoteButton_Click"/>
+                        <Button x:Name="CancelNoteButton" Content="Cancel" Click="CancelUploadButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Popup>
+
     </Grid>
 </Page>
