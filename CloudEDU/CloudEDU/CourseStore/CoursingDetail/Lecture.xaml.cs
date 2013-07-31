@@ -2,8 +2,10 @@
 using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -30,7 +32,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
 
         DBAccessAPIs dba = null;
         List<LESSON> lessons = null;
-
+        Dictionary<string, int> resourceDic = null;
         /// <summary>
         /// Constructor, initilize the components.
         /// </summary>
@@ -90,6 +92,37 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 //ShowMessageDialog();
                 // Network Connection error.
             }
+            try
+            {
+                resourceDic = new Dictionary<string, int>(Constants.ResourceType.Count);
+                for (int i = 0; i <Constants.ResourceType.Count; ++i)
+                {
+                    DataServiceQuery<RES_TYPE> dps = (DataServiceQuery<RES_TYPE>)(from res_type in ctx.RES_TYPE
+                                                                                  where res_type.DESCRIPTION.Trim() == Constants.ResourceType[i]
+                                                                                  select res_type);
+                    TaskFactory<IEnumerable<RES_TYPE>> tf = new TaskFactory<IEnumerable<RES_TYPE>>();
+                    RES_TYPE resID = (await tf.FromAsync(dps.BeginExecute(null, null), result => dps.EndExecute(result))).FirstOrDefault();
+
+                    resourceDic.Add(Constants.ResourceType[i], resID.ID);
+                }
+            }
+            catch
+            {
+                ShowMessageDialog("Network connection error!");
+                return;
+            }
+
+        }
+
+
+        /// <summary>
+        /// Upload information error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog(string msg)
+        {
+            var messageDialog = new MessageDialog(msg);
+            messageDialog.Commands.Add(new UICommand("Close"));
+            await messageDialog.ShowAsync();
         }
 
 
@@ -115,11 +148,13 @@ namespace CloudEDU.CourseStore.CoursingDetail
             {
                 Source = new BitmapImage(new Uri(uri)),
                 Margin = new Thickness(4, 0, 4, 0),
+                Width = 40,
+                Height = 40,
+                HorizontalAlignment = HorizontalAlignment.Right
             };
 
             return image;
         }
-
 
         
         private Grid GenerateALessonBox(LESSON les)
@@ -183,12 +218,43 @@ namespace CloudEDU.CourseStore.CoursingDetail
 
             noteImage.Tapped += noteImage_Tapped;
 
+            AddImageButton(les.ID, imagesStackPanel);
             return newLesson;
+        }
+
+        private async void AddImageButton(int lessonId, StackPanel parent)
+        {
+            System.Diagnostics.Debug.WriteLine("AddImageButton!");
+            DataServiceQuery<RESOURCE> dps = (DataServiceQuery<RESOURCE>)(ctx.RESOURCE.Where(r => r.LESSON_ID == lessonId));
+            TaskFactory<IEnumerable<RESOURCE>> tf = new TaskFactory<IEnumerable<RESOURCE>>();
+            IEnumerable<RESOURCE> resources = (await tf.FromAsync(dps.BeginExecute(null, null), iar => dps.EndExecute(iar)));
+            foreach (var r in resources)
+            {
+                System.Diagnostics.Debug.WriteLine("resources!");
+                if (r.TYPE == 2)
+                {
+                    parent.Children.Add(GenerateDocImage());
+                }
+                else if (r.TYPE == 1)
+                {
+                    parent.Children.Add(GenerateAudioImage());
+                }
+                else if (r.TYPE == 3)
+                {
+                    parent.Children.Add(GenerateVideoImage());
+                }
+            }
         }
 
         private void noteImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
             this.addNotePopup.IsOpen = true;
+            List<string> list= new List<string>();
+            for (int i = 0; i < lessons.Count; i++)
+            {
+                list.Add("Lesson " + i+1);
+            }
+            this.selectLessonComboBox.ItemsSource = list;
             //throw new NotImplementedException();
         }
 
@@ -201,11 +267,12 @@ namespace CloudEDU.CourseStore.CoursingDetail
 
         private async void SaveNoteButton_Click(object sender, RoutedEventArgs e)
         {
+
             NOTE note = new NOTE();
             note.TITLE = this.noteTitle.Text;
             note.CONTENT = this.noteContent.Text;
-            note.LESSON_ID = 1;
-            note.CUSTOMER_ID = 1;
+            note.LESSON_ID = lessons[selectLessonComboBox.SelectedIndex].ID;
+            note.CUSTOMER_ID = Constants.User.ID;
 
             if (note == null)
             {
