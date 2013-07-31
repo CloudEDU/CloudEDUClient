@@ -255,6 +255,54 @@
         <Property Name="CUSTOMER_ID" Type="Edm.Int32" />
         <Property Name="SHARE" Type="Edm.Boolean" Nullable="false" />
       </EntityType>
+      <EntityType Name="NOTE_SHAREABLE_AVAIL">
+        <Key>
+          <PropertyRef Name="CONTENT" />
+          <PropertyRef Name="LESSON_ID" />
+          <PropertyRef Name="ID" />
+          <PropertyRef Name="DATE" />
+          <PropertyRef Name="SHARE" />
+          <PropertyRef Name="COURSE_TITLE" />
+          <PropertyRef Name="CUSTOMER_NAME" />
+          <PropertyRef Name="COURSE_ID" />
+          <PropertyRef Name="LESSON_NUMBER" />
+        </Key>
+        <Property Name="TITLE" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="CONTENT" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="LESSON_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="DATE" Type="Edm.DateTime" Nullable="false" Precision="7" />
+        <Property Name="CUSTOMER_ID" Type="Edm.Int32" />
+        <Property Name="SHARE" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="COURSE_TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="CUSTOMER_NAME" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="COURSE_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="LESSON_NUMBER" Type="Edm.Int32" Nullable="false" />
+      </EntityType>
+      <EntityType Name="NOTE_AVAIL">
+        <Key>
+          <PropertyRef Name="CONTENT" />
+          <PropertyRef Name="LESSON_ID" />
+          <PropertyRef Name="ID" />
+          <PropertyRef Name="DATE" />
+          <PropertyRef Name="SHARE" />
+          <PropertyRef Name="COURSE_TITLE" />
+          <PropertyRef Name="CUSTOMER_NAME" />
+          <PropertyRef Name="COURSE_ID" />
+          <PropertyRef Name="LESSON_NUMBER" />
+        </Key>
+        <Property Name="TITLE" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="CONTENT" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="LESSON_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="DATE" Type="Edm.DateTime" Nullable="false" Precision="7" />
+        <Property Name="CUSTOMER_ID" Type="Edm.Int32" />
+        <Property Name="SHARE" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="COURSE_TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="CUSTOMER_NAME" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="COURSE_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="LESSON_NUMBER" Type="Edm.Int32" Nullable="false" />
+      </EntityType>
       <Association Name="FK_COURSE_CATEGORY">
         <End Type="CloudEDUModel.CATEGORY" Role="CATEGORY" Multiplicity="0..1" />
         <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="*" />
@@ -463,6 +511,8 @@
         <EntitySet Name="COURSE_OK" EntityType="CloudEDUModel.COURSE_OK" />
         <EntitySet Name="COURSE_PENDING" EntityType="CloudEDUModel.COURSE_PENDING" />
         <EntitySet Name="NOTE_SHARABLE" EntityType="CloudEDUModel.NOTE_SHARABLE" />
+        <EntitySet Name="NOTE_SHAREABLE_AVAIL" EntityType="CloudEDUModel.NOTE_SHAREABLE_AVAIL" />
+        <EntitySet Name="NOTE_AVAIL" EntityType="CloudEDUModel.NOTE_AVAIL" />
         <FunctionImport Name="EnrollCourse" ReturnType="Edm.Int32" m:HttpMethod="GET">
           <Parameter Name="customer_id" Type="Edm.Int32" Nullable="false" />
           <Parameter Name="course_id" Type="Edm.Int32" Nullable="false" />
@@ -488,6 +538,9 @@
         <FunctionImport Name="AddDBLog" m:HttpMethod="GET">
           <Parameter Name="opr" Type="Edm.String" />
           <Parameter Name="msg" Type="Edm.String" />
+        </FunctionImport>
+        <FunctionImport Name="RemoveNote" ReturnType="Edm.Boolean" m:HttpMethod="GET">
+          <Parameter Name="id" Type="Edm.Int32" Nullable="false" />
         </FunctionImport>
         <AssociationSet Name="FK_COURSE_CATEGORY" Association="CloudEDUModel.FK_COURSE_CATEGORY">
           <End Role="CATEGORY" EntitySet="CATEGORY" />
