@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -87,18 +88,37 @@ namespace CloudEDU.Login
 
                         //User
                         //Constants.User = new User("Shania", "../Images/Users/ania.png");
-            Constants.User = new CUSTOMER();
-            Constants.User.NAME = "Dewen";
-            Constants.User.ID = 1;
-                        System.Diagnostics.Debug.WriteLine("login success");
-                        Frame.Navigate(typeof(CategoryForNewest));
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from cus in ctx.CUSTOMER select cus);
+            customerDsq.BeginExecute(OnUserComplete, null);
+            
+            //Constants.User.NAME = "Dewen";
+            //Constants.User.ID = 1;
+            //            System.Diagnostics.Debug.WriteLine("login success");
+            //            Frame.Navigate(typeof(CourseStore.Courstore));
                         // navigate 
             //        }
             //    }
             //}
             // login fail
         }
-         
+
+        private async void OnUserComplete(IAsyncResult iar)
+        {
+            IEnumerable<CUSTOMER> customers = customerDsq.EndExecute(iar);
+            Constants.User = customers.FirstOrDefault();
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Frame.Navigate(typeof(CourseStore.Courstore));
+                //dataCategory = coursesData.GetGroupsByCategory();
+                //cvs1.Source = dataCategory;
+                //(SemanticZoom.ZoomedOutView as ListViewBase).ItemsSource = cvs1.View.CollectionGroups;
+                //loadingProgressRing.IsActive = false;
+            });
+
+
+            
+        }
+
         public static string ComputeMD5(string str)
         {
             var alg = HashAlgorithmProvider.OpenAlgorithm("MD5");
