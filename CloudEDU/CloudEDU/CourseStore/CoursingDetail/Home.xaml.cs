@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudEDU.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,6 +41,11 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             course = e.Parameter as Course;
             DataContext = course;
+        }
+
+        private void Rectangle_Tapped_1(object sender, TappedRoutedEventArgs e)
+        {
+            Constants.coursing.NavigateToLecture();
         }
     }
 }
