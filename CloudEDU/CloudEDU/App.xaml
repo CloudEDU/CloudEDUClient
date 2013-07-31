@@ -108,9 +108,9 @@
             <!-- Some styles used in ListView -->
             <Style x:Key="VariableSizedWrapListTemplateStyle" TargetType="VariableSizedWrapGrid">
                 <Setter Property="ItemWidth" Value="300" />
-                <Setter Property="ItemHeight" Value="100" />
+                <Setter Property="ItemHeight" Value="90" />
                 <Setter Property="Orientation" Value="Vertical" />
-                <Setter Property="MaxHeight" Value="630" />
+                <Setter Property="MaxHeight" Value="530" />
                 <Setter Property="Margin" Value="100, 0, 100, 0" />
             </Style>
             <Style x:Key="ListViewOpacityRectangleStyle" TargetType="Rectangle">
