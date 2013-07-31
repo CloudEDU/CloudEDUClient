@@ -9,7 +9,7 @@
     d:DesignHeight="552"
     d:DesignWidth="884">
 
-    <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent">
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="Transparent" Name="OuterGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="253*"/>
             <ColumnDefinition Width="189*"/>
@@ -21,7 +21,7 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
             <Grid Width="auto" Background="White">
-                <Image Height="300" Stretch="UniformToFill" Source="{Binding ImageUri}" />
+                <Image Height="270" Stretch="UniformToFill" Source="{Binding ImageUri}" />
             </Grid>
             <Grid VerticalAlignment="Bottom">
                 <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="&#x2605;&#x2605;&#x2605;&#x2605;&#x2606;" HorizontalAlignment="Left" Foreground="White" />
@@ -56,7 +56,7 @@
             </ScrollViewer>
         </StackPanel>
         
-        <Rectangle Grid.Row="1" Grid.Column="1" Fill="Black" Opacity="0.2" Margin="50" />
+        <Rectangle Grid.Row="1" Grid.Column="1" Fill="Black" Opacity="0.2" Margin="50" Tapped="Rectangle_Tapped_1" />
         <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource TextButtonStyle}" Content="Start Learning!" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="28" FontFamily="Segoe UI Light"/>
     </Grid>
 </Page>

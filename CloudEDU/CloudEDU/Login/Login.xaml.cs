@@ -123,7 +123,7 @@ namespace CloudEDU.Login
                         Constants.User = new User(c);
                         isLogined = true;
                         System.Diagnostics.Debug.WriteLine("login success");
-                        Frame.Navigate(typeof(CategoryForNewest));
+                        Frame.Navigate(typeof(Courstore));
                         // navigate 
                     }
                 }

@@ -55,8 +55,10 @@ namespace CloudEDU
 
         private List<Lesson> allLessons;
         private Course toBeUploadCourse;
-     
-        //private Button addImageButton;
+        Dictionary<string, int> resourceDic;
+        private bool hasImage;
+
+        private Button addImageButton;
 
         private CancellationTokenSource cts;
 
@@ -70,7 +72,7 @@ namespace CloudEDU
             this.InitializeComponent();
 
             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
-            //addImageButton = imageAddButton;
+            addImageButton = imageAddButton;
         }
 
         /// <summary>
@@ -120,8 +122,13 @@ namespace CloudEDU
             }
             catch
             {
-                
+
             }
+        }
+
+        private void OnUploadCourseComplete(IAsyncResult result)
+        {
+            ctx.EndExecute(result);
         }
         #endregion
 
@@ -172,6 +179,9 @@ namespace CloudEDU
                 ShowMessageDialog("Format error! Please check your upload infomation.");
                 return;
             }
+            lessonUploadProgressRing.IsActive = true;
+            UploadLessionButton.Visibility = Visibility.Collapsed;
+            CancelUploadButton.Visibility = Visibility.Collapsed;
             allLessons.Add(new Lesson(++lessonCount, lessonName.Text, lessonDescription.Text));
 
             List<BackgroundTransferContentPart> docParts = CreateBackgroundTransferContentPartList(docs);
@@ -183,17 +193,30 @@ namespace CloudEDU
             if (audioParts != null) allParts.AddRange(audioParts);
             if (videoParts != null) allParts.AddRange(videoParts);
 
-            Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=" + Constants.User.NAME.Trim());
+            Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=" + Constants.User.NAME);
 
             BackgroundUploader uploader = new BackgroundUploader();
-            if (allParts.Count != 0)
+            try
             {
-                UploadOperation uploadOperation = await uploader.CreateUploadAsync(uploadUri, allParts);
-                // Attach progress and completion handlers.
-                await HandleUploadAsync(uploadOperation, true);
+                if (allParts.Count != 0)
+                {
+                    UploadOperation uploadOperation = await uploader.CreateUploadAsync(uploadUri, allParts);
+                    // Attach progress and completion handlers.
+                    await HandleUploadAsync(uploadOperation, true);
+                }
+            }
+            catch
+            {
+                ShowMessageDialog("Network connection error!");
+                lessonCount--;
+                ResetPopup();
+                return;
             }
 
             AddLessonInfo();
+            lessonUploadProgressRing.IsActive = false;
+            UploadLessionButton.Visibility = Visibility.Visible;
+            CancelUploadButton.Visibility = Visibility.Visible;
             wholeFrame.Opacity = 1;
             addLessonPopup.IsOpen = false;
         }
@@ -207,6 +230,7 @@ namespace CloudEDU
         {
             wholeFrame.Opacity = 1;
             addLessonPopup.IsOpen = false;
+            ResetPopup();
         }
 
         /// <summary>
@@ -216,35 +240,36 @@ namespace CloudEDU
         /// <param name="e">Event data that describes how the click was initiated.</param>
         private async void ImageUploadButton_Click(object sender, RoutedEventArgs e)
         {
-            //FileOpenPicker picker = FileTypePicker(imagesFilterTypeList);
-            //if (picker == null) return;
+            FileOpenPicker picker = FileTypePicker(imagesFilterTypeList);
+            if (picker == null) return;
 
-            //images = await picker.PickMultipleFilesAsync();
-            //if (images == null || images.Count == 0) return;
+            images = await picker.PickMultipleFilesAsync();
+            if (images == null || images.Count == 0) return;
 
-            //Image imgImg = new Image
-            //{
-            //    Source = new BitmapImage(new Uri("ms-appx:///Images/Upload/image.png")),
-            //    Margin = new Thickness(5, 0, 5, 0)
-            //};
+            Image imgImg = new Image
+            {
+                Source = new BitmapImage(new Uri("ms-appx:///Images/Upload/image.png")),
+                Margin = new Thickness(5, 0, 5, 0)
+            };
 
-            //ToolTip toolTip = new ToolTip();
-            //toolTip.Content = images[0].Name;
-            //ToolTipService.SetToolTip(imgImg, toolTip);
+            ToolTip toolTip = new ToolTip();
+            toolTip.Content = images[0].Name;
+            ToolTipService.SetToolTip(imgImg, toolTip);
 
-            //totalImagePanel.Children.RemoveAt(totalImagePanel.Children.Count - 1);
-            //imagePanel.Children.Add(imgImg);
+            totalImagePanel.Children.RemoveAt(totalImagePanel.Children.Count - 1);
+            imagePanel.Children.Add(imgImg);
 
-            //List<BackgroundTransferContentPart> imageParts = CreateBackgroundTransferContentPartList(images);
+            List<BackgroundTransferContentPart> imageParts = CreateBackgroundTransferContentPartList(images);
 
-            //Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=" + Constants.User.NAME);
+            Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=" + Constants.User.NAME);
 
-            //BackgroundUploader uploader = new BackgroundUploader();
-            //if (imageParts != null)
-            //{
-            //    UploadOperation imagesUpload = await uploader.CreateUploadAsync(uploadUri, imageParts);
-            //    await HandleUploadAsync(imagesUpload, true);
-            //}
+            BackgroundUploader uploader = new BackgroundUploader();
+            if (imageParts != null)
+            {
+                UploadOperation imagesUpload = await uploader.CreateUploadAsync(uploadUri, imageParts);
+                await HandleUploadAsync(imagesUpload, true);
+            }
+            hasImage = true;
         }
 
         /// <summary>
@@ -336,7 +361,7 @@ namespace CloudEDU
         /// </summary>
         /// <param name="sender">The all upload button clicked.</param>
         /// <param name="e">Event data that describes how the click was initiated.</param>
-        private void allUploadButton_Click(object sender, RoutedEventArgs e)
+        private async void allUploadButton_Click(object sender, RoutedEventArgs e)
         {
             if (!CheckCourseInfomation())
             {
@@ -344,14 +369,136 @@ namespace CloudEDU
                 return;
             }
 
-            COURSE newCourse = new COURSE()
+            addLessonButton.IsEnabled = false;
+            allUploadButton.IsEnabled = false;
+            resetUploadButton.IsEnabled = false;
+            uploadProgressBar.Visibility = Visibility.Visible;
+
+            try
             {
-                TITLE = courseNameTextBox.Text,
-                PRICE = Convert.ToDecimal(priceTextBox.Text),
-                TEACHER = Constants.User.ID,
-                CATEGORY = (categoryComboBox.SelectionBoxItem as CATEGORY).ID,
-                PG = (pgComboBox.SelectionBoxItem as PARENT_GUIDE).ID
-            };
+                resourceDic = new Dictionary<string, int>(Constants.ResourceType.Count);
+                for (int i = 0; i < Constants.ResourceType.Count; ++i)
+                {
+                    DataServiceQuery<RES_TYPE> dps = (DataServiceQuery<RES_TYPE>)(from res_type in ctx.RES_TYPE
+                                                                                  where res_type.DESCRIPTION.Trim() == Constants.ResourceType[i]
+                                                                                  select res_type);
+                    TaskFactory<IEnumerable<RES_TYPE>> tf = new TaskFactory<IEnumerable<RES_TYPE>>();
+                    RES_TYPE resID = (await tf.FromAsync(dps.BeginExecute(null, null), iar => dps.EndExecute(iar))).FirstOrDefault();
+
+                    resourceDic.Add(Constants.ResourceType[i], resID.ID);
+                }
+            }
+            catch
+            {
+                ShowMessageDialog("Network connection error!");
+                return;
+            }
+
+            string courseUplaodUri = "/CreateCourse?teacher_id=" + Constants.User.ID
+                + "&title='" + courseNameTextBox.Text
+                + "'&intro='" + CourseDescriptionTextBox.Text
+                + "'&category_id=" + (categoryComboBox.SelectionBoxItem as CATEGORY).ID
+                + "&price=" + Convert.ToDecimal(priceTextBox.Text)
+                + "&pg_id=" + (pgComboBox.SelectionBoxItem as PARENT_GUIDE).ID
+                + "&icon_url='" + toBeUploadCourse.ImageUri + "'";
+
+            int newCourseID = 0;
+            try
+            {
+                TaskFactory<IEnumerable<decimal>> tf = new TaskFactory<IEnumerable<decimal>>();
+                IEnumerable<decimal> courses = await tf.FromAsync(ctx.BeginExecute<decimal>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<decimal>(iar));
+                newCourseID = Convert.ToInt32(courses.FirstOrDefault());
+                if (newCourseID == 0) throw new InvalidDataException();
+            }
+            catch
+            {
+                ShowMessageDialog("Course upload error! Please check your network.");
+                return;
+            }
+
+            for (int i = 0; i < allLessons.Count; ++i)
+            {
+                Lesson newLesson = allLessons[i];
+                string lessonUploadUri = "/CreateLesson?course_id=" + newCourseID
+                    + "&content='" + newLesson.Content
+                    + "'&title='" + newLesson.Title +
+                    "'&number=" + newLesson.Number;
+                int newLessonID = 0;
+                try
+                {
+                    TaskFactory<IEnumerable<decimal>> tf = new TaskFactory<IEnumerable<decimal>>();
+                    IEnumerable<decimal> lessons = await tf.FromAsync(ctx.BeginExecute<decimal>(new Uri(lessonUploadUri, UriKind.Relative), null, null), iar => ctx.EndExecute<decimal>(iar));
+                    newLessonID = Convert.ToInt32(lessons.FirstOrDefault());
+                    if (newLessonID == 0) throw new InvalidDataException();
+                }
+                catch
+                {
+                    ShowMessageDialog("Lesson error! Please check your network.");
+                    return;
+                }
+
+                try
+                {
+                    List<Resource> docsRes = allLessons[i].GetDocList();
+                    List<Resource> audiosRes = allLessons[i].GetAudioList();
+                    List<Resource> videosRes = allLessons[i].GetVideoList();
+                    for (int j = 0; j < docsRes.Count; ++j)
+                    {
+                        Resource r = docsRes[j];
+                        RESOURCE newRes = new RESOURCE();
+                        newRes.LESSON_ID = newLessonID;
+                        newRes.TYPE = resourceDic["DOCUMENT"];
+                        newRes.URL = r.Uri;
+                        newRes.TITLE = r.Title;
+
+                        ctx.AddToRESOURCE(newRes);
+                    }
+                    for (int j = 0; j < audiosRes.Count; ++j)
+                    {
+                        Resource r = audiosRes[j];
+                        RESOURCE newRes = new RESOURCE();
+                        newRes.LESSON_ID = newLessonID;
+                        newRes.TYPE = resourceDic["AUDIO"];
+                        newRes.URL = r.Uri;
+                        newRes.TITLE = r.Title;
+
+                        ctx.AddToRESOURCE(newRes);
+                    }
+                    for (int j = 0; j < videosRes.Count; ++j)
+                    {
+                        Resource r = videosRes[j];
+                        RESOURCE newRes = new RESOURCE();
+                        newRes.LESSON_ID = newLessonID;
+                        newRes.TYPE = resourceDic["VIDEO"];
+                        newRes.URL = r.Uri;
+                        newRes.TITLE = r.Title;
+
+                        ctx.AddToRESOURCE(newRes);
+                    }
+                    TaskFactory<DataServiceResponse> tfRes = new TaskFactory<DataServiceResponse>();
+                    DataServiceResponse dsr = await tfRes.FromAsync(ctx.BeginSaveChanges(null, null), iar => ctx.EndSaveChanges(iar));
+                }
+                catch
+                {
+                    ShowMessageDialog("Uplaod error! Please check your network");
+                    return;
+                }
+            }
+            addLessonButton.IsEnabled = true;
+            allUploadButton.IsEnabled = true;
+            resetUploadButton.IsEnabled = true;
+            uploadProgressBar.Visibility = Visibility.Collapsed;
+
+            var finishMsg = new MessageDialog("Upload Finish! Please wait the check.", "Congratulation");
+            finishMsg.Commands.Add(new UICommand("Continue upload", (command) =>
+                {
+                    ResetPage();
+                }));
+            finishMsg.Commands.Add(new UICommand("Back", (command) =>
+                {
+                    Frame.Navigate(typeof(CourseStore.Courstore));
+                }));
+            await finishMsg.ShowAsync();
         }
 
         /// <summary>
@@ -469,9 +616,10 @@ namespace CloudEDU
                     System.Diagnostics.Debug.WriteLine("{0}, {1}", c.Key, c.Value);
                 }
 
-                if (images != null && images.Count != 0)
+                if (images != null && images.Count != 0 && hasImage == false)
                 {
                     toBeUploadCourse.ImageUri = response.Headers[images.FirstOrDefault().Name];
+                    hasImage = true;
                 }
                 SaveUploadLessonToListAsync(response);
             }
@@ -605,29 +753,17 @@ namespace CloudEDU
         /// </summary>
         private void ResetPopup()
         {
-            bool inFlag = false;
-
             lessonName.Text = "Lesson Name";
             lessonDescription.Text = "Description...";
-            //imagePanel.Children.Clear();
             docsPanel.Children.Clear();
             audiosPanel.Children.Clear();
             videosPanel.Children.Clear();
-            //foreach (var c in totalImagePanel.Children)
-            //{
-            //    if (c == addImageButton)
-            //    {
-            //        inFlag = true;
-            //    }
-            //}
-            //if (!inFlag)
-            //{
-            //    totalImagePanel.Children.Add(addImageButton);
-            //}
-            images = null;
             docs = null;
             audios = null;
             videos = null;
+            lessonUploadProgressRing.IsActive = false;
+            UploadLessionButton.Visibility = Visibility.Visible;
+            CancelUploadButton.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -635,7 +771,8 @@ namespace CloudEDU
         /// </summary>
         private void ResetPage()
         {
-            //bool inFlag = false;
+            bool inFlag = false;
+            hasImage = false;
 
             categoryDsq = (DataServiceQuery<CATEGORY>)(from category in ctx.CATEGORY select category);
             categoryDsq.BeginExecute(OnCategoryComplete, null);
@@ -646,7 +783,8 @@ namespace CloudEDU
             lessonCount = 0;
             cts = new CancellationTokenSource();
             courseNameTextBox.Text = "";
-            //priceTextBox.Text = "Price";
+            priceTextBox.Text = "";
+            CourseDescriptionTextBox.Text = "";
             lessonInfo.Children.Clear();
             lessonRes.Children.Clear();
             images = null;
@@ -656,18 +794,18 @@ namespace CloudEDU
             allLessons = new List<Lesson>();
             toBeUploadCourse = new Course();
 
-            //imagePanel.Children.Clear();
-            //foreach (var c in totalImagePanel.Children)
-            //{
-            //    if (c == addImageButton)
-            //    {
-            //        inFlag = true;
-            //    }
-            //}
-            //if (!inFlag)
-            //{
-            //    totalImagePanel.Children.Add(addImageButton);
-            //}
+            imagePanel.Children.Clear();
+            foreach (var c in totalImagePanel.Children)
+            {
+                if (c == addImageButton)
+                {
+                    inFlag = true;
+                }
+            }
+            if (!inFlag)
+            {
+                totalImagePanel.Children.Add(addImageButton);
+            }
         }
         #endregion
 
@@ -708,6 +846,7 @@ namespace CloudEDU
                 if (categoryComboBox.SelectedItem == null) result = false;
                 if (pgComboBox.SelectedItem == null) result = false;
                 if (images == null || images.Count == 0) result = false;
+                if (allLessons == null || allLessons.Count == 0) result = false;
             }
             catch
             {
@@ -748,7 +887,7 @@ namespace CloudEDU
         /// </summary>
         private async void ShowMessageDialog(string msg)
         {
-            var messageDialog = new MessageDialog("Format error! Please check your upload infomation.");
+            var messageDialog = new MessageDialog(msg);
             messageDialog.Commands.Add(new UICommand("Close"));
             await messageDialog.ShowAsync();
         }
