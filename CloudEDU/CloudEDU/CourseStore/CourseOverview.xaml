@@ -52,9 +52,9 @@
                     <TextBlock x:Name="PriceTextBlock" Style="{StaticResource HeaderTextStyle}" Text="Free"
                                Foreground="{StaticResource CourseInfoFontForegroundBrush}"
                                FontFamily="Segoe Marker" Margin="0, 15" />
-                    <Button Background="#2490FF" Width="110" Foreground="{StaticResource CourseInfoFontForegroundBrush}"
+                    <Button x:Name="courseButton" Background="#2490FF" Width="110" Foreground="{StaticResource CourseInfoFontForegroundBrush}"
                             BorderBrush="White" BorderThickness="2"
-                            Height="50" Content="Attend" FontSize="25" Click="AttendButton_Click"/>
+                            Height="50" Content="" FontSize="25" Click="AttendButton_Click"/>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Orientation="Vertical"

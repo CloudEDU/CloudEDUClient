@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,6 +31,11 @@ namespace CloudEDU.CourseStore
     {
         Course course;
         CloudEDUEntities ctx = null;
+        DataServiceQuery<COURSE_AVAIL> teachCourses;
+        DataServiceQuery<ATTEND> buyCourses;
+
+        bool isTeach;
+        bool isBuy;
 
         DBAccessAPIs dba;
         /// <summary>
@@ -46,12 +53,45 @@ namespace CloudEDU.CourseStore
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             course = e.Parameter as Course;
             UserProfileBt.DataContext = Constants.User;
             DataContext = course;
             frame.Navigate(typeof(CourseDetail.Overview), course);
+
+            isTeach = false;
+            isBuy = false;
+
+            teachCourses = (DataServiceQuery<COURSE_AVAIL>)(from teachC in ctx.COURSE_AVAIL
+                                                            where teachC.TEACHER_NAME == Constants.User.NAME
+                                                            select teachC);
+            TaskFactory<IEnumerable<COURSE_AVAIL>> teachTF = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
+            IEnumerable<COURSE_AVAIL> tcs = await teachTF.FromAsync(teachCourses.BeginExecute(null, null), iar => teachCourses.EndExecute(iar));
+
+            buyCourses = (DataServiceQuery<ATTEND>)(from buyC in ctx.ATTEND
+                                                    where buyC.CUSTOMER_ID == Constants.User.ID
+                                                    select buyC);
+            TaskFactory<IEnumerable<ATTEND>> buyCF = new TaskFactory<IEnumerable<ATTEND>>();
+            IEnumerable<ATTEND> bcs = await buyCF.FromAsync(buyCourses.BeginExecute(null, null), iar => buyCourses.EndExecute(iar));
+
+            foreach (var t in tcs)
+            {
+                if (t.ID == course.ID)
+                {
+                    isTeach = true;
+                    break;
+                }
+            }
+
+            foreach (var b in bcs)
+            {
+                if (b.COURSE_ID == course.ID)
+                {
+                    isBuy = true;
+                    break;
+                }
+            }
 
             if (course.Price == null || course.Price.Value == 0)
             {
@@ -62,6 +102,19 @@ namespace CloudEDU.CourseStore
                 PriceTextBlock.Text = "$ " + Math.Round(course.Price.Value, 2);
             }
             SetStarsStackPanel(course.Rate ?? 0);
+
+            if (isTeach)
+            {
+                courseButton.Content = "Teach";
+            }
+            else if (isBuy)
+            {
+                courseButton.Content = "Attend";
+            }
+            else
+            {
+                courseButton.Content = "Buy";
+            }
         }
 
         /// <summary>
@@ -196,9 +249,75 @@ namespace CloudEDU.CourseStore
             Frame.Navigate(typeof(Login.Profile));
         }
 
-        private void AttendButton_Click(object sender, RoutedEventArgs e)
+        private async void AttendButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            Button bt = sender as Button;
+            List<object> courseInfo = new List<object>();
+            courseInfo.Add(course);
+
+            if (bt.Content.ToString() == "Teach")
+            {
+                courseInfo.Add("teaching");
+                Frame.Navigate(typeof(Coursing), courseInfo);
+            }
+            else if (bt.Content.ToString() == "Attend")
+            {
+                courseInfo.Add("attending");
+                Frame.Navigate(typeof(Coursing), courseInfo);
+            }
+            else if (bt.Content.ToString() == "Buy")
+            {
+                var buySure = new MessageDialog("Are you sure to buy this course?", "Buy Course");
+                buySure.Commands.Add(new UICommand("Yes"));
+                buySure.Commands.Add(new UICommand("No", (command) =>
+                    {
+                        return;
+                    }));
+                await buySure.ShowAsync();
+
+                try
+                {
+                    string uri = "/EnrollCourse?customer_id=" + Constants.User.ID + "&course_id=" + course.ID;
+                    TaskFactory<IEnumerable<int>> tf = new TaskFactory<IEnumerable<int>>();
+                    IEnumerable<int> code = await tf.FromAsync(ctx.BeginExecute<int>(new Uri(uri, UriKind.Relative), null, null), iar => ctx.EndExecute<int>(iar));
+
+                    if (code.FirstOrDefault() != 0)
+                    {
+                        var buyError = new MessageDialog("You don't have enough money. Please contact Scott Zhao.", "Buy Failed");
+                        buyError.Commands.Add(new UICommand("Close"));
+                        await buyError.ShowAsync();
+                        return;
+                    }
+
+                }
+                catch
+                {
+                    ShowMessageDialog("Network connection error!");
+                    return;
+                }
+
+                var buyOkMsg = new MessageDialog("Do you want to start learning?", "Buy successfully");
+                buyOkMsg.Commands.Add(new UICommand("Yes", (command) =>
+                    {
+                        courseInfo.Add("attending");
+                        Frame.Navigate(typeof(Coursing), courseInfo);
+                    }));
+                buyOkMsg.Commands.Add(new UICommand("No", (command) =>
+                    {
+                        bt.Content = "Attend";
+                    }));
+                await buyOkMsg.ShowAsync();
+            }
+        }
+
+        /// <summary>
+        /// Upload information error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog(string msg)
+        {
+            var messageDialog = new MessageDialog("Format error! Please check your upload infomation.");
+            messageDialog.Commands.Add(new UICommand("Close"));
+            await messageDialog.ShowAsync();
         }
     }
 }
