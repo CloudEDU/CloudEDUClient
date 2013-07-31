@@ -15,6 +15,7 @@ using CloudEDU.Common;
 using CloudEDU.Service;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using System.Data.Services.Client;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -26,7 +27,9 @@ namespace CloudEDU.Login
     public sealed partial class Profile : Page
     {
         private CloudEDUEntities ctx = null;
+        private DataServiceQuery<CUSTOMER> customerDsq = null;
 
+        private List<CUSTOMER> csl;
         public Profile()
         {
             this.InitializeComponent();
@@ -42,6 +45,13 @@ namespace CloudEDU.Login
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             biggestGrid.DataContext = Constants.User;
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
+            customerDsq.BeginExecute(OnCustomerComplete, null);
+        }
+        private void OnCustomerComplete(IAsyncResult result)
+        {
+            csl = customerDsq.EndExecute(result).ToList();
+            System.Diagnostics.Debug.WriteLine(csl[0].NAME);
         }
 
         /// <summary>
@@ -81,13 +91,19 @@ namespace CloudEDU.Login
                 await dialog.ShowAsync();
                 return;
             }
-
-            Constants.User.DEGREE = (string)degreeBox.SelectedItem;
-            Constants.User.PASSWORD = Constants.ComputeMD5(passwordBox.Password);
-            Constants.User.EMAIL = email.Text;
-            Constants.User.BIRTHDAY = Convert.ToDateTime(birthday.Text);
-            ctx.UpdateObject(Constants.User);
-            ctx.BeginSaveChanges(OnCustomerSaveChange, null);
+            
+            foreach (CUSTOMER c in csl)
+            {
+                if (c.NAME == Constants.User.NAME)
+                {
+                    c.DEGREE = (string)degreeBox.SelectedItem;
+                    c.PASSWORD = Constants.ComputeMD5(passwordBox.Password);
+                    c.EMAIL = email.Text;
+                    c.BIRTHDAY = Convert.ToDateTime(birthday.Text);
+                    ctx.UpdateObject(c);
+                    ctx.BeginSaveChanges(OnCustomerSaveChange, null);
+                }
+            }
         }
 
         private void OnCustomerSaveChange(IAsyncResult result)
@@ -95,6 +111,7 @@ namespace CloudEDU.Login
             try
             {
                 ctx.EndSaveChanges(result);
+                Constants.User = new User(Constants.UserEntity);
             }
             catch
             {

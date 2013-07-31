@@ -26,7 +26,7 @@ namespace CloudEDU.Common
 
         public static List<string> ResourceType = new List<string> { "DOCUMENT", "VIDEO", "AUDIO" };
         public static Coursing coursing;
-        //public static CUSTOMER User;
+        public static CUSTOMER UserEntity;
         public static User User;
         /// <summary>
         /// Cast the first character of every word in a string from lower to upper.

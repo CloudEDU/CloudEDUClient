@@ -52,8 +52,8 @@ namespace CloudEDU.Login
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            //customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
-            //customerDsq.BeginExecute(OnCustomerComplete, null);
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
+            customerDsq.BeginExecute(OnCustomerComplete, null);
             
             // auto log
             //if (Constants.Read<bool>("AutoLog") == true)
@@ -80,8 +80,7 @@ namespace CloudEDU.Login
 
         private void OnCustomerComplete(IAsyncResult result)
         {
-            IEnumerable<CUSTOMER> cs = customerDsq.EndExecute(result);
-            csl = new List<CUSTOMER>(cs);
+            csl = customerDsq.EndExecute(result).ToList();
             System.Diagnostics.Debug.WriteLine(csl[0].NAME);
         }
 
@@ -106,18 +105,18 @@ namespace CloudEDU.Login
                 return;
             }
 
-            try
-            {
-                TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();
-                customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER where user.NAME == InputUsername.Text select user);
-                IEnumerable<CUSTOMER> cs = await tf.FromAsync(customerDsq.BeginExecute(null, null), iar => customerDsq.EndExecute(iar));
-                csl = new List<CUSTOMER>(cs);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("login request error: {0}", ex.Message);
-                ShowMessageDialog();
-            }
+            //try
+            //{
+            //    TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();
+            //    customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER where user.NAME == InputUsername.Text select user);
+            //    IEnumerable<CUSTOMER> cs = await tf.FromAsync(customerDsq.BeginExecute(null, null), iar => customerDsq.EndExecute(iar));
+            //    csl = new List<CUSTOMER>(cs);
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Diagnostics.Debug.WriteLine("login request error: {0}", ex.Message);
+            //    ShowMessageDialog();
+            //}
             bool isLogined = false;
             foreach (CUSTOMER c in csl)
             {
@@ -137,6 +136,7 @@ namespace CloudEDU.Login
                         isLogined = true;
                         System.Diagnostics.Debug.WriteLine("login success");
                         string courseUplaodUri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
+                        //ctx.UpdateObject(c);
 
                         try
                         {

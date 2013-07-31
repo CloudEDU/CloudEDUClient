@@ -38,6 +38,7 @@ namespace CloudEDU.Login
         //public NOTE NOTE { get; set; }
         public User(CUSTOMER c)
         {
+            Constants.UserEntity = c;
             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
             NAME = c.NAME;
             ID = c.ID;
