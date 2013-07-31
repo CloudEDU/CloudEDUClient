@@ -38,6 +38,7 @@ namespace CloudEDU.Login
         //public NOTE NOTE { get; set; }
         public User(CUSTOMER c)
         {
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
             NAME = c.NAME;
             ID = c.ID;
             EMAIL = c.EMAIL;
@@ -48,7 +49,7 @@ namespace CloudEDU.Login
             BIRTHDAY = c.BIRTHDAY;
             BALANCE = c.BALANCE;
             ALLOW = c.ALLOW;
-            //SetAttendTeachNumber();
+            SetAttendTeachNumber();
             //TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();
             //customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER where user.NAME.Equals(InputUsername.Text) select user);
             //IEnumerable<CUSTOMER> cs = await tf.FromAsync(customerDsq.BeginExecute(null, null), iar => customerDsq.EndExecute(iar));
@@ -85,11 +86,13 @@ namespace CloudEDU.Login
         {
             using (SQLiteConnection db = CreateSQLiteConnection())
             {
+                //db.DropTable<User>();
                 db.CreateTable<User>();
                 if (db.Table<User>().Count() != 0)
                 {
                     db.DeleteAll<User>();
                 }
+                System.Diagnostics.Debug.WriteLine("Count of table after deleteall: {0}",db.Table<User>().Count());
                 db.InsertOrReplace(this);
                 db.Close();
             }
@@ -110,7 +113,16 @@ namespace CloudEDU.Login
         public static User SelectLastUser()
         {
             SQLiteConnection db = User.CreateSQLiteConnection();
-            return db.Query<User>("select * from User where NAME =? ", Constants.Read<string>("LastUser"))[0];
+            User u = null;
+            try
+            {
+                u = db.Query<User>("select * from User where NAME =? ", Constants.Read<string>("LastUser"))[0];
+            }
+            catch (SQLiteException e)
+            {
+                System.Diagnostics.Debug.WriteLine("in SelectLastUser Function error:{0}", e.Message);
+            }
+            return u;
         }
     }
 }

@@ -18,7 +18,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:UserProfileButton">
-                    <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" DataContext="{Binding Mode=TwoWay}">
+                    <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" DataContext="{Binding Mode=OneWay}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto"/>

@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Popups;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -51,28 +52,30 @@ namespace CloudEDU.Login
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-
+            //customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
+            //customerDsq.BeginExecute(OnCustomerComplete, null);
+            
             // auto log
-            if (Constants.Read<bool>("AutoLog") == true)
-            {
-                Constants.User = User.SelectLastUser();
-                // navigate
-                Frame.Navigate(typeof(CourseStore.Courstore));
-            }
+            //if (Constants.Read<bool>("AutoLog") == true)
+            //{
+            //    Constants.User = User.SelectLastUser();
+            //    // navigate
+            //    Frame.Navigate(typeof(CourseStore.Courstore));
+            //}
 
-            // last user
-            if (Constants.Read<string>("LastUser") == default(string))
-            {
+            //// last user
+            //if (Constants.Read<string>("LastUser") == default(string))
+            //{
 
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine(Constants.Read<string>("LastUser"));
-                if (Frame.Navigate(typeof(SignUp)))
-                    System.Diagnostics.Debug.WriteLine("suc navigate");
-                else
-                    System.Diagnostics.Debug.WriteLine("fail navigate");
-            }
+            //}
+            //else
+            //{
+            //    System.Diagnostics.Debug.WriteLine(Constants.Read<string>("LastUser"));
+            //    if (Frame.Navigate(typeof(SignUp)))
+            //        System.Diagnostics.Debug.WriteLine("suc navigate");
+            //    else
+            //        System.Diagnostics.Debug.WriteLine("fail navigate");
+            //}
         }
 
         private void OnCustomerComplete(IAsyncResult result)
@@ -103,10 +106,18 @@ namespace CloudEDU.Login
                 return;
             }
 
-            TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();
-            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER where user.NAME.Equals(InputUsername.Text) select user);
-            IEnumerable<CUSTOMER> cs = await tf.FromAsync(customerDsq.BeginExecute(null, null), iar => customerDsq.EndExecute(iar));
-            csl = new List<CUSTOMER>(cs);
+            try
+            {
+                TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();
+                customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER where user.NAME == InputUsername.Text select user);
+                IEnumerable<CUSTOMER> cs = await tf.FromAsync(customerDsq.BeginExecute(null, null), iar => customerDsq.EndExecute(iar));
+                csl = new List<CUSTOMER>(cs);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("login request error: {0}", ex.Message);
+                ShowMessageDialog();
+            }
             bool isLogined = false;
             foreach (CUSTOMER c in csl)
             {
@@ -119,10 +130,23 @@ namespace CloudEDU.Login
                         //Constants.User = c;
 
                         //User
+                        if (!c.ALLOW)
+                            break;
                         Constants.Save<bool>("AutoLog", (bool)CheckAutoLogin.IsChecked);
                         Constants.User = new User(c);
                         isLogined = true;
                         System.Diagnostics.Debug.WriteLine("login success");
+                        string courseUplaodUri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
+
+                        try
+                        {
+                            TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
+                            IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
+                            
+                        }
+                        catch
+                        {
+                        }
                         Frame.Navigate(typeof(Courstore));
                         // navigate 
                     }
@@ -140,6 +164,30 @@ namespace CloudEDU.Login
                 return;
             emptyUsername = InputUsername.Text;
             firstTimeForUsername = false;
+        }
+        /// <summary>
+        /// Network Connection error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    var messageDialog = new MessageDialog("No Network has been found!");
+                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                    {
+                        Frame.Navigate(typeof(Login));
+                    }));
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    //loadingProgressRing.IsActive = false;
+                    await messageDialog.ShowAsync();
+                }
+                catch
+                {
+                    ShowMessageDialog();
+                }
+            });
         }
     }
 }

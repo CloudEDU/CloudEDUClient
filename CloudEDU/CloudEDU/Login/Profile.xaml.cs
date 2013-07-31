@@ -12,6 +12,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CloudEDU.Common;
+using CloudEDU.Service;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -22,9 +25,13 @@ namespace CloudEDU.Login
     /// </summary>
     public sealed partial class Profile : Page
     {
+        private CloudEDUEntities ctx = null;
+
         public Profile()
         {
             this.InitializeComponent();
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
+
         }
 
         /// <summary>
@@ -59,16 +66,81 @@ namespace CloudEDU.Login
             retypePasswordStackPanel.Visibility = Visibility.Visible;
         }
 
-        private void SaveImage_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void SaveImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            if (passwordBox.Password.Equals(string.Empty) || retypePasswordBox.Password.Equals(string.Empty))
+            {
+                var messageDialog = new MessageDialog("Check your input, Password can't be empty!");
+                await messageDialog.ShowAsync();
+                return;
+            }
 
+            if (!passwordBox.Password.Equals(retypePasswordBox.Password))
+            {
+                var dialog = new MessageDialog("Passwords are not same! Try again, thx!");
+                await dialog.ShowAsync();
+                return;
+            }
+
+            Constants.User.DEGREE = (string)degreeBox.SelectedItem;
+            Constants.User.PASSWORD = Constants.ComputeMD5(passwordBox.Password);
+            Constants.User.EMAIL = email.Text;
+            Constants.User.BIRTHDAY = Convert.ToDateTime(birthday.Text);
+            ctx.UpdateObject(Constants.User);
+            ctx.BeginSaveChanges(OnCustomerSaveChange, null);
+        }
+
+        private void OnCustomerSaveChange(IAsyncResult result)
+        {
+            try
+            {
+                ctx.EndSaveChanges(result);
+            }
+            catch
+            {
+                ShowMessageDialog();
+                //Network Connection error.
+            }
         }
 
         private void ResetImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
             retypePasswordStackPanel.Visibility = Visibility.Collapsed;
+            degreeBox.SelectedItem = Constants.User.DEGREE;
+            System.Diagnostics.Debug.WriteLine(Constants.User.DEGREE);
+            degreeBox.SelectedIndex = 0;
+            email.Text = Constants.User.EMAIL;
+            birthday.Text = Constants.User.BIRTHDAY.ToString();
         }
 
+        private void degreeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(degreeBox.SelectedItem);
+        }
+        /// <summary>
+        /// Network Connection error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    var messageDialog = new MessageDialog("No Network has been found!");
+                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                    {
+                        Frame.Navigate(typeof(Profile));
+                    }));
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    //loadingProgressRing.IsActive = false;
+                    await messageDialog.ShowAsync();
+                }
+                catch
+                {
+                    ShowMessageDialog();
+                }
+            });
+        }
 
     }
 }

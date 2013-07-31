@@ -88,6 +88,8 @@ namespace CloudEDU
                 {
                     Constants.User = User.SelectLastUser();
                     // navigate
+                    System.Diagnostics.Debug.WriteLine("ID:{0}, ATTEND:{1}, TEACH:{2}",
+                        Constants.User.ID, Constants.User.ATTEND_COUNT, Constants.User.TEACH_COUNT);
                     goalPage = typeof(CourseStore.Courstore);
                 }
                 goalPage = typeof(Login.Login);

@@ -68,12 +68,12 @@
                     
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Degree:" Margin="0, 7, 0, 0" FontSize="30" />
-                        <ComboBox x:Name="degreeBox" FontSize="30" Width="350" BorderBrush="Transparent" Background="Transparent" Height="60" Padding="10, 0, 10, 7">
-                            <x:String>Grad</x:String>
-                            <x:String>Undergrad</x:String>
-                            <x:String>Senior High</x:String>
-                            <x:String>Junior High</x:String>
-                            <x:String>Primary School or Lower</x:String>
+                        <ComboBox x:Name="degreeBox" FontSize="30" Width="350" BorderBrush="Transparent" Background="Transparent" Height="60" Padding="10, 0, 10, 7" SelectionChanged="degreeBox_SelectionChanged">
+                            <x:String>grad</x:String>
+                            <x:String>undergrad</x:String>
+                            <x:String>senior high</x:String>
+                            <x:String>junior high</x:String>
+                            <x:String>primary school or lower</x:String>
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">

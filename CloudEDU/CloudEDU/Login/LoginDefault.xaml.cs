@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -77,7 +78,8 @@ namespace CloudEDU.Login
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
+            customerDsq.BeginExecute(OnCustomerComplete, null);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -101,15 +103,22 @@ namespace CloudEDU.Login
         {
             if (InputPassword.Password.Equals(string.Empty))
             {
-                var messageDialog = new MessageDialog("Check your input!");
+                var messageDialog = new MessageDialog("Please Check your input!");
                 await messageDialog.ShowAsync();
                 return;
             }
-
-            TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();
-            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER where user.NAME.Equals(Constants.User.NAME) select user);
-            IEnumerable<CUSTOMER> cs = await tf.FromAsync(customerDsq.BeginExecute(null, null), iar => customerDsq.EndExecute(iar));
-            csl = new List<CUSTOMER>(cs);
+            try
+            {
+                TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();
+                customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER where user.NAME.Equals(Constants.User.NAME) select user);
+                IEnumerable<CUSTOMER> cs = await tf.FromAsync(customerDsq.BeginExecute(null, null), iar => customerDsq.EndExecute(iar));
+                csl = new List<CUSTOMER>(cs);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                ShowMessageDialog();
+            }
             bool isLogined = false;
 
             foreach (CUSTOMER c in csl)
@@ -123,8 +132,19 @@ namespace CloudEDU.Login
                         Constants.Save<bool>("AutoLog", (bool)CheckAutoLogin.IsChecked);
 
                         System.Diagnostics.Debug.WriteLine("login success");
+                        string courseUplaodUri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
+
+                        try
+                        {
+                            TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
+                            IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
+
+                        }
+                        catch
+                        {
+                        }
                         isLogined = true;
-                        Frame.Navigate(typeof(CategoryForNewest));
+                        Frame.Navigate(typeof(CourseStore.Courstore));
                         // navigate 
                     }
                 }
@@ -135,6 +155,30 @@ namespace CloudEDU.Login
                 var msgDialog = new MessageDialog("Username Or Password is wrong");
                 await msgDialog.ShowAsync();
             }
+        }
+        /// <summary>
+        /// Network Connection error MessageDialog.
+        /// </summary>
+        private async void ShowMessageDialog()
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                try
+                {
+                    var messageDialog = new MessageDialog("No Network has been found!");
+                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                    {
+                        Frame.Navigate(typeof(LoginDefault));
+                    }));
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    //loadingProgressRing.IsActive = false;
+                    await messageDialog.ShowAsync();
+                }
+                catch
+                {
+                    ShowMessageDialog();
+                }
+            });
         }
     }
 }
