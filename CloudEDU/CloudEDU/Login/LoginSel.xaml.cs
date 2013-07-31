@@ -50,8 +50,8 @@ namespace CloudEDU.Login
                 //bt.UserName = user.NAME;
                 UsersStack.Children.Insert(0,bt);
             }
-            test.user = new User("Fox", "http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328");
-            test.UserName = test.user.NAME;
+            //test.user = new User("Fox", "http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328");
+            //test.UserName = test.user.NAME;
         }
 
         private void SetUsers()

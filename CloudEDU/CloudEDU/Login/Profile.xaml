@@ -24,7 +24,13 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                
+                <Border x:Name="image" Background="#75B3C5" Width="200" Height="200" CornerRadius="1000" Margin="5,0,0,0" DataContext="{Binding}">
+                    <Border Width="190" Height="190" CornerRadius="1000">
+                        <Border.Background>
+                            <ImageBrush ImageSource="{Binding ImageSource}"/>
+                        </Border.Background>
+                    </Border>
+                </Border>
                 <StackPanel Grid.Column="1" Margin="20, 50, 20, 50">
                     <StackPanel.Transitions>
                         <TransitionCollection>

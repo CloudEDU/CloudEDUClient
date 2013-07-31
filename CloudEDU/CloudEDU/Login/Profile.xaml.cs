@@ -44,6 +44,7 @@ namespace CloudEDU.Login
         /// 属性通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            image.DataContext = Constants.User;
             biggestGrid.DataContext = Constants.User;
             customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
             customerDsq.BeginExecute(OnCustomerComplete, null);

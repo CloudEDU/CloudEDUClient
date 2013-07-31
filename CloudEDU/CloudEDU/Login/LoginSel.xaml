@@ -55,7 +55,7 @@
             <StackPanel x:Name="UsersStack" Canvas.Left="613" Width="Auto" 
                         Orientation="Horizontal" HorizontalAlignment ="Center" 
                         Canvas.Top="215" Height="229" >
-                <local:UserSelButtonControl x:Name="test" Template="{StaticResource ResourceKey=temp}" Content="http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328" Click="Button_Click" UserName="Shania" Margin="0,0,0,-20"/>
+                <!--<local:UserSelButtonControl x:Name="test" Template="{StaticResource ResourceKey=temp}" Content="http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328" Click="Button_Click" UserName="Shania" Margin="0,0,0,-20"/>-->
                 <Button Template="{StaticResource AddUser}"  Width="Auto" Content="+"  Click="SignUpButton_Click" Margin="0,0,0,40"/>
                 <!--<local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>
                 <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>-->
