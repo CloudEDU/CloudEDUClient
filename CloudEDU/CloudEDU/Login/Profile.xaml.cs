@@ -11,6 +11,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using CloudEDU.Common;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -33,6 +34,7 @@ namespace CloudEDU.Login
         /// 属性通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            biggestGrid.DataContext = Constants.User;
         }
 
         /// <summary>
@@ -66,5 +68,7 @@ namespace CloudEDU.Login
         {
             retypePasswordStackPanel.Visibility = Visibility.Collapsed;
         }
+
+
     }
 }

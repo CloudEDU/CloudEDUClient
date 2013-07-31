@@ -155,11 +155,14 @@
     <Compile Include="CourseStore\CourseOverview.xaml.cs">
       <DependentUpon>CourseOverview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Login\LoginDefault.xaml.cs">
+      <DependentUpon>LoginDefault.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Login\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Login\LoginTmp.xaml.cs">
-      <DependentUpon>LoginTmp.xaml</DependentUpon>
+    <Compile Include="Login\LoginSel.xaml.cs">
+      <DependentUpon>LoginSel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\PasswordBoxBehavior.cs" />
     <Compile Include="Login\Profile.xaml.cs">
@@ -289,11 +292,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Login\LoginDefault.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Login\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Login\LoginTmp.xaml">
+    <Page Include="Login\LoginSel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -364,6 +371,9 @@
     <Reference Include="System.Spatial.WindowsStore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Data.OData.WindowsStore.5.0.0\lib\.NETCore\System.Spatial.WindowsStore.dll</HintPath>
+    </Reference>
+    <Reference Include="WinRTXamlToolkit">
+      <HintPath>..\packages\winrtxamltoolkit.1.5.2.0\lib\netcore45\WinRTXamlToolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
