@@ -31,7 +31,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:UserSelButtonControl" >
-                    <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" DataContext="{Binding Mode=TwoWay}">
+                    <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" 
+                          DataContext="{Binding Mode=TwoWay}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto"/>
@@ -47,8 +48,8 @@
                                 <VisualState x:Name="PointerOver"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border Background="#75B3C5" Width="150" Height="150" CornerRadius="1000" Margin="5,0,0,0">
-                            <Border Width="140" Height="140" CornerRadius="1000">
+                        <Border Background="#75B3C5" Width="170" Height="170" CornerRadius="1000" Margin="5,0,0,0">
+                            <Border Width="160" Height="160" CornerRadius="1000">
                                 <Border.Background>
                                     <ImageBrush ImageSource="{Binding ImageSource}"/>
                                 </Border.Background>

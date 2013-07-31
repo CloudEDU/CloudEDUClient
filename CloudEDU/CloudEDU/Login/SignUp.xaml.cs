@@ -15,6 +15,7 @@ using CloudEDU.Common;
 using CloudEDU.Service;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using SQLite;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -97,6 +98,11 @@ namespace CloudEDU.Login
                     ShowMessageDialog();
                 }
             });
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Login));
         }
     }
 }

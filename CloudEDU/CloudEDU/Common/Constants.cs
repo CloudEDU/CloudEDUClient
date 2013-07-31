@@ -1,4 +1,4 @@
-using CloudEDU.CourseStore;
+﻿using CloudEDU.CourseStore;
 using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ using CloudEDU.Login;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
+using Windows.Storage;
 
 namespace CloudEDU.Common
 {
@@ -75,6 +76,7 @@ namespace CloudEDU.Common
 
             return course;
         }
+
         public static string ComputeMD5(string str)
         {
             var alg = HashAlgorithmProvider.OpenAlgorithm("MD5");
@@ -84,7 +86,46 @@ namespace CloudEDU.Common
             return res;
         }
 
+        /// <summary>
+        /// 保存数据
+        /// </summary>
+        /// <typeparam name="T">数据类型</typeparam>
+        /// <param name="key">键</param>
+        /// <param name="value">值</param>
+        public static void Save<T>(string key, T value)
+        {
+            ApplicationData.Current.LocalSettings.Values[key] = value;
+        }
+
+        /// <summary>
+        /// 读取数据
+        /// </summary>
+        /// <typeparam name="T">数据类型</typeparam>
+        /// <param name="key">键</param>
+        /// <returns>值</returns>
+        public static T Read<T>(string key)
+        {
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey(key))
+            {
+                return (T)ApplicationData.Current.LocalSettings.Values[key];
+            }
+            else
+            {
+                return default(T);
+            }
+        }
+
+        /// <summary>
+        /// 移除数据
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns>成功true/失败false</returns>
+        public static bool Remove(string key)
+        {
+            return ApplicationData.Current.LocalSettings.Values.Remove(key);
+        }
     }
+
 
     /// <summary>
     /// Used as selector to select container size.
@@ -97,4 +138,5 @@ namespace CloudEDU.Common
         SquareGridViewItemContainerSize = 3,
     }
 }
+
 
