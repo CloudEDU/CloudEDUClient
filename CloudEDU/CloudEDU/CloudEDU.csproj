@@ -141,9 +141,13 @@
     <Compile Include="CourseStore\CoursingDetail\Lecture.xaml.cs">
       <DependentUpon>Lecture.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseStore\CoursingDetail\Note.xaml.cs">
+      <DependentUpon>Note.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CourseStore\Courstore.xaml.cs">
       <DependentUpon>Courstore.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseStore\Lesson.cs" />
     <Compile Include="CourseStore\MyCourses.xaml.cs">
       <DependentUpon>MyCourses.xaml</DependentUpon>
     </Compile>
@@ -198,6 +202,9 @@
     <Content Include="Images\Courses\course3.png" />
     <Content Include="Images\Courses\star.png" />
     <Content Include="Images\Courses\transparent.png" />
+    <Content Include="Images\Coursing\Lectures\newnote.png" />
+    <Content Include="Images\Coursing\Note\delete.png" />
+    <Content Include="Images\Coursing\Note\delete2.png" />
     <Content Include="Images\Upload\audio.png" />
     <Content Include="Images\Upload\audio_white.png" />
     <Content Include="Images\Upload\doc.png" />
@@ -257,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CourseStore\CoursingDetail\Lecture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CourseStore\CoursingDetail\Note.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

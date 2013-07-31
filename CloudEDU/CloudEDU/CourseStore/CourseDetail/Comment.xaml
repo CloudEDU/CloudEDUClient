@@ -25,32 +25,8 @@
                             <AddDeleteThemeTransition />
                         </TransitionCollection>
                     </StackPanel.ChildrenTransitions>
-                    <StackPanel Orientation="Vertical" Background="Bisque" Margin="0, 0, 0, 5">
-                        <StackPanel Orientation="Horizontal" Margin="10, 3, 3, 3">
-                            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Max" FontWeight="Bold" />
-                            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="2013.7.29" FontWeight="Bold" Margin="40, 0, 0, 0" />
-                            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="14:23" FontWeight="Bold" Margin="20, 0, 0, 0" />
-                            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="&#x2605;&#x2605;&#x2605;&#x2605;"  Margin="30, 0, 0, 0" />
-                        </StackPanel>
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="It's awesome!" FontWeight="Bold" 
-                               Margin="10, 3, 3, 3" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Width="450" HorizontalAlignment="Left"
-                               Text="I laskdjjlqwj jpfwqjof wq ojpwqojp jo wfqopj fwekwjfoqjop" Margin="10, 0, 0, 15" />
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical" Background="Cyan" Margin="0, 0, 0, 5">
-                        <StackPanel Orientation="Horizontal" Margin="10, 3, 3, 3">
-                            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Max" FontWeight="Bold" />
-                            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="2013.7.29" FontWeight="Bold" Margin="40, 0, 0, 0" />
-                            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="14:23" FontWeight="Bold" Margin="20, 0, 0, 0" />
-                            <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="&#x2605;&#x2605;&#x2605;"  Margin="30, 0, 0, 0" />
-                        </StackPanel>
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="It's awesome!" FontWeight="Bold"
-                                   Margin="10, 3, 3, 3" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Width="450" HorizontalAlignment="Left"
-                                   Text="I laskdjjlqwj jpfwqjof wq ojpwqojp jo wfqopj fwekwjfoqjop" Margin="10, 0, 0, 15" />
-                    </StackPanel>
                 </StackPanel>
-                <StackPanel Orientation="Vertical">
+                <StackPanel x:Name="enterCommentStackPanel" Orientation="Vertical" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <TextBox x:Name="newTitleTextBox" Width="300" i:WatermarkTextBehavior.Text="Title" MaxLength="30" Margin="0, 0, 10, 0" />
                         <StackPanel Orientation="Horizontal">

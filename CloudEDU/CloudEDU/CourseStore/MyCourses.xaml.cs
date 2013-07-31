@@ -1,8 +1,11 @@
-﻿using CloudEDU.Common;
+using CloudEDU.Common;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -22,8 +25,12 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public sealed partial class MyCourses : GlobalPage
     {
-        private StoreData storeSampleData;
+        private StoreData courseData;
         private List<GroupInfoList<Object>> dataCategory;
+
+        private CloudEDUEntities ctx = null;
+        private DataServiceQuery<COURSE_AVAIL> attendDsq = null;
+        private DataServiceQuery<COURSE_AVAIL> teachDsq = null;
 
         /// <summary>
         /// Constructor, initialized the components.
@@ -31,6 +38,8 @@ namespace CloudEDU.CourseStore
         public MyCourses()
         {
             this.InitializeComponent();
+
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 
         /// <summary>
@@ -38,13 +47,40 @@ namespace CloudEDU.CourseStore
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            storeSampleData = new StoreData();
-            dataCategory = storeSampleData.GetGroupsByAttendingOrTeaching();
+            attendDsq = (DataServiceQuery<COURSE_AVAIL>)(from attend in ctx.ATTEND
+                                                         join course in ctx.COURSE_AVAIL
+                                                         on attend.COURSE_ID equals course.ID
+                                                         where attend.CUSTOMER_ID == Constants.User.ID
+                                                         select course);
+            teachDsq = (DataServiceQuery<COURSE_AVAIL>)(from course in ctx.COURSE_AVAIL
+                                                        where course.TEACHER_NAME == Constants.User.NAME
+                                                        select course);
+
+            TaskFactory<IEnumerable<COURSE_AVAIL>> tf = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
+            IEnumerable<COURSE_AVAIL> attends = await tf.FromAsync(attendDsq.BeginExecute(null, null), iar => attendDsq.EndExecute(iar));
+            IEnumerable<COURSE_AVAIL> teaches = await tf.FromAsync(teachDsq.BeginExecute(null, null), iar => teachDsq.EndExecute(iar));
+
+            courseData = new StoreData();
+            foreach (var c in attends)
+            {
+                Course tmpCourse = Constants.CourseAvail2Course(c);
+                tmpCourse.IsBuy = true;
+                tmpCourse.IsTeach = false;
+                courseData.AddCourse(tmpCourse);
+            }
+            foreach (var c in teaches)
+            {
+                Course tmpCourse = Constants.CourseAvail2Course(c);
+                tmpCourse.IsTeach = true;
+                tmpCourse.IsBuy = false;
+                courseData.AddCourse(tmpCourse);
+            }
+            
+            dataCategory = courseData.GetGroupsByAttendingOrTeaching();
             cvs1.Source = dataCategory;
             UserProfileBt.DataContext = Constants.User;
-
         }
 
         /// <summary>
@@ -89,7 +125,7 @@ namespace CloudEDU.CourseStore
 
         private void UserProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Login.Profile));
+            //Frame.Navigate(typeof());
         }
     }
 }
