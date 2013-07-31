@@ -224,8 +224,8 @@ namespace CloudEDU.CourseStore
             
             IEnumerable<CUSTOMER> customers = dba.customerDsq.EndExecute(result);
             buyer=  customers.FirstOrDefault();
-            //buyer.BALANCE= Constants.User.BALANCE;
-            System.Diagnostics.Debug.WriteLine("BINGO!!!");
+
+            //System.Diagnostics.Debug.WriteLine("BINGO!!!");
             //dsq = (DataServiceQuery<CUSTOMER>)(from cus in ctx.CUSTOMER where cus.ID == Constants.User.ID select cus);
             
 
