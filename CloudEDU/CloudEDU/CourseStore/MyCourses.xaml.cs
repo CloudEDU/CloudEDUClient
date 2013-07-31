@@ -54,7 +54,7 @@ namespace CloudEDU.CourseStore
 
             TaskFactory<IEnumerable<COURSE_AVAIL>> tf = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
             IEnumerable<COURSE_AVAIL> attends = await tf.FromAsync(ctx.BeginExecute<COURSE_AVAIL>(
-                new Uri("/GetAllCoursesAttendedByCustomer?customer_id=13", UriKind.Relative), null, null),
+                new Uri("/GetAllCoursesAttendedByCustomer?customer_id=" + Constants.User.ID, UriKind.Relative), null, null),
                 iar => ctx.EndExecute<COURSE_AVAIL>(iar));
             IEnumerable<COURSE_AVAIL> teaches = await tf.FromAsync(teachDsq.BeginExecute(null, null), iar => teachDsq.EndExecute(iar));
 

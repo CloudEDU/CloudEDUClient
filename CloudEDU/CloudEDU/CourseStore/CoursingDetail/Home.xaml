@@ -21,7 +21,7 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
             <Grid Width="auto" Background="White">
-                <Image Height="300" Stretch="UniformToFill" Source="{Binding ImageUri}" />
+                <Image Height="270" Stretch="UniformToFill" Source="{Binding ImageUri}" />
             </Grid>
             <Grid VerticalAlignment="Bottom">
                 <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="&#x2605;&#x2605;&#x2605;&#x2605;&#x2606;" HorizontalAlignment="Left" Foreground="White" />

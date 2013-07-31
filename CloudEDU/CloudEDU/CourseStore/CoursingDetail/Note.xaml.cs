@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CloudEDU.Common;
+using CloudEDU.Service;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,9 +25,17 @@ namespace CloudEDU.CourseStore.CoursingDetail
     /// </summary>
     public sealed partial class Note : Page
     {
+        Course course;
+        CloudEDUEntities ctx = null;
+        DBAccessAPIs dba = null;
+
+
         public Note()
         {
             this.InitializeComponent();
+
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
+            dba = new DBAccessAPIs();
         }
 
         /// <summary>
@@ -35,10 +45,9 @@ namespace CloudEDU.CourseStore.CoursingDetail
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Course course = e.Parameter as Course;
+            course = e.Parameter as Course;
             this.allNoteStackPanel.Children.Add(GenerateNoteItem());
         }
-
 
         private Grid GenerateNoteItem()
         {

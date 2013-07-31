@@ -887,7 +887,7 @@ namespace CloudEDU
         /// </summary>
         private async void ShowMessageDialog(string msg)
         {
-            var messageDialog = new MessageDialog("Format error! Please check your upload infomation.");
+            var messageDialog = new MessageDialog(msg);
             messageDialog.Commands.Add(new UICommand("Close"));
             await messageDialog.ShowAsync();
         }

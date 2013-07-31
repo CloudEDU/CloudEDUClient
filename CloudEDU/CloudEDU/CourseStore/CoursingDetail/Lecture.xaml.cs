@@ -38,7 +38,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             this.InitializeComponent();
             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
-            this.dba = new DBAccessAPIs();
+            dba = new DBAccessAPIs();
             lessons = new List<LESSON>();
         }
 
@@ -203,9 +203,6 @@ namespace CloudEDU.CourseStore.CoursingDetail
             this.selectLessonComboBox.SelectedIndex = 0;
 
         }
-
-
-
 
         private void noteContent_GotFocus(object sender, RoutedEventArgs e)
         {
