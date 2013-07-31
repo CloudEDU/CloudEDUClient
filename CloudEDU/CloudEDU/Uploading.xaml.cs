@@ -55,6 +55,7 @@ namespace CloudEDU
 
         private List<Lesson> allLessons;
         private Course toBeUploadCourse;
+        Dictionary<string, int> resourceDic;
 
         private Button addImageButton;
 
@@ -78,9 +79,20 @@ namespace CloudEDU
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             ResetPage();
+
+            resourceDic = new Dictionary<string, int>(Constants.ResourceType.Count);
+            for (int i = 0; i < Constants.ResourceType.Count; ++i)
+            {
+                DataServiceQuery<int> dps = (DataServiceQuery<int>)(from res_type in ctx.RES_TYPE
+                                                                    where res_type.DESCRIPTION == Constants.ResourceType[i]
+                                                                    select res_type.ID);
+                TaskFactory<IEnumerable<int>> tf = new TaskFactory<IEnumerable<int>>();
+                IEnumerable<int> resID = await tf.FromAsync(dps.BeginExecute(null, null), iar => dps.EndExecute(iar));
+                resourceDic.Add(Constants.ResourceType[i], resID.FirstOrDefault());
+            }
         }
 
         #region Query Callback methods
@@ -357,11 +369,12 @@ namespace CloudEDU
                 + "&pg_id=" + (pgComboBox.SelectionBoxItem as PARENT_GUIDE).ID
                 + "&icon_url='" + toBeUploadCourse.ImageUri + "'";
 
+            int newCourseID = 0;
             try
             {
                 TaskFactory<IEnumerable<decimal>> tf = new TaskFactory<IEnumerable<decimal>>();
                 IEnumerable<decimal> courses = await tf.FromAsync(ctx.BeginExecute<decimal>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<decimal>(iar));
-                int newCourseID = Convert.ToInt32(courses.FirstOrDefault());
+                newCourseID = Convert.ToInt32(courses.FirstOrDefault());
                 if (newCourseID == 0) throw new InvalidDataException();
             }
             catch
@@ -372,7 +385,71 @@ namespace CloudEDU
 
             for (int i = 0; i < allLessons.Count; ++i)
             {
-                string lessonUplaodUri = "/CreateLesson?course_id=1&content='safsafs'&title='sflfas'&number=1";
+                Lesson newLesson = allLessons[i];
+                string lessonUplaodUri = "/CreateLesson?course_id=" + newCourseID
+                    + "&content='" + newLesson.Content
+                    + "'&title='" + newLesson.Title +
+                    "'&number=" + newLesson.Number;
+                int newLessonID = 0;
+                try
+                {
+                    TaskFactory<IEnumerable<decimal>> tf = new TaskFactory<IEnumerable<decimal>>();
+                    IEnumerable<decimal> lessons = await tf.FromAsync(ctx.BeginExecute<decimal>(new Uri(lessonUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<decimal>(iar));
+                    newLessonID = Convert.ToInt32(lessons.FirstOrDefault());
+                    if (newLessonID == 0) throw new InvalidDataException();
+                }
+                catch
+                {
+                    ShowMessageDialog("Lesson uplaod error! Please check your network.");
+                    return;
+                }
+
+                try
+                {
+                    List<Resource> docsRes = allLessons[i].GetDocList();
+                    List<Resource> audiosRes = allLessons[i].GetAudioList();
+                    List<Resource> videosRes = allLessons[i].GetVideoList();
+                    for (int j = 0; j < docsRes.Count; ++j)
+                    {
+                        Resource r = docsRes[j];
+                        RESOURCE newRes = new RESOURCE();
+                        newRes.LESSON_ID = newLessonID;
+                        newRes.TYPE = resourceDic["DOCUMENT"];
+                        newRes.URL = r.Uri;
+                        newRes.TITLE = r.Title;
+
+                        ctx.AddToRESOURCE(newRes);
+                    }
+                    for (int j = 0; j < audiosRes.Count; ++j)
+                    {
+                        Resource r = audiosRes[j];
+                        RESOURCE newRes = new RESOURCE();
+                        newRes.LESSON_ID = newLessonID;
+                        newRes.TYPE = resourceDic["AUDIO"];
+                        newRes.URL = r.Uri;
+                        newRes.TITLE = r.Title;
+
+                        ctx.AddToRESOURCE(newRes);
+                    }
+                    for (int j = 0; j < videosRes.Count; ++j)
+                    {
+                        Resource r = videosRes[j];
+                        RESOURCE newRes = new RESOURCE();
+                        newRes.LESSON_ID = newLessonID;
+                        newRes.TYPE = resourceDic["VIDEO"];
+                        newRes.URL = r.Uri;
+                        newRes.TITLE = r.Title;
+
+                        ctx.AddToRESOURCE(newRes);
+                    }
+                    TaskFactory<DataServiceResponse> tfRes = new TaskFactory<DataServiceResponse>();
+                    DataServiceResponse dsr = await tfRes.FromAsync(ctx.BeginSaveChanges(null, null), iar => ctx.EndSaveChanges(iar));
+                }
+                catch
+                {
+                    ShowMessageDialog("Uplaod error! Please check your network");
+                    return;
+                }
             }
         }
 
@@ -730,6 +807,7 @@ namespace CloudEDU
                 if (categoryComboBox.SelectedItem == null) result = false;
                 if (pgComboBox.SelectedItem == null) result = false;
                 if (images == null || images.Count == 0) result = false;
+                if (allLessons == null || allLessons.Count == 0) result = false;
             }
             catch
             {
