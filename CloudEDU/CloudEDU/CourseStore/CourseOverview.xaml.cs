@@ -1,6 +1,9 @@
 ﻿using CloudEDU.Common;
+using CloudEDU.Login;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
@@ -18,19 +21,29 @@ using Windows.UI.Xaml.Navigation;
 
 namespace CloudEDU.CourseStore
 {
+
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class CourseOverview : GlobalPage
     {
         Course course;
+        CloudEDUEntities ctx = null;
+        DataServiceQuery<CUSTOMER> dsq = null;
 
+
+        CUSTOMER buyer;
+        CUSTOMER saler;
+
+        DBAccessAPIs dba;
         /// <summary>
         /// Constructor, initialize the components
         /// </summary>
         public CourseOverview()
         {
             this.InitializeComponent();
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
+            dba = new DBAccessAPIs();
         }
 
         /// <summary>
@@ -186,7 +199,45 @@ namespace CloudEDU.CourseStore
 
         private void UserProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            //Frame.Navigate(typeof());
+            Frame.Navigate(typeof(Login.Profile));
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            //Constants.User.BALANCE -= (decimal)course.Price;
+            //dsq = (DataServiceQuery<CUSTOMER>)(from cus in ctx.CUSTOMER where cus.ID == Constants.User.ID  select cus);
+            //dsq.BeginExecute(onUserQueryComplete, null);
+
+            dba.getUserById(Constants.User.ID,onUserQueryComplete);
+            System.Diagnostics.Debug.WriteLine(DBAccessAPIs.test(method));
+        }
+        string method(int c, string d)
+        {
+            return c + d;
+        }
+
+        
+
+
+        private void onUserQueryComplete(IAsyncResult result)
+        {
+            
+            IEnumerable<CUSTOMER> customers = dba.customerDsq.EndExecute(result);
+            buyer=  customers.FirstOrDefault();
+            buyer.BALANCE= Constants.User.BALANCE;
+            System.Diagnostics.Debug.WriteLine("BINGO!!!");
+            //dsq = (DataServiceQuery<CUSTOMER>)(from cus in ctx.CUSTOMER where cus.ID == Constants.User.ID select cus);
+            
+
+        }
+
+        private void onUserBalanceSaved(IAsyncResult result)
+        {
+
+            //ctx.UpdateObject(user);
+
+            //ctx.BeginSaveChanges(onUserBalanceSaved, null);
+            //ctx.EndSaveChanges(result);
         }
     }
 }

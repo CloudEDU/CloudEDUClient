@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CloudEDU.Common;
+using CloudEDU.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,13 +13,21 @@ namespace CloudEDU.Login
     /// </summary>
     public class User 
     {
-        public string Username { get; set; }
+        public CUSTOMER c;
+        public string NAME { get; set; }
         public string ImageSource { get; set; }
-
-        public User(string username, string imageSource)
+        public int ID { get; set; }
+        public User(CUSTOMER c)
         {
-            Username = username;
-            ImageSource = imageSource;
+            NAME = c.NAME;
+            ID = c.ID;
+            ImageSource = "http://www.gravatar.com/avatar/" + Constants.ComputeMD5(c.EMAIL);
+        }
+
+        public User(string un, string ims)
+        {
+            NAME = un;
+            ImageSource = ims;
         }
     }
 }
