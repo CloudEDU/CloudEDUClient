@@ -39,6 +39,38 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
+
+        <Popup Grid.RowSpan="4" Name="addNotePopup" IsOpen="False" IsLightDismissEnabled="False">
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition />
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+
+            <Grid Width="500" Height="500" Background="White"
+                  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="380, 0, 0, 0">
+                <StackPanel Orientation="Vertical" Margin="20, 20">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox x:Name="noteTitle"
+                                 MaxLength="30" Text=""  />
+                    </StackPanel>
+                    <TextBox x:Name="noteContent"
+                                 MaxLength="2000" TextWrapping="Wrap" Text="." Height="219"  />
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox Width="200" HorizontalAlignment="Left" Name="selectLessonComboBox">
+                            <x:String>Lesson 1</x:String>
+                            <x:String>Lesson 2</x:String>
+                        </ComboBox>
+                        <TextBlock Text="Sharable" FontSize="26" HorizontalAlignment="Right" Margin="100, 0, 0, 0"/>
+                        <CheckBox Name="sharableCheckBox" HorizontalAlignment="Right" Margin="10, 0, 0, 0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 20, 0, 0">
+                        <Button x:Name="SaveNoteButton" Content="Save" Click="SaveNoteButton_Click"/>
+                        <Button x:Name="CancelNoteButton" Content="Cancel" Click="CancelUploadButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Popup>
         <Button x:Name="switchButton" Grid.Row="1" Height="65" Width="160" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Content="Mine" FontSize="40" Click="SwitchButton_Click" />
     </Grid>
 </Page>

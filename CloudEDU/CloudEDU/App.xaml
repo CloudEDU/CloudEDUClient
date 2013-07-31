@@ -42,7 +42,7 @@
             <Style x:Key="GridViewDataTemplateNameTextBlockStyle" TargetType="TextBlock"
                    BasedOn="{StaticResource GroupHeaderTextStyle}">
                 <Setter Property="Foreground" Value="White" />
-                <Setter Property="Height" Value="50" />
+                <Setter Property="Height" Value="40" />
                 <Setter Property="Margin" Value="15,0,15,0" />
             </Style>
             <Style x:Key="VariableSizedWrapGridTemplateStyle" TargetType="VariableSizedWrapGrid">
@@ -54,7 +54,7 @@
             </Style>
             <Style x:Key="GridViewOpacityRectangleStyle" TargetType="Rectangle">
                 <Setter Property="Fill" Value="Black" />
-                <Setter Property="Height" Value="100" />
+                <Setter Property="Height" Value="60" />
                 <Setter Property="VerticalAlignment" Value="Bottom" />
                 <Setter Property="Opacity" Value="0.5" />
             </Style>
