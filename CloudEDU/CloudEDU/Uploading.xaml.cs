@@ -350,20 +350,24 @@ namespace CloudEDU
                 return;
             }
 
-            resourceDic = new Dictionary<string, int>(Constants.ResourceType.Count);
-            for (int i = 0; i < Constants.ResourceType.Count; ++i)
+            try
             {
-                DataServiceQuery<RESOURCE> dps = (DataServiceQuery<RESOURCE>)(from res_type in ctx.RES_TYPE
-                                                                              select res_type);
-                TaskFactory<IEnumerable<RESOURCE>> tf = new TaskFactory<IEnumerable<RESOURCE>>();
-                IEnumerable<RESOURCE> resID = await tf.FromAsync(dps.BeginExecute(null, null), iar => dps.EndExecute(iar));
-
-                foreach (var a in resID)
+                resourceDic = new Dictionary<string, int>(Constants.ResourceType.Count);
+                for (int i = 0; i < Constants.ResourceType.Count; ++i)
                 {
-                    System.Diagnostics.Debug.WriteLine(a.ToString());
-                }
+                    DataServiceQuery<RES_TYPE> dps = (DataServiceQuery<RES_TYPE>)(from res_type in ctx.RES_TYPE
+                                                                                  where res_type.DESCRIPTION.Trim() == Constants.ResourceType[i]
+                                                                                  select res_type);
+                    TaskFactory<IEnumerable<RES_TYPE>> tf = new TaskFactory<IEnumerable<RES_TYPE>>();
+                    RES_TYPE resID = (await tf.FromAsync(dps.BeginExecute(null, null), iar => dps.EndExecute(iar))).FirstOrDefault();
 
-                //resourceDic.Add(Constants.ResourceType[i], resID.FirstOrDefault());
+                    resourceDic.Add(Constants.ResourceType[i], resID.ID);
+                }
+            }
+            catch
+            {
+                ShowMessageDialog("Network connection error!");
+                return;
             }
 
             string courseUplaodUri = "/CreateCourse?teacher_id=" + Constants.User.ID
@@ -709,26 +713,11 @@ namespace CloudEDU
         /// </summary>
         private void ResetPopup()
         {
-            bool inFlag = false;
-
             lessonName.Text = "Lesson Name";
             lessonDescription.Text = "Description...";
-            imagePanel.Children.Clear();
             docsPanel.Children.Clear();
             audiosPanel.Children.Clear();
             videosPanel.Children.Clear();
-            foreach (var c in totalImagePanel.Children)
-            {
-                if (c == addImageButton)
-                {
-                    inFlag = true;
-                }
-            }
-            if (!inFlag)
-            {
-                totalImagePanel.Children.Add(addImageButton);
-            }
-            images = null;
             docs = null;
             audios = null;
             videos = null;
@@ -750,7 +739,8 @@ namespace CloudEDU
             lessonCount = 0;
             cts = new CancellationTokenSource();
             courseNameTextBox.Text = "";
-            priceTextBox.Text = "Price";
+            priceTextBox.Text = "";
+            CourseDescriptionTextBox.Text = "";
             lessonInfo.Children.Clear();
             lessonRes.Children.Clear();
             images = null;
