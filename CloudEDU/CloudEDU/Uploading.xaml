@@ -115,6 +115,11 @@
             <StackPanel Orientation="Vertical" Width="1000">
                 <StackPanel Orientation="Vertical">
                     <Grid Background="#00B7EE">
+                        <Grid.ChildrenTransitions>
+                            <TransitionCollection>
+                                <AddDeleteThemeTransition />
+                            </TransitionCollection>
+                        </Grid.ChildrenTransitions>
                         <StackPanel x:Name="lessonInfo" Orientation="Vertical" HorizontalAlignment="Left">
                             <StackPanel.ChildrenTransitions>
                                 <TransitionCollection>
@@ -131,7 +136,12 @@
                         </StackPanel>
                     </Grid>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="-80, 0, 0, 0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="-80, 10, 0, 0">
+                    <StackPanel.Transitions>
+                        <TransitionCollection>
+                            <RepositionThemeTransition />
+                        </TransitionCollection>
+                    </StackPanel.Transitions>
                     <Button Style="{StaticResource AddAppBarButtonStyle}" HorizontalAlignment="Center"
                         AutomationProperties.Name="" Click="AddLessonButton_Click">
                         <Button.Transitions>
@@ -142,6 +152,14 @@
                     </Button>
                     <Button Style="{StaticResource UploadSkyDriveAppBarButtonStyle}" HorizontalAlignment="Center"
                             AutomationProperties.Name="" Click="allUploadButton_Click">
+                        <Button.Transitions>
+                            <TransitionCollection>
+                                <RepositionThemeTransition />
+                            </TransitionCollection>
+                        </Button.Transitions>
+                    </Button>
+                    <Button Style="{StaticResource RefreshAppBarButtonStyle}" HorizontalAlignment="Center"
+                            AutomationProperties.Name="" Click="resetUploadButton_Click">
                         <Button.Transitions>
                             <TransitionCollection>
                                 <RepositionThemeTransition />
