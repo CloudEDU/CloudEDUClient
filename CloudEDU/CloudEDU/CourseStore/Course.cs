@@ -326,6 +326,7 @@ namespace CloudEDU.CourseStore
     public class GroupInfoList<T> : List<object>
     {
         public object Key { get; set; }
+        public string CategoryImg { get; set; }
 
         public new IEnumerator<object> GetEnumerator()
         {

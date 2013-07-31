@@ -35,6 +35,8 @@ namespace CloudEDU.CourseStore.CoursingDetail
         DataServiceQuery<NOTE_AVAIL> myNoteDsq = null;
         List<NOTE_AVAIL> sharedNotesList;
         List<NOTE_AVAIL> mySharedNotesList;
+        NOTE_AVAIL changedNote = null;
+        int changedLessonID;
 
         public Note()
         {
@@ -136,10 +138,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             };
             ToolTipService.SetToolTip(noteInfo, toolTip);
 
-            Image deleteImage = new Image();
-            //if (customerID != Constants.User.ID)
-            //{
-                deleteImage = new Image
+            Image deleteImage = new Image
                 {
                     Tag = id.ToString(),
                     Margin = new Thickness(4, 0, -45, 0),
@@ -148,8 +147,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
                     HorizontalAlignment = HorizontalAlignment.Right,
                     IsTapEnabled = true
                 };
-                deleteImage.Tapped += deleteImage_Tapped;
-            //}
+            deleteImage.Tapped += deleteImage_Tapped;
 
             TextBlock lesson = new TextBlock
             {
@@ -177,13 +175,16 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             TextBlock noteInfo = new TextBlock
             {
+                Tag = id,
                 FontSize = 45,
                 Height = 50,
                 Margin = new Thickness(5, 0, 0, 0),
                 Foreground = new SolidColorBrush(Colors.White),
                 HorizontalAlignment = HorizontalAlignment.Left,
-                Text = title + " At " + time.Year.ToString() + "." + time.Month.ToString() + "." + time.Day.ToString()
+                Text = title + " At " + time.Year.ToString() + "." + time.Month.ToString() + "." + time.Day.ToString(),
+                IsTapEnabled = true
             };
+            noteInfo.Tapped += noteInfo_Tapped;
             ToolTip toolTip = new ToolTip()
             {
                 Content = content,
@@ -225,6 +226,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
 
             return newNote;
         }
+
 
         void deleteImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -297,6 +299,83 @@ namespace CloudEDU.CourseStore.CoursingDetail
                     allSharedNotesStackPanel.Children.Add(GenerateSharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER, n.CUSTOMER_ID.Value));
                 }
             }
+        }
+
+        private void CancelUploadButton_Click(object sender, RoutedEventArgs e)
+        {
+            addNotePopup.IsOpen = false;
+            noteTitle.Text = "";
+            noteContent.Text = "";
+            selectLessonComboBox.SelectedIndex = 0;
+            sharableCheckBox.IsChecked = false;
+        }
+
+        private async void SaveNoteButton_Click(object sender, RoutedEventArgs e)
+        {
+            NOTE updatedNote = null;
+            try
+            {
+                DataServiceQuery<NOTE> naDsq = (DataServiceQuery<NOTE>)(from selNote in ctx.NOTE
+                                                                        where selNote.ID == changedNote.ID
+                                                                        select selNote);
+
+                TaskFactory<IEnumerable<NOTE>> changeNote = new TaskFactory<IEnumerable<NOTE>>();
+                updatedNote = (await changeNote.FromAsync(naDsq.BeginExecute(null, null), iar => naDsq.EndExecute(iar))).FirstOrDefault();
+            }
+            catch
+            {
+                ShowMessageDialog("Network connection error!");
+                return;
+            }
+
+            updatedNote.TITLE = noteTitle.Text;
+            updatedNote.CONTENT = noteContent.Text;
+            updatedNote.LESSON_ID = changedLessonID;
+            updatedNote.SHARE = sharableCheckBox.IsChecked ?? false;
+
+            try
+            {
+                ctx.UpdateObject(updatedNote);
+                TaskFactory<DataServiceResponse> tf = new TaskFactory<DataServiceResponse>();
+                await tf.FromAsync(ctx.BeginSaveChanges(null, null), iar => ctx.EndSaveChanges(iar));
+            }
+            catch
+            {
+                ShowMessageDialog("Update error.");
+            }
+            finally
+            {
+                addNotePopup.IsOpen = false;
+            }
+        }
+
+        private async void noteInfo_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            TextBlock tb = sender as TextBlock;
+            int noteId = (int)tb.Tag;
+
+            try
+            {
+                DataServiceQuery<NOTE_AVAIL> naDsq = (DataServiceQuery<NOTE_AVAIL>)(from selNote in ctx.NOTE_AVAIL
+                                                                                    where selNote.ID == noteId
+                                                                                    select selNote);
+
+                TaskFactory<IEnumerable<NOTE_AVAIL>> changeNote = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
+                changedNote = (await changeNote.FromAsync(naDsq.BeginExecute(null, null), iar => naDsq.EndExecute(iar))).FirstOrDefault();
+            }
+            catch
+            {
+                ShowMessageDialog("Seach failed or Network connection error!");
+                return;
+            }
+
+            addNotePopup.IsOpen = true;
+            noteTitle.Text = changedNote.TITLE;
+            noteContent.Text = changedNote.CONTENT;
+            selectLessonComboBox.SelectedIndex = changedNote.LESSON_NUMBER - 1;
+            sharableCheckBox.IsChecked = changedNote.SHARE;
+
+            changedLessonID = changedNote.LESSON_ID;
         }
     }
 }
