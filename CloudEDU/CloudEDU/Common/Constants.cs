@@ -26,6 +26,9 @@ namespace CloudEDU.Common
         public static List<string> ResourceType = new List<string> { "DOCUMENT", "VIDEO", "AUDIO" };
 
         public static string Username = "Test";
+
+        public static Coursing coursing = null;
+
         //public static CUSTOMER User;
         public static User User;
         /// <summary>

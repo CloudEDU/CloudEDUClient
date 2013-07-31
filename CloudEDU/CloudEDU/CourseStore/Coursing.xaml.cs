@@ -44,6 +44,9 @@ namespace CloudEDU.CourseStore
             pageGreen = this.Resources["PageGreen"] as SolidColorBrush;
             pageWhite = new SolidColorBrush(Colors.White);
             pageBlack = new SolidColorBrush(Colors.Black);
+
+
+            Constants.coursing = this;
         }
 
         /// <summary>
@@ -98,17 +101,7 @@ namespace CloudEDU.CourseStore
         {
             if (ContentBackgroundRect.Fill != pageRed)
             {
-                HomeBorder.Background = pageRed;
-                LecturesBorder.Background = pageWhite;
-                NotesBorder.Background = pageWhite;
-
-                HomeText.Foreground = pageWhite;
-                LecturesText.Foreground = pageBlack;
-                NotesText.Foreground = pageBlack;
-
-                ContentBackgroundRect.Fill = pageRed;
-
-                detailFrame.Navigate(typeof(CoursingDetail.Home), course);
+                NavigateToHome();
             }
         }
 
@@ -121,17 +114,7 @@ namespace CloudEDU.CourseStore
         {
             if (ContentBackgroundRect.Fill != pageBlue)
             {
-                HomeBorder.Background = pageWhite;
-                LecturesBorder.Background = pageBlue;
-                NotesBorder.Background = pageWhite;
-
-                HomeText.Foreground = pageBlack;
-                LecturesText.Foreground = pageWhite;
-                NotesText.Foreground = pageBlack;
-
-                ContentBackgroundRect.Fill = pageBlue;
-
-                detailFrame.Navigate(typeof(CoursingDetail.Lecture), course);
+                NavigateToLecture();
             }
         }
 
@@ -144,22 +127,58 @@ namespace CloudEDU.CourseStore
         {
             if (ContentBackgroundRect.Fill != pageGreen)
             {
-                HomeBorder.Background = pageWhite;
-                LecturesBorder.Background = pageWhite;
-                NotesBorder.Background = pageGreen;
-
-                HomeText.Foreground = pageBlack;
-                LecturesText.Foreground = pageBlack;
-                NotesText.Foreground = pageWhite;
-
-                ContentBackgroundRect.Fill = pageGreen;
-                detailFrame.Navigate(typeof(CoursingDetail.Note), course);
+                NavigateToNote();
             }
         }
 
         private void UserProfileButton_Click(object sender, RoutedEventArgs e)
         {
             //Frame.Navigate(typeof());
+        }
+
+
+        public void NavigateToNote()
+        {
+            HomeBorder.Background = pageWhite;
+            LecturesBorder.Background = pageWhite;
+            NotesBorder.Background = pageGreen;
+
+            HomeText.Foreground = pageBlack;
+            LecturesText.Foreground = pageBlack;
+            NotesText.Foreground = pageWhite;
+
+            ContentBackgroundRect.Fill = pageGreen;
+            detailFrame.Navigate(typeof(CoursingDetail.Note), course);
+        }
+
+        public void NavigateToLecture()
+        {
+            HomeBorder.Background = pageWhite;
+            LecturesBorder.Background = pageBlue;
+            NotesBorder.Background = pageWhite;
+
+            HomeText.Foreground = pageBlack;
+            LecturesText.Foreground = pageWhite;
+            NotesText.Foreground = pageBlack;
+
+            ContentBackgroundRect.Fill = pageBlue;
+
+            detailFrame.Navigate(typeof(CoursingDetail.Lecture), course);
+        }
+
+        public void NavigateToHome()
+        {
+            HomeBorder.Background = pageRed;
+            LecturesBorder.Background = pageWhite;
+            NotesBorder.Background = pageWhite;
+
+            HomeText.Foreground = pageWhite;
+            LecturesText.Foreground = pageBlack;
+            NotesText.Foreground = pageBlack;
+
+            ContentBackgroundRect.Fill = pageRed;
+
+            detailFrame.Navigate(typeof(CoursingDetail.Home), course);
         }
     }
 }
