@@ -140,7 +140,7 @@ namespace CloudEDU.CourseStore.CourseDetail
                 WarningTextBlock.Visibility = Visibility.Visible;
                 return;
             }
-            StackPanel newComment = GenerateACommentBox(Constants.Username, newTitleTextBox.Text, globalRate, newContentTextBox.Text);
+            StackPanel newComment = GenerateACommentBox(Constants.User.NAME, newTitleTextBox.Text, globalRate, newContentTextBox.Text);
 
             COMMENT commentEntity = new COMMENT();
             commentEntity.COURSE_ID = course.ID.Value;

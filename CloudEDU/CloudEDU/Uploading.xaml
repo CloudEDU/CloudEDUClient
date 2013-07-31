@@ -71,7 +71,7 @@
                 <TextBox x:Name="courseNameTextBox" TextAlignment="Center" i:WatermarkTextBehavior.Text="Course Name" FontSize="60" BorderThickness="0"/>
         </Border>
         <StackPanel Grid.Row="2" Orientation="Vertical" Margin="140, 0">
-            <TextBox x:Name="CourseDescriptionTextBox" Style="{StaticResource PopupTextBoxStyle}" Width="930" i:WatermarkTextBehavior.Text="Description..." TextWrapping="Wrap" />
+            <TextBox x:Name="CourseDescriptionTextBox" Style="{StaticResource PopupTextBoxStyle}" Width="930" i:WatermarkTextBehavior.Text="Description..." TextWrapping="Wrap" TextAlignment="Center" />
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="priceTextBox" Style="{StaticResource PopupTextBoxStyle}" Width="420" TextAlignment="Center" i:WatermarkTextBehavior.Text="Price"  BorderThickness="0" />
                 <StackPanel x:Name="totalImagePanel" Orientation="Horizontal" Margin="50, 0, 0, 0">
@@ -110,7 +110,7 @@
             </StackPanel>
         </StackPanel>
 
-        <ScrollViewer Grid.Row="3" Style="{StaticResource VerticalScrollViewerStyle}"
+        <ScrollViewer Grid.Row="3" Style="{StaticResource VerticalScrollViewerStyle}" VerticalScrollBarVisibility="Hidden"
                       HorizontalAlignment="Center" Margin="140,0,226,20">
             <StackPanel Orientation="Vertical" Width="1000">
                 <StackPanel Orientation="Vertical">
@@ -142,7 +142,7 @@
                             <RepositionThemeTransition />
                         </TransitionCollection>
                     </StackPanel.Transitions>
-                    <Button Style="{StaticResource AddAppBarButtonStyle}" HorizontalAlignment="Center"
+                    <Button x:Name="addLessonButton" Style="{StaticResource AddAppBarButtonStyle}" HorizontalAlignment="Center"
                         AutomationProperties.Name="" Click="AddLessonButton_Click">
                         <Button.Transitions>
                             <TransitionCollection>
@@ -150,7 +150,7 @@
                             </TransitionCollection>
                         </Button.Transitions>
                     </Button>
-                    <Button Style="{StaticResource UploadSkyDriveAppBarButtonStyle}" HorizontalAlignment="Center"
+                    <Button x:Name="allUploadButton" Style="{StaticResource UploadSkyDriveAppBarButtonStyle}" HorizontalAlignment="Center"
                             AutomationProperties.Name="" Click="allUploadButton_Click">
                         <Button.Transitions>
                             <TransitionCollection>
@@ -158,7 +158,7 @@
                             </TransitionCollection>
                         </Button.Transitions>
                     </Button>
-                    <Button Style="{StaticResource RefreshAppBarButtonStyle}" HorizontalAlignment="Center"
+                    <Button x:Name="resetUploadButton" Style="{StaticResource RefreshAppBarButtonStyle}" HorizontalAlignment="Center"
                             AutomationProperties.Name="" Click="resetUploadButton_Click">
                         <Button.Transitions>
                             <TransitionCollection>
@@ -169,6 +169,7 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
+        <ProgressBar x:Name="uploadProgressBar" Grid.Row="3" IsIndeterminate="True" VerticalAlignment="Bottom" Height="30" Visibility="Collapsed" />
 
         <Popup Grid.RowSpan="4" Name="addLessonPopup" IsOpen="False" IsLightDismissEnabled="False">
             <Popup.ChildTransitions>
@@ -242,10 +243,11 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0, 20, 0, 0">
                         <Button x:Name="UploadLessionButton" Style="{StaticResource UploadCheckButtonStyle}" Content="Upload"
-                                Click="UploadLessionButton_Click" />
+                                Click="UploadLessionButton_Click" Visibility="Visible" />
                         <Button x:Name="CancelUploadButton" Style="{StaticResource UploadCheckButtonStyle}" Content="Cancel"
-                                Click="CancelUploadButton_Click" />
+                                Click="CancelUploadButton_Click" Visibility="Visible" />
                     </StackPanel>
+                    <ProgressRing x:Name="lessonUploadProgressRing" IsActive="False" Width="50" Height="50" />
                 </StackPanel>
             </Grid>
         </Popup>

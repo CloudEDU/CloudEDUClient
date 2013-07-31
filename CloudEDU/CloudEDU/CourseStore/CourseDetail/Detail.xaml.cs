@@ -37,6 +37,7 @@ namespace CloudEDU.CourseStore.CourseDetail
         {
             course = e.Parameter as Course;
             DataContext = course;
+            submitOfTimeTextBlock.Text = course.StartTime.Year.ToString() + "." + course.StartTime.Month.ToString() + "." + course.StartTime.Day.ToString();
         }
     }
 }

@@ -22,7 +22,7 @@
             <RowDefinition Height="500*"/>
             <RowDefinition Height="60*" />
         </Grid.RowDefinitions>
-        <common:UserProfileButton x:Name="UserProfileBt" Grid.Column="1" DataContext="{Binding Mode=OneWay}" Content="{Binding ImageSource}" Click="UserProfileButton_Click" UserName="{Binding Username}"/>
+        <common:UserProfileButton x:Name="UserProfileBt" Grid.Column="1" DataContext="{Binding Mode=OneWay}" Content="{Binding ImageSource}" Click="UserProfileButton_Click" UserName="{Binding NAME}"/>
 
         <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
             <Button Style="{StaticResource BackButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -54,7 +54,7 @@
                                FontFamily="Segoe Marker" Margin="0, 15" />
                     <Button Background="#2490FF" Width="110" Foreground="{StaticResource CourseInfoFontForegroundBrush}"
                             BorderBrush="White" BorderThickness="2"
-                            Height="50" Content="Attend" FontSize="25" Click="Button_Click_1"/>
+                            Height="50" Content="Attend" FontSize="25" Click="AttendButton_Click"/>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Orientation="Vertical"
@@ -77,7 +77,7 @@
                         <TextBlock Style="{StaticResource BodyTextStyle}" Text="Distributor: " 
                                    Foreground="{StaticResource CourseInfoFontForegroundBrush}"
                                    Margin="0, 0, 10, 0" />
-                        <TextBlock x:Name="Distributor" Style="{StaticResource BodyTextStyle}" Text="xxxEDU"
+                        <TextBlock x:Name="Distributor" Style="{StaticResource BodyTextStyle}" Text="{Binding Teacher}"
                                    Foreground="{StaticResource CourseInfoFontForegroundBrush}" />
                     </StackPanel>
                     <TextBlock x:Name="Copyright" Style="{StaticResource CaptionTextStyle}"
