@@ -15,9 +15,9 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="CloudEDU.App">
-      <VisualElements DisplayName="CloudEDU" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="CloudEDU" ForegroundText="dark" BackgroundColor="#464646">
-        <DefaultTile ShowName="allLogos" WideLogo="Assets\SplashScreen.png" />
-        <SplashScreen Image="" />
+      <VisualElements DisplayName="CloudEDU" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="CloudEDU" ForegroundText="light" BackgroundColor="#464646">
+        <DefaultTile ShowName="allLogos" WideLogo="Assets\WidthLogo.png" />
+        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#F1402A" />
       </VisualElements>
     </Application>
   </Applications>

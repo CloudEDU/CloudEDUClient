@@ -79,20 +79,9 @@ namespace CloudEDU
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             ResetPage();
-
-            resourceDic = new Dictionary<string, int>(Constants.ResourceType.Count);
-            for (int i = 0; i < Constants.ResourceType.Count; ++i)
-            {
-                DataServiceQuery<int> dps = (DataServiceQuery<int>)(from res_type in ctx.RES_TYPE
-                                                                    where res_type.DESCRIPTION == Constants.ResourceType[i]
-                                                                    select res_type.ID);
-                TaskFactory<IEnumerable<int>> tf = new TaskFactory<IEnumerable<int>>();
-                IEnumerable<int> resID = await tf.FromAsync(dps.BeginExecute(null, null), iar => dps.EndExecute(iar));
-                resourceDic.Add(Constants.ResourceType[i], resID.FirstOrDefault());
-            }
         }
 
         #region Query Callback methods
@@ -359,6 +348,22 @@ namespace CloudEDU
             {
                 ShowMessageDialog("Format error! Please check your upload infomation.");
                 return;
+            }
+
+            resourceDic = new Dictionary<string, int>(Constants.ResourceType.Count);
+            for (int i = 0; i < Constants.ResourceType.Count; ++i)
+            {
+                DataServiceQuery<RESOURCE> dps = (DataServiceQuery<RESOURCE>)(from res_type in ctx.RES_TYPE
+                                                                              select res_type);
+                TaskFactory<IEnumerable<RESOURCE>> tf = new TaskFactory<IEnumerable<RESOURCE>>();
+                IEnumerable<RESOURCE> resID = await tf.FromAsync(dps.BeginExecute(null, null), iar => dps.EndExecute(iar));
+
+                foreach (var a in resID)
+                {
+                    System.Diagnostics.Debug.WriteLine(a.ToString());
+                }
+
+                //resourceDic.Add(Constants.ResourceType[i], resID.FirstOrDefault());
             }
 
             string courseUplaodUri = "/CreateCourse?teacher_id=" + Constants.User.ID
