@@ -7,6 +7,7 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -26,6 +27,10 @@ namespace CloudEDU.CourseStore.CoursingDetail
     /// </summary>
     public sealed partial class Lecture : Page
     {
+
+        DBAccessAPIs dba = null;
+        List<LESSON> lessons = null;
+
         /// <summary>
         /// Constructor, initilize the components.
         /// </summary>
@@ -33,6 +38,8 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             this.InitializeComponent();
             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
+            this.dba = new DBAccessAPIs();
+            lessons = new List<LESSON>();
         }
 
         /// <summary>
@@ -43,13 +50,54 @@ namespace CloudEDU.CourseStore.CoursingDetail
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Course course = e.Parameter as Course;
+            dba = new DBAccessAPIs();
+            dba.getLessonsByCourseId((int)course.ID, onGetLessonComplete);
+            allLessonsStackPanel.Children.RemoveAt(0);
+            allLessonsStackPanel.Children.RemoveAt(0);
 
-            allLessonsStackPanel.Children.Add(GenerateALessonBox());
-            allLessonsStackPanel.Children.Add(GenerateALessonBox());
+            //allLessonsStackPanel.Children.Add(GenerateALessonBox(null));
+            //allLessonsStackPanel.Children.Add(GenerateALessonBox(null));
         }
 
-        private Grid GenerateALessonBox()
+
+        private async void onGetLessonComplete(IAsyncResult iar)
         {
+            try
+            {
+                System.Diagnostics.Debug.WriteLine("get lesson complete");
+                IEnumerable<LESSON> lessons = dba.lessonDsq.EndExecute(iar);
+                foreach (var l in lessons)
+                {
+                    this.lessons.Add(l);
+                    //coursesData.AddCourse(Constants.CourseAvail2Course(c));
+                }
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    foreach (var l in this.lessons)
+                    {
+                        System.Diagnostics.Debug.WriteLine(l.TITLE);
+                        allLessonsStackPanel.Children.Add(GenerateALessonBox(l));
+                    }
+                    //dataCategory = coursesData.GetGroupsByCategory();
+                    //cvs1.Source = dataCategory;
+                    //(SemanticZoom.ZoomedOutView as ListViewBase).ItemsSource = cvs1.View.CollectionGroups;
+                    //loadingProgressRing.IsActive = false;
+                });
+            }
+            catch
+            {
+                //ShowMessageDialog();
+                // Network Connection error.
+            }
+        }
+
+
+        private Grid GenerateALessonBox(LESSON les)
+        {
+            if (les == null)
+            {
+                return null;
+            }
             TextBlock lessonName = new TextBlock
             {
                 FontSize = 50,
@@ -57,7 +105,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 Margin = new Thickness(5, 0, 0, 0),
                 Foreground = new SolidColorBrush(Colors.White),
                 HorizontalAlignment = HorizontalAlignment.Left,
-                Text = "Lesson 1 xxxxx"
+                Text = les.TITLE
             };
 
             Image docImage = new Image
