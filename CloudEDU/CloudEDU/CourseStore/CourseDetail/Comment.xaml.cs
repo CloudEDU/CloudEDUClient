@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -34,6 +35,7 @@ namespace CloudEDU.CourseStore.CourseDetail
 
         private CloudEDUEntities ctx = null;
         private DataServiceQuery<COMMENT_DET> commentDsq = null;
+        private DataServiceQuery<ATTEND> attendDsq = null;
 
         /// <summary>
         /// Constructor, initialize the components.
@@ -50,13 +52,37 @@ namespace CloudEDU.CourseStore.CourseDetail
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             course = e.Parameter as Course;
             globalRate = 0;
 
+<<<<<<< HEAD
             commentDsq = (DataServiceQuery<COMMENT_DET>)(from comment in ctx.COMMENT_DET
                                                          where comment.CUSTOMER_ID == course.ID
+=======
+            attendDsq = (DataServiceQuery<ATTEND>)(from attend in ctx.ATTEND
+                                                   where attend.COURSE_ID == course.ID && attend.CUSTOMER_ID == Constants.User.ID
+                                                   select attend);
+
+            try
+            {
+                TaskFactory<IEnumerable<ATTEND>> tf = new TaskFactory<IEnumerable<ATTEND>>();
+                IEnumerable<ATTEND> attends = await tf.FromAsync(attendDsq.BeginExecute(null, null), iar => attendDsq.EndExecute(iar));
+                if (attends.Count() != 0)
+                {
+                    enterCommentStackPanel.Visibility = Visibility.Visible;
+                }
+            }
+            catch
+            {
+                ShowMessageDialog();
+            }
+
+            commentDsq = (DataServiceQuery<COMMENT_DET>)(from comment in ctx.COMMENT_DET
+                                                         where comment.COURSE_ID == course.ID
+                                                         orderby comment.TIME ascending
+>>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
                                                          select comment);
             commentDsq.BeginExecute(OnCommentComplete, null);
         }
@@ -67,12 +93,15 @@ namespace CloudEDU.CourseStore.CourseDetail
             {
                 IEnumerable<COMMENT_DET> coms = commentDsq.EndExecute(result);
                 allComments = new List<COMMENT_DET>(coms);
+<<<<<<< HEAD
                 System.Diagnostics.Debug.WriteLine(allComments.Count);
+=======
+>>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         foreach (COMMENT_DET c in allComments)
                         {
-                            StackPanel newComment = GenerateACommentBox(c.USERNAME ,c.TITLE, Convert.ToInt32(c.RATE), c.CONTENT);
+                            StackPanel newComment = GenerateACommentBox(c.USERNAME, c.TITLE, Convert.ToInt32(c.RATE), c.CONTENT);
                             commentsStackPanel.Children.Add(newComment);
                         }
                     });
@@ -121,12 +150,27 @@ namespace CloudEDU.CourseStore.CourseDetail
                 return;
             }
             StackPanel newComment = GenerateACommentBox(Constants.Username, newTitleTextBox.Text, globalRate, newContentTextBox.Text);
+
+            COMMENT commentEntity = new COMMENT();
+            commentEntity.COURSE_ID = course.ID.Value;
+            commentEntity.CUSTOMER_ID = Constants.User.ID;
+            commentEntity.TITLE = newTitleTextBox.Text;
+            commentEntity.RATE = globalRate;
+            commentEntity.CONTENT = newContentTextBox.Text;
+            ctx.AddToCOMMENT(commentEntity);
+            ctx.BeginSaveChanges(OnAddCommentComplete, null);
+
             commentsStackPanel.Children.Add(newComment);
 
             newTitleTextBox.Text = newContentTextBox.Text = "";
             globalRate = 0;
             SetStarTextBlock(globalRate);
             WarningTextBlock.Visibility = Visibility.Collapsed;
+        }
+
+        private void OnAddCommentComplete(IAsyncResult result)
+        {
+            ctx.EndSaveChanges(result);
         }
 
         /// <summary>
@@ -149,14 +193,18 @@ namespace CloudEDU.CourseStore.CourseDetail
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(40, 0, 0, 0),
+<<<<<<< HEAD
                 Text = DateTime.Now.ToString()
+=======
+                Text = DateTime.Now.Year.ToString() + "." + DateTime.Now.Month.ToString() + "." + DateTime.Now.Day.ToString()
+>>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
             };
             TextBlock timeTextBlock = new TextBlock
             {
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(20, 0, 0, 0),
-                Text = DateTime.Now.TimeOfDay.ToString()
+                Text = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString()
             };
             TextBlock rateTextBlock = new TextBlock
             {
@@ -210,6 +258,7 @@ namespace CloudEDU.CourseStore.CourseDetail
             return outsidePanel;
         }
 
+        #region Deal with star
         private void star_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             TextBlock targetTextBlock = sender as TextBlock;
@@ -298,5 +347,6 @@ namespace CloudEDU.CourseStore.CourseDetail
                 star5.Text = Constants.FillStar;
             }
         }
+        #endregion
     }
 }

@@ -16,8 +16,13 @@ namespace CloudEDU.Login
     /// </summary>
     public static class PasswordBoxBehavior
     {
+<<<<<<< HEAD
         private const string WatermarkId = "_pboxWatermark";
        // private string specialId;
+=======
+        private const string WatermarkId = "_pboxWatermark";
+       // private string specialId;
+>>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
       // private static int countOfPBox;
         /// <summary>
         /// Backing storage key for the text property.
@@ -156,7 +161,11 @@ namespace CloudEDU.Login
                     {
                         // Add the TextBlock
                         var textBlock = new TextBlock
+<<<<<<< HEAD
                         {
+=======
+                        {
+>>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
                             Name = pbox.Name + WatermarkId,
                             Text = text,
                             TextAlignment = TextAlignment.Center,

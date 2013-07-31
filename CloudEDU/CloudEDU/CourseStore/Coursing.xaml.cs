@@ -69,7 +69,9 @@ namespace CloudEDU.CourseStore
             LecturesText.Foreground = pageBlack;
             NotesText.Foreground = pageBlack;
 
+
             detailFrame.Navigate(typeof(CoursingDetail.Home), course);
+
             UserProfileBt.DataContext = Constants.User;
 
         }
@@ -158,6 +160,11 @@ namespace CloudEDU.CourseStore
 
                 detailFrame.Navigate(typeof(CoursingDetail.Note), course);
             }
+        }
+
+        private void UserProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Frame.Navigate(typeof());
         }
 
         private void UserProfileButton_Click(object sender, RoutedEventArgs e)

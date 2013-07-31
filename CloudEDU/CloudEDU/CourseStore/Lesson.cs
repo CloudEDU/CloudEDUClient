@@ -46,5 +46,15 @@ namespace CloudEDU.CourseStore
         public string Title { get; set; }
         public string Uri { get; set; }
         public string Type { get; set; }
+<<<<<<< HEAD
+=======
+
+        public Resource(string title, string uri, string type)
+        {
+            Title = title;
+            Uri = uri;
+            Type = type;
+        }
+>>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
     }
 }

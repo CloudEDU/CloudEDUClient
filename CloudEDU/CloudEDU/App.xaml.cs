@@ -67,7 +67,11 @@ namespace CloudEDU
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
+<<<<<<< HEAD
                 if (!rootFrame.Navigate(typeof(CourseStore.Coursing), args.Arguments))
+=======
+                if (!rootFrame.Navigate(typeof(Login.Login), args.Arguments))
+>>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
                 {
                     throw new Exception("Failed to create initial page");
 
