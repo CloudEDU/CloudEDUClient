@@ -52,5 +52,10 @@ namespace CloudEDU.Common
         {
             ((Frame)Window.Current.Content).Navigate(typeof(Uploading));
         }
+
+        private void LogoutButton_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

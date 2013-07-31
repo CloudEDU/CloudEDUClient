@@ -263,13 +263,20 @@ namespace CloudEDU
 
             Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=" + Constants.User.NAME);
 
-            BackgroundUploader uploader = new BackgroundUploader();
-            if (imageParts != null)
+            try
             {
-                UploadOperation imagesUpload = await uploader.CreateUploadAsync(uploadUri, imageParts);
-                await HandleUploadAsync(imagesUpload, true);
+                BackgroundUploader uploader = new BackgroundUploader();
+                if (imageParts != null)
+                {
+                    UploadOperation imagesUpload = await uploader.CreateUploadAsync(uploadUri, imageParts);
+                    await HandleUploadAsync(imagesUpload, true);
+                }
+                hasImage = true;
             }
-            hasImage = true;
+            catch
+            {
+                ShowMessageDialog("Image uplaod error. Please check your network.");
+            }
         }
 
         /// <summary>
