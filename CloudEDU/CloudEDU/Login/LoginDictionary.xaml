@@ -1,4 +1,4 @@
-﻿<ResourceDictionary
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CloudEDU.Login"
@@ -30,8 +30,8 @@
     <Style TargetType="local:UserSelButtonControl">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:UserSelButtonControl">
-                    <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" >
+                <ControlTemplate TargetType="local:UserSelButtonControl" >
+                    <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" DataContext="{Binding Mode=TwoWay}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto"/>
@@ -48,10 +48,13 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border Background="#75B3C5" Width="150" Height="150" CornerRadius="1000" Margin="5,0,0,0">
-                            <Image HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Height="140" Width="140" Stretch="Fill" Source="{TemplateBinding Content}"/>
+                            <Border Width="140" Height="140" CornerRadius="1000">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="{Binding ImageSource}"/>
+                                </Border.Background>
+                            </Border>
                         </Border>
-                        <TextBlock Text="{TemplateBinding UserName}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" Foreground="White" Margin="0,10,0,10"/>
+                        <TextBlock Text="{Binding NAME}" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" Foreground="White" Margin="0,10,0,10"/>
 
                     </Grid>
                 </ControlTemplate>

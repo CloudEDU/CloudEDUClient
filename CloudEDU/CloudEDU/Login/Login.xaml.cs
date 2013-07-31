@@ -19,7 +19,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -50,9 +49,8 @@ namespace CloudEDU.Login
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //where user.NAME == InputUsername.Text
-            //customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER  select user );
-            //customerDsq.BeginExecute(OnCustomerComplete, null);
-            //System.Diagnostics.Debug.WriteLine(ComputeMD5("aaa"));
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
+            customerDsq.BeginExecute(OnCustomerComplete, null);
         }
 
         private void OnCustomerComplete(IAsyncResult result)
@@ -76,56 +74,27 @@ namespace CloudEDU.Login
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             //login
-            //foreach (CUSTOMER c in csl)
-            //{
-            //    if (c.NAME == InputUsername.Text)
-            //    {
-            //        if (c.PASSWORD == ComputeMD5(InputPassword.Password))
-            //        {
-                        // login success
-                        // CUSTOMER
+            foreach (CUSTOMER c in csl)
+            {
+                if (c.NAME == InputUsername.Text)
+                {
+                    if (c.PASSWORD == Constants.ComputeMD5(InputPassword.Password))
+                    {
+                         //login success
+                         //CUSTOMER
                         //Constants.User = c;
 
                         //User
-                        //Constants.User = new User("Shania", "../Images/Users/ania.png");
-            customerDsq = (DataServiceQuery<CUSTOMER>)(from cus in ctx.CUSTOMER select cus);
-            customerDsq.BeginExecute(OnUserComplete, null);
-            
-            //Constants.User.NAME = "Dewen";
-            //Constants.User.ID = 1;
-            //            System.Diagnostics.Debug.WriteLine("login success");
-            //            Frame.Navigate(typeof(CourseStore.Courstore));
+                        Constants.User = new User(c);
+                        System.Diagnostics.Debug.WriteLine("login success");
+                        Frame.Navigate(typeof(CategoryForNewest));
                         // navigate 
-            //        }
-            //    }
-            //}
+                    }
+                }
+            }
             // login fail
         }
+         
 
-        private async void OnUserComplete(IAsyncResult iar)
-        {
-            IEnumerable<CUSTOMER> customers = customerDsq.EndExecute(iar);
-            Constants.User = customers.FirstOrDefault();
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                Frame.Navigate(typeof(CourseStore.Courstore));
-                //dataCategory = coursesData.GetGroupsByCategory();
-                //cvs1.Source = dataCategory;
-                //(SemanticZoom.ZoomedOutView as ListViewBase).ItemsSource = cvs1.View.CollectionGroups;
-                //loadingProgressRing.IsActive = false;
-            });
-
-
-            
-        }
-
-        public static string ComputeMD5(string str)
-        {
-            var alg = HashAlgorithmProvider.OpenAlgorithm("MD5");
-            IBuffer buff = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
-            var hashed = alg.HashData(buff);
-            var res = CryptographicBuffer.EncodeToHexString(hashed);
-            return res;
-        }
     }
 }

@@ -54,23 +54,24 @@ namespace CloudEDU.Login
             CUSTOMER c = new CUSTOMER()
             {
                 NAME = InputUsername.Text,
-                PASSWORD = InputPassword.Password,
+                PASSWORD = Constants.ComputeMD5(InputPassword.Password),
             };
             ctx.AddToCUSTOMER(c);
             ctx.BeginSaveChanges(OnCustomerSaveChange, null);
 
         }
+
         private void OnCustomerSaveChange(IAsyncResult result)
         {
-            //try
-            //{
+            try
+            {
                 ctx.EndSaveChanges(result);
-            //}
-            //catch
-            //{
-             //   ShowMessageDialog();
-                // Network Connection error.
-            //}
+            }
+            catch
+            {
+                 ShowMessageDialog();
+                 //Network Connection error.
+            }
         }
 
         /// <summary>

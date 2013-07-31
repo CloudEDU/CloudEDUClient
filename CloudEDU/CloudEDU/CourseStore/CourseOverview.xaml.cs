@@ -199,7 +199,7 @@ namespace CloudEDU.CourseStore
 
         private void UserProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            //Frame.Navigate(typeof());
+            Frame.Navigate(typeof(Login.Profile));
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

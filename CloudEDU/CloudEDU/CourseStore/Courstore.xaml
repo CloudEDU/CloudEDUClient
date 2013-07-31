@@ -17,7 +17,7 @@
             <RowDefinition Height="150" />
             <RowDefinition />
         </Grid.RowDefinitions>
-
+        
         <SemanticZoom Grid.Row="1" x:Name="SemanticZoom">
             <SemanticZoom.ZoomedOutView>
                 <GridView x:Name="ZoomedOutGV" SelectionMode="None"
@@ -31,9 +31,8 @@
                     </GridView.ItemsPanel>
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="{Binding Group.Key}" FontFamily="Segoe UI Light" FontSize="40"/>
-                            </Grid>
+                            <TextBlock
+                                Text="{Binding Group.Key}" FontFamily="Segoe UI Light" FontSize="40"/>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                     <GridView.ItemContainerStyle>
@@ -87,7 +86,7 @@
             </SemanticZoom.ZoomedInView>
         </SemanticZoom>
         <ProgressRing x:Name="loadingProgressRing" Grid.RowSpan="2" Width="100" Height="100" />
-
+     
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*" />
@@ -97,7 +96,7 @@
             <TextBlock Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"
                        HorizontalAlignment="Left" Text="Courstore" VerticalAlignment="Center"
                        FontSize="100" Margin="0, -10"/>
-            <common:UserProfileButton  Grid.Column="2" Content="../Images/Users/ania.png" Click="UserProfileButton_Click" UserName="Shania"/>
+            <common:UserProfileButton x:Name="UserProfileBt" Grid.Column="2" DataContext="{Binding Mode=OneWay}" Content="{Binding ImageSource}" Click="UserProfileButton_Click" UserName="{Binding Username}"/>
         </Grid>
     </Grid>
 </common:GlobalPage>

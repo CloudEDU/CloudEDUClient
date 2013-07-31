@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using CloudEDU.Login;
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
+using Windows.Storage.Streams;
 
 namespace CloudEDU.Common
 {
@@ -21,9 +24,8 @@ namespace CloudEDU.Common
         public static double StarWidth = 22.2133331298828;
 
         public static string Username = "Test";
-        public static CUSTOMER User;
-        //public static User User;
-
+        //public static CUSTOMER User;
+        public static User User;
         /// <summary>
         /// Cast the first character of every word in a string from lower to upper.
         /// </summary>
@@ -72,7 +74,14 @@ namespace CloudEDU.Common
 
             return course;
         }
-
+        public static string ComputeMD5(string str)
+        {
+            var alg = HashAlgorithmProvider.OpenAlgorithm("MD5");
+            IBuffer buff = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
+            var hashed = alg.HashData(buff);
+            var res = CryptographicBuffer.EncodeToHexString(hashed);
+            return res;
+        }
 
     }
 

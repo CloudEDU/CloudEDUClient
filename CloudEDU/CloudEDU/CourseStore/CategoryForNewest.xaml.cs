@@ -1,4 +1,4 @@
-﻿using CloudEDU.Common;
+using CloudEDU.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -73,7 +73,7 @@ namespace CloudEDU.CourseStore
         }
         private void UserProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            //Frame.Navigate(typeof());
+            Frame.Navigate(typeof(Login.Profile));
         }
     }
 }
