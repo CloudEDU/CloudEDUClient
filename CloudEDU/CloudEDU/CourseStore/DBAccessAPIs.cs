@@ -91,19 +91,30 @@ namespace CloudEDU.CourseStore
 
         public void GetTypeByResourceID(int id, onQueryComplete onComplete)
         {
-        }
-
-        private void GetResourceByID(int id, onQueryComplete onComplete)
-        {
             resourceDsq = (DataServiceQuery<RESOURCE>)(ctx.RESOURCE.Where(r => r.ID == id));
             this.onUQC = onComplete;
             resourceDsq.BeginExecute(onResComplete, null);
         }
 
+
+        public void GetNoteByLessonId(int id, onQueryComplete onComplete)
+        {
+            noteDsq = (DataServiceQuery<NOTE>)(from note in ctx.NOTE where note.LESSON_ID == id select note);
+            this.onUQC = onComplete;
+            noteDsq.BeginExecute(onQueryComplete2, null);
+        }
+
+        public void GetResourceByID(int id, onQueryComplete onComplete)
+        {
+            resourceDsq = (DataServiceQuery<RESOURCE>)(ctx.RESOURCE.Where(r => r.ID == id));
+            this.onUQC = onComplete;
+            resourceDsq.BeginExecute(onQueryComplete2, null);
+        }
+
         private void onResComplete(IAsyncResult res)
         {
-            IEnumerable<RESOURCE> courses = resourceDsq.EndExecute(res);
-            RESOURCE resource = courses.FirstOrDefault();
+            IEnumerable<RESOURCE> resources = resourceDsq.EndExecute(res);
+            RESOURCE resource = resources.FirstOrDefault();
             resTypeDsq = (DataServiceQuery<RES_TYPE>)(ctx.RES_TYPE.Where(r => r.ID == resource.TYPE));
             resTypeDsq.BeginExecute(onQueryComplete2, null);
         }

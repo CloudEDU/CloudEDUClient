@@ -51,10 +51,10 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             Course course = e.Parameter as Course;
             dba = new DBAccessAPIs();
-            dba.getLessonsByCourseId((int)course.ID, onGetLessonComplete);
+            dba.GetLessonsByCourseId((int)course.ID, onGetLessonComplete);
             allLessonsStackPanel.Children.RemoveAt(0);
             allLessonsStackPanel.Children.RemoveAt(0);
-
+            
             //allLessonsStackPanel.Children.Add(GenerateALessonBox(null));
             //allLessonsStackPanel.Children.Add(GenerateALessonBox(null));
         }
@@ -70,6 +70,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 {
                     this.lessons.Add(l);
                     //coursesData.AddCourse(Constants.CourseAvail2Course(c));
+
                 }
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
@@ -92,6 +93,35 @@ namespace CloudEDU.CourseStore.CoursingDetail
         }
 
 
+
+        private Image GenerateDocImage()
+        {
+            return GenerateImage("ms-appx:///Images/Upload/doc_white.png");
+        }
+
+        private Image GenerateAudioImage()
+        {
+            return GenerateImage("ms-appx:///Images/Upload/audio_white.png");
+        }
+
+        private Image GenerateVideoImage()
+        {
+            return GenerateImage("ms-appx:///Images/Upload/video_white.png");
+        }
+
+        private Image GenerateImage(string uri)
+        {
+            Image image = new Image
+            {
+                Source = new BitmapImage(new Uri(uri)),
+                Margin = new Thickness(4, 0, 4, 0),
+            };
+
+            return image;
+        }
+
+
+        
         private Grid GenerateALessonBox(LESSON les)
         {
             if (les == null)
@@ -105,9 +135,10 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 Margin = new Thickness(5, 0, 0, 0),
                 Foreground = new SolidColorBrush(Colors.White),
                 HorizontalAlignment = HorizontalAlignment.Left,
-                Text = les.TITLE
+                Text = les.TITLE,
+                
             };
-
+            /*
             Image docImage = new Image
             {
                 Source = new BitmapImage(new Uri("ms-appx:///Images/Upload/doc_white.png")),
@@ -123,15 +154,15 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 Source = new BitmapImage(new Uri("ms-appx:///Images/Upload/video_white.png")),
                 Margin = new Thickness(8, 0, 8, 0)
             };
-
+            */
             StackPanel imagesStackPanel = new StackPanel
             {
                 Orientation = Orientation.Horizontal,
-                HorizontalAlignment = HorizontalAlignment.Right
+                HorizontalAlignment = HorizontalAlignment.Right,
             };
-            imagesStackPanel.Children.Add(docImage);
-            imagesStackPanel.Children.Add(audioImage);
-            imagesStackPanel.Children.Add(videoImage);
+            //imagesStackPanel.Children.Add(docImage);
+            //imagesStackPanel.Children.Add(audioImage);
+            //imagesStackPanel.Children.Add(videoImage);
 
             Image noteImage = new Image
             {
@@ -144,7 +175,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             Grid newLesson = new Grid()
             {
                 Background = this.Resources["LessonBackgroundBrush"] as SolidColorBrush,
-                Margin = new Thickness(2, 2, 50, 2)
+                Margin = new Thickness(2, 2, 80, 2)
             };
             newLesson.Children.Add(lessonName);
             newLesson.Children.Add(imagesStackPanel);
