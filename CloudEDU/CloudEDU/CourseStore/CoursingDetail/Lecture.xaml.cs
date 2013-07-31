@@ -11,6 +11,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Networking.BackgroundTransfer;
 using Windows.Storage;
+using Windows.Storage.Search;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -156,7 +157,6 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 Width = 40,
                 Height = 40,
                 HorizontalAlignment = HorizontalAlignment.Right,
-                
             };
             Res_URL.Add(image,url);
 
@@ -258,6 +258,38 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
         }
 
+        //string fileToLaunch = null;
+        private async void LaunchFileOpenWith(string fileName)
+        {
+
+            var file = await KnownFolders.VideosLibrary.GetFileAsync(fileName);
+            // First, get the image file from the package's image directory.
+            //var file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(fileToLaunch);
+
+            // Calculate the position for the Open With dialog.
+            // An alternative to using the point is to set the rect of the UI element that triggered the launch.
+            Point openWithPosition = new Point(600, 500);
+
+            // Next, configure the Open With dialog.
+            var options = new Windows.System.LauncherOptions();
+            options.DisplayApplicationPicker = true;
+            options.UI.InvocationPoint = openWithPosition;
+            options.UI.PreferredPlacement = Windows.UI.Popups.Placement.Below;
+
+            // Finally, launch the file.
+            bool success = await Windows.System.Launcher.LaunchFileAsync(file, options);
+            if (success)
+            {
+                ShowMessageDialog("File launched: " + file.Name);
+            }
+            else
+            {
+                ShowMessageDialog("File launch failed.");
+            }
+        }
+
+
+
 
         private async void ResImageTapped(object sender, TappedRoutedEventArgs e)
         {
@@ -266,8 +298,22 @@ namespace CloudEDU.CourseStore.CoursingDetail
             System.Diagnostics.Debug.WriteLine(url);
             Uri uri = new Uri(Constants.BaseURI+url);
             string[] fileArray = url.Split('\\');
+            
+
             string fileName = fileArray[fileArray.Length - 1];
             System.Diagnostics.Debug.WriteLine(fileName);
+
+
+            if ((await StorageFolderExtension.CheckFileExisted(KnownFolders.VideosLibrary, fileName)))
+            {
+                LaunchFileOpenWith(fileName);
+                //System.Diagnostics.Debug.WriteLine("somepath"+KnownFolders.VideosLibrary.Path+"asdfa");
+
+                //ShowMessageDialog("file already exist!!");
+                return;
+            }
+
+
 
             StorageFile destinationFile;
             try

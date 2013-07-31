@@ -152,6 +152,7 @@
     <Compile Include="CourseStore\MyCourses.xaml.cs">
       <DependentUpon>MyCourses.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseStore\StorageFolderExtension.cs" />
     <Compile Include="CourseStore\StoreData.cs" />
     <Compile Include="CourseStore\CourseOverview.xaml.cs">
       <DependentUpon>CourseOverview.xaml</DependentUpon>
