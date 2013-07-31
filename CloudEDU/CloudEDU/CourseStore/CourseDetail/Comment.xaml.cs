@@ -57,10 +57,6 @@ namespace CloudEDU.CourseStore.CourseDetail
             course = e.Parameter as Course;
             globalRate = 0;
 
-<<<<<<< HEAD
-            commentDsq = (DataServiceQuery<COMMENT_DET>)(from comment in ctx.COMMENT_DET
-                                                         where comment.CUSTOMER_ID == course.ID
-=======
             attendDsq = (DataServiceQuery<ATTEND>)(from attend in ctx.ATTEND
                                                    where attend.COURSE_ID == course.ID && attend.CUSTOMER_ID == Constants.User.ID
                                                    select attend);
@@ -82,7 +78,6 @@ namespace CloudEDU.CourseStore.CourseDetail
             commentDsq = (DataServiceQuery<COMMENT_DET>)(from comment in ctx.COMMENT_DET
                                                          where comment.COURSE_ID == course.ID
                                                          orderby comment.TIME ascending
->>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
                                                          select comment);
             commentDsq.BeginExecute(OnCommentComplete, null);
         }
@@ -93,10 +88,6 @@ namespace CloudEDU.CourseStore.CourseDetail
             {
                 IEnumerable<COMMENT_DET> coms = commentDsq.EndExecute(result);
                 allComments = new List<COMMENT_DET>(coms);
-<<<<<<< HEAD
-                System.Diagnostics.Debug.WriteLine(allComments.Count);
-=======
->>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         foreach (COMMENT_DET c in allComments)
@@ -193,11 +184,7 @@ namespace CloudEDU.CourseStore.CourseDetail
                 Style = Application.Current.Resources["SubheaderTextStyle"] as Style,
                 FontWeight = FontWeights.Bold,
                 Margin = new Thickness(40, 0, 0, 0),
-<<<<<<< HEAD
-                Text = DateTime.Now.ToString()
-=======
                 Text = DateTime.Now.Year.ToString() + "." + DateTime.Now.Month.ToString() + "." + DateTime.Now.Day.ToString()
->>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
             };
             TextBlock timeTextBlock = new TextBlock
             {

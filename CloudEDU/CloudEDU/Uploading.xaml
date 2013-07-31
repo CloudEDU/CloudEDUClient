@@ -170,7 +170,7 @@
             </StackPanel>
         </ScrollViewer>
 
-        <Popup Grid.RowSpan="4" Name="addLessonPopup" IsOpen="false" IsLightDismissEnabled="False">
+        <Popup Grid.RowSpan="4" Name="addLessonPopup" IsOpen="False" IsLightDismissEnabled="False">
             <Popup.ChildTransitions>
                 <TransitionCollection>
                     <PaneThemeTransition />

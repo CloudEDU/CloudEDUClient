@@ -39,11 +39,7 @@ namespace CloudEDU.CourseStore
         {
             storeSampleData = new StoreData();
             dataCategory = storeSampleData.GetSingleGroupByCategoryTitle("newest");
-<<<<<<< HEAD
             cvs1.Source = dataCategory;
-=======
-            cvs1.Source = dataCategory;
->>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
             UserProfileBt.DataContext = Constants.User;
         }
 
@@ -74,10 +70,6 @@ namespace CloudEDU.CourseStore
             var courseName = ((Course)e.ClickedItem).Title;
 
             Frame.Navigate(typeof(CourseOverview), courseName);
-        }
-        private void UserProfileButton_Click(object sender, RoutedEventArgs e)
-        {
-            //Frame.Navigate(typeof());
         }
         private void UserProfileButton_Click(object sender, RoutedEventArgs e)
         {

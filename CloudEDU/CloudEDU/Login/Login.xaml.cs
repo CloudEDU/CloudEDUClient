@@ -89,10 +89,7 @@ namespace CloudEDU.Login
                         //Constants.User = new User("Shania", "../Images/Users/ania.png");
             Constants.User = new CUSTOMER();
             Constants.User.NAME = "Shania";
-<<<<<<< HEAD
-=======
             Constants.User.ID = 1;
->>>>>>> be833e4a170e89bd221d605f2a445e798eb40c3e
                         System.Diagnostics.Debug.WriteLine("login success");
                         Frame.Navigate(typeof(CategoryForNewest));
                         // navigate 

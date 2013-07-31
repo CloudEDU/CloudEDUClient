@@ -1,13 +1,10 @@
-﻿using CloudEDU.Common;
-using CloudEDU.Service;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -32,8 +29,6 @@ namespace CloudEDU.CourseStore.CoursingDetail
         public Lecture()
         {
             this.InitializeComponent();
-            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
-
         }
 
         /// <summary>
@@ -47,7 +42,6 @@ namespace CloudEDU.CourseStore.CoursingDetail
 
             allLessonsStackPanel.Children.Add(GenerateALessonBox());
             allLessonsStackPanel.Children.Add(GenerateALessonBox());
-            
         }
 
         private Grid GenerateALessonBox()
@@ -87,95 +81,15 @@ namespace CloudEDU.CourseStore.CoursingDetail
             imagesStackPanel.Children.Add(audioImage);
             imagesStackPanel.Children.Add(videoImage);
 
-            Image noteImage = new Image
-            {
-                Source = new BitmapImage(new Uri("ms-appx:///Images/Coursing/Lectures/newnote.png")),
-                Margin = new Thickness(4, 0, -40, 0)
-            };
-            noteImage.Height=30;
-            noteImage.Width=30;
-            noteImage.HorizontalAlignment = HorizontalAlignment.Right;
             Grid newLesson = new Grid()
             {
                 Background = this.Resources["LessonBackgroundBrush"] as SolidColorBrush,
-                Margin = new Thickness(2,2,50,2)
+                Margin = new Thickness(2)
             };
             newLesson.Children.Add(lessonName);
             newLesson.Children.Add(imagesStackPanel);
-            newLesson.Children.Add(noteImage);
-
-            noteImage.Tapped +=noteImage_Tapped;
 
             return newLesson;
         }
-
-        private void noteImage_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            this.addNotePopup.IsOpen = true;
-            //throw new NotImplementedException();
-        }
-
-        private void CancelUploadButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.addNotePopup.IsOpen = false;
-        }
-
-        CloudEDUEntities ctx = null;
-
-        private async void SaveNoteButton_Click(object sender, RoutedEventArgs e)
-        {
-            NOTE note = new NOTE();
-            note.TITLE = this.noteTitle.Text;
-            note.CONTENT = this.noteContent.Text;
-            note.LESSON_ID = 1;
-            note.CUSTOMER_ID = 1;
-
-            ctx.AddToNOTE(note);
-            ctx.BeginSaveChanges(onNoteSaved, null);
-
-            this.addNotePopup.IsOpen = false;
-            ClearNote();
-            MessageDialog md = new MessageDialog("Note Saved","Your note have been saved!");
-            await md.ShowAsync();
-            //md.Content = "Your note have been saved!";
-            
-            
-
-        }
-        private void onNoteSaved(IAsyncResult iar)
-        {
-            ctx.EndSaveChanges(iar);
-        }
-        private void ClearNote()
-        {
-            this.noteTitle.Text = "Title";
-            this.noteContent.Text = "Note Content...";
-            this.selectLessonComboBox.SelectedIndex = 0;
-            
-        }
-
-
-      
-
-        private void noteContent_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (this.noteContent.Text.Equals("Note Content..."))
-            {
-                this.noteContent.Text = "";
-            }
-            //System.Diagnostics.Debug.WriteLine("noteContent tapped");
-
-        }
-
-        private void noteTitle_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (this.noteTitle.Text.Equals("Title"))
-            {
-                this.noteTitle.Text = "";
-            }
-            //System.Diagnostics.Debug.WriteLine("notetitle tapped");
-
-        }
-       
     }
 }
