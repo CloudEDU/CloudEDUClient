@@ -24,7 +24,7 @@ namespace CloudEDU.Common
         public static double StarWidth = 22.2133331298828;
 
         public static List<string> ResourceType = new List<string> { "DOCUMENT", "VIDEO", "AUDIO" };
-
+        public static Coursing coursing;
         //public static CUSTOMER User;
         public static User User;
         /// <summary>
