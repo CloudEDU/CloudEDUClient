@@ -18,7 +18,7 @@
         <Property Name="COURSE_ID" Type="Edm.Int32" Nullable="false" />
         <Property Name="CONTENT" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         <Property Name="TITLE" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="false" />
-        <Property Name="TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="TIME" Type="Edm.DateTime" Nullable="false" Precision="7" />
         <Property Name="RATE" Type="Edm.Double" />
         <NavigationProperty Name="CUSTOMER" Relationship="CloudEDUModel.FK__COMMENT__CUSTOME__6E01572D" ToRole="CUSTOMER" FromRole="COMMENT" />
         <NavigationProperty Name="COURSE" Relationship="CloudEDUModel.FK_COMMENT_COURSE" ToRole="COURSE" FromRole="COMMENT" />
@@ -37,7 +37,7 @@
         <Property Name="COURSE_STATUS" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
         <Property Name="PG" Type="Edm.Int32" />
         <Property Name="ICON_URL" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
-        <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="7" />
         <NavigationProperty Name="CATEGORY1" Relationship="CloudEDUModel.FK_COURSE_CATEGORY" ToRole="CATEGORY" FromRole="COURSE" />
         <NavigationProperty Name="COMMENT" Relationship="CloudEDUModel.FK_COMMENT_COURSE" ToRole="COMMENT" FromRole="COURSE" />
         <NavigationProperty Name="ATTEND" Relationship="CloudEDUModel.FK_ATTEND_COURSE" ToRole="ATTEND" FromRole="COURSE" />
@@ -120,7 +120,7 @@
         </Key>
         <Property Name="CUSTOMER_ID" Type="Edm.Int32" Nullable="false" />
         <Property Name="COURSE_ID" Type="Edm.Int32" Nullable="false" />
-        <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="7" />
         <Property Name="CURRENT_LESSON" Type="Edm.Int32" />
         <NavigationProperty Name="COURSE" Relationship="CloudEDUModel.FK_ATTEND_COURSE" ToRole="COURSE" FromRole="ATTEND" />
         <NavigationProperty Name="LESSON" Relationship="CloudEDUModel.FK_ATTEND_CURRENTLESSON" ToRole="LESSON" FromRole="ATTEND" />
@@ -138,7 +138,7 @@
         <Property Name="DEGREE" Type="Edm.String" MaxLength="20" FixedLength="false" Unicode="false" />
         <Property Name="LEARN_RATE" Type="Edm.Double" Nullable="false" />
         <Property Name="TEACH_RATE" Type="Edm.Double" Nullable="false" />
-        <Property Name="BIRTHDAY" Type="Edm.DateTime" Nullable="false" Precision="0" />
+        <Property Name="BIRTHDAY" Type="Edm.DateTime" Nullable="false" Precision="7" />
         <Property Name="ALLOW" Type="Edm.Boolean" Nullable="false" />
         <NavigationProperty Name="COMMENT" Relationship="CloudEDUModel.FK__COMMENT__CUSTOME__6E01572D" ToRole="COMMENT" FromRole="CUSTOMER" />
         <NavigationProperty Name="COURSE" Relationship="CloudEDUModel.FK_COURSE_TEACHER" ToRole="COURSE" FromRole="CUSTOMER" />
@@ -154,7 +154,7 @@
         <Property Name="CONTENT" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         <Property Name="LESSON_ID" Type="Edm.Int32" Nullable="false" />
         <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-        <Property Name="DATE" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="DATE" Type="Edm.DateTime" Nullable="false" Precision="7" />
         <Property Name="CUSTOMER_ID" Type="Edm.Int32" />
         <Property Name="SHARE" Type="Edm.Boolean" Nullable="false" />
         <NavigationProperty Name="LESSON" Relationship="CloudEDUModel.FK__NOTE__LESSON_ID__3A81B327" ToRole="LESSON" FromRole="NOTE" />
@@ -475,6 +475,13 @@
           <Parameter Name="price" Type="Edm.Double" Nullable="false" />
           <Parameter Name="pg_id" Type="Edm.Int32" Nullable="false" />
           <Parameter Name="icon_url" Type="Edm.String" />
+        </FunctionImport>
+        <FunctionImport Name="GetAllCoursesAttendedByCustomer" ReturnType="Collection(CloudEDUModel.COURSE_AVAIL)" EntitySet="COURSE_AVAIL" m:HttpMethod="GET">
+          <Parameter Name="customer_id" Type="Edm.Int32" Nullable="false" />
+        </FunctionImport>
+        <FunctionImport Name="AddDBLog" m:HttpMethod="GET">
+          <Parameter Name="opr" Type="Edm.String" />
+          <Parameter Name="msg" Type="Edm.String" />
         </FunctionImport>
         <AssociationSet Name="FK_COURSE_CATEGORY" Association="CloudEDUModel.FK_COURSE_CATEGORY">
           <End Role="CATEGORY" EntitySet="CATEGORY" />

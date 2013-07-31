@@ -55,8 +55,8 @@ namespace CloudEDU
 
         private List<Lesson> allLessons;
         private Course toBeUploadCourse;
-
-        private Button addImageButton;
+     
+        //private Button addImageButton;
 
         private CancellationTokenSource cts;
 
@@ -70,7 +70,7 @@ namespace CloudEDU
             this.InitializeComponent();
 
             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
-            addImageButton = imageAddButton;
+            //addImageButton = imageAddButton;
         }
 
         /// <summary>
@@ -216,35 +216,35 @@ namespace CloudEDU
         /// <param name="e">Event data that describes how the click was initiated.</param>
         private async void ImageUploadButton_Click(object sender, RoutedEventArgs e)
         {
-            FileOpenPicker picker = FileTypePicker(imagesFilterTypeList);
-            if (picker == null) return;
+            //FileOpenPicker picker = FileTypePicker(imagesFilterTypeList);
+            //if (picker == null) return;
 
-            images = await picker.PickMultipleFilesAsync();
-            if (images == null || images.Count == 0) return;
+            //images = await picker.PickMultipleFilesAsync();
+            //if (images == null || images.Count == 0) return;
 
-            Image imgImg = new Image
-            {
-                Source = new BitmapImage(new Uri("ms-appx:///Images/Upload/image.png")),
-                Margin = new Thickness(5, 0, 5, 0)
-            };
+            //Image imgImg = new Image
+            //{
+            //    Source = new BitmapImage(new Uri("ms-appx:///Images/Upload/image.png")),
+            //    Margin = new Thickness(5, 0, 5, 0)
+            //};
 
-            ToolTip toolTip = new ToolTip();
-            toolTip.Content = images[0].Name;
-            ToolTipService.SetToolTip(imgImg, toolTip);
+            //ToolTip toolTip = new ToolTip();
+            //toolTip.Content = images[0].Name;
+            //ToolTipService.SetToolTip(imgImg, toolTip);
 
-            totalImagePanel.Children.RemoveAt(totalImagePanel.Children.Count - 1);
-            imagePanel.Children.Add(imgImg);
+            //totalImagePanel.Children.RemoveAt(totalImagePanel.Children.Count - 1);
+            //imagePanel.Children.Add(imgImg);
 
-            List<BackgroundTransferContentPart> imageParts = CreateBackgroundTransferContentPartList(images);
+            //List<BackgroundTransferContentPart> imageParts = CreateBackgroundTransferContentPartList(images);
 
-            Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=Boyi");
+            //Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=" + Constants.User.NAME);
 
-            BackgroundUploader uploader = new BackgroundUploader();
-            if (imageParts != null)
-            {
-                UploadOperation imagesUpload = await uploader.CreateUploadAsync(uploadUri, imageParts);
-                await HandleUploadAsync(imagesUpload, true);
-            }
+            //BackgroundUploader uploader = new BackgroundUploader();
+            //if (imageParts != null)
+            //{
+            //    UploadOperation imagesUpload = await uploader.CreateUploadAsync(uploadUri, imageParts);
+            //    await HandleUploadAsync(imagesUpload, true);
+            //}
         }
 
         /// <summary>
@@ -343,6 +343,15 @@ namespace CloudEDU
                 ShowMessageDialog("Format error! Please check your upload infomation.");
                 return;
             }
+
+            COURSE newCourse = new COURSE()
+            {
+                TITLE = courseNameTextBox.Text,
+                PRICE = Convert.ToDecimal(priceTextBox.Text),
+                TEACHER = Constants.User.ID,
+                CATEGORY = (categoryComboBox.SelectionBoxItem as CATEGORY).ID,
+                PG = (pgComboBox.SelectionBoxItem as PARENT_GUIDE).ID
+            };
         }
 
         /// <summary>
@@ -600,21 +609,21 @@ namespace CloudEDU
 
             lessonName.Text = "Lesson Name";
             lessonDescription.Text = "Description...";
-            imagePanel.Children.Clear();
+            //imagePanel.Children.Clear();
             docsPanel.Children.Clear();
             audiosPanel.Children.Clear();
             videosPanel.Children.Clear();
-            foreach (var c in totalImagePanel.Children)
-            {
-                if (c == addImageButton)
-                {
-                    inFlag = true;
-                }
-            }
-            if (!inFlag)
-            {
-                totalImagePanel.Children.Add(addImageButton);
-            }
+            //foreach (var c in totalImagePanel.Children)
+            //{
+            //    if (c == addImageButton)
+            //    {
+            //        inFlag = true;
+            //    }
+            //}
+            //if (!inFlag)
+            //{
+            //    totalImagePanel.Children.Add(addImageButton);
+            //}
             images = null;
             docs = null;
             audios = null;
@@ -626,7 +635,7 @@ namespace CloudEDU
         /// </summary>
         private void ResetPage()
         {
-            bool inFlag = false;
+            //bool inFlag = false;
 
             categoryDsq = (DataServiceQuery<CATEGORY>)(from category in ctx.CATEGORY select category);
             categoryDsq.BeginExecute(OnCategoryComplete, null);
@@ -637,7 +646,7 @@ namespace CloudEDU
             lessonCount = 0;
             cts = new CancellationTokenSource();
             courseNameTextBox.Text = "";
-            priceTextBox.Text = "Price";
+            //priceTextBox.Text = "Price";
             lessonInfo.Children.Clear();
             lessonRes.Children.Clear();
             images = null;
@@ -647,18 +656,18 @@ namespace CloudEDU
             allLessons = new List<Lesson>();
             toBeUploadCourse = new Course();
 
-            imagePanel.Children.Clear();
-            foreach (var c in totalImagePanel.Children)
-            {
-                if (c == addImageButton)
-                {
-                    inFlag = true;
-                }
-            }
-            if (!inFlag)
-            {
-                totalImagePanel.Children.Add(addImageButton);
-            }
+            //imagePanel.Children.Clear();
+            //foreach (var c in totalImagePanel.Children)
+            //{
+            //    if (c == addImageButton)
+            //    {
+            //        inFlag = true;
+            //    }
+            //}
+            //if (!inFlag)
+            //{
+            //    totalImagePanel.Children.Add(addImageButton);
+            //}
         }
         #endregion
 
