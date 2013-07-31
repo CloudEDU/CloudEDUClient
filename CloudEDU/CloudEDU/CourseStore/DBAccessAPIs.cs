@@ -23,6 +23,11 @@ namespace CloudEDU.CourseStore
 
 
         public DataServiceQuery<CUSTOMER> customerDsq = null;
+        public DataServiceQuery<LESSON> lessonDsq = null;
+        public DataServiceQuery<RESOURCE> resourceDsq = null;
+        public DataServiceQuery<NOTE> noteDsq = null;
+        public DataServiceQuery<RES_TYPE> resTypeDsq = null;
+        public DataServiceQuery<COURSE> courseDsq = null;
         public delegate string deleMethod(int a, string b);
 
         public static string test(deleMethod m)
@@ -35,24 +40,128 @@ namespace CloudEDU.CourseStore
 
 
 
-        public delegate void onUserQueryComplete(IAsyncResult result);
-        private onUserQueryComplete onUQC;
+        public delegate void onQueryComplete(IAsyncResult result);
+        private onQueryComplete onUQC;
 
+        
 
-        public void getUserById(int id, onUserQueryComplete onComplete)
+        public void getUserById(int id, onQueryComplete onComplete)
         {
             customerDsq = (DataServiceQuery<CUSTOMER>)(from cus in ctx.CUSTOMER where cus.ID == Constants.User.ID select cus);
             this.onUQC = onComplete;
-            customerDsq.BeginExecute(onUserQueryComplete2, null);
+            customerDsq.BeginExecute(onQueryComplete2, null);
         }
 
 
-        private void onUserQueryComplete2(IAsyncResult result)
+        private void onQueryComplete2(IAsyncResult result)
         {
             this.onUQC(result);
-
         }
 
 
+
+        public void GetLessonById(int id, onQueryComplete onComplete)
+        {
+            lessonDsq = (DataServiceQuery<LESSON>)(from les in ctx.LESSON where les.ID == id select les);
+            this.onUQC = onComplete;
+            lessonDsq.BeginExecute(onQueryComplete2, null);
+        }
+
+        public void GetLessonsByCourseId(int id, onQueryComplete onComplete)
+        {
+            lessonDsq = (DataServiceQuery<LESSON>)(from les in ctx.LESSON where les.COURSE_ID == id select les);
+            this.onUQC = onComplete;
+            lessonDsq.BeginExecute(onQueryComplete2, null);
+        }
+
+
+        public void GetResourcesByLessonId(int id, onQueryComplete onComplete)
+        {
+            resourceDsq = (DataServiceQuery<RESOURCE>)(ctx.RESOURCE.Where(r => r.LESSON_ID == id));
+            this.onUQC = onComplete;
+            resourceDsq.BeginExecute(onQueryComplete2, null);
+        }
+
+        public void GetNoteByCustomerID(int id, onQueryComplete onComplete)
+        {
+            noteDsq = (DataServiceQuery<NOTE>)(ctx.NOTE.Where(n => n.CUSTOMER_ID == id));
+            this.onUQC = onComplete;
+            noteDsq.BeginExecute(onQueryComplete2, null);
+        }
+
+        public void GetTypeByResourceID(int id, onQueryComplete onComplete)
+        {
+        }
+
+        private void GetResourceByID(int id, onQueryComplete onComplete)
+        {
+            resourceDsq = (DataServiceQuery<RESOURCE>)(ctx.RESOURCE.Where(r => r.ID == id));
+            this.onUQC = onComplete;
+            resourceDsq.BeginExecute(onResComplete, null);
+        }
+
+        private void onResComplete(IAsyncResult res)
+        {
+            IEnumerable<RESOURCE> courses = resourceDsq.EndExecute(res);
+            RESOURCE resource = courses.FirstOrDefault();
+            resTypeDsq = (DataServiceQuery<RES_TYPE>)(ctx.RES_TYPE.Where(r => r.ID == resource.TYPE));
+            resTypeDsq.BeginExecute(onQueryComplete2, null);
+        }
+
+        public void InsertNote(NOTE note, onQueryComplete onComplete)
+        {
+            ctx.AddToNOTE(note);
+            this.onUQC = onComplete;
+            ctx.BeginSaveChanges(onQueryComplete2, null);                        
+        }
+
+        public void EditNote(NOTE note, onQueryComplete onComplete)
+        {
+            ctx.UpdateObject(note);
+            this.onUQC = onComplete;
+            ctx.BeginSaveChanges(onQueryComplete2, null);
+        }
+
+        public void EditLesson(LESSON lesson, onQueryComplete onComplete)
+        {
+            ctx.UpdateObject(lesson);
+            this.onUQC = onComplete;
+            ctx.BeginSaveChanges(onQueryComplete2, null);
+        }
+
+        public void EditCourse(COURSE course, onQueryComplete onComplete)
+        {
+            ctx.UpdateObject(course);
+            this.onUQC = onComplete;
+            ctx.BeginSaveChanges(onQueryComplete2, null);
+        }
+
+        public void DeleteNote(NOTE note, onQueryComplete onComplete)
+        {
+            ctx.DeleteObject(note);
+            this.onUQC = onComplete;
+            ctx.BeginSaveChanges(onQueryComplete2, null);
+        }
+
+        public void GetNoteByID(int id, onQueryComplete onComplete)
+        {
+            noteDsq = (DataServiceQuery<NOTE>)(ctx.NOTE.Where(r => r.ID == id));
+            this.onUQC = onComplete;
+            resourceDsq.BeginExecute(onResComplete, null);
+        }
+
+        public void GetLessonByID(int id, onQueryComplete onComplete)
+        {
+            lessonDsq = (DataServiceQuery<LESSON>)(ctx.LESSON.Where(r => r.ID == id));
+            this.onUQC = onComplete;
+            resourceDsq.BeginExecute(onResComplete, null);
+        }
+
+        public void GetCourseByID(int id, onQueryComplete onComplete)
+        {
+            courseDsq = (DataServiceQuery<COURSE>)(ctx.COURSE.Where(r => r.ID == id));
+            this.onUQC = onComplete;
+            resourceDsq.BeginExecute(onResComplete, null);
+        }
     }
 }
