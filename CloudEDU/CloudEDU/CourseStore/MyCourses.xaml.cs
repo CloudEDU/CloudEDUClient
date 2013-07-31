@@ -1,4 +1,4 @@
-using CloudEDU.Common;
+﻿using CloudEDU.Common;
 using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
@@ -49,17 +49,14 @@ namespace CloudEDU.CourseStore
         /// property is typically used to configure the page.</param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            attendDsq = (DataServiceQuery<COURSE_AVAIL>)(from attend in ctx.ATTEND
-                                                         join course in ctx.COURSE_AVAIL
-                                                         on attend.COURSE_ID equals course.ID
-                                                         where attend.CUSTOMER_ID == Constants.User.ID
-                                                         select course);
             teachDsq = (DataServiceQuery<COURSE_AVAIL>)(from course in ctx.COURSE_AVAIL
                                                         where course.TEACHER_NAME == Constants.User.NAME
                                                         select course);
 
             TaskFactory<IEnumerable<COURSE_AVAIL>> tf = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
-            IEnumerable<COURSE_AVAIL> attends = await tf.FromAsync(attendDsq.BeginExecute(null, null), iar => attendDsq.EndExecute(iar));
+            IEnumerable<COURSE_AVAIL> attends = await tf.FromAsync(ctx.BeginExecute<COURSE_AVAIL>(
+                new Uri("/GetAllCoursesAttendedByCustomer?customer_id=13", UriKind.Relative), null, null),
+                iar => ctx.EndExecute<COURSE_AVAIL>(iar));
             IEnumerable<COURSE_AVAIL> teaches = await tf.FromAsync(teachDsq.BeginExecute(null, null), iar => teachDsq.EndExecute(iar));
 
             courseData = new StoreData();
@@ -77,10 +74,19 @@ namespace CloudEDU.CourseStore
                 tmpCourse.IsBuy = false;
                 courseData.AddCourse(tmpCourse);
             }
-            
+
             dataCategory = courseData.GetGroupsByAttendingOrTeaching();
             cvs1.Source = dataCategory;
             UserProfileBt.DataContext = Constants.User;
+        }
+
+        private void OnCourseSeachComplete(IAsyncResult ar)
+        {
+            IEnumerable<COURSE_AVAIL> courses = ctx.EndExecute<COURSE_AVAIL>(ar);
+            foreach (COURSE_AVAIL c in courses)
+            {
+                System.Diagnostics.Debug.WriteLine(c.TITLE);
+            }
         }
 
         /// <summary>

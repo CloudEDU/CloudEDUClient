@@ -55,6 +55,7 @@ namespace CloudEDU.CourseStore
         {
             List<object> courseInfo = e.Parameter as List<object>;
             course = courseInfo[0] as Course;
+            DataContext = course;
             NavigateText.Text = courseInfo[1] as string;
             CourseTitle.Text = Constants.UpperInitialChar(course.Title);
 
@@ -152,12 +153,13 @@ namespace CloudEDU.CourseStore
                 NotesText.Foreground = pageWhite;
 
                 ContentBackgroundRect.Fill = pageGreen;
+                detailFrame.Navigate(typeof(CoursingDetail.Note), course);
             }
         }
 
         private void UserProfileButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Login.Profile));
+            //Frame.Navigate(typeof());
         }
     }
 }

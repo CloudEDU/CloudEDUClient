@@ -479,6 +479,10 @@
         <FunctionImport Name="GetAllCoursesAttendedByCustomer" ReturnType="Collection(CloudEDUModel.COURSE_AVAIL)" EntitySet="COURSE_AVAIL" m:HttpMethod="GET">
           <Parameter Name="customer_id" Type="Edm.Int32" Nullable="false" />
         </FunctionImport>
+        <FunctionImport Name="AddDBLog" m:HttpMethod="GET">
+          <Parameter Name="opr" Type="Edm.String" />
+          <Parameter Name="msg" Type="Edm.String" />
+        </FunctionImport>
         <AssociationSet Name="FK_COURSE_CATEGORY" Association="CloudEDUModel.FK_COURSE_CATEGORY">
           <End Role="CATEGORY" EntitySet="CATEGORY" />
           <End Role="COURSE" EntitySet="COURSE" />
