@@ -68,6 +68,7 @@ namespace CloudEDU.Common
             course.Price = c.PRICE;
             course.Rate = c.RATE;
             course.PG = c.RESTRICT_AGE;
+            course.Rate = c.RATED_USERS;
             course.LessonNum = c.LESSON_NUM;
             course.ImageUri = BaseURI + c.ICON_URL.Replace('\\', '/');
             course.IsBuy = true;

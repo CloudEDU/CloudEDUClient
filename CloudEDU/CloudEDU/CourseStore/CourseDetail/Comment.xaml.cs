@@ -235,7 +235,7 @@ namespace CloudEDU.CourseStore.CourseDetail
             StackPanel outsidePanel = new StackPanel
             {
                 Orientation = Orientation.Vertical,
-                Background = new SolidColorBrush(Colors.Bisque),
+                Background = new SolidColorBrush(Colors.Azure),
                 Margin = new Thickness(0, 0, 0, 5)
             };
             outsidePanel.Children.Add(insidePanel);

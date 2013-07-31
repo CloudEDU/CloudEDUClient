@@ -58,6 +58,7 @@ namespace CloudEDU.CourseStore
             course = e.Parameter as Course;
             UserProfileBt.DataContext = Constants.User;
             DataContext = course;
+            System.Diagnostics.Debug.WriteLine(course.Rate);
             frame.Navigate(typeof(CourseDetail.Overview), course);
 
             isTeach = false;
