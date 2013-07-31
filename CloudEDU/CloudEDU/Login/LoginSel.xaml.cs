@@ -25,14 +25,14 @@ namespace CloudEDU.Login
     /// </summary>
     /// 
 
-    public sealed partial class LoginTmp : Page
+    public sealed partial class LoginSel : Page
     {
         //static int WidthOfScreen = 1366;
-
+        int ClickSameButtonTime = 0;
         UserSelButtonControl LastSelectedUser;
         UserSelButtonControl SelectedUser;
         List<User> users;
-        public LoginTmp()
+        public LoginSel()
         {
             this.InitializeComponent();
             Setup();
@@ -44,24 +44,24 @@ namespace CloudEDU.Login
             foreach (User user in users)
             {
                 UserSelButtonControl bt = new UserSelButtonControl();
-                bt.Content = user.ImageSource;
+                //bt.Content = user.ImageSource;
                 bt.user = user;
                 bt.Click += Button_Click;
-                bt.UserName = user.NAME;
+                //bt.UserName = user.NAME;
                 UsersStack.Children.Insert(0,bt);
             }
             test.user = new User("Fox", "http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328");
             test.UserName = test.user.NAME;
-            
         }
 
         private void SetUsers()
         {
-            users = new List<User>();
-            string imageSource = Constants.ComputeMD5("yougmark94@gmail.com");
-            imageSource = "http://www.gravatar.com/avatar/" + imageSource;
-            users.Add(new User("Mark", imageSource));
+            //string imageSource = Constants.ComputeMD5("yougmark94@gmail.com");
+            //imageSource = "http://www.gravatar.com/avatar/" + imageSource;
+            //users.Add(new User("Mark", imageSource));
+            users = User.Select();
         }
+
         /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.
         /// </summary>
@@ -77,7 +77,11 @@ namespace CloudEDU.Login
             LastSelectedUser = SelectedUser;
             SelectedUser = sender as UserSelButtonControl;
             if (LastSelectedUser != null && SelectedUser.Equals(LastSelectedUser))
+            {
+                Constants.User = SelectedUser.user;
+                Frame.Navigate(typeof(LoginDefault));
                 return;
+            }
             
             System.Diagnostics.Debug.WriteLine("tap on image in logintmp");
 
