@@ -27,8 +27,6 @@
                      Margin="0, 105, 0, 0" local:PasswordBoxBehavior.Watermark="Retype-Password" />
         <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}" Margin="0, 250, 0, 0"
                 VerticalAlignment="Center" AutomationProperties.Name="" Click="Button_Click" Foreground="white"/>
-        <Button Content="Log in?" HorizontalAlignment="Center" Margin="849,423,413,306" VerticalAlignment="Center"
-                FontFamily="Candara" FontSize="20" BorderThickness="0" Background="Transparent"
-                Foreground="White" Click="LoginButton_Click" />
+
     </Grid>
 </Page>

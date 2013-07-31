@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="biggestGrid" Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}" DataContext="{Binding Mode=OneTime}">
+    <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
             <RowDefinition />
@@ -33,28 +33,28 @@
                     </StackPanel.Transitions>
                     <StackPanel Orientation="Horizontal" Margin="0, 5">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Name:" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="{Binding NAME}" Margin="20, 0, 0, 0" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Ania" Margin="20, 0, 0, 0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0, 5">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Learning Level:" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="{Binding LEARN_RATE}" Margin="20, 0, 0, 0" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Lv.10" Margin="20, 0, 0, 0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0, 5">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Teaching Level:" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="{Binding TEACH_RATE}" Margin="20, 0, 0, 0" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Lv.2" Margin="20, 0, 0, 0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0, 5">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Balance:" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="{Binding BALANCE}" Margin="20, 0, 0, 0" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="200" Margin="20, 0, 0, 0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="0, 30, 0, 5">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Course Attending:" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="{Binding ATTEND_COUNT}" Margin="20, 0, 0, 0" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="10" Margin="20, 0, 0, 0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0, 5">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="Course Teaching:" />
-                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="{Binding TEACH_COUNT}" Margin="20, 0, 0, 0" />
+                        <TextBlock Style="{StaticResource SubheaderTextStyle}" Foreground="White" Text="2" Margin="20, 0, 0, 0" />
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -68,7 +68,7 @@
                     
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Degree:" Margin="0, 7, 0, 0" FontSize="30" />
-                        <ComboBox x:Name="degreeBox" FontSize="30" Width="350" BorderBrush="Transparent" Background="Transparent" Height="60" Padding="10, 0, 10, 7">
+                        <ComboBox FontSize="30" Width="350" BorderBrush="Transparent" Background="Transparent" Height="60" Padding="10, 0, 10, 7">
                             <x:String>Grad</x:String>
                             <x:String>Undergrad</x:String>
                             <x:String>Senior High</x:String>
@@ -78,21 +78,21 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Password:" Margin="0, 7, 0, 0" FontSize="30" />
-                        <PasswordBox x:Name="passwordBox" FontSize="30" Password="123" Width="445" BorderBrush="Transparent" Background="Transparent"
+                        <PasswordBox FontSize="30" Password="xxx@xsian.com" Width="445" BorderBrush="Transparent" Background="Transparent"
                                      Height="60" PasswordChanged="Password_PasswordChanged" MaxLength="14" />
                     </StackPanel>
                     <StackPanel x:Name="retypePasswordStackPanel" Orientation="Horizontal" Visibility="Collapsed">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Retype Password:" Margin="0, 7, 0, 0" FontSize="30" />
-                        <PasswordBox x:Name="retypePasswordBox" FontSize="30" Password="" Width="445" BorderBrush="Transparent" Background="Transparent" Height="60"
+                        <PasswordBox FontSize="30" Password="" Width="445" BorderBrush="Transparent" Background="Transparent" Height="60"
                                      MaxLength="14" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="EMAIL:" Margin="0, 7, 0, 0" FontSize="30" />
-                        <TextBox x:Name="email" FontSize="30" Text="{Binding EMAIL}" Width="445" BorderBrush="Transparent" Background="Transparent" Height="60" />
+                        <TextBox FontSize="30" Text="xxx@xsian.com" Width="445" BorderBrush="Transparent" Background="Transparent" Height="60" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="Birthday:" Margin="0, 7, 0, 0" FontSize="30" />
-                        <TextBox x:Name="birthday" FontSize="30" Text="{Binding BIRTHDAY}" Width="445" BorderBrush="Transparent" Background="Transparent" Height="60" />
+                        <TextBox FontSize="30" Text="2012-01-03" Width="445" BorderBrush="Transparent" Background="Transparent" Height="60" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <Image Source="ms-appx:///Images/Users/save.png" Width="32" Height="32" Margin="5, 0" IsTapEnabled="True" Tapped="SaveImage_Tapped" />

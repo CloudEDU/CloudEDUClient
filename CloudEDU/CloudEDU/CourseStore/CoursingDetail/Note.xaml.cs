@@ -7,7 +7,6 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -48,27 +47,6 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             course = e.Parameter as Course;
 
-            dba.GetLessonsByCourseId(course.ID.Value, iar =>
-                {
-                    IEnumerable<LESSON> ls = dba.lessonDsq.EndExecute(iar);
-
-                    foreach (var l in ls)
-                    {
-                        dba.GetNoteByLessonId(l.ID, async iar1 =>
-                            {
-                                IEnumerable<NOTE> ns = dba.noteDsq.EndExecute(iar1);
-
-                                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                                    {
-                                        foreach (NOTE n in ns)
-                                        {
-                                            
-                                        }
-                                    });
-                            });
-                    }
-                });
-
             this.allNoteStackPanel.Children.Add(GenerateNoteItem());
         }
 
@@ -83,8 +61,6 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 HorizontalAlignment = HorizontalAlignment.Left,
                 Text = "notexx By max 2013.7.31 10:44"
             };
-
-           
 
             Image deleteImage = new Image
             {
