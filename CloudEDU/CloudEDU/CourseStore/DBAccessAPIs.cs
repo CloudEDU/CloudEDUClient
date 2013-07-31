@@ -6,6 +6,7 @@ using System.Data.Services.Client;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace CloudEDU.CourseStore
 {
