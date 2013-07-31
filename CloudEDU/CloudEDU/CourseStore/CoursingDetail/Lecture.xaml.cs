@@ -5,9 +5,12 @@ using System.Collections.Generic;
 using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.BackgroundTransfer;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
@@ -33,6 +36,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
         DBAccessAPIs dba = null;
         List<LESSON> lessons = null;
         Dictionary<string, int> resourceDic = null;
+        Dictionary<Image, string> Res_URL = null;
         /// <summary>
         /// Constructor, initilize the components.
         /// </summary>
@@ -42,6 +46,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
             dba = new DBAccessAPIs();
             lessons = new List<LESSON>();
+            Res_URL = new Dictionary<Image, string>();
         }
 
         /// <summary>
@@ -127,22 +132,22 @@ namespace CloudEDU.CourseStore.CoursingDetail
 
 
 
-        private Image GenerateDocImage()
+        private Image GenerateDocImage(string url)
         {
-            return GenerateImage("ms-appx:///Images/Upload/doc_white.png");
+            return GenerateImage("ms-appx:///Images/Upload/doc_white.png",url);
         }
 
-        private Image GenerateAudioImage()
+        private Image GenerateAudioImage(string url)
         {
-            return GenerateImage("ms-appx:///Images/Upload/audio_white.png");
+            return GenerateImage("ms-appx:///Images/Upload/audio_white.png",url);
         }
 
-        private Image GenerateVideoImage()
+        private Image GenerateVideoImage(string url)
         {
-            return GenerateImage("ms-appx:///Images/Upload/video_white.png");
+            return GenerateImage("ms-appx:///Images/Upload/video_white.png",url);
         }
 
-        private Image GenerateImage(string uri)
+        private Image GenerateImage(string uri,string url)
         {
             Image image = new Image
             {
@@ -150,8 +155,10 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 Margin = new Thickness(4, 0, 4, 0),
                 Width = 40,
                 Height = 40,
-                HorizontalAlignment = HorizontalAlignment.Right
+                HorizontalAlignment = HorizontalAlignment.Right,
+                
             };
+            Res_URL.Add(image,url);
 
             return image;
         }
@@ -230,21 +237,109 @@ namespace CloudEDU.CourseStore.CoursingDetail
             IEnumerable<RESOURCE> resources = (await tf.FromAsync(dps.BeginExecute(null, null), iar => dps.EndExecute(iar)));
             foreach (var r in resources)
             {
-                System.Diagnostics.Debug.WriteLine("resources!");
+                System.Diagnostics.Debug.WriteLine(r.URL);
+                Image image = null;
                 if (r.TYPE == 2)
                 {
-                    parent.Children.Add(GenerateDocImage());
+                    image = GenerateDocImage(r.URL);
+                    parent.Children.Add(image);
                 }
                 else if (r.TYPE == 1)
                 {
-                    parent.Children.Add(GenerateAudioImage());
+                    image = GenerateAudioImage(r.URL);
+                    parent.Children.Add(image);
                 }
                 else if (r.TYPE == 3)
                 {
-                    parent.Children.Add(GenerateVideoImage());
+                    image = GenerateAudioImage(r.URL);
+                    parent.Children.Add(image);
                 }
+                image.Tapped += ResImageTapped;
             }
         }
+
+
+        private async void ResImageTapped(object sender, TappedRoutedEventArgs e)
+        {
+            Image image = (Image)sender;
+            string url = Res_URL[image];
+            System.Diagnostics.Debug.WriteLine(url);
+            Uri uri = new Uri(Constants.BaseURI+url);
+            string[] fileArray = url.Split('\\');
+            string fileName = fileArray[fileArray.Length - 1];
+            System.Diagnostics.Debug.WriteLine(fileName);
+
+            StorageFile destinationFile;
+            try
+            {
+                destinationFile = await KnownFolders.VideosLibrary.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+            }
+            catch (FileNotFoundException ex)
+            {
+                //rootPage.NotifyUser("Error while creating file: " + ex.Message, NotifyType.ErrorMessage);
+                return;
+            }
+
+            BackgroundDownloader downloader = new BackgroundDownloader();
+            DownloadOperation download = downloader.CreateDownload(uri, destinationFile);
+
+            await HandleDownloadAsync(download, true);
+
+        }
+
+        private CancellationTokenSource cts;
+
+
+        private async Task HandleDownloadAsync(DownloadOperation download, bool start)
+        {
+            try
+            {
+                //LogStatus("Running: " + download.Guid, NotifyType.StatusMessage);
+
+                // Store the download so we can pause/resume.
+                //activeDownloads.Add(download);
+
+                cts = new CancellationTokenSource();
+
+                //Progress<DownloadOperation> progressCallback = new Progress<DownloadOperation>(DownloadProgress);
+                if (start)
+                {
+                    // Start the download and attach a progress handler.
+                    await download.StartAsync().AsTask(cts.Token, null);
+                }
+                else
+                {
+                    // The download was already running when the application started, re-attach the progress handler.
+                    await download.AttachAsync().AsTask(cts.Token, null);
+                }
+                ShowMessageDialog("Download Complete!");
+                ResponseInformation response = download.GetResponseInformation();
+                
+                //LogStatus(String.Format("Completed: {0}, Status Code: {1}", download.Guid, response.StatusCode),
+                    //NotifyType.StatusMessage);
+            }
+            catch (TaskCanceledException e)
+            {
+                
+                //LogStatus("Canceled: " + download.Guid, NotifyType.StatusMessage);
+            }
+            catch (Exception ex)
+            {
+                ShowMessageDialog("Execution error!");
+                //if (!IsExceptionHandled("Execution error", ex, download))
+                //{
+                   // throw;
+                //}
+            }
+            finally
+            {
+                //activeDownloads.Remove(download);
+            }
+            
+        }
+
+
+
 
         private void noteImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
@@ -252,7 +347,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             List<string> list= new List<string>();
             for (int i = 0; i < lessons.Count; i++)
             {
-                list.Add("Lesson " + i+1);
+                list.Add("Lesson " + (i+1));
             }
             this.selectLessonComboBox.ItemsSource = list;
             //throw new NotImplementedException();
