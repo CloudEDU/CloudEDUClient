@@ -7,15 +7,15 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Controls.Primitives;
+using CloudEDU.Login;
 
 // “用户控件”项模板在 http://go.microsoft.com/fwlink/?LinkId=234235 上有介绍
 
-namespace CloudEDU.Login
+namespace CloudEDU.Common
 {
-    public sealed class UserSelButtonControl : Button
+
+    public sealed class UserProfileButton : Button
     {
-        public Grid grid;
         public User user
         {
             get;
@@ -28,23 +28,19 @@ namespace CloudEDU.Login
             {
                 return (string)GetValue(UserNameProperty);
             }
-            set 
+            set
             {
                 SetValue(UserNameProperty, value);
             }
         }
 
         public static readonly DependencyProperty UserNameProperty =
-  　　　　 DependencyProperty.Register("UserName", typeof(string), typeof(UserSelButtonControl),
-  　　　　　　　 null);
+        DependencyProperty.Register("UserName", typeof(string), typeof(UserProfileButton),
+          null);
 
-        public UserSelButtonControl()
+        public UserProfileButton()
         {
-            this.DefaultStyleKey = typeof(UserSelButtonControl);
-        }
-        protected override void OnApplyTemplate()
-        {
-            grid = GetTemplateChild("grid") as Grid;
+            this.DefaultStyleKey = typeof(UserProfileButton);
         }
     }
 }

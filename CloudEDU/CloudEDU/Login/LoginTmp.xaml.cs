@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Media;
 using Windows.UI.Xaml.Media.Animation;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace CloudEDU.Login
@@ -27,13 +28,37 @@ namespace CloudEDU.Login
     {
         //static int WidthOfScreen = 1366;
 
-        UserSelButtonControl oldBt;
-        UserSelButtonControl newSel;
+        UserSelButtonControl LastSelectedUser;
+        UserSelButtonControl SelectedUser;
+        List<User> users;
         public LoginTmp()
         {
             this.InitializeComponent();
+            Setup();
         }
 
+        private void Setup()
+        {
+            SetUsers();
+            foreach (User user in users)
+            {
+                UserSelButtonControl bt = new UserSelButtonControl();
+                bt.Content = user.ImageSource;
+                bt.user = user;
+                bt.Click += Button_Click;
+                bt.UserName = user.Username;
+                UsersStack.Children.Insert(0,bt);
+            }
+            
+        }
+
+        private void SetUsers()
+        {
+            users = new List<User>();
+            users.Add(new User("Beauty", "../Images/Users/ania.png"));
+            users.Add(new User("Ugly", "../Images/Users/ania.png"));
+            users.Add(new User("Soso", "../Images/Users/ania.png"));
+        }
         /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.
         /// </summary>
@@ -46,17 +71,17 @@ namespace CloudEDU.Login
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             
-            oldBt = newSel;
-            newSel = sender as UserSelButtonControl;
-            if (oldBt != null && newSel.Equals(oldBt))
+            LastSelectedUser = SelectedUser;
+            SelectedUser = sender as UserSelButtonControl;
+            if (LastSelectedUser != null && SelectedUser.Equals(LastSelectedUser))
                 return;
             
             System.Diagnostics.Debug.WriteLine("tap on image in logintmp");
 
-            newSel.Margin = new Thickness(50, 0, 50, 0);
+            SelectedUser.Margin = new Thickness(50, 0, 50, 0);
 
             TimeSpan span = new TimeSpan(0,0,0,0,200);
-            Grid grid = newSel.grid;
+            Grid grid = SelectedUser.grid;
             DoubleAnimation scaleY = new DoubleAnimation();
             scaleY.To = 1.5;
             scaleY.Duration = new Duration(span);
@@ -71,10 +96,10 @@ namespace CloudEDU.Login
             Storyboard.SetTarget(scaleX, grid);
             storyboard.Children.Add(scaleX);
 
-            if (oldBt != null)
+            if (LastSelectedUser != null)
             {
-                oldBt.Margin = new Thickness(5, 0, 0, 0);
-                Grid gridOld = oldBt.grid;
+                LastSelectedUser.Margin = new Thickness(5, 0, 0, 0);
+                Grid gridOld = LastSelectedUser.grid;
                 DoubleAnimation scaleYOld = new DoubleAnimation();
                 scaleYOld.To = 1;
                 scaleYOld.Duration = new Duration(span);
@@ -96,7 +121,7 @@ namespace CloudEDU.Login
                 if (each != null)
                 {
                     // doing......
-                    if (each.Equals(newSel))
+                    if (each.Equals(SelectedUser))
                     {
                         DoubleAnimation transition = new DoubleAnimation();
                         transition.From = Canvas.GetLeft(UsersStack);
@@ -116,10 +141,13 @@ namespace CloudEDU.Login
             }
 
         }
-
-        private void Focused(object sender, RoutedEventArgs e)
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-
+            Frame.Navigate(typeof(SignUp));
+        }
+        private void LoginButton_Click(object sende, RoutedEventArgs e)
+        {
+ 
         }
 
     }

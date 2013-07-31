@@ -43,6 +43,8 @@ namespace CloudEDU.CourseStore
             storeSampleData = new StoreData();
             dataCategory = storeSampleData.GetGroupsByAttendingOrTeaching();
             cvs1.Source = dataCategory;
+            UserProfileBt.DataContext = Constants.User;
+
         }
 
         /// <summary>
@@ -83,6 +85,11 @@ namespace CloudEDU.CourseStore
             }
 
             Frame.Navigate(typeof(Coursing), courseInfo);
+        }
+
+        private void UserProfileButton_Click(object sender, RoutedEventArgs e)
+        {
+            //Frame.Navigate(typeof());
         }
     }
 }
