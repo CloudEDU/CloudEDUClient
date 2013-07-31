@@ -54,10 +54,10 @@ namespace CloudEDU.CourseStore
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             List<object> courseInfo = e.Parameter as List<object>;
-            Course tempCourse = new Course();
-            course = tempCourse;//courseInfo[0] as Course;
-            NavigateText.Text = "Navigate Text";//courseInfo[1] as string;
-            CourseTitle.Text = "CourseTitle Text";//Constants.UpperInitialChar(course.Title);
+            course = courseInfo[0] as Course;
+            DataContext = course;
+            NavigateText.Text = courseInfo[1] as string;
+            CourseTitle.Text = Constants.UpperInitialChar(course.Title);
 
             HomeBorder.Background = pageRed;
             LecturesBorder.Background = pageWhite;

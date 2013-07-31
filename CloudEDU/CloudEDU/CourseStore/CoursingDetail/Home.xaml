@@ -21,13 +21,13 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
             <Grid Width="auto" Background="White">
-                <Image Stretch="UniformToFill" Source="ms-appx:///Images/Courses/ComputerNetworking.png" />
+                <Image Height="300" Stretch="UniformToFill" Source="{Binding ImageUri}" />
             </Grid>
             <Grid VerticalAlignment="Bottom">
                 <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="&#x2605;&#x2605;&#x2605;&#x2605;&#x2606;" HorizontalAlignment="Left" Foreground="White" />
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <TextBlock Style="{StaticResource SubheaderTextStyle}" Text="By" Foreground="White" />
-                    <TextBlock Style="{StaticResource SubheaderTextStyle}" FontWeight="Bold" Text="Yeye Jin" Margin="15, 0, 0, 0" Foreground="White" />
+                    <TextBlock Style="{StaticResource SubheaderTextStyle}" FontWeight="Bold" Text="{Binding Teacher}" Margin="15, 0, 0, 0" Foreground="White" />
                 </StackPanel>
             </Grid>
         </StackPanel>
