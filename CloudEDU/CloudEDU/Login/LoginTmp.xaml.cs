@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Media;
 using Windows.UI.Xaml.Media.Animation;
+using CloudEDU.Common;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -49,15 +50,17 @@ namespace CloudEDU.Login
                 bt.UserName = user.Username;
                 UsersStack.Children.Insert(0,bt);
             }
+            test.user = new User("Fox", "http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328");
+            test.UserName = test.user.Username;
             
         }
 
         private void SetUsers()
         {
             users = new List<User>();
-            users.Add(new User("Beauty", "../Images/Users/ania.png"));
-            users.Add(new User("Ugly", "../Images/Users/ania.png"));
-            users.Add(new User("Soso", "../Images/Users/ania.png"));
+            string imageSource = Constants.ComputeMD5("yougmark94@gmail.com");
+            imageSource = "http://www.gravatar.com/avatar/" + imageSource;
+            users.Add(new User("Mark", imageSource));
         }
         /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.

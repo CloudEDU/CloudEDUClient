@@ -18,7 +18,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:UserProfileButton">
-                    <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" >
+                    <Grid x:Name="grid" RenderTransformOrigin="0.5,0.5" DataContext="{Binding Mode=TwoWay}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto"/>
@@ -34,9 +34,12 @@
                                 <VisualState x:Name="PointerOver"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>-->
-                        <Border Background="#75B3C5" Width="70" Height="70" CornerRadius="1000" Margin="0,0,0,0">
-                            <Image HorizontalAlignment="Center" VerticalAlignment="Center"
-                       Height="60" Width="60" Stretch="Fill" Source="{TemplateBinding Content}"/>
+                        <Border Background="#75B3C5" Width="80" Height="80" CornerRadius="1000" Margin="5,0,0,0">
+                            <Border Width="70" Height="70" CornerRadius="1000">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="{Binding ImageSource}"/>
+                                </Border.Background>
+                            </Border>
                         </Border>
                         <TextBlock Text="{TemplateBinding UserName}" 
                                    Grid.Column="1" VerticalAlignment="Center" 

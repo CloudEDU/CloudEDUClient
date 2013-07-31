@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 using CloudEDU.Login;
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
+using Windows.Storage.Streams;
 
 namespace CloudEDU.Common
 {
@@ -71,7 +74,14 @@ namespace CloudEDU.Common
 
             return course;
         }
-
+        public static string ComputeMD5(string str)
+        {
+            var alg = HashAlgorithmProvider.OpenAlgorithm("MD5");
+            IBuffer buff = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
+            var hashed = alg.HashData(buff);
+            var res = CryptographicBuffer.EncodeToHexString(hashed);
+            return res;
+        }
 
     }
 

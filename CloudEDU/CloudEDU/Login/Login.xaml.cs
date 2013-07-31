@@ -49,9 +49,8 @@ namespace CloudEDU.Login
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             //where user.NAME == InputUsername.Text
-            //customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER  select user );
-            //customerDsq.BeginExecute(OnCustomerComplete, null);
-            //System.Diagnostics.Debug.WriteLine(ComputeMD5("aaa"));
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
+            customerDsq.BeginExecute(OnCustomerComplete, null);
         }
 
         private void OnCustomerComplete(IAsyncResult result)
@@ -75,34 +74,27 @@ namespace CloudEDU.Login
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             //login
-            //foreach (CUSTOMER c in csl)
-            //{
-            //    if (c.NAME == InputUsername.Text)
-            //    {
-            //        if (c.PASSWORD == ComputeMD5(InputPassword.Password))
-            //        {
-                        // login success
-                        // CUSTOMER
+            foreach (CUSTOMER c in csl)
+            {
+                if (c.NAME == InputUsername.Text)
+                {
+                    if (c.PASSWORD == Constants.ComputeMD5(InputPassword.Password))
+                    {
+                         //login success
+                         //CUSTOMER
                         //Constants.User = c;
 
                         //User
-                        Constants.User = new User("Shania", "../Images/Users/ania.png");
+                        Constants.User = new User(c.NAME, "http://www.gravatar.com/avatar/" + Constants.ComputeMD5(c.EMAIL));
                         System.Diagnostics.Debug.WriteLine("login success");
                         Frame.Navigate(typeof(CategoryForNewest));
                         // navigate 
-            //        }
-            //    }
-            //}
+                    }
+                }
+            }
             // login fail
         }
          
-        public static string ComputeMD5(string str)
-        {
-            var alg = HashAlgorithmProvider.OpenAlgorithm("MD5");
-            IBuffer buff = CryptographicBuffer.ConvertStringToBinary(str, BinaryStringEncoding.Utf8);
-            var hashed = alg.HashData(buff);
-            var res = CryptographicBuffer.EncodeToHexString(hashed);
-            return res;
-        }
+
     }
 }

@@ -45,6 +45,7 @@ namespace CloudEDU.Login
         protected override void OnApplyTemplate()
         {
             grid = GetTemplateChild("grid") as Grid;
+            grid.DataContext = user;
         }
     }
 }
