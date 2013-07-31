@@ -29,7 +29,6 @@ namespace CloudEDU.CourseStore
         private List<GroupInfoList<Object>> dataCategory;
 
         private CloudEDUEntities ctx = null;
-        private DataServiceQuery<COURSE_AVAIL> attendDsq = null;
         private DataServiceQuery<COURSE_AVAIL> teachDsq = null;
 
         /// <summary>

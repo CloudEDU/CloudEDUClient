@@ -476,6 +476,12 @@
           <Parameter Name="pg_id" Type="Edm.Int32" Nullable="false" />
           <Parameter Name="icon_url" Type="Edm.String" />
         </FunctionImport>
+        <FunctionImport Name="CreateLesson" ReturnType="Edm.Decimal" m:HttpMethod="GET">
+          <Parameter Name="course_id" Type="Edm.Int32" Nullable="false" />
+          <Parameter Name="content" Type="Edm.String" />
+          <Parameter Name="title" Type="Edm.String" />
+          <Parameter Name="number" Type="Edm.Int32" Nullable="false" />
+        </FunctionImport>
         <FunctionImport Name="GetAllCoursesAttendedByCustomer" ReturnType="Collection(CloudEDUModel.COURSE_AVAIL)" EntitySet="COURSE_AVAIL" m:HttpMethod="GET">
           <Parameter Name="customer_id" Type="Edm.Int32" Nullable="false" />
         </FunctionImport>
