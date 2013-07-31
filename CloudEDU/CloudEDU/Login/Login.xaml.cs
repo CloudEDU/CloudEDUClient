@@ -118,39 +118,48 @@ namespace CloudEDU.Login
             //    ShowMessageDialog();
             //}
             bool isLogined = false;
-            foreach (CUSTOMER c in csl)
+            try
             {
-                if (c.NAME == InputUsername.Text)
+                foreach (CUSTOMER c in csl)
                 {
-                    if (c.PASSWORD == Constants.ComputeMD5(InputPassword.Password))
+                    if (c.NAME == InputUsername.Text)
                     {
-                         //login success
-                         //CUSTOMER
-                        //Constants.User = c;
-
-                        //User
-                        if (!c.ALLOW)
-                            break;
-                        Constants.Save<bool>("AutoLog", (bool)CheckAutoLogin.IsChecked);
-                        Constants.User = new User(c);
-                        isLogined = true;
-                        System.Diagnostics.Debug.WriteLine("login success");
-                        string courseUplaodUri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
-                        //ctx.UpdateObject(c);
-
-                        try
+                        if (c.PASSWORD == Constants.ComputeMD5(InputPassword.Password))
                         {
-                            TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
-                            IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
-                            
+                            //login success
+                            //CUSTOMER
+                            //Constants.User = c;
+                            System.Diagnostics.Debug.WriteLine(c.PASSWORD);
+                            //User
+                            if (!c.ALLOW)
+                                break;
+                            Constants.Save<bool>("AutoLog", (bool)CheckAutoLogin.IsChecked);
+                            Constants.User = new User(c);
+                            isLogined = true;
+                            System.Diagnostics.Debug.WriteLine("login success");
+                            string courseUplaodUri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
+                            //ctx.UpdateObject(c);
+
+                            try
+                            {
+                                TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
+                                IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
+
+                            }
+                            catch
+                            {
+                            }
+                            Frame.Navigate(typeof(Courstore));
+                            // navigate 
                         }
-                        catch
-                        {
-                        }
-                        Frame.Navigate(typeof(Courstore));
-                        // navigate 
                     }
                 }
+            }
+            catch (Exception exp)
+            {
+                System.Diagnostics.Debug.WriteLine("Msg: {0}\nInnerExp:{1}\nStackTrace: {2} ",
+                    exp.Message, exp.InnerException, exp.StackTrace);
+                ShowMessageDialog();
             }
             // login fail
             if (isLogined) return;
@@ -185,7 +194,7 @@ namespace CloudEDU.Login
                 }
                 catch
                 {
-                    ShowMessageDialog();
+                    //ShowMessageDialog();
                 }
             });
         }

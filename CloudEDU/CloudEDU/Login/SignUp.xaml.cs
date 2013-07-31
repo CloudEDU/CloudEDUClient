@@ -45,6 +45,13 @@ namespace CloudEDU.Login
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (InputUsername.Text.Equals(string.Empty) || InputPassword.Password.Equals(string.Empty))
+            {
+                var messageDialog = new MessageDialog("Check your input!");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
             if (!InputPassword.Password.Equals(ReInputPassword.Password))
             {
                 var dialog = new MessageDialog("Passwords are not same! Try again, thx!");
@@ -56,23 +63,29 @@ namespace CloudEDU.Login
             {
                 NAME = InputUsername.Text,
                 PASSWORD = Constants.ComputeMD5(InputPassword.Password),
+                ALLOW = true,
             };
             ctx.AddToCUSTOMER(c);
             ctx.BeginSaveChanges(OnCustomerSaveChange, null);
-
         }
 
-        private void OnCustomerSaveChange(IAsyncResult result)
+        private async void OnCustomerSaveChange(IAsyncResult result)
         {
             try
             {
                 ctx.EndSaveChanges(result);
             }
-            catch
+            catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("Msg: {0}\nInnerExp:{1}\nStackTrace: {2} ",
+                    e.Message ,  e.InnerException, e.StackTrace);
                  ShowMessageDialog();
                  //Network Connection error.
             }
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Frame.Navigate(typeof(Login));
+            });
         }
 
         /// <summary>

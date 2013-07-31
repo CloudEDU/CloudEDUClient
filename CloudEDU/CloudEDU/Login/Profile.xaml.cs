@@ -155,7 +155,7 @@ namespace CloudEDU.Login
                 }
                 catch
                 {
-                    ShowMessageDialog();
+                    //ShowMessageDialog();
                 }
             });
         }
