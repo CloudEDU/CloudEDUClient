@@ -67,7 +67,33 @@ namespace CloudEDU
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!rootFrame.Navigate(typeof(Login.Login), args.Arguments))
+
+
+                Type goalPage;
+
+                // last user
+                if (Constants.Read<string>("LastUser") == default(string))
+                {
+                    goalPage = typeof(Login.Login);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine(Constants.Read<string>("LastUser"));
+                    Constants.User = User.SelectLastUser();
+                    goalPage = typeof(LoginDefault);
+                }
+
+                // auto log
+                if (Constants.Read<bool>("AutoLog") == true)
+                {
+                    Constants.User = User.SelectLastUser();
+                    // navigate
+                    System.Diagnostics.Debug.WriteLine("ID:{0}, ATTEND:{1}, TEACH:{2}",
+                        Constants.User.ID, Constants.User.ATTEND_COUNT, Constants.User.TEACH_COUNT);
+                    goalPage = typeof(CourseStore.Courstore);
+                }
+                //goalPage = typeof(Login.Login);
+                if (!rootFrame.Navigate(goalPage, args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
 

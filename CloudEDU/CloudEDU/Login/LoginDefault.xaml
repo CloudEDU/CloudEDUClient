@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="CloudEDU.Login.LoginTmp"
+    x:Class="CloudEDU.Login.LoginDefault"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CloudEDU.Login"
@@ -51,12 +51,11 @@
                     <ImageBrush ImageSource="http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328"/>
                 </Border.Background>
             </Border>-->
-            
+
             <StackPanel x:Name="UsersStack" Canvas.Left="613" Width="Auto" 
                         Orientation="Horizontal" HorizontalAlignment ="Center" 
-                        Canvas.Top="215" Height="199" >
-                <local:UserSelButtonControl x:Name="test" Template="{StaticResource ResourceKey=temp}" Content="http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328" Click="Button_Click" UserName="Shania" Margin="0,0,0,-20"/>
-                <Button Template="{StaticResource AddUser}"  Width="Auto" Content="+"  Click="SignUpButton_Click" Margin="0,0,0,40"/>
+                        Canvas.Top="176" Height="220" >
+                <!--<local:UserSelButtonControl x:Name="test" Template="{StaticResource ResourceKey=temp}" Content="http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328" Click="Button_Click" UserName="Shania" Margin="0,0,0,-20"/>-->
                 <!--<local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>
                 <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>-->
 
@@ -75,7 +74,7 @@
 
             </PasswordBox>
             <CheckBox x:Name="CheckAutoLogin" Content="Auto-Log" HorizontalAlignment="center"
-                  VerticalAlignment="Center" Canvas.Left="648" Canvas.Top="510" Foreground="White"/>
+                  VerticalAlignment="Center" Canvas.Left="648" Canvas.Top="510" Foreground="White" />
             <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}"
                 Width="100" Height="100" VerticalAlignment="Center" AutomationProperties.Name="" Click="LoginButton_Click" Canvas.Left="797" Canvas.Top="450" Foreground="white" />
         </Canvas>

@@ -63,10 +63,12 @@
     <DefineConstants>DEBUG;TRACE;NETFX_CORE</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -160,8 +162,11 @@
     <Compile Include="Login\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Login\LoginTmp.xaml.cs">
-      <DependentUpon>LoginTmp.xaml</DependentUpon>
+    <Compile Include="Login\LoginDefault.xaml.cs">
+      <DependentUpon>LoginDefault.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login\LoginSel.xaml.cs">
+      <DependentUpon>LoginSel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Common\PasswordBoxBehavior.cs" />
     <Compile Include="Login\Profile.xaml.cs">
@@ -298,9 +303,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Login\LoginTmp.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Login\LoginDefault.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Login\LoginSel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Login\Profile.xaml">
       <SubType>Designer</SubType>
@@ -375,6 +384,14 @@
     <ServiceReferenceMetadataStorage Include="Service References\Service\">
       <Type>datasvcmap</Type>
     </ServiceReferenceMetadataStorage>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="Microsoft.VCLibs, Version=11.0">
+      <Name>Microsoft Visual C++ Runtime Package</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.WinRT, Version=3.7.17">
+      <Name>SQLite for Windows Runtime</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
