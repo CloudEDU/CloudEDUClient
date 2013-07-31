@@ -51,7 +51,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             Course course = e.Parameter as Course;
             dba = new DBAccessAPIs();
-            dba.getLessonsByCourseId((int)course.ID, onGetLessonComplete);
+            dba.GetLessonsByCourseId((int)course.ID, onGetLessonComplete);
             allLessonsStackPanel.Children.RemoveAt(0);
             allLessonsStackPanel.Children.RemoveAt(0);
 
@@ -90,7 +90,6 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 // Network Connection error.
             }
         }
-
 
         private Grid GenerateALessonBox(LESSON les)
         {
