@@ -59,6 +59,7 @@ namespace CloudEDU.CourseStore
             UserProfileBt.DataContext = Constants.User;
             DataContext = course;
             introGrid.DataContext = course;
+
             frame.Navigate(typeof(CourseDetail.Overview), course);
 
             isTeach = false;

@@ -35,10 +35,10 @@
                 <StackPanel Orientation="Vertical" Margin="20, 20">
                     <StackPanel Orientation="Horizontal">
                         <TextBox x:Name="noteTitle"
-                                 MaxLength="30" Text="Title" />
+                                 MaxLength="30" Text="Title" GotFocus="noteTitle_GotFocus" />
                     </StackPanel>
                     <TextBox x:Name="noteContent"
-                                 MaxLength="2000" TextWrapping="Wrap" Text="Note Content..." Height="219" />
+                                 MaxLength="2000" TextWrapping="Wrap" Text="Note Content..." Height="219" GotFocus="noteContent_GotFocus"  />
                     <StackPanel Orientation="Horizontal">
                         <ComboBox Width="200" HorizontalAlignment="Left" Name="selectLessonComboBox">
                             <x:String>Lesson 1</x:String>

@@ -341,12 +341,13 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Update error.");
-            }
-            finally
-            {
+                ShowMessageDialog("Update error! Please check your network.");
                 addNotePopup.IsOpen = false;
+                return;
             }
+
+            ShowMessageDialog("Update successfully!");
+            addNotePopup.IsOpen = false;
         }
 
         private async void noteInfo_Tapped(object sender, TappedRoutedEventArgs e)
