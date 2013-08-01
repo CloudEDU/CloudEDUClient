@@ -1,4 +1,4 @@
-using CloudEDU.Common;
+﻿using CloudEDU.Common;
 using CloudEDU.Service;
 using CloudEDU.CourseStore;
 using System;
@@ -137,19 +137,19 @@ namespace CloudEDU.Login
                             //CUSTOMER
                             //Constants.User = c;
                             System.Diagnostics.Debug.WriteLine(c.PASSWORD);
+                            string Uri;
                             //User
                             if (!c.ALLOW)
                             {
                                 var notAllowed = new MessageDialog("The User is forbidden!");
                                 await notAllowed.ShowAsync();
-                                string Uri = "/AddDBLog?opr='TryLoginFailBecauseUserForbiddened'&msg='" + c.NAME + "'";
+                                Uri = "/AddDBLog?opr='TryLoginFailBecauseUserForbiddened'&msg='" + c.NAME + "'";
                                 //ctx.UpdateObject(c);
 
                                 try
                                 {
                                     TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
                                     IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(Uri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
-
                                 }
                                 catch
                                 {
@@ -160,7 +160,7 @@ namespace CloudEDU.Login
                             Constants.User = new User(c);
                             isLogined = true;
                             System.Diagnostics.Debug.WriteLine("login success");
-                            string Uri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
+                            Uri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
                             //ctx.UpdateObject(c);
 
                             try
