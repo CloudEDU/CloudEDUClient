@@ -42,19 +42,19 @@
             <Style x:Key="GridViewDataTemplateNameTextBlockStyle" TargetType="TextBlock"
                    BasedOn="{StaticResource GroupHeaderTextStyle}">
                 <Setter Property="Foreground" Value="White" />
-                <Setter Property="Height" Value="50" />
+                <Setter Property="Height" Value="40" />
                 <Setter Property="Margin" Value="15,0,15,0" />
             </Style>
             <Style x:Key="VariableSizedWrapGridTemplateStyle" TargetType="VariableSizedWrapGrid">
-                <Setter Property="ItemWidth" Value="270" />
-                <Setter Property="ItemHeight" Value="180" />
+                <Setter Property="ItemWidth" Value="230" />
+                <Setter Property="ItemHeight" Value="200" />
                 <Setter Property="Orientation" Value="Vertical" />
                 <Setter Property="MaxHeight" Value="630" />
                 <Setter Property="Margin" Value="100, 0, 100, 0" />
             </Style>
             <Style x:Key="GridViewOpacityRectangleStyle" TargetType="Rectangle">
                 <Setter Property="Fill" Value="Black" />
-                <Setter Property="Height" Value="100" />
+                <Setter Property="Height" Value="60" />
                 <Setter Property="VerticalAlignment" Value="Bottom" />
                 <Setter Property="Opacity" Value="0.5" />
             </Style>
@@ -108,9 +108,9 @@
             <!-- Some styles used in ListView -->
             <Style x:Key="VariableSizedWrapListTemplateStyle" TargetType="VariableSizedWrapGrid">
                 <Setter Property="ItemWidth" Value="300" />
-                <Setter Property="ItemHeight" Value="100" />
+                <Setter Property="ItemHeight" Value="90" />
                 <Setter Property="Orientation" Value="Vertical" />
-                <Setter Property="MaxHeight" Value="630" />
+                <Setter Property="MaxHeight" Value="530" />
                 <Setter Property="Margin" Value="100, 0, 100, 0" />
             </Style>
             <Style x:Key="ListViewOpacityRectangleStyle" TargetType="Rectangle">

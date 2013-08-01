@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -30,10 +31,12 @@ namespace CloudEDU.CourseStore.CoursingDetail
     {
         Course course;
         CloudEDUEntities ctx = null;
-        DataServiceQuery<NOTE_SHAREABLE_AVAIL> sharedNoteDsq = null;
-        DataServiceQuery<NOTE_AVAIL> mySharedNoteDsq = null;
-        List<NOTE_SHAREABLE_AVAIL> sharedNotesList;
+        DataServiceQuery<NOTE_AVAIL> sharedNoteDsq = null;
+        DataServiceQuery<NOTE_AVAIL> myNoteDsq = null;
+        List<NOTE_AVAIL> sharedNotesList;
         List<NOTE_AVAIL> mySharedNotesList;
+        NOTE_AVAIL changedNote = null;
+        int changedLessonID;
 
         public Note()
         {
@@ -47,21 +50,23 @@ namespace CloudEDU.CourseStore.CoursingDetail
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             course = e.Parameter as Course;
 
-            
-            sharedNoteDsq = (DataServiceQuery<NOTE_SHAREABLE_AVAIL>)(from selectNote in ctx.NOTE_SHAREABLE_AVAIL
-                                                                     where selectNote.COURSE_ID == course.ID.Value
-                                                                     orderby selectNote.DATE descending
-                                                                     select selectNote);
-            mySharedNoteDsq = (DataServiceQuery<NOTE_AVAIL>)(from myNote in ctx.NOTE_AVAIL
-                                                              where myNote.COURSE_ID == course.ID.Value && myNote.CUSTOMER_ID == Constants.User.ID
-                                                              orderby myNote.DATE descending
-                                                              select myNote);
+
+            sharedNoteDsq = (DataServiceQuery<NOTE_AVAIL>)(from selectNote in ctx.NOTE_AVAIL
+                                                           where selectNote.COURSE_ID == course.ID.Value && selectNote.SHARE == true
+                                                           orderby selectNote.DATE descending
+                                                           select selectNote);
             switchButton.Content = "Mine";
-            sharedNoteDsq.BeginExecute(OnSharedNoteComplete, null);
+            TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
+            IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(sharedNoteDsq.BeginExecute(null, null), iar => sharedNoteDsq.EndExecute(iar));
+            sharedNotesList = nas.ToList();
+            foreach (var n in sharedNotesList)
+            {
+                allSharedNotesStackPanel.Children.Add(GenerateSharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER, n.CUSTOMER_ID.Value));
+            }
         }
 
         private async void OnSharedNoteComplete(IAsyncResult result)
@@ -84,11 +89,11 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
         }
 
-        private async void OnMySharedNoteComplete(IAsyncResult result)
+        private async void OnMyNoteComplete(IAsyncResult result)
         {
             try
             {
-                mySharedNotesList = mySharedNoteDsq.EndExecute(result).ToList();
+                mySharedNotesList = myNoteDsq.EndExecute(result).ToList();
 
                 foreach (var n in mySharedNotesList)
                 {
@@ -133,21 +138,16 @@ namespace CloudEDU.CourseStore.CoursingDetail
             };
             ToolTipService.SetToolTip(noteInfo, toolTip);
 
-            Image deleteImage = new Image();
-            if (customerID != Constants.User.ID)
-            {
-                deleteImage = new Image
+            Image deleteImage = new Image
                 {
-                    Name = id.ToString(),
-                    Source = new BitmapImage(new Uri("ms-appx:///Images/Coursing/Note/delete.png")),
+                    Tag = id.ToString(),
                     Margin = new Thickness(4, 0, -45, 0),
                     Height = 40,
                     Width = 40,
                     HorizontalAlignment = HorizontalAlignment.Right,
                     IsTapEnabled = true
                 };
-                deleteImage.Tapped += deleteImage_Tapped;
-            }
+            deleteImage.Tapped += deleteImage_Tapped;
 
             TextBlock lesson = new TextBlock
             {
@@ -175,13 +175,16 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             TextBlock noteInfo = new TextBlock
             {
+                Tag = id,
                 FontSize = 45,
                 Height = 50,
                 Margin = new Thickness(5, 0, 0, 0),
                 Foreground = new SolidColorBrush(Colors.White),
                 HorizontalAlignment = HorizontalAlignment.Left,
-                Text = title + " At " + time.Year.ToString() + "." + time.Month.ToString() + "." + time.Day.ToString()
+                Text = title + " At " + time.Year.ToString() + "." + time.Month.ToString() + "." + time.Day.ToString(),
+                IsTapEnabled = true
             };
+            noteInfo.Tapped += noteInfo_Tapped;
             ToolTip toolTip = new ToolTip()
             {
                 Content = content,
@@ -192,7 +195,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
 
             Image deleteImage = new Image
             {
-                Name = id.ToString(),
+                Tag = id.ToString(),
                 Source = new BitmapImage(new Uri("ms-appx:///Images/Coursing/Note/delete.png")),
                 Margin = new Thickness(4, 0, -45, 0),
                 Height = 40,
@@ -224,14 +227,15 @@ namespace CloudEDU.CourseStore.CoursingDetail
             return newNote;
         }
 
+
         void deleteImage_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Image toDelImage = sender as Image;
 
-            ctx.BeginExecute<bool>(new Uri("/RemoveNote?id=" + Convert.ToInt32(toDelImage.Name), UriKind.Relative), OnDeleteNoteComplete, null);
+            ctx.BeginExecute<bool>(new Uri("/RemoveNote?id=" + Convert.ToInt32(toDelImage.Tag), UriKind.Relative), OnDeleteNoteComplete, null);
 
             Grid toDelGrid = toDelImage.Parent as Grid;
-            allSharedNotesStackPanel.Children.Remove(toDelGrid);
+            myNotesStackPanel.Children.Remove(toDelGrid);
         }
 
         private void OnDeleteNoteComplete(IAsyncResult result)
@@ -256,25 +260,123 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
         }
 
-        private void SwitchButton_Click(object sender, RoutedEventArgs e)
+        private async void SwitchButton_Click(object sender, RoutedEventArgs e)
         {
             Button bt = sender as Button;
+            sharedNoteDsq = (DataServiceQuery<NOTE_AVAIL>)(from selectNote in ctx.NOTE_AVAIL
+                                                           where selectNote.COURSE_ID == course.ID.Value && selectNote.SHARE == true
+                                                           orderby selectNote.DATE descending
+                                                           select selectNote);
+            myNoteDsq = (DataServiceQuery<NOTE_AVAIL>)(from myNote in ctx.NOTE_AVAIL
+                                                       where myNote.COURSE_ID == course.ID.Value && myNote.CUSTOMER_ID == Constants.User.ID
+                                                       orderby myNote.DATE descending
+                                                       select myNote);
             if (bt.Content.ToString() == "Mine")
             {
                 bt.Content = "Shared";
                 myNotesStackPanel.Visibility = Visibility.Visible;
                 allSharedNotesStackPanel.Visibility = Visibility.Collapsed;
-                allSharedNotesStackPanel.Children.Clear();
-                mySharedNoteDsq.BeginExecute(OnMySharedNoteComplete, null);
+                myNotesStackPanel.Children.Clear();
+                TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
+                IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(myNoteDsq.BeginExecute(null, null), iar => myNoteDsq.EndExecute(iar));
+                mySharedNotesList = nas.ToList();
+                foreach (var n in mySharedNotesList)
+                {
+                    myNotesStackPanel.Children.Add(GenerateMySharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER));
+                }
             }
             else if (bt.Content.ToString() == "Shared")
             {
                 bt.Content = "Mine";
                 myNotesStackPanel.Visibility = Visibility.Collapsed;
                 allSharedNotesStackPanel.Visibility = Visibility.Visible;
-                myNotesStackPanel.Children.Clear();
-                sharedNoteDsq.BeginExecute(OnSharedNoteComplete, null);
+                allSharedNotesStackPanel.Children.Clear();
+                TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
+                IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(sharedNoteDsq.BeginExecute(null, null), iar => sharedNoteDsq.EndExecute(iar));
+                sharedNotesList = nas.ToList();
+                foreach (var n in sharedNotesList)
+                {
+                    allSharedNotesStackPanel.Children.Add(GenerateSharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER, n.CUSTOMER_ID.Value));
+                }
             }
+        }
+
+        private void CancelUploadButton_Click(object sender, RoutedEventArgs e)
+        {
+            addNotePopup.IsOpen = false;
+            noteTitle.Text = "";
+            noteContent.Text = "";
+            selectLessonComboBox.SelectedIndex = 0;
+            sharableCheckBox.IsChecked = false;
+        }
+
+        private async void SaveNoteButton_Click(object sender, RoutedEventArgs e)
+        {
+            NOTE updatedNote = null;
+            try
+            {
+                DataServiceQuery<NOTE> naDsq = (DataServiceQuery<NOTE>)(from selNote in ctx.NOTE
+                                                                        where selNote.ID == changedNote.ID
+                                                                        select selNote);
+
+                TaskFactory<IEnumerable<NOTE>> changeNote = new TaskFactory<IEnumerable<NOTE>>();
+                updatedNote = (await changeNote.FromAsync(naDsq.BeginExecute(null, null), iar => naDsq.EndExecute(iar))).FirstOrDefault();
+            }
+            catch
+            {
+                ShowMessageDialog("Network connection error!");
+                return;
+            }
+
+            updatedNote.TITLE = noteTitle.Text;
+            updatedNote.CONTENT = noteContent.Text;
+            updatedNote.LESSON_ID = changedLessonID;
+            updatedNote.SHARE = sharableCheckBox.IsChecked ?? false;
+
+            try
+            {
+                ctx.UpdateObject(updatedNote);
+                TaskFactory<DataServiceResponse> tf = new TaskFactory<DataServiceResponse>();
+                await tf.FromAsync(ctx.BeginSaveChanges(null, null), iar => ctx.EndSaveChanges(iar));
+            }
+            catch
+            {
+                ShowMessageDialog("Update error! Please check your network.");
+                addNotePopup.IsOpen = false;
+                return;
+            }
+
+            ShowMessageDialog("Update successfully!");
+            addNotePopup.IsOpen = false;
+        }
+
+        private async void noteInfo_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            TextBlock tb = sender as TextBlock;
+            int noteId = (int)tb.Tag;
+
+            try
+            {
+                DataServiceQuery<NOTE_AVAIL> naDsq = (DataServiceQuery<NOTE_AVAIL>)(from selNote in ctx.NOTE_AVAIL
+                                                                                    where selNote.ID == noteId
+                                                                                    select selNote);
+
+                TaskFactory<IEnumerable<NOTE_AVAIL>> changeNote = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
+                changedNote = (await changeNote.FromAsync(naDsq.BeginExecute(null, null), iar => naDsq.EndExecute(iar))).FirstOrDefault();
+            }
+            catch
+            {
+                ShowMessageDialog("Seach failed or Network connection error!");
+                return;
+            }
+
+            addNotePopup.IsOpen = true;
+            noteTitle.Text = changedNote.TITLE;
+            noteContent.Text = changedNote.CONTENT;
+            selectLessonComboBox.SelectedIndex = changedNote.LESSON_NUMBER - 1;
+            sharableCheckBox.IsChecked = changedNote.SHARE;
+
+            changedLessonID = changedNote.LESSON_ID;
         }
     }
 }

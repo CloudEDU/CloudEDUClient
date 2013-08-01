@@ -1,4 +1,4 @@
-using CloudEDU.CourseStore;
+﻿using CloudEDU.CourseStore;
 using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,8 @@ using CloudEDU.Login;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
+using Windows.Storage;
+using System.Text.RegularExpressions;
 
 namespace CloudEDU.Common
 {
@@ -25,8 +27,11 @@ namespace CloudEDU.Common
 
         public static List<string> ResourceType = new List<string> { "DOCUMENT", "VIDEO", "AUDIO" };
         public static Coursing coursing;
-        //public static CUSTOMER User;
+        public static CUSTOMER UserEntity;
         public static User User;
+
+        public static List<string> CategoryNameList = new List<string>();
+        public static Dictionary<string, string> RecUriDic = new Dictionary<string, string>();
         /// <summary>
         /// Cast the first character of every word in a string from lower to upper.
         /// </summary>
@@ -68,15 +73,36 @@ namespace CloudEDU.Common
             course.Price = c.PRICE;
             course.Rate = c.RATE;
             course.PG = c.RESTRICT_AGE;
-            course.Rate = c.RATED_USERS;
             course.LessonNum = c.LESSON_NUM;
             course.RatedUser = c.RATED_USERS;
             course.ImageUri = BaseURI + c.ICON_URL.Replace('\\', '/');
-            course.IsBuy = true;
-            course.IsTeach = true;
+            course.IsBuy = false;
+            course.IsTeach = false;
 
             return course;
         }
+
+        public static Course CourseRecAvail2Course(COURSE_RECO_AVAIL c)
+        {
+            Course course = new Course();
+
+            course.Title = c.TITLE;
+            course.Intro = c.INTRO;
+            course.ID = c.ID;
+            course.Teacher = c.TEACHER_NAME;
+            course.Category = c.RECO_TITLE;
+            course.Price = c.PRICE;
+            course.Rate = c.RATE;
+            course.PG = c.RESTRICT_AGE;
+            course.LessonNum = c.LESSON_NUM;
+            course.RatedUser = c.RATED_USERS;
+            course.ImageUri = BaseURI + c.ICON_URL.Replace('\\', '/');
+            course.IsBuy = false;
+            course.IsTeach = false;
+
+            return course;
+        }
+
         public static string ComputeMD5(string str)
         {
             var alg = HashAlgorithmProvider.OpenAlgorithm("MD5");
@@ -85,7 +111,57 @@ namespace CloudEDU.Common
             var res = CryptographicBuffer.EncodeToHexString(hashed);
             return res;
         }
+        /// <summary>
+        /// 保存数据
+        /// </summary>
+        /// <typeparam name="T">数据类型</typeparam>
+        /// <param name="key">键</param>
+        /// <param name="value">值</param>
+        public static void Save<T>(string key, T value)
+        {
+            ApplicationData.Current.LocalSettings.Values[key] = value;
+        }
 
+        /// <summary>
+        /// 读取数据
+        /// </summary>
+        /// <typeparam name="T">数据类型</typeparam>
+        /// <param name="key">键</param>
+        /// <returns>值</returns>
+        public static T Read<T>(string key)
+        {
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey(key))
+            {
+                return (T)ApplicationData.Current.LocalSettings.Values[key];
+            }
+            else
+            {
+                return default(T);
+            }
+        }
+
+        /// <summary>
+        /// 移除数据
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <returns>成功true/失败false</returns>
+        public static bool Remove(string key)
+        {
+            return ApplicationData.Current.LocalSettings.Values.Remove(key);
+        }
+
+        public static bool isUserNameAvailable(string un)
+        {
+            string Regextest = "^[a-zA-Z_][a-zA-Z0-9_]{3,13}$";
+            return Regex.IsMatch(un, Regextest);
+        }
+
+        public static bool isEmailAvailable(string em)
+        {
+            string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+            Regex re = new Regex(strRegex);
+            return re.IsMatch(em);
+        }
     }
 
     /// <summary>

@@ -15,6 +15,8 @@ using CloudEDU.Common;
 using CloudEDU.Service;
 using Windows.UI.Core;
 using Windows.UI.Popups;
+using SQLite;
+using System.Threading.Tasks;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,7 +28,7 @@ namespace CloudEDU.Login
     public sealed partial class SignUp : Page
     {
         private CloudEDUEntities ctx = null;
-
+        CUSTOMER c;
         public SignUp()
         {
             this.InitializeComponent();
@@ -44,6 +46,20 @@ namespace CloudEDU.Login
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (InputUsername.Text.Equals(string.Empty) || InputPassword.Password.Equals(string.Empty))
+            {
+                var messageDialog = new MessageDialog("Check your input!");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            if (!Constants.isUserNameAvailable(InputUsername.Text))
+            {
+                var messageDialog = new MessageDialog("Check your input! Username can only contain 1-9 a-z and _");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
             if (!InputPassword.Password.Equals(ReInputPassword.Password))
             {
                 var dialog = new MessageDialog("Passwords are not same! Try again, thx!");
@@ -51,27 +67,46 @@ namespace CloudEDU.Login
                 return;
             }
             //CUSTOMER c = CUSTOMER.CreateCUSTOMER(null, InputUsername.Text, InputPassword.Password, null, null, null);
-            CUSTOMER c = new CUSTOMER()
+            c = new CUSTOMER()
             {
                 NAME = InputUsername.Text,
                 PASSWORD = Constants.ComputeMD5(InputPassword.Password),
+                ALLOW = true,
+                BALANCE = 100,
             };
             ctx.AddToCUSTOMER(c);
             ctx.BeginSaveChanges(OnCustomerSaveChange, null);
-
         }
 
-        private void OnCustomerSaveChange(IAsyncResult result)
+        private async void OnCustomerSaveChange(IAsyncResult result)
         {
             try
             {
                 ctx.EndSaveChanges(result);
+                string Uri = "/AddDBLog?opr='SignUp'&msg='" + c.NAME + "'";
+                //ctx.UpdateObject(c);
+
+                try
+                {
+                    TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
+                    IEnumerable<bool> resulta = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(Uri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
+                }
+                catch
+                {
+                }
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    Frame.Navigate(typeof(Login));
+                });
             }
-            catch
+            catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("Msg: {0}\nInnerExp:{1}\nStackTrace: {2} ",
+                    e.Message ,  e.InnerException, e.StackTrace);
                  ShowMessageDialog();
                  //Network Connection error.
             }
+            
         }
 
         /// <summary>
@@ -97,6 +132,11 @@ namespace CloudEDU.Login
                     ShowMessageDialog();
                 }
             });
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Login));
         }
     }
 }

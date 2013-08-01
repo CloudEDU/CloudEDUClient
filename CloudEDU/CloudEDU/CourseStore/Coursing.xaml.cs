@@ -25,6 +25,7 @@ namespace CloudEDU.CourseStore
     public sealed partial class Coursing : GlobalPage
     {
         Course course;
+        List<object> cInfo = null;
 
         SolidColorBrush pageRed;
         SolidColorBrush pageBlue;
@@ -45,7 +46,6 @@ namespace CloudEDU.CourseStore
             pageWhite = new SolidColorBrush(Colors.White);
             pageBlack = new SolidColorBrush(Colors.Black);
 
-
             Constants.coursing = this;
         }
 
@@ -57,6 +57,7 @@ namespace CloudEDU.CourseStore
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             List<object> courseInfo = e.Parameter as List<object>;
+            cInfo = courseInfo;
             course = courseInfo[0] as Course;
             DataContext = course;
             NavigateText.Text = courseInfo[1] as string;
@@ -70,7 +71,7 @@ namespace CloudEDU.CourseStore
             LecturesText.Foreground = pageBlack;
             NotesText.Foreground = pageBlack;
 
-            detailFrame.Navigate(typeof(CoursingDetail.Home), course);
+            detailFrame.Navigate(typeof(CoursingDetail.Home), cInfo);
             UserProfileBt.DataContext = Constants.User;
 
         }
@@ -178,7 +179,7 @@ namespace CloudEDU.CourseStore
 
             ContentBackgroundRect.Fill = pageRed;
 
-            detailFrame.Navigate(typeof(CoursingDetail.Home), course);
+            detailFrame.Navigate(typeof(CoursingDetail.Home), cInfo);
         }
     }
 }

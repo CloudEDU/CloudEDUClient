@@ -1,10 +1,13 @@
 ﻿using CloudEDU.Common;
 using CloudEDU.CourseStore;
 using CloudEDU.Login;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -26,6 +29,7 @@ namespace CloudEDU
     /// </summary>
     sealed partial class App : Application
     {
+        CloudEDUEntities ctx = null;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -34,6 +38,9 @@ namespace CloudEDU
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
+
         }
 
         /// <summary>
@@ -67,7 +74,34 @@ namespace CloudEDU
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!rootFrame.Navigate(typeof(Login.Login), args.Arguments))
+
+
+                Type goalPage;
+
+                // last user
+                if (Constants.Read<string>("LastUser") == default(string))
+                {
+                   
+                    goalPage = typeof(Login.Login);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine(Constants.Read<string>("LastUser"));
+                    Constants.User = User.SelectLastUser();
+                    goalPage = typeof(LoginDefault);
+                }
+
+                // auto log
+                if (Constants.Read<bool>("AutoLog") == true)
+                {
+                    Constants.User = User.SelectLastUser();
+                    // navigate
+                    System.Diagnostics.Debug.WriteLine("ID:{0}, ATTEND:{1}, TEACH:{2}",
+                        Constants.User.ID, Constants.User.ATTEND_COUNT, Constants.User.TEACH_COUNT);
+                    goalPage = typeof(CourseStore.Courstore);
+                }
+                //goalPage = typeof(Login.Login);
+                if (!rootFrame.Navigate(goalPage, args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
 
@@ -90,6 +124,8 @@ namespace CloudEDU
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+       
     }
 
     /// <summary>

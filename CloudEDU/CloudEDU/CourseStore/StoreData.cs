@@ -1,6 +1,8 @@
 ﻿using CloudEDU.Common;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,174 +32,10 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public class StoreData
     {
+        CloudEDUEntities ctx = null;
+
         public StoreData()
         {
-            //Course course;
-
-            //course = new Course();
-            //course.Title = "the power of smile";
-            //course.Rate = 3.4;
-            //course.ImageUri = Constants.BaseURI + "Images/Courses/course1.png";
-            //course.Category = "newest";
-            //course.IsBuy = false;
-            //course.IsTeach = true;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "sun shower";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI + "Images/Courses/course2.png";
-            //course.Category = "newest";
-            //course.IsBuy = false;
-            //course.IsTeach = true;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "the evolution";
-            //course.Rate = 2.6;
-            //course.ImageUri = Constants.BaseURI + "Images/Courses/course3.png";
-            //course.Category = "newest";
-            //course.IsBuy = false;
-            //course.IsTeach = true;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "the power of smile";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI + "Images/Courses/course1.png";
-            //course.Category = "newest";
-            //course.IsBuy = false;
-            //course.IsTeach = true;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "sun shower";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI + "Images/Courses/course2.png";
-            //course.Category = "hottest";
-            //course.IsBuy = false;
-            //course.IsTeach = true;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "the power of smile";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI + "Images/Courses/course1.png";
-            //course.Category = "hottest";
-            //course.IsBuy = true;
-            //course.IsTeach = false;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "the evolution";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI + "Images/Courses/course3.png";
-            //course.Category = "hottest";
-            //course.IsBuy = true;
-            //course.IsTeach = false;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "sun shower";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI, "Images/Courses/course2.png";
-            //course.Category = "Computer Science";
-            //course.IsBuy = true;
-            //course.IsTeach = false;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "the evolution";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI, "Images/Courses/course3.png";
-            //course.Category = "Computer Science";
-            //course.IsBuy = true;
-            //course.IsTeach = false;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "the power of smile";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI, "Images/Courses/course1.png";
-            //course.Category = "Computer Science";
-            //course.IsBuy = true;
-            //course.IsTeach = false;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "sun shower";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI, "Images/Courses/course2.png";
-            //course.Category = "Psychology";
-            //course.IsBuy = true;
-            //course.IsTeach = false;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "the evolution";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI, "Images/Courses/course3.png";
-            //course.Category = "Psychology";
-            //course.IsBuy = false;
-            //course.IsTeach = true;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "the power of smile";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI, "Images/Courses/course1.png";
-            //course.Category = "Psychology";
-            //course.IsBuy = false;
-            //course.IsTeach = true;
-            //Collection.Add(course);
-
-            //course = new Course();
-            //course.Title = "the evolution";
-            //course.Rate = 4.0;
-            //course.ImageUri = Constants.BaseURI, "Images/Courses/course3.png";
-            //course.Category = "Psychology";
-            //course.IsBuy = false;
-            //course.IsTeach = true;
-            //Collection.Add(course);
-
-            //for (int j = 0; j < 15; ++j)
-            //{
-            //    for (int i = 0; i < 1; ++i)
-            //    {
-            //        course = new Course();
-            //        course.Title = "the power of smile";
-            //        course.Rate = 4.0;
-            //        course.ImageUri = Constants.BaseURI, "Images/Courses/course1.png");
-            //        course.Category = "Psychology";
-            //        course.IsBuy = false;
-            //        course.IsTeach = true;
-            //        Collection.Add(course);
-            //    }
-
-            //    for (int i = 0; i < 2; ++i)
-            //    {
-            //        course = new Course();
-            //        course.Title = "sun shower";
-            //        course.Rate = 4.0;
-            //        course.ImageUri = Constants.BaseURI, "Images/Courses/course2.png");
-            //        course.Category = "Psychology";
-            //        course.IsBuy = true;
-            //        course.IsTeach = false;
-            //        Collection.Add(course);
-            //    }
-
-            //    for (int i = 0; i < 4; ++i)
-            //    {
-            //        course = new Course();
-            //        course.Title = "the evolution";
-            //        course.Rate = 4.0;
-            //        course.ImageUri = Constants.BaseURI, "Images/Courses/course3.png");
-            //        course.Category = "Psychology";
-            //        course.IsBuy = false;
-            //        course.IsTeach = true;
-            //        Collection.Add(course);
-            //    }
-            //}
         }
 
         private CourseCollection _collection = new CourseCollection();
@@ -231,22 +69,6 @@ namespace CloudEDU.CourseStore
             }
         }
         #endregion
-
-        //internal List<object> GetCoursesByCategoryTitle(string categoryTitle)
-        //{
-        //    List<object> courses = new List<object>();
-
-        //    var query = from course in Collection
-        //                where ((Course)course).Category == categoryTitle
-        //                select course;
-
-        //    foreach (var g in query)
-        //    {
-        //        courses.Add(g);
-        //    }
-
-        //    return courses;
-        //}
 
         #region Different ways used to get the groups
         /// <summary>
@@ -295,15 +117,87 @@ namespace CloudEDU.CourseStore
             {
                 GroupInfoList<object> info = new GroupInfoList<object>();
                 info.Key = g.GroupTitle;
-                foreach (var course in g.Courses)
+                if (Constants.CategoryNameList.Contains(info.Key))
                 {
-                    info.Add(course);
+                    info.CategoryImg = "ms-appx:///Images/Category/" + info.Key + ".jpg";
+                }
+                else
+                {
+                    info.CategoryImg = Constants.RecUriDic[info.Key as string];
+                }
+
+                Random ran = new Random();
+                int random = ran.Next(3, 6);
+                int size = 0;
+                if (random > g.Courses.Count())
+                {
+                    size = g.Courses.Count();
+                }
+                else
+                {
+                    size = random;
+                }
+
+                switch (size)
+                {
+                    case 1:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
+                            break;
+                        }
+                    case 2:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
+                            break;
+                        }
+                    case 3:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            break;
+                        }
+                    case 4:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(3) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            break;
+                        }
+                    case 5:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(3) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(4) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            break;
+                        }
+                    case 6:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(3) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(4) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(5) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            break;
+                        }
+                }
+                for (int i = 0; i < size; ++i)
+                {
+                    var c = g.Courses.ElementAt(i);
+                    info.Add(c);
                 }
                 groups.Add(info);
             }
 
             return groups;
         }
+
+       
 
         /// <summary>
         /// Get the list that has been grouped by whether user has bought or teached.

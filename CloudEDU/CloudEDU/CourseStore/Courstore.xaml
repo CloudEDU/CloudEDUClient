@@ -25,20 +25,22 @@
                           ItemsSource="{Binding Source={StaticResource cvs1}}">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapGrid ItemHeight="200" ItemWidth="400"
+                            <WrapGrid ItemHeight="270" ItemWidth="350"
                                       MaximumRowsOrColumns="1" VerticalChildrenAlignment="Center" />
                         </ItemsPanelTemplate>
                     </GridView.ItemsPanel>
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock
-                                Text="{Binding Group.Key}" FontFamily="Segoe UI Light" FontSize="40"/>
+                            <Grid>
+                                <Image Source="{Binding Group.CategoryImg}" Width="400" Stretch="UniformToFill" />
+                                <Rectangle Width="400" Height="300" Fill="Black" Opacity="0.5" />
+                                <TextBlock Text="{Binding Group.Key}" FontFamily="Segoe UI Light" FontSize="40" TextWrapping="Wrap" TextAlignment="Center"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                            </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                     <GridView.ItemContainerStyle>
                         <Style TargetType="GridViewItem">
-                            <Setter Property="Margin" Value="4" />
-                            <Setter Property="Padding" Value="10" />
                             <Setter Property="BorderBrush" Value="Gray" />
                             <Setter Property="BorderThickness" Value="1" />
                             <Setter Property="HorizontalContentAlignment" Value="Center" />

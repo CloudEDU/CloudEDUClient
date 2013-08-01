@@ -56,42 +56,68 @@ namespace CloudEDU.CourseStore
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             course = e.Parameter as Course;
+
+            try
+            {
+                DataServiceQuery<COURSE_AVAIL> cDsq = (DataServiceQuery<COURSE_AVAIL>)(from kc in ctx.COURSE_AVAIL
+                                                                                       where course.ID == kc.ID
+                                                                                       select kc);
+                TaskFactory<IEnumerable<COURSE_AVAIL>> tf = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
+                COURSE_AVAIL tmpCourse = (await tf.FromAsync(cDsq.BeginExecute(null, null), iar => cDsq.EndExecute(iar))).FirstOrDefault();
+                course = Constants.CourseAvail2Course(tmpCourse);
+            }
+            catch
+            {
+                ShowMessageDialog("Network connection error!");
+                Frame.GoBack();
+            }
+
             UserProfileBt.DataContext = Constants.User;
             DataContext = course;
             introGrid.DataContext = course;
+
             frame.Navigate(typeof(CourseDetail.Overview), course);
 
             isTeach = false;
             isBuy = false;
 
-            teachCourses = (DataServiceQuery<COURSE_AVAIL>)(from teachC in ctx.COURSE_AVAIL
-                                                            where teachC.TEACHER_NAME == Constants.User.NAME
-                                                            select teachC);
-            TaskFactory<IEnumerable<COURSE_AVAIL>> teachTF = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
-            IEnumerable<COURSE_AVAIL> tcs = await teachTF.FromAsync(teachCourses.BeginExecute(null, null), iar => teachCourses.EndExecute(iar));
-
-            buyCourses = (DataServiceQuery<ATTEND>)(from buyC in ctx.ATTEND
-                                                    where buyC.CUSTOMER_ID == Constants.User.ID
-                                                    select buyC);
-            TaskFactory<IEnumerable<ATTEND>> buyCF = new TaskFactory<IEnumerable<ATTEND>>();
-            IEnumerable<ATTEND> bcs = await buyCF.FromAsync(buyCourses.BeginExecute(null, null), iar => buyCourses.EndExecute(iar));
-
-            foreach (var t in tcs)
+            try
             {
-                if (t.ID == course.ID)
+                teachCourses = (DataServiceQuery<COURSE_AVAIL>)(from teachC in ctx.COURSE_AVAIL
+                                                                where teachC.TEACHER_NAME == Constants.User.NAME
+                                                                select teachC);
+                TaskFactory<IEnumerable<COURSE_AVAIL>> teachTF = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
+                IEnumerable<COURSE_AVAIL> tcs = await teachTF.FromAsync(teachCourses.BeginExecute(null, null), iar => teachCourses.EndExecute(iar));
+
+                buyCourses = (DataServiceQuery<ATTEND>)(from buyC in ctx.ATTEND
+                                                        where buyC.CUSTOMER_ID == Constants.User.ID
+                                                        select buyC);
+                TaskFactory<IEnumerable<ATTEND>> buyCF = new TaskFactory<IEnumerable<ATTEND>>();
+                IEnumerable<ATTEND> bcs = await buyCF.FromAsync(buyCourses.BeginExecute(null, null), iar => buyCourses.EndExecute(iar));
+
+
+                foreach (var t in tcs)
                 {
-                    isTeach = true;
-                    break;
+                    if (t.ID == course.ID)
+                    {
+                        isTeach = true;
+                        break;
+                    }
+                }
+
+                foreach (var b in bcs)
+                {
+                    if (b.COURSE_ID == course.ID)
+                    {
+                        isBuy = true;
+                        break;
+                    }
                 }
             }
-
-            foreach (var b in bcs)
+            catch
             {
-                if (b.COURSE_ID == course.ID)
-                {
-                    isBuy = true;
-                    break;
-                }
+                ShowMessageDialog("Network connection error!");
+                Frame.GoBack();
             }
 
             if (course.Price == null || course.Price.Value == 0)
@@ -102,6 +128,7 @@ namespace CloudEDU.CourseStore
             {
                 PriceTextBlock.Text = "$ " + Math.Round(course.Price.Value, 2);
             }
+            System.Diagnostics.Debug.WriteLine(course.Rate);
             SetStarsStackPanel(course.Rate ?? 0);
 
             if (isTeach)
@@ -268,46 +295,61 @@ namespace CloudEDU.CourseStore
             }
             else if (bt.Content.ToString() == "Buy")
             {
+                bool isToBuy = false;
+                bool isHaveBuy = false;
+
                 var buySure = new MessageDialog("Are you sure to buy this course?", "Buy Course");
-                buySure.Commands.Add(new UICommand("Yes"));
+                buySure.Commands.Add(new UICommand("Yes", (command) =>
+                    {
+                        isToBuy = true;
+                    }));
                 buySure.Commands.Add(new UICommand("No", (command) =>
                     {
+                        isToBuy = false;
                         return;
                     }));
                 await buySure.ShowAsync();
 
-                try
+                if (isToBuy)
                 {
-                    string uri = "/EnrollCourse?customer_id=" + Constants.User.ID + "&course_id=" + course.ID;
-                    TaskFactory<IEnumerable<int>> tf = new TaskFactory<IEnumerable<int>>();
-                    IEnumerable<int> code = await tf.FromAsync(ctx.BeginExecute<int>(new Uri(uri, UriKind.Relative), null, null), iar => ctx.EndExecute<int>(iar));
-
-                    if (code.FirstOrDefault() != 0)
+                    try
                     {
-                        var buyError = new MessageDialog("You don't have enough money. Please contact Scott Zhao.", "Buy Failed");
-                        buyError.Commands.Add(new UICommand("Close"));
-                        await buyError.ShowAsync();
+                        string uri = "/EnrollCourse?customer_id=" + Constants.User.ID + "&course_id=" + course.ID;
+                        TaskFactory<IEnumerable<int>> tf = new TaskFactory<IEnumerable<int>>();
+                        IEnumerable<int> code = await tf.FromAsync(ctx.BeginExecute<int>(new Uri(uri, UriKind.Relative), null, null), iar => ctx.EndExecute<int>(iar));
+                        isHaveBuy = true;
+
+                        if (code.FirstOrDefault() != 0)
+                        {
+                            isHaveBuy = false;
+                            var buyError = new MessageDialog("You don't have enough money. Please contact Scott Zhao.", "Buy Failed");
+                            buyError.Commands.Add(new UICommand("Close"));
+                            await buyError.ShowAsync();
+                            return;
+                        }
+
+                    }
+                    catch
+                    {
+                        ShowMessageDialog("Network connection error!");
                         return;
                     }
-
                 }
-                catch
+
+                if (isHaveBuy)
                 {
-                    ShowMessageDialog("Network connection error!");
-                    return;
+                    var buyOkMsg = new MessageDialog("Do you want to start learning?", "Buy successfully");
+                    buyOkMsg.Commands.Add(new UICommand("Yes", (command) =>
+                        {
+                            courseInfo.Add("attending");
+                            Frame.Navigate(typeof(Coursing), courseInfo);
+                        }));
+                    buyOkMsg.Commands.Add(new UICommand("No", (command) =>
+                        {
+                            bt.Content = "Attend";
+                        }));
+                    await buyOkMsg.ShowAsync();
                 }
-
-                var buyOkMsg = new MessageDialog("Do you want to start learning?", "Buy successfully");
-                buyOkMsg.Commands.Add(new UICommand("Yes", (command) =>
-                    {
-                        courseInfo.Add("attending");
-                        Frame.Navigate(typeof(Coursing), courseInfo);
-                    }));
-                buyOkMsg.Commands.Add(new UICommand("No", (command) =>
-                    {
-                        bt.Content = "Attend";
-                    }));
-                await buyOkMsg.ShowAsync();
             }
         }
 

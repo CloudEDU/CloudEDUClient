@@ -15,10 +15,12 @@
                     Click="CourstoreButton_Click" />
             <Button x:Name="MyCoursesButton" Style="{StaticResource ListAppBarButtonStyle}" AutomationProperties.Name="My Courses"
                     Click="MyCoursesButton_Click" />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="UploadCourseButton" Style="{StaticResource UploadAppBarButtonStyle}" AutomationProperties.Name="Upload Course"
                     Click="UploadCourseButton_Click" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="LogoutButton" Style="{StaticResource OtherUserAppBarButtonStyle}" AutomationProperties.Name="Log Out"
+                    Click="LogoutButton_Click_1" />
         </StackPanel>
     </Grid>    
 </UserControl>

@@ -60,8 +60,6 @@ namespace CloudEDU.CourseStore.CoursingDetail
             Course course = e.Parameter as Course;
             dba = new DBAccessAPIs();
             dba.GetLessonsByCourseId((int)course.ID, onGetLessonComplete);
-            allLessonsStackPanel.Children.RemoveAt(0);
-            allLessonsStackPanel.Children.RemoveAt(0);
             
             //allLessonsStackPanel.Children.Add(GenerateALessonBox(null));
             //allLessonsStackPanel.Children.Add(GenerateALessonBox(null));
@@ -409,33 +407,27 @@ namespace CloudEDU.CourseStore.CoursingDetail
         private async void SaveNoteButton_Click(object sender, RoutedEventArgs e)
         {
 
-            try
+            NOTE note = new NOTE();
+            note.TITLE = this.noteTitle.Text;
+            note.CONTENT = this.noteContent.Text;
+            note.LESSON_ID = lessons[selectLessonComboBox.SelectedIndex].ID;
+            note.CUSTOMER_ID = Constants.User.ID;
+            note.SHARE = sharableCheckBox.IsChecked ?? false;
+
+            if (note == null)
             {
-                NOTE note = new NOTE();
-                note.TITLE = this.noteTitle.Text;
-                note.CONTENT = this.noteContent.Text;
-                note.LESSON_ID = lessons[selectLessonComboBox.SelectedIndex].ID;
-                note.CUSTOMER_ID = Constants.User.ID;
-
-                if (note == null)
-                {
-                    System.Diagnostics.Debug.WriteLine("note is null!");
-                }
-
-                ctx.AddToNOTE(note);
-                ctx.BeginSaveChanges(onNoteSaved, null);
-
-                this.addNotePopup.IsOpen = false;
-                ClearNote();
-                MessageDialog md = new MessageDialog("Note Saved", "Your note have been saved!");
-                await md.ShowAsync();
-                //md.Content = "Your note have been saved!";
+                System.Diagnostics.Debug.WriteLine("note is null!");
             }
-            catch
-                (Exception exc)
-            {
-                System.Diagnostics.Debug.WriteLine(exc.StackTrace);
-            }
+
+            ctx.AddToNOTE(note);
+            ctx.BeginSaveChanges(onNoteSaved, null);
+
+            this.addNotePopup.IsOpen = false;
+            ClearNote();
+            MessageDialog md = new MessageDialog("Note Saved", "Your note have been saved!");
+            await md.ShowAsync();
+            //md.Content = "Your note have been saved!";
+
 
 
         }
@@ -448,6 +440,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             this.noteTitle.Text = "Title";
             this.noteContent.Text = "Note Content...";
             this.selectLessonComboBox.SelectedIndex = 0;
+            sharableCheckBox.IsChecked = false;
 
         }
 

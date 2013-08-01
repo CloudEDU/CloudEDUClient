@@ -47,44 +47,44 @@ namespace CloudEDU.CourseStore
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            
             loadingProgressRing.IsActive = true;
+
+            try
+            {
+                if (Constants.RecUriDic.Count == 0 && Constants.CategoryNameList.Count == 0)
+                {
+                    DataServiceQuery<RECOMMENDATION> craDsq = (DataServiceQuery<RECOMMENDATION>)(from re in ctx.RECOMMENDATION
+                                                                                                 select re);
+                    TaskFactory<IEnumerable<RECOMMENDATION>> tf = new TaskFactory<IEnumerable<RECOMMENDATION>>();
+                    IEnumerable<RECOMMENDATION> recommendation = await tf.FromAsync(craDsq.BeginExecute(null, null), iar => craDsq.EndExecute(iar));
+
+                    DataServiceQuery<CATEGORY> cateDsq = (DataServiceQuery<CATEGORY>)(from cate in ctx.CATEGORY
+                                                                                      select cate);
+                    TaskFactory<IEnumerable<CATEGORY>> tfc = new TaskFactory<IEnumerable<CATEGORY>>();
+                    IEnumerable<CATEGORY> categories = await tfc.FromAsync(cateDsq.BeginExecute(null, null), iar => cateDsq.EndExecute(iar));
+
+                    foreach (var c in categories)
+                    {
+                        Constants.CategoryNameList.Add(c.CATE_NAME);
+                    }
+
+                    foreach (var r in recommendation)
+                    {
+                        Constants.RecUriDic.Add(r.TITLE, r.ICON_URL);
+                    }
+                }
+            }
+            catch
+            {
+                ShowMessageDialog();
+            }
 
             courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in ctx.COURSE_AVAIL select course_avail);
             courseDsq.BeginExecute(OnCourseAvailComplete, null);
             UserProfileBt.DataContext = Constants.User;
-
-
-            //DataServiceQuery<COURSE> dps = (DataServiceQuery<COURSE>)(from c in DataServiceContextSingleton.SharedDataServiceContext().COURSEs where c.TITLE == "Test Title2" select c);
-
-            
-
-//TaskFactory<IEnumerable<COURSE>> tf = new TaskFactory<IEnumerable<COURSE>>();
-            //IEnumerable<COURSE> courses = await tf.FromAsync(dps.BeginExecute(null, null), ira => dps.EndExecute(ira));
-            //courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in DataServiceContextSingleton.SharedDataServiceContext().COURSE_AVAIL select course_avail);
-            //DataServiceContextSingleton.SharedDataServiceContext().BeginExecute<int?>(new Uri("CreateCourse?teacher_id=3&title='HaoHaoDBL'&intro='HaoHaoYouDBL'&category_id=3&price=0&pg_id=1&icon_url='www.HaoHaoDBL.com'", UriKind.Relative), OnComplete, null);
-
-            //ctx.BeginExecute<COURSE_OK>(new Uri("GetCoursesByName?name='Test Title2'", UriKind.Relative), OnComplete, null);
-
-
-
-            //foreach (COURSE_OK c in courses)
-            //{
-            //    System.Diagnostics.Debug.WriteLine(c.TITLE);
-            //}
-
-
-            //query = (DataServiceQuery<COURSE>)(from c in ctx.COURSEs select c);
-
-            //try
-            //{
-            //    query.BeginExecute(OnComplete, query);
-            //}
-            //catch (Exception ex)
-            //{
-            //    System.Diagnostics.Debug.WriteLine(ex.StackTrace);
-            //}
         }
 
         /// <summary>
@@ -96,11 +96,22 @@ namespace CloudEDU.CourseStore
             coursesData = new StoreData();
             try
             {
+                DataServiceQuery<COURSE_RECO_AVAIL> craDsq = (DataServiceQuery<COURSE_RECO_AVAIL>)(from re in ctx.COURSE_RECO_AVAIL
+                                                                                             select re);
+                TaskFactory<IEnumerable<COURSE_RECO_AVAIL>> tf = new TaskFactory<IEnumerable<COURSE_RECO_AVAIL>>();
+                IEnumerable<COURSE_RECO_AVAIL> recommendation = await tf.FromAsync(craDsq.BeginExecute(null, null), iar => craDsq.EndExecute(iar));
+
+                foreach (var re in recommendation)
+                {
+                    coursesData.AddCourse(Constants.CourseRecAvail2Course(re));
+                }
+
                 IEnumerable<COURSE_AVAIL> courses = courseDsq.EndExecute(result);
                 foreach (var c in courses)
                 {
                     coursesData.AddCourse(Constants.CourseAvail2Course(c));
                 }
+                
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     dataCategory = coursesData.GetGroupsByCategory();
@@ -171,6 +182,8 @@ namespace CloudEDU.CourseStore
         private void Course_ItemClick(object sender, ItemClickEventArgs e)
         {
             Course course = (Course)e.ClickedItem;
+
+            System.Diagnostics.Debug.WriteLine(course.Rate);
 
             Frame.Navigate(typeof(CourseOverview), course);
         }
