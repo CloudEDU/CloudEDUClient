@@ -31,8 +31,8 @@ namespace CloudEDU.Login
         public int ATTEND_COUNT { get; set; }
         public int TEACH_COUNT { get; set; }
         private CloudEDUEntities ctx = null;
-        private DataServiceQuery<CUSTOMER> customerDsq = null;
-        private List<CUSTOMER> csl;
+        //private DataServiceQuery<CUSTOMER> customerDsq = null;
+        //private List<CUSTOMER> csl;
         private DataServiceQuery<COURSE_AVAIL> teachDsq = null;
 
         //public NOTE NOTE { get; set; }
