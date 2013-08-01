@@ -97,7 +97,6 @@ namespace CloudEDU.Login
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             //login
-
             if (InputUsername.Text.Equals(emptyUsername) || InputPassword.Password.Equals(string.Empty))
             {
                 var messageDialog = new MessageDialog("Check your input!");
@@ -105,6 +104,12 @@ namespace CloudEDU.Login
                 return;
             }
 
+            if (!Constants.isUserNameAvailable(InputUsername.Text))
+            {
+                var messageDialog = new MessageDialog("Check your input! Username can only contain 1-9 a-z and _");
+                await messageDialog.ShowAsync();
+                return;
+            }
             //try
             //{
             //    TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();

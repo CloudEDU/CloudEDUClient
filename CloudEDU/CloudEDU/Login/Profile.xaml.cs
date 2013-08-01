@@ -30,6 +30,7 @@ namespace CloudEDU.Login
         private DataServiceQuery<CUSTOMER> customerDsq = null;
 
         private List<CUSTOMER> csl;
+        private CUSTOMER changedCustomer = null;
         public Profile()
         {
             this.InitializeComponent();
@@ -81,7 +82,14 @@ namespace CloudEDU.Login
         {
             if (passwordBox.Password.Equals(string.Empty) || retypePasswordBox.Password.Equals(string.Empty))
             {
-                var messageDialog = new MessageDialog("Check your input, Password can't be empty!");
+                var messageDialog = new MessageDialog("Please Check your input, Password can't be empty!");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            if (!Constants.isEmailAvailable(email.Text))
+            {
+                var messageDialog = new MessageDialog("Please Check your input, EMAIL is not Available!");
                 await messageDialog.ShowAsync();
                 return;
             }
@@ -97,17 +105,20 @@ namespace CloudEDU.Login
             {
                 if (c.NAME == Constants.User.NAME)
                 {
+                    
                     c.DEGREE = (string)degreeBox.SelectedItem;
                     c.PASSWORD = Constants.ComputeMD5(passwordBox.Password);
                     c.EMAIL = email.Text;
                     c.BIRTHDAY = Convert.ToDateTime(birthday.Text);
+                    changedCustomer = c;
                     ctx.UpdateObject(c);
                     ctx.BeginSaveChanges(OnCustomerSaveChange, null);
+                    
                 }
             }
         }
 
-        private void OnCustomerSaveChange(IAsyncResult result)
+        private async void OnCustomerSaveChange(IAsyncResult result)
         {
             try
             {
@@ -119,6 +130,11 @@ namespace CloudEDU.Login
                 ShowMessageDialog();
                 //Network Connection error.
             }
+            Constants.User = new User(changedCustomer);
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                Frame.Navigate(typeof(Profile));
+            });
         }
 
         private void ResetImage_Tapped(object sender, TappedRoutedEventArgs e)

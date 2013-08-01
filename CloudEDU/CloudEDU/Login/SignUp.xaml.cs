@@ -52,6 +52,13 @@ namespace CloudEDU.Login
                 return;
             }
 
+            if (!Constants.isUserNameAvailable(InputUsername.Text))
+            {
+                var messageDialog = new MessageDialog("Check your input! Username can only contain 1-9 a-z and _");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
             if (!InputPassword.Password.Equals(ReInputPassword.Password))
             {
                 var dialog = new MessageDialog("Passwords are not same! Try again, thx!");
