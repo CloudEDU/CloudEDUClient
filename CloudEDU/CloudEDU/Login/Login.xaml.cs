@@ -144,13 +144,13 @@ namespace CloudEDU.Login
                             Constants.User = new User(c);
                             isLogined = true;
                             System.Diagnostics.Debug.WriteLine("login success");
-                            string courseUplaodUri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
+                            string Uri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
                             //ctx.UpdateObject(c);
 
                             try
                             {
                                 TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
-                                IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
+                                IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(Uri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
 
                             }
                             catch
