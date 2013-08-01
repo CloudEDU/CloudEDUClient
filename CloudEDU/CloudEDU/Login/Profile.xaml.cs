@@ -123,18 +123,19 @@ namespace CloudEDU.Login
             try
             {
                 ctx.EndSaveChanges(result);
-                Constants.User = new User(Constants.UserEntity);
+                Constants.User = new User(changedCustomer);
+                //Constants.User = new User(changedCustomer);
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    Frame.GoBack();
+                });
             }
             catch
             {
                 ShowMessageDialog();
                 //Network Connection error.
             }
-            Constants.User = new User(changedCustomer);
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                Frame.Navigate(typeof(Profile));
-            });
+           
         }
 
         private void ResetImage_Tapped(object sender, TappedRoutedEventArgs e)
@@ -161,10 +162,10 @@ namespace CloudEDU.Login
                 try
                 {
                     var messageDialog = new MessageDialog("No Network has been found!");
-                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
-                    {
-                        Frame.Navigate(typeof(Profile));
-                    }));
+                    //messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                    //{
+                    //    Frame.Navigate(typeof(Profile));
+                    //}));
                     messageDialog.Commands.Add(new UICommand("Close"));
                     //loadingProgressRing.IsActive = false;
                     await messageDialog.ShowAsync();

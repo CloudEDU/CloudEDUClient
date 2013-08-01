@@ -33,7 +33,7 @@
                 </wm:WatermarkTextBox.WatermarkTextStyle>
             </wm:WatermarkTextBox>-->
 
-        <PasswordBox x:Name="InputPassword" Style="{StaticResource ResourceKey=PasswordBox}" />
+        <PasswordBox x:Name="InputPassword" Style="{StaticResource ResourceKey=PasswordBox}" KeyDown="InputPassword_KeyDown" />
         <CheckBox x:Name="CheckAutoLogin" Content="Auto-Log" HorizontalAlignment="center" Margin="300, -70, 0, 0"
                   VerticalAlignment="Center" Foreground="White" />
         <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}" Margin="300, 130, 0, 0"
