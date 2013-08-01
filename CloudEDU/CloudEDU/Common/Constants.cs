@@ -127,7 +127,7 @@ namespace CloudEDU.Common
 
         public static bool isUserNameAvailable(string un)
         {
-            string Regextest = "^[a-zA-Z_][a-zA-Z0-9_]{3,13}$";
+            string Regextest = "^[a-zA-Z_][a-zA-Z0-9_]{2,14}$";
             return Regex.IsMatch(un, Regextest);
         }
 

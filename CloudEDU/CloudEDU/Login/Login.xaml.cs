@@ -103,7 +103,7 @@ namespace CloudEDU.Login
                 await messageDialog.ShowAsync();
                 return;
             }
-
+            //InputUsername.Text
             if (!Constants.isUserNameAvailable(InputUsername.Text))
             {
                 var messageDialog = new MessageDialog("Check your input! Username can only contain 1-9 a-z and _");
@@ -137,7 +137,11 @@ namespace CloudEDU.Login
                             System.Diagnostics.Debug.WriteLine(c.PASSWORD);
                             //User
                             if (!c.ALLOW)
-                                break;
+                            {
+                                var notAllowed = new MessageDialog("The User is forbidden!");
+                                await notAllowed.ShowAsync();
+                                return;
+                            }
                             Constants.Save<bool>("AutoLog", (bool)CheckAutoLogin.IsChecked);
                             Constants.User = new User(c);
                             isLogined = true;
