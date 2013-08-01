@@ -147,8 +147,8 @@ namespace CloudEDU.CourseStore
                         }
                     case 2:
                         {
-                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
-                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
                             break;
                         }
                     case 3:
