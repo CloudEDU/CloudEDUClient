@@ -884,7 +884,7 @@ namespace CloudEDU
                 }
                 catch
                 {
-                    ShowNetworkMessageDialog();
+                    //ShowNetworkMessageDialog();
                 }
             });
         }
