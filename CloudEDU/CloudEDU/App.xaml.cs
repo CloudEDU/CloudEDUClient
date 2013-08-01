@@ -1,10 +1,13 @@
 ﻿using CloudEDU.Common;
 using CloudEDU.CourseStore;
 using CloudEDU.Login;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -26,6 +29,7 @@ namespace CloudEDU
     /// </summary>
     sealed partial class App : Application
     {
+        CloudEDUEntities ctx = null;
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -34,6 +38,9 @@ namespace CloudEDU
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
+
         }
 
         /// <summary>
@@ -74,6 +81,7 @@ namespace CloudEDU
                 // last user
                 if (Constants.Read<string>("LastUser") == default(string))
                 {
+                   
                     goalPage = typeof(Login.Login);
                 }
                 else
@@ -116,6 +124,8 @@ namespace CloudEDU
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
+       
     }
 
     /// <summary>

@@ -50,8 +50,10 @@ namespace CloudEDU.Login
         /// </summary>
         /// <param name="e">Event data that describes how this page was reached.  The Parameter
         /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
+            
+
             customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
             customerDsq.BeginExecute(OnCustomerComplete, null);
             
