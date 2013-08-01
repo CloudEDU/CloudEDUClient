@@ -70,7 +70,7 @@
                 -->
 
             </StackPanel>
-            <PasswordBox x:Name="InputPassword" Style="{StaticResource ResourceKey=PasswordBox}" Canvas.Left="575" Margin="0" Canvas.Top="450" Width="239">
+            <PasswordBox x:Name="InputPassword" Style="{StaticResource ResourceKey=PasswordBox}" Canvas.Left="575" Margin="0" Canvas.Top="450" Width="239" >
 
             </PasswordBox>
             <CheckBox x:Name="CheckAutoLogin" Content="Auto-Log" HorizontalAlignment="center"

@@ -55,7 +55,7 @@ namespace CloudEDU.Common
 
         private void LogoutButton_Click_1(object sender, RoutedEventArgs e)
         {
-
+            ((Frame)Window.Current.Content).Navigate(typeof(Login.Login));
         }
     }
 }

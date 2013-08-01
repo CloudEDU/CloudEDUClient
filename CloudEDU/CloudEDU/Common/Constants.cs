@@ -12,6 +12,7 @@ using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
 using Windows.Storage;
+using System.Text.RegularExpressions;
 
 namespace CloudEDU.Common
 {
@@ -124,6 +125,18 @@ namespace CloudEDU.Common
             return ApplicationData.Current.LocalSettings.Values.Remove(key);
         }
 
+        public static bool isUserNameAvailable(string un)
+        {
+            string Regextest = "^[a-zA-Z_][a-zA-Z0-9_]{3,13}$";
+            return Regex.IsMatch(un, Regextest);
+        }
+
+        public static bool isEmailAvailable(string em)
+        {
+            string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+            Regex re = new Regex(strRegex);
+            return re.IsMatch(em);
+        }
     }
 
     /// <summary>

@@ -119,34 +119,43 @@ namespace CloudEDU.Login
                 ShowMessageDialog();
             }
             bool isLogined = false;
-
-            foreach (CUSTOMER c in csl)
+            try
             {
-                if (c.NAME.Equals(Constants.User.NAME))
+                foreach (CUSTOMER c in csl)
                 {
-                    if (c.PASSWORD == Constants.ComputeMD5(InputPassword.Password))
+                    if (c.NAME.Equals(Constants.User.NAME))
                     {
-                        //login success
-                        Constants.User = new User(c);
-                        Constants.Save<bool>("AutoLog", (bool)CheckAutoLogin.IsChecked);
-
-                        System.Diagnostics.Debug.WriteLine("login success");
-                        string courseUplaodUri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
-
-                        try
+                        if (c.PASSWORD == Constants.ComputeMD5(InputPassword.Password))
                         {
-                            TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
-                            IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
+                            //login success
+                            Constants.User = new User(c);
+                            Constants.Save<bool>("AutoLog", (bool)CheckAutoLogin.IsChecked);
 
+                            System.Diagnostics.Debug.WriteLine("login success");
+                            string courseUplaodUri = "/AddDBLog?opr='Login'&msg='" + Constants.User.NAME + "'";
+
+                            try
+                            {
+                                TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
+                                IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
+
+                            }
+                            catch
+                            {
+                            }
+                            isLogined = true;
+                            Frame.Navigate(typeof(CourseStore.Courstore));
+                            // navigate 
                         }
-                        catch
-                        {
-                        }
-                        isLogined = true;
-                        Frame.Navigate(typeof(CourseStore.Courstore));
-                        // navigate 
                     }
                 }
+                
+            }
+            catch (Exception exp)
+            {
+                System.Diagnostics.Debug.WriteLine("Msg: {0}\nInnerExp:{1}\nStackTrace: {2} ",
+                    exp.Message, exp.InnerException, exp.StackTrace);
+                ShowMessageDialog();
             }
 
             if (!isLogined)
@@ -175,7 +184,7 @@ namespace CloudEDU.Login
                 }
                 catch
                 {
-                    ShowMessageDialog();
+                    //ShowMessageDialog();
                 }
             });
         }

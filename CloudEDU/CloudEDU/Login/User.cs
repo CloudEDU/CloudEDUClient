@@ -56,7 +56,7 @@ namespace CloudEDU.Login
             //IEnumerable<CUSTOMER> cs = await tf.FromAsync(customerDsq.BeginExecute(null, null), iar => customerDsq.EndExecute(iar));
             //csl = new List<CUSTOMER>(cs);
             Constants.Save<string>("LastUser", NAME);
-            ImageSource = "http://www.gravatar.com/avatar/" + Constants.ComputeMD5(c.EMAIL)+"?s=400";
+            ImageSource = (c.EMAIL!=null)?"http://www.gravatar.com/avatar/" + Constants.ComputeMD5(c.EMAIL)+"?s=400":"";
             CreateDBAndInsert();
         }
 
@@ -92,7 +92,7 @@ namespace CloudEDU.Login
                 db.CreateTable<User>();
                 if (db.Table<User>().Count() != 0)
                 {
-                    db.DeleteAll<User>();
+                //    db.DeleteAll<User>();
                 }
                 System.Diagnostics.Debug.WriteLine("Count of table after deleteall: {0}",db.Table<User>().Count());
                 db.InsertOrReplace(this);
