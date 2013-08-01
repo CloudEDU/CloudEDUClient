@@ -46,11 +46,13 @@ namespace CloudEDU.Login
         /// 属性通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            Constants.User.SetAttendTeachNumber();  
             image.DataContext = Constants.User;
             biggestGrid.DataContext = Constants.User;
             customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
             customerDsq.BeginExecute(OnCustomerComplete, null);
         }
+
         private void OnCustomerComplete(IAsyncResult result)
         {
             csl = customerDsq.EndExecute(result).ToList();

@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 using SQLite;
 using System.IO;
 using System.Data.Services.Client;
+using System.Threading.Tasks;
+using Windows.UI.Core;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
 
 namespace CloudEDU.Login
 {
@@ -39,7 +43,7 @@ namespace CloudEDU.Login
         public User(CUSTOMER c)
         {
             Constants.UserEntity = c;
-            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
+            //ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
             NAME = c.NAME;
             ID = c.ID;
             EMAIL = c.EMAIL;
@@ -60,19 +64,26 @@ namespace CloudEDU.Login
             CreateDBAndInsert();
         }
 
-        private async void SetAttendTeachNumber()
+        public async void SetAttendTeachNumber()
         {
-            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
-            teachDsq = (DataServiceQuery<COURSE_AVAIL>)(from course in ctx.COURSE_AVAIL
-                                                        where course.TEACHER_NAME == this.NAME
-                                                        select course);
-            TaskFactory<IEnumerable<COURSE_AVAIL>> tf = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
-            IEnumerable<COURSE_AVAIL> attends = await tf.FromAsync(ctx.BeginExecute<COURSE_AVAIL>(
-                new Uri("/GetAllCoursesAttendedByCustomer?customer_id=" + this.ID, UriKind.Relative), null, null),
-                iar => ctx.EndExecute<COURSE_AVAIL>(iar));
-            ATTEND_COUNT = attends.Count();
-            IEnumerable<COURSE_AVAIL> teaches = await tf.FromAsync(teachDsq.BeginExecute(null, null), iar => teachDsq.EndExecute(iar));
-            TEACH_COUNT = teaches.Count();
+            try
+            {
+                ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
+                teachDsq = (DataServiceQuery<COURSE_AVAIL>)(from course in ctx.COURSE_AVAIL
+                                                            where course.TEACHER_NAME == this.NAME
+                                                            select course);
+                TaskFactory<IEnumerable<COURSE_AVAIL>> tf = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
+                IEnumerable<COURSE_AVAIL> attends = await tf.FromAsync(ctx.BeginExecute<COURSE_AVAIL>(
+                    new Uri("/GetAllCoursesAttendedByCustomer?customer_id=" + this.ID, UriKind.Relative), null, null),
+                    iar => ctx.EndExecute<COURSE_AVAIL>(iar));
+                ATTEND_COUNT = attends.Count();
+                IEnumerable<COURSE_AVAIL> teaches = await tf.FromAsync(teachDsq.BeginExecute(null, null), iar => teachDsq.EndExecute(iar));
+                TEACH_COUNT = teaches.Count();
+            }
+            catch
+            {
+                ShowMessageDialog();
+            }
         }
 
         public User(string un, string ims)
@@ -124,8 +135,24 @@ namespace CloudEDU.Login
             {
                 System.Diagnostics.Debug.WriteLine("in SelectLastUser Function error:{0}", e.Message);
             }
-            u.SetAttendTeachNumber();
+            //u.SetAttendTeachNumber();
             return u;
+        }
+
+        private async void ShowMessageDialog()
+        {
+                try
+                {
+                    var messageDialog = new MessageDialog("No Network has been found!");
+                    
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    //loadingProgressRing.IsActive = false;
+                    await messageDialog.ShowAsync();
+                }
+                catch
+                {
+                    //ShowMessageDialog();
+                }
         }
     }
 }

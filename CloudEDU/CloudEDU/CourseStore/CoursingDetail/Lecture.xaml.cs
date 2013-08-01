@@ -433,7 +433,14 @@ namespace CloudEDU.CourseStore.CoursingDetail
         }
         private void onNoteSaved(IAsyncResult iar)
         {
-            ctx.EndSaveChanges(iar);
+            try
+            {
+                ctx.EndSaveChanges(iar);
+            }
+            catch (Exception exc)
+            {
+                
+            }
         }
         private void ClearNote()
         {
