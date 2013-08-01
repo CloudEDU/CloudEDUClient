@@ -1,6 +1,8 @@
 ﻿using CloudEDU.Common;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
+using System.Data.Services.Client;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +32,8 @@ namespace CloudEDU.CourseStore
     /// </summary>
     public class StoreData
     {
+        CloudEDUEntities ctx = null;
+
         public StoreData()
         {
         }
@@ -113,17 +117,87 @@ namespace CloudEDU.CourseStore
             {
                 GroupInfoList<object> info = new GroupInfoList<object>();
                 info.Key = g.GroupTitle;
-                info.CategoryImg = "ms-appx:///Images/Category/" + info.Key + ".jpg";
-                System.Diagnostics.Debug.WriteLine(info.CategoryImg);
-                foreach (var course in g.Courses)
+                if (Constants.CategoryNameList.Contains(info.Key))
                 {
-                    info.Add(course);
+                    info.CategoryImg = "ms-appx:///Images/Category/" + info.Key + ".jpg";
+                }
+                else
+                {
+                    info.CategoryImg = Constants.RecUriDic[info.Key as string];
+                }
+
+                Random ran = new Random();
+                int random = ran.Next(3, 6);
+                int size = 0;
+                if (random > g.Courses.Count())
+                {
+                    size = g.Courses.Count();
+                }
+                else
+                {
+                    size = random;
+                }
+
+                switch (size)
+                {
+                    case 1:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
+                            break;
+                        }
+                    case 2:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            break;
+                        }
+                    case 3:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            break;
+                        }
+                    case 4:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(3) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            break;
+                        }
+                    case 5:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(3) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(4) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            break;
+                        }
+                    case 6:
+                        {
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(3) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(4) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(5) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            break;
+                        }
+                }
+                for (int i = 0; i < size; ++i)
+                {
+                    var c = g.Courses.ElementAt(i);
+                    info.Add(c);
                 }
                 groups.Add(info);
             }
 
             return groups;
         }
+
+       
 
         /// <summary>
         /// Get the list that has been grouped by whether user has bought or teached.

@@ -271,33 +271,41 @@ namespace CloudEDU.CourseStore.CoursingDetail
                                                        where myNote.COURSE_ID == course.ID.Value && myNote.CUSTOMER_ID == Constants.User.ID
                                                        orderby myNote.DATE descending
                                                        select myNote);
-            if (bt.Content.ToString() == "Mine")
+
+            try
             {
-                bt.Content = "Shared";
-                myNotesStackPanel.Visibility = Visibility.Visible;
-                allSharedNotesStackPanel.Visibility = Visibility.Collapsed;
-                myNotesStackPanel.Children.Clear();
-                TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
-                IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(myNoteDsq.BeginExecute(null, null), iar => myNoteDsq.EndExecute(iar));
-                mySharedNotesList = nas.ToList();
-                foreach (var n in mySharedNotesList)
+                if (bt.Content.ToString() == "Mine")
                 {
-                    myNotesStackPanel.Children.Add(GenerateMySharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER));
+                    bt.Content = "Shared";
+                    myNotesStackPanel.Visibility = Visibility.Visible;
+                    allSharedNotesStackPanel.Visibility = Visibility.Collapsed;
+                    myNotesStackPanel.Children.Clear();
+                    TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
+                    IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(myNoteDsq.BeginExecute(null, null), iar => myNoteDsq.EndExecute(iar));
+                    mySharedNotesList = nas.ToList();
+                    foreach (var n in mySharedNotesList)
+                    {
+                        myNotesStackPanel.Children.Add(GenerateMySharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER));
+                    }
+                }
+                else if (bt.Content.ToString() == "Shared")
+                {
+                    bt.Content = "Mine";
+                    myNotesStackPanel.Visibility = Visibility.Collapsed;
+                    allSharedNotesStackPanel.Visibility = Visibility.Visible;
+                    allSharedNotesStackPanel.Children.Clear();
+                    TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
+                    IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(sharedNoteDsq.BeginExecute(null, null), iar => sharedNoteDsq.EndExecute(iar));
+                    sharedNotesList = nas.ToList();
+                    foreach (var n in sharedNotesList)
+                    {
+                        allSharedNotesStackPanel.Children.Add(GenerateSharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER, n.CUSTOMER_ID.Value));
+                    }
                 }
             }
-            else if (bt.Content.ToString() == "Shared")
+            catch
             {
-                bt.Content = "Mine";
-                myNotesStackPanel.Visibility = Visibility.Collapsed;
-                allSharedNotesStackPanel.Visibility = Visibility.Visible;
-                allSharedNotesStackPanel.Children.Clear();
-                TaskFactory<IEnumerable<NOTE_AVAIL>> tf = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
-                IEnumerable<NOTE_AVAIL> nas = await tf.FromAsync(sharedNoteDsq.BeginExecute(null, null), iar => sharedNoteDsq.EndExecute(iar));
-                sharedNotesList = nas.ToList();
-                foreach (var n in sharedNotesList)
-                {
-                    allSharedNotesStackPanel.Children.Add(GenerateSharedNoteItem(n.ID, n.TITLE, n.CONTENT, n.CUSTOMER_NAME, n.DATE, n.LESSON_NUMBER, n.CUSTOMER_ID.Value));
-                }
+                ShowMessageDialog("Network connection error!");
             }
         }
 
@@ -354,7 +362,8 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             TextBlock tb = sender as TextBlock;
             int noteId = (int)tb.Tag;
-
+           
+            IEnumerable<LESSON> allLessons = null;
             try
             {
                 DataServiceQuery<NOTE_AVAIL> naDsq = (DataServiceQuery<NOTE_AVAIL>)(from selNote in ctx.NOTE_AVAIL
@@ -363,16 +372,28 @@ namespace CloudEDU.CourseStore.CoursingDetail
 
                 TaskFactory<IEnumerable<NOTE_AVAIL>> changeNote = new TaskFactory<IEnumerable<NOTE_AVAIL>>();
                 changedNote = (await changeNote.FromAsync(naDsq.BeginExecute(null, null), iar => naDsq.EndExecute(iar))).FirstOrDefault();
+
+                DataServiceQuery<LESSON> lessonDsq = (DataServiceQuery<LESSON>)(from selLesson in ctx.LESSON
+                                                                                where selLesson.COURSE_ID == course.ID
+                                                                                select selLesson);
+                TaskFactory<IEnumerable<LESSON>> lessonTf = new TaskFactory<IEnumerable<LESSON>>();
+                allLessons = await lessonTf.FromAsync(lessonDsq.BeginExecute(null, null), res => lessonDsq.EndExecute(res));
             }
             catch
             {
                 ShowMessageDialog("Seach failed or Network connection error!");
                 return;
             }
+            List<string> allLessonString = new List<string>();
+            foreach (var l in allLessons)
+            {
+                allLessonString.Add(l.TITLE);
+            }
 
             addNotePopup.IsOpen = true;
             noteTitle.Text = changedNote.TITLE;
             noteContent.Text = changedNote.CONTENT;
+            selectLessonComboBox.ItemsSource = allLessonString;
             selectLessonComboBox.SelectedIndex = changedNote.LESSON_NUMBER - 1;
             sharableCheckBox.IsChecked = changedNote.SHARE;
 

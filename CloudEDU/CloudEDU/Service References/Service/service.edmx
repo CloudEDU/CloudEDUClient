@@ -239,21 +239,29 @@
         <Property Name="ICON_URL" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
         <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
       </EntityType>
-      <EntityType Name="NOTE_SHARABLE">
+      <EntityType Name="COURSE_RECO_AVAIL">
         <Key>
-          <PropertyRef Name="CONTENT" />
-          <PropertyRef Name="LESSON_ID" />
           <PropertyRef Name="ID" />
-          <PropertyRef Name="DATE" />
-          <PropertyRef Name="SHARE" />
+          <PropertyRef Name="PRICE" />
+          <PropertyRef Name="TITLE" />
+          <PropertyRef Name="RECO_TITLE" />
+          <PropertyRef Name="RECO_ID" />
         </Key>
-        <Property Name="TITLE" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
-        <Property Name="CONTENT" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-        <Property Name="LESSON_ID" Type="Edm.Int32" Nullable="false" />
-        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-        <Property Name="DATE" Type="Edm.DateTime" Nullable="false" Precision="3" />
-        <Property Name="CUSTOMER_ID" Type="Edm.Int32" />
-        <Property Name="SHARE" Type="Edm.Boolean" Nullable="false" />
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PRICE" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
+        <Property Name="RATE" Type="Edm.Double" />
+        <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="INTRO" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="TEACHER_NAME" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="CATE_NAME" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="true" />
+        <Property Name="RESTRICT_AGE" Type="Edm.Int32" />
+        <Property Name="PG_DESCRIPTION" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="ICON_URL" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="RATED_USERS" Type="Edm.Int32" />
+        <Property Name="LESSON_NUM" Type="Edm.Int32" />
+        <Property Name="RECO_TITLE" Type="Edm.String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="RECO_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Expr1" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
       </EntityType>
       <EntityType Name="NOTE_AVAIL">
         <Key>
@@ -279,7 +287,23 @@
         <Property Name="COURSE_ID" Type="Edm.Int32" Nullable="false" />
         <Property Name="LESSON_NUMBER" Type="Edm.Int32" Nullable="false" />
       </EntityType>
-      <EntityType Name="NOTE_AVAIL">
+      <EntityType Name="NOTE_SHARABLE">
+        <Key>
+          <PropertyRef Name="CONTENT" />
+          <PropertyRef Name="LESSON_ID" />
+          <PropertyRef Name="ID" />
+          <PropertyRef Name="DATE" />
+          <PropertyRef Name="SHARE" />
+        </Key>
+        <Property Name="TITLE" Type="Edm.String" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="CONTENT" Type="Edm.String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="LESSON_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="DATE" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="CUSTOMER_ID" Type="Edm.Int32" />
+        <Property Name="SHARE" Type="Edm.Boolean" Nullable="false" />
+      </EntityType>
+      <EntityType Name="NOTE_SHAREABLE_AVAIL">
         <Key>
           <PropertyRef Name="CONTENT" />
           <PropertyRef Name="LESSON_ID" />
@@ -510,9 +534,10 @@
         <EntitySet Name="COURSE_AVAIL" EntityType="CloudEDUModel.COURSE_AVAIL" />
         <EntitySet Name="COURSE_OK" EntityType="CloudEDUModel.COURSE_OK" />
         <EntitySet Name="COURSE_PENDING" EntityType="CloudEDUModel.COURSE_PENDING" />
+        <EntitySet Name="COURSE_RECO_AVAIL" EntityType="CloudEDUModel.COURSE_RECO_AVAIL" />
+        <EntitySet Name="NOTE_AVAIL" EntityType="CloudEDUModel.NOTE_AVAIL" />
         <EntitySet Name="NOTE_SHARABLE" EntityType="CloudEDUModel.NOTE_SHARABLE" />
-        <EntitySet Name="NOTE_AVAIL" EntityType="CloudEDUModel.NOTE_AVAIL" />
-        <EntitySet Name="NOTE_AVAIL" EntityType="CloudEDUModel.NOTE_AVAIL" />
+        <EntitySet Name="NOTE_SHAREABLE_AVAIL" EntityType="CloudEDUModel.NOTE_SHAREABLE_AVAIL" />
         <FunctionImport Name="EnrollCourse" ReturnType="Edm.Int32" m:HttpMethod="GET">
           <Parameter Name="customer_id" Type="Edm.Int32" Nullable="false" />
           <Parameter Name="course_id" Type="Edm.Int32" Nullable="false" />
@@ -535,7 +560,7 @@
         <FunctionImport Name="GetAllCoursesAttendedByCustomer" ReturnType="Collection(CloudEDUModel.COURSE_AVAIL)" EntitySet="COURSE_AVAIL" m:HttpMethod="GET">
           <Parameter Name="customer_id" Type="Edm.Int32" Nullable="false" />
         </FunctionImport>
-        <FunctionImport Name="AddDBLog" m:HttpMethod="GET">
+        <FunctionImport Name="AddDBLog" ReturnType="Edm.Boolean" m:HttpMethod="GET">
           <Parameter Name="opr" Type="Edm.String" />
           <Parameter Name="msg" Type="Edm.String" />
         </FunctionImport>

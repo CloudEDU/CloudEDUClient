@@ -31,6 +31,7 @@ namespace CloudEDU.CourseStore
         private List<GroupInfoList<Object>> dataCategory;
         private CloudEDUEntities ctx = null;
         private DataServiceQuery<COURSE_AVAIL> courseDsq = null;
+        private DataServiceQuery<COURSE_RECO_AVAIL> recDsq = null;
 
         string categoryName = null;
 
@@ -52,12 +53,44 @@ namespace CloudEDU.CourseStore
             Title.Text = Constants.UpperInitialChar(categoryName);
             loadingProgressRing.IsActive = true;
 
-            courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in ctx.COURSE_AVAIL
-                                                         where course_avail.CATE_NAME == categoryName
-                                                         select course_avail);
-            courseDsq.BeginExecute(OnCategoryCoursesComplete, null);
+            if (Constants.CategoryNameList.Contains(categoryName))
+            {
+                courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in ctx.COURSE_AVAIL
+                                                             where course_avail.CATE_NAME == categoryName
+                                                             select course_avail);
+                courseDsq.BeginExecute(OnCategoryCoursesComplete, null);
+            }
+            else
+            {
+                recDsq = (DataServiceQuery<COURSE_RECO_AVAIL>)(from re in ctx.COURSE_RECO_AVAIL
+                                                               where re.RECO_TITLE == categoryName
+                                                               select re);
+                recDsq.BeginExecute(OnRecommendationCoursesComplete, null);
+            }
             UserProfileBt.DataContext = Constants.User;
+        }
 
+        private async void OnRecommendationCoursesComplete(IAsyncResult result)
+        {
+            categoryCourses = new StoreData();
+            try
+            {
+                IEnumerable<COURSE_RECO_AVAIL> courses = recDsq.EndExecute(result);
+                foreach (var c in courses)
+                {
+                    categoryCourses.AddCourse(Constants.CourseRecAvail2Course(c));
+                }
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    dataCategory = categoryCourses.GetSingleGroupByCategoryTitle(categoryName);
+                    cvs1.Source = dataCategory;
+                    loadingProgressRing.IsActive = false;
+                });
+            }
+            catch
+            {
+                ShowMessageDialog();
+            }
         }
 
         /// <summary>

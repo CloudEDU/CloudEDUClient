@@ -29,6 +29,9 @@ namespace CloudEDU.Common
         public static Coursing coursing;
         public static CUSTOMER UserEntity;
         public static User User;
+
+        public static List<string> CategoryNameList = new List<string>();
+        public static Dictionary<string, string> RecUriDic = new Dictionary<string, string>();
         /// <summary>
         /// Cast the first character of every word in a string from lower to upper.
         /// </summary>
@@ -73,11 +76,33 @@ namespace CloudEDU.Common
             course.LessonNum = c.LESSON_NUM;
             course.RatedUser = c.RATED_USERS;
             course.ImageUri = BaseURI + c.ICON_URL.Replace('\\', '/');
-            course.IsBuy = true;
-            course.IsTeach = true;
+            course.IsBuy = false;
+            course.IsTeach = false;
 
             return course;
         }
+
+        public static Course CourseRecAvail2Course(COURSE_RECO_AVAIL c)
+        {
+            Course course = new Course();
+
+            course.Title = c.TITLE;
+            course.Intro = c.INTRO;
+            course.ID = c.ID;
+            course.Teacher = c.TEACHER_NAME;
+            course.Category = c.RECO_TITLE;
+            course.Price = c.PRICE;
+            course.Rate = c.RATE;
+            course.PG = c.RESTRICT_AGE;
+            course.LessonNum = c.LESSON_NUM;
+            course.RatedUser = c.RATED_USERS;
+            course.ImageUri = BaseURI + c.ICON_URL.Replace('\\', '/');
+            course.IsBuy = false;
+            course.IsTeach = false;
+
+            return course;
+        }
+
         public static string ComputeMD5(string str)
         {
             var alg = HashAlgorithmProvider.OpenAlgorithm("MD5");

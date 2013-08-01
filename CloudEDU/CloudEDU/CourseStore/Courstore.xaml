@@ -34,7 +34,8 @@
                             <Grid>
                                 <Image Source="{Binding Group.CategoryImg}" Width="400" Stretch="UniformToFill" />
                                 <Rectangle Width="400" Height="300" Fill="Black" Opacity="0.5" />
-                                <TextBlock Text="{Binding Group.Key}" FontFamily="Segoe UI Light" FontSize="40" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                                <TextBlock Text="{Binding Group.Key}" FontFamily="Segoe UI Light" FontSize="40" TextWrapping="Wrap" TextAlignment="Center"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                             </Grid>
                         </DataTemplate>
                     </GridView.ItemTemplate>

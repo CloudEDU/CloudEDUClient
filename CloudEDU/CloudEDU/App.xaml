@@ -46,8 +46,8 @@
                 <Setter Property="Margin" Value="15,0,15,0" />
             </Style>
             <Style x:Key="VariableSizedWrapGridTemplateStyle" TargetType="VariableSizedWrapGrid">
-                <Setter Property="ItemWidth" Value="270" />
-                <Setter Property="ItemHeight" Value="180" />
+                <Setter Property="ItemWidth" Value="230" />
+                <Setter Property="ItemHeight" Value="200" />
                 <Setter Property="Orientation" Value="Vertical" />
                 <Setter Property="MaxHeight" Value="630" />
                 <Setter Property="Margin" Value="100, 0, 100, 0" />

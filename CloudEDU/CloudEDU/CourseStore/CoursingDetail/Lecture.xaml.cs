@@ -35,7 +35,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
     {
 
         DBAccessAPIs dba = null;
-        List<LESSON> lessons = null;
+        List<LESSON> allLessons = null;
         Dictionary<string, int> resourceDic = null;
         Dictionary<Image, string> Res_URL = null;
         /// <summary>
@@ -46,7 +46,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             this.InitializeComponent();
             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
             dba = new DBAccessAPIs();
-            lessons = new List<LESSON>();
+            allLessons = new List<LESSON>();
             Res_URL = new Dictionary<Image, string>();
         }
 
@@ -74,13 +74,13 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 IEnumerable<LESSON> lessons = dba.lessonDsq.EndExecute(iar);
                 foreach (var l in lessons)
                 {
-                    this.lessons.Add(l);
+                    this.allLessons.Add(l);
                     //coursesData.AddCourse(Constants.CourseAvail2Course(c));
 
                 }
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    foreach (var l in this.lessons)
+                    foreach (var l in this.allLessons)
                     {
                         System.Diagnostics.Debug.WriteLine(l.TITLE);
                         allLessonsStackPanel.Children.Add(GenerateALessonBox(l));
@@ -389,7 +389,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
         {
             this.addNotePopup.IsOpen = true;
             List<string> list= new List<string>();
-            for (int i = 0; i < lessons.Count; i++)
+            for (int i = 0; i < allLessons.Count; i++)
             {
                 list.Add("Lesson " + (i+1));
             }
@@ -410,7 +410,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             NOTE note = new NOTE();
             note.TITLE = this.noteTitle.Text;
             note.CONTENT = this.noteContent.Text;
-            note.LESSON_ID = lessons[selectLessonComboBox.SelectedIndex].ID;
+            note.LESSON_ID = allLessons[selectLessonComboBox.SelectedIndex].ID;
             note.CUSTOMER_ID = Constants.User.ID;
             note.SHARE = sharableCheckBox.IsChecked ?? false;
 

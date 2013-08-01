@@ -57,10 +57,7 @@
                     <TextBox x:Name="noteContent"
                                  MaxLength="2000" TextWrapping="Wrap" Text="." Height="219"  />
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox Width="200" HorizontalAlignment="Left" Name="selectLessonComboBox">
-                            <x:String>Lesson 1</x:String>
-                            <x:String>Lesson 2</x:String>
-                        </ComboBox>
+                        <ComboBox Width="200" HorizontalAlignment="Left" Name="selectLessonComboBox" />
                         <TextBlock Text="Sharable" FontSize="26" HorizontalAlignment="Right" Margin="100, 0, 0, 0"/>
                         <CheckBox Name="sharableCheckBox" HorizontalAlignment="Right" Margin="10, 0, 0, 0" />
                     </StackPanel>
