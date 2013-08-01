@@ -409,26 +409,33 @@ namespace CloudEDU.CourseStore.CoursingDetail
         private async void SaveNoteButton_Click(object sender, RoutedEventArgs e)
         {
 
-            NOTE note = new NOTE();
-            note.TITLE = this.noteTitle.Text;
-            note.CONTENT = this.noteContent.Text;
-            note.LESSON_ID = lessons[selectLessonComboBox.SelectedIndex].ID;
-            note.CUSTOMER_ID = Constants.User.ID;
-
-            if (note == null)
+            try
             {
-                System.Diagnostics.Debug.WriteLine("note is null!");
+                NOTE note = new NOTE();
+                note.TITLE = this.noteTitle.Text;
+                note.CONTENT = this.noteContent.Text;
+                note.LESSON_ID = lessons[selectLessonComboBox.SelectedIndex].ID;
+                note.CUSTOMER_ID = Constants.User.ID;
+
+                if (note == null)
+                {
+                    System.Diagnostics.Debug.WriteLine("note is null!");
+                }
+
+                ctx.AddToNOTE(note);
+                ctx.BeginSaveChanges(onNoteSaved, null);
+
+                this.addNotePopup.IsOpen = false;
+                ClearNote();
+                MessageDialog md = new MessageDialog("Note Saved", "Your note have been saved!");
+                await md.ShowAsync();
+                //md.Content = "Your note have been saved!";
             }
-
-            ctx.AddToNOTE(note);
-            ctx.BeginSaveChanges(onNoteSaved, null);
-
-            this.addNotePopup.IsOpen = false;
-            ClearNote();
-            MessageDialog md = new MessageDialog("Note Saved", "Your note have been saved!");
-            await md.ShowAsync();
-            //md.Content = "Your note have been saved!";
-
+            catch
+                (Exception exc)
+            {
+                System.Diagnostics.Debug.WriteLine(exc.StackTrace);
+            }
 
 
         }
