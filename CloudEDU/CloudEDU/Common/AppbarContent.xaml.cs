@@ -57,7 +57,7 @@ namespace CloudEDU.Common
 
         private async void LogoutButton_Click_1(object sender, RoutedEventArgs e)
         {
-            ((Frame)Window.Current.Content).Navigate(typeof(Login.Login));
+            ((Frame)Window.Current.Content).Navigate(typeof(Login.LoginSel));
             string courseUplaodUri = "/AddDBLog?opr='Logout'&msg='" + Constants.User.NAME + "'";
             //ctx.UpdateObject(c);
             CloudEDUEntities ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
@@ -65,7 +65,6 @@ namespace CloudEDU.Common
             {
                 TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
                 IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
-
             }
             catch
             {

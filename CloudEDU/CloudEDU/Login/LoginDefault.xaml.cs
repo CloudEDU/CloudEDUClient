@@ -127,8 +127,14 @@ namespace CloudEDU.Login
                     {
                         if (c.PASSWORD == Constants.ComputeMD5(InputPassword.Password))
                         {
-                            //login success
+                            if (!c.ALLOW)
+                            {
+                                var notAllowed = new MessageDialog("The User is forbidden!");
+                                await notAllowed.ShowAsync();
+                                return;
+                            }
                             Constants.User = new User(c);
+                            //login success
                             Constants.Save<bool>("AutoLog", (bool)CheckAutoLogin.IsChecked);
 
                             System.Diagnostics.Debug.WriteLine("login success");

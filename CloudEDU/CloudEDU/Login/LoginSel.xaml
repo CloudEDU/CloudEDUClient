@@ -51,12 +51,12 @@
                     <ImageBrush ImageSource="http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328"/>
                 </Border.Background>
             </Border>-->
-            
+
             <StackPanel x:Name="UsersStack" Canvas.Left="613" Width="Auto" 
                         Orientation="Horizontal" HorizontalAlignment ="Center" 
                         Canvas.Top="215" Height="229" >
                 <!--<local:UserSelButtonControl x:Name="test" Template="{StaticResource ResourceKey=temp}" Content="http://www.gravatar.com/avatar/3c2986ad7ac1f2230ea3596f44563328" Click="Button_Click" UserName="Shania" Margin="0,0,0,-20"/>-->
-                <Button Template="{StaticResource AddUser}"  Width="Auto" Content="+"  Click="SignUpButton_Click" Margin="0,0,0,40"/>
+                <Button Template="{StaticResource AddUser}"  Width="Auto" Content="+"  Click="addUserButton_Click" Margin="0,0,0,40"/>
                 <!--<local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>
                 <local:UserSelButtonControl Content="../Images/Users/ania.png" Click="Button_Click"/>-->
 
@@ -78,6 +78,9 @@
                   VerticalAlignment="Center" Canvas.Left="648" Canvas.Top="510" Foreground="White"/>
             <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}"
                 Width="100" Height="100" VerticalAlignment="Center" AutomationProperties.Name="" Click="LoginButton_Click" Canvas.Left="797" Canvas.Top="450" Foreground="white" />-->
+            <Button Content="Sign Up?" HorizontalAlignment="Center" VerticalAlignment="Center"
+                FontFamily="Candara" FontSize="20" BorderThickness="0" Background="Transparent"
+                Foreground="White" Click="SignUpButton_Click" Canvas.Left="645" Canvas.Top="461" />
         </Canvas>
     </Grid>
 </Page>

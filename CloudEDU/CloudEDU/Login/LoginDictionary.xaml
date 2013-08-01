@@ -121,9 +121,17 @@ Storyboard.TargetProperty= "(UIElement.RenderTransform). (CompositeTransform.Sca
         </Grid>
     </ControlTemplate>
     <ControlTemplate TargetType="Button" x:Key="AddUser">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
         <Border Background="#75B3C5" Width="150" Height="150" CornerRadius="1000" Margin="5,0,0,0">
             <TextBlock Text="{TemplateBinding Content}"
                            Height="300" Width="200" FontSize="210" Foreground="#BDDBE4" Margin="0, -90, 0, 0" />
         </Border>
+            <TextBlock Text="Other" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25" Foreground="White" Margin="0,10,0,10"/>
+
+        </Grid>
     </ControlTemplate>
 </ResourceDictionary>

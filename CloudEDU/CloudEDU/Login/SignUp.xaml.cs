@@ -17,6 +17,7 @@ using Windows.UI.Core;
 using Windows.UI.Popups;
 using SQLite;
 using System.Threading.Tasks;
+using System.Data.Services.Client;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -28,6 +29,8 @@ namespace CloudEDU.Login
     public sealed partial class SignUp : Page
     {
         private CloudEDUEntities ctx = null;
+        private DataServiceQuery<CUSTOMER> customerDsq = null;
+        private List<CUSTOMER> csl;
         CUSTOMER c;
         public SignUp()
         {
@@ -42,6 +45,14 @@ namespace CloudEDU.Login
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
+            customerDsq.BeginExecute(OnCustomerComplete, null);
+        }
+
+        private void OnCustomerComplete(IAsyncResult result)
+        {
+            csl = customerDsq.EndExecute(result).ToList();
+            System.Diagnostics.Debug.WriteLine(csl[0].NAME);
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -66,6 +77,14 @@ namespace CloudEDU.Login
                 await dialog.ShowAsync();
                 return;
             }
+
+            if (isUserAlreadyThere())
+            {
+                var dialog = new MessageDialog("Username already exists");
+                await dialog.ShowAsync();
+                return;
+            }
+
             //CUSTOMER c = CUSTOMER.CreateCUSTOMER(null, InputUsername.Text, InputPassword.Password, null, null, null);
             c = new CUSTOMER()
             {
@@ -106,7 +125,18 @@ namespace CloudEDU.Login
                  ShowMessageDialog();
                  //Network Connection error.
             }
-            
+        }
+
+        private bool isUserAlreadyThere()
+        {
+            foreach (CUSTOMER c in csl)
+            {
+                if (c.NAME == InputUsername.Text)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
