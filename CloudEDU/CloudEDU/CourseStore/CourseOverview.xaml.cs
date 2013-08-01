@@ -56,6 +56,22 @@ namespace CloudEDU.CourseStore
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             course = e.Parameter as Course;
+
+            try
+            {
+                DataServiceQuery<COURSE_AVAIL> cDsq = (DataServiceQuery<COURSE_AVAIL>)(from kc in ctx.COURSE_AVAIL
+                                                                                       where course.ID == kc.ID
+                                                                                       select kc);
+                TaskFactory<IEnumerable<COURSE_AVAIL>> tf = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
+                COURSE_AVAIL tmpCourse = (await tf.FromAsync(cDsq.BeginExecute(null, null), iar => cDsq.EndExecute(iar))).FirstOrDefault();
+                course = Constants.CourseAvail2Course(tmpCourse);
+            }
+            catch
+            {
+                ShowMessageDialog("Network connection error!");
+                Frame.GoBack();
+            }
+
             UserProfileBt.DataContext = Constants.User;
             DataContext = course;
             introGrid.DataContext = course;
@@ -65,34 +81,43 @@ namespace CloudEDU.CourseStore
             isTeach = false;
             isBuy = false;
 
-            teachCourses = (DataServiceQuery<COURSE_AVAIL>)(from teachC in ctx.COURSE_AVAIL
-                                                            where teachC.TEACHER_NAME == Constants.User.NAME
-                                                            select teachC);
-            TaskFactory<IEnumerable<COURSE_AVAIL>> teachTF = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
-            IEnumerable<COURSE_AVAIL> tcs = await teachTF.FromAsync(teachCourses.BeginExecute(null, null), iar => teachCourses.EndExecute(iar));
-
-            buyCourses = (DataServiceQuery<ATTEND>)(from buyC in ctx.ATTEND
-                                                    where buyC.CUSTOMER_ID == Constants.User.ID
-                                                    select buyC);
-            TaskFactory<IEnumerable<ATTEND>> buyCF = new TaskFactory<IEnumerable<ATTEND>>();
-            IEnumerable<ATTEND> bcs = await buyCF.FromAsync(buyCourses.BeginExecute(null, null), iar => buyCourses.EndExecute(iar));
-
-            foreach (var t in tcs)
+            try
             {
-                if (t.ID == course.ID)
+                teachCourses = (DataServiceQuery<COURSE_AVAIL>)(from teachC in ctx.COURSE_AVAIL
+                                                                where teachC.TEACHER_NAME == Constants.User.NAME
+                                                                select teachC);
+                TaskFactory<IEnumerable<COURSE_AVAIL>> teachTF = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
+                IEnumerable<COURSE_AVAIL> tcs = await teachTF.FromAsync(teachCourses.BeginExecute(null, null), iar => teachCourses.EndExecute(iar));
+
+                buyCourses = (DataServiceQuery<ATTEND>)(from buyC in ctx.ATTEND
+                                                        where buyC.CUSTOMER_ID == Constants.User.ID
+                                                        select buyC);
+                TaskFactory<IEnumerable<ATTEND>> buyCF = new TaskFactory<IEnumerable<ATTEND>>();
+                IEnumerable<ATTEND> bcs = await buyCF.FromAsync(buyCourses.BeginExecute(null, null), iar => buyCourses.EndExecute(iar));
+
+
+                foreach (var t in tcs)
                 {
-                    isTeach = true;
-                    break;
+                    if (t.ID == course.ID)
+                    {
+                        isTeach = true;
+                        break;
+                    }
+                }
+
+                foreach (var b in bcs)
+                {
+                    if (b.COURSE_ID == course.ID)
+                    {
+                        isBuy = true;
+                        break;
+                    }
                 }
             }
-
-            foreach (var b in bcs)
+            catch
             {
-                if (b.COURSE_ID == course.ID)
-                {
-                    isBuy = true;
-                    break;
-                }
+                ShowMessageDialog("Network connection error!");
+                Frame.GoBack();
             }
 
             if (course.Price == null || course.Price.Value == 0)
