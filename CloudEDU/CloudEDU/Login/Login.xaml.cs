@@ -142,6 +142,18 @@ namespace CloudEDU.Login
                             {
                                 var notAllowed = new MessageDialog("The User is forbidden!");
                                 await notAllowed.ShowAsync();
+                                string Uri = "/AddDBLog?opr='TryLoginFailBecauseUserForbiddened'&msg='" + c.NAME + "'";
+                                //ctx.UpdateObject(c);
+
+                                try
+                                {
+                                    TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
+                                    IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(Uri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
+
+                                }
+                                catch
+                                {
+                                }
                                 return;
                             }
                             Constants.Save<bool>("AutoLog", (bool)CheckAutoLogin.IsChecked);
