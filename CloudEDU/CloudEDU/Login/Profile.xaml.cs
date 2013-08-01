@@ -16,6 +16,7 @@ using CloudEDU.Service;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using System.Data.Services.Client;
+using System.Threading.Tasks;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上有介绍
 
@@ -125,6 +126,17 @@ namespace CloudEDU.Login
                 ctx.EndSaveChanges(result);
                 Constants.User = new User(changedCustomer);
                 //Constants.User = new User(changedCustomer);
+                string Uri = "/AddDBLog?opr='ChangeProfile'&msg='" + Constants.User.NAME + "'";
+
+                try
+                {
+                    TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
+                    IEnumerable<bool> resulta = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(Uri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
+                }
+                catch
+                {
+                }
+
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
                     Frame.GoBack();
