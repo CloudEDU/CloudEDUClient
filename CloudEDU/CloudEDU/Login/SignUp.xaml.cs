@@ -142,13 +142,13 @@ namespace CloudEDU.Login
         /// <summary>
         /// Network Connection error MessageDialog.
         /// </summary>
-        private async void ShowMessageDialog()
+        private async void ShowMessageDialog(String msg ="No network has been founddddddd!")
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
-                    var messageDialog = new MessageDialog("No Network has been found!");
+                    var messageDialog = new MessageDialog(msg);
                     messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
                     {
                         Frame.Navigate(typeof(SignUp));

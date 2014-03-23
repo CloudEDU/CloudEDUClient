@@ -29,7 +29,14 @@ namespace CloudEDU
     /// </summary>
     sealed partial class App : Application
     {
-        CloudEDUEntities ctx = null;
+        //CloudEDUEntities ctx = null;
+
+
+        private CloudEDUEntities ctx = null;
+        private DataServiceQuery<CUSTOMER> customerDsq = null;
+        private List<CUSTOMER> csl;
+
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -39,9 +46,19 @@ namespace CloudEDU
             this.InitializeComponent();
             this.Suspending += OnSuspending;
 
-             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
+            ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
 
         }
+
+
+
+        private void OnCustomerComplete(IAsyncResult result)
+        {
+            csl = customerDsq.EndExecute(result).ToList();
+            System.Diagnostics.Debug.WriteLine(csl[0].NAME);
+            Constants.User = new User(csl[0]);
+        }
+
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -51,6 +68,41 @@ namespace CloudEDU
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+
+
+            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
+            customerDsq.BeginExecute(OnCustomerComplete, null);
+
+
+
+            // Do not repeat app initialization when already running, just ensure that
+            // the window is active
+            if (args.PreviousExecutionState == ApplicationExecutionState.Running)
+            {
+                Window.Current.Activate();
+                return;
+            }
+
+            if (args.PreviousExecutionState == ApplicationExecutionState.Terminated)
+            {
+                //TODO: Load state from previously suspended application
+            }
+
+
+
+
+
+            // Create a Frame to act navigation context and navigate to the first page
+            var rootFrame = new Frame();
+            if (!rootFrame.Navigate(typeof(LoginSel)))
+            {
+                throw new Exception("Failed to create initial page");
+            }
+
+            // Place the frame in the current Window and ensure that it is active
+            Window.Current.Content = rootFrame;
+            Window.Current.Activate();
+            /*
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -67,6 +119,7 @@ namespace CloudEDU
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+                System.Diagnostics.Debug.WriteLine("rootframe == null");
             }
 
             if (rootFrame.Content == null)
@@ -75,20 +128,21 @@ namespace CloudEDU
                 // configuring the new page by passing required information as a navigation
                 // parameter
 
-
+                System.Diagnostics.Debug.WriteLine("rootframe.content == null");
                 Type goalPage;
 
                 // last user
                 if (Constants.Read<string>("LastUser") == default(string))
                 {
-                   
                     goalPage = typeof(Login.Login);
+                    //goalPage = typeof(CourseStore.Courstore);
                 }
                 else
                 {
                     System.Diagnostics.Debug.WriteLine(Constants.Read<string>("LastUser"));
                     Constants.User = User.SelectLastUser();
                     goalPage = typeof(LoginDefault);
+                    System.Diagnostics.Debug.WriteLine("LoginDefault");
                 }
 
                 // auto log
@@ -99,16 +153,19 @@ namespace CloudEDU
                     System.Diagnostics.Debug.WriteLine("ID:{0}, ATTEND:{1}, TEACH:{2}",
                         Constants.User.ID, Constants.User.ATTEND_COUNT, Constants.User.TEACH_COUNT);
                     goalPage = typeof(CourseStore.Courstore);
+                    System.Diagnostics.Debug.WriteLine("Courstore");
                 }
                 //goalPage = typeof(Login.Login);
                 if (!rootFrame.Navigate(goalPage, args.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
-
+                    System.Diagnostics.Debug.WriteLine("!rootframe");
                 }
+                System.Diagnostics.Debug.WriteLine("Outer");
             }
             // Ensure the current window is active
             Window.Current.Activate();
+            */
         }
 
         /// <summary>

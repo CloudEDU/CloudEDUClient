@@ -40,6 +40,7 @@
         <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="7" />
         <NavigationProperty Name="CATEGORY1" Relationship="CloudEDUModel.FK_COURSE_CATEGORY" ToRole="CATEGORY" FromRole="COURSE" />
         <NavigationProperty Name="COMMENT" Relationship="CloudEDUModel.FK_COMMENT_COURSE" ToRole="COMMENT" FromRole="COURSE" />
+        <NavigationProperty Name="SALEORDER" Relationship="CloudEDUModel.FK__SALEORDER__COURS__534D60F1" ToRole="SALEORDER" FromRole="COURSE" />
         <NavigationProperty Name="ATTEND" Relationship="CloudEDUModel.FK_ATTEND_COURSE" ToRole="ATTEND" FromRole="COURSE" />
         <NavigationProperty Name="PARENT_GUIDE" Relationship="CloudEDUModel.FK_COURSE_PG" ToRole="PARENT_GUIDE" FromRole="COURSE" />
         <NavigationProperty Name="CUSTOMER" Relationship="CloudEDUModel.FK_COURSE_TEACHER" ToRole="CUSTOMER" FromRole="COURSE" />
@@ -144,6 +145,8 @@
         <NavigationProperty Name="COURSE" Relationship="CloudEDUModel.FK_COURSE_TEACHER" ToRole="COURSE" FromRole="CUSTOMER" />
         <NavigationProperty Name="ATTEND" Relationship="CloudEDUModel.FK_ATTEND_CUSTOMER" ToRole="ATTEND" FromRole="CUSTOMER" />
         <NavigationProperty Name="NOTE" Relationship="CloudEDUModel.FK__NOTE__CUSTOMER_I__2334397B" ToRole="NOTE" FromRole="CUSTOMER" />
+        <NavigationProperty Name="SALEORDER" Relationship="CloudEDUModel.FK__SALEORDER__BUYER__5070F446" ToRole="SALEORDER" FromRole="CUSTOMER" />
+        <NavigationProperty Name="SALEORDER1" Relationship="CloudEDUModel.FK__SALEORDER__SALER__5165187F" ToRole="SALEORDER" FromRole="CUSTOMER" />
         <NavigationProperty Name="COURSE1" Relationship="CloudEDUModel.FAVORITE" ToRole="COURSE" FromRole="CUSTOMER" />
       </EntityType>
       <EntityType Name="NOTE">
@@ -159,6 +162,57 @@
         <Property Name="SHARE" Type="Edm.Boolean" Nullable="false" />
         <NavigationProperty Name="LESSON" Relationship="CloudEDUModel.FK__NOTE__LESSON_ID__3A81B327" ToRole="LESSON" FromRole="NOTE" />
         <NavigationProperty Name="CUSTOMER" Relationship="CloudEDUModel.FK__NOTE__CUSTOMER_I__2334397B" ToRole="CUSTOMER" FromRole="NOTE" />
+      </EntityType>
+      <EntityType Name="OPR_LOG">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="OPR" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+        <Property Name="OPR_TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <Property Name="MSG" Type="Edm.String" MaxLength="200" FixedLength="false" Unicode="true" />
+      </EntityType>
+      <EntityType Name="MANAGER">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="NAME" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="PASSWORD" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="MNGR_TYPE" Type="Edm.Int32" />
+        <NavigationProperty Name="TYPE" Relationship="CloudEDUModel.FK__MANAGER__MNGR_TY__44FF419A" ToRole="TYPE" FromRole="MANAGER" />
+        <NavigationProperty Name="PERMISSION" Relationship="CloudEDUModel.GRANTED" ToRole="PERMISSION" FromRole="MANAGER" />
+      </EntityType>
+      <EntityType Name="PERMISSION">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="NAME" Type="Edm.String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+        <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="20" FixedLength="true" Unicode="true" />
+        <NavigationProperty Name="MANAGER" Relationship="CloudEDUModel.GRANTED" ToRole="MANAGER" FromRole="PERMISSION" />
+      </EntityType>
+      <EntityType Name="TYPE">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="DESCRIPTION" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <NavigationProperty Name="MANAGER" Relationship="CloudEDUModel.FK__MANAGER__MNGR_TY__44FF419A" ToRole="MANAGER" FromRole="TYPE" />
+      </EntityType>
+      <EntityType Name="SALEORDER">
+        <Key>
+          <PropertyRef Name="ID" />
+        </Key>
+        <Property Name="BUYER" Type="Edm.Int32" Nullable="false" />
+        <Property Name="SALER" Type="Edm.Int32" Nullable="false" />
+        <Property Name="PRICE" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
+        <Property Name="COURSE" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+        <NavigationProperty Name="COURSE1" Relationship="CloudEDUModel.FK__SALEORDER__COURS__534D60F1" ToRole="COURSE" FromRole="SALEORDER" />
+        <NavigationProperty Name="CUSTOMER" Relationship="CloudEDUModel.FK__SALEORDER__BUYER__5070F446" ToRole="CUSTOMER" FromRole="SALEORDER" />
+        <NavigationProperty Name="CUSTOMER1" Relationship="CloudEDUModel.FK__SALEORDER__SALER__5165187F" ToRole="CUSTOMER" FromRole="SALEORDER" />
       </EntityType>
       <EntityType Name="COMMENT_DET">
         <Key>
@@ -327,6 +381,27 @@
         <Property Name="COURSE_ID" Type="Edm.Int32" Nullable="false" />
         <Property Name="LESSON_NUMBER" Type="Edm.Int32" Nullable="false" />
       </EntityType>
+      <EntityType Name="COURSE_CANCEL">
+        <Key>
+          <PropertyRef Name="ID" />
+          <PropertyRef Name="PRICE" />
+          <PropertyRef Name="TITLE" />
+          <PropertyRef Name="TEACHER" />
+          <PropertyRef Name="COURSE_STATUS" />
+          <PropertyRef Name="START_TIME" />
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false" p6:StoreGeneratedPattern="Identity" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+        <Property Name="PRICE" Type="Edm.Decimal" Nullable="false" Precision="19" Scale="4" />
+        <Property Name="RATE" Type="Edm.Double" />
+        <Property Name="TITLE" Type="Edm.String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        <Property Name="INTRO" Type="Edm.String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        <Property Name="TEACHER" Type="Edm.Int32" Nullable="false" />
+        <Property Name="CATEGORY" Type="Edm.Int32" />
+        <Property Name="COURSE_STATUS" Type="Edm.String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+        <Property Name="PG" Type="Edm.Int32" />
+        <Property Name="ICON_URL" Type="Edm.String" MaxLength="100" FixedLength="false" Unicode="true" />
+        <Property Name="START_TIME" Type="Edm.DateTime" Nullable="false" Precision="3" />
+      </EntityType>
       <Association Name="FK_COURSE_CATEGORY">
         <End Type="CloudEDUModel.CATEGORY" Role="CATEGORY" Multiplicity="0..1" />
         <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="*" />
@@ -362,6 +437,18 @@
           </Principal>
           <Dependent Role="COMMENT">
             <PropertyRef Name="COURSE_ID" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK__SALEORDER__COURS__534D60F1">
+        <End Type="CloudEDUModel.COURSE" Role="COURSE" Multiplicity="1" />
+        <End Type="CloudEDUModel.SALEORDER" Role="SALEORDER" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="COURSE">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="SALEORDER">
+            <PropertyRef Name="COURSE" />
           </Dependent>
         </ReferentialConstraint>
       </Association>
@@ -515,6 +602,46 @@
           </Dependent>
         </ReferentialConstraint>
       </Association>
+      <Association Name="FK__SALEORDER__BUYER__5070F446">
+        <End Type="CloudEDUModel.CUSTOMER" Role="CUSTOMER" Multiplicity="1" />
+        <End Type="CloudEDUModel.SALEORDER" Role="SALEORDER" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="CUSTOMER">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="SALEORDER">
+            <PropertyRef Name="BUYER" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK__SALEORDER__SALER__5165187F">
+        <End Type="CloudEDUModel.CUSTOMER" Role="CUSTOMER" Multiplicity="1" />
+        <End Type="CloudEDUModel.SALEORDER" Role="SALEORDER" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="CUSTOMER">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="SALEORDER">
+            <PropertyRef Name="SALER" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="FK__MANAGER__MNGR_TY__44FF419A">
+        <End Type="CloudEDUModel.TYPE" Role="TYPE" Multiplicity="0..1" />
+        <End Type="CloudEDUModel.MANAGER" Role="MANAGER" Multiplicity="*" />
+        <ReferentialConstraint>
+          <Principal Role="TYPE">
+            <PropertyRef Name="ID" />
+          </Principal>
+          <Dependent Role="MANAGER">
+            <PropertyRef Name="MNGR_TYPE" />
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="GRANTED">
+        <End Type="CloudEDUModel.PERMISSION" Role="PERMISSION" Multiplicity="*" />
+        <End Type="CloudEDUModel.MANAGER" Role="MANAGER" Multiplicity="*" />
+      </Association>
     </Schema>
     <Schema Namespace="DataService" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
       <EntityContainer Name="CloudEDUEntities" m:IsDefaultEntityContainer="true" p6:LazyLoadingEnabled="true" xmlns:p6="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
@@ -530,6 +657,11 @@
         <EntitySet Name="ATTEND" EntityType="CloudEDUModel.ATTEND" />
         <EntitySet Name="CUSTOMER" EntityType="CloudEDUModel.CUSTOMER" />
         <EntitySet Name="NOTE" EntityType="CloudEDUModel.NOTE" />
+        <EntitySet Name="OPR_LOG" EntityType="CloudEDUModel.OPR_LOG" />
+        <EntitySet Name="MANAGER" EntityType="CloudEDUModel.MANAGER" />
+        <EntitySet Name="PERMISSION" EntityType="CloudEDUModel.PERMISSION" />
+        <EntitySet Name="TYPE" EntityType="CloudEDUModel.TYPE" />
+        <EntitySet Name="SALEORDER" EntityType="CloudEDUModel.SALEORDER" />
         <EntitySet Name="COMMENT_DET" EntityType="CloudEDUModel.COMMENT_DET" />
         <EntitySet Name="COURSE_AVAIL" EntityType="CloudEDUModel.COURSE_AVAIL" />
         <EntitySet Name="COURSE_OK" EntityType="CloudEDUModel.COURSE_OK" />
@@ -538,6 +670,7 @@
         <EntitySet Name="NOTE_AVAIL" EntityType="CloudEDUModel.NOTE_AVAIL" />
         <EntitySet Name="NOTE_SHARABLE" EntityType="CloudEDUModel.NOTE_SHARABLE" />
         <EntitySet Name="NOTE_SHAREABLE_AVAIL" EntityType="CloudEDUModel.NOTE_SHAREABLE_AVAIL" />
+        <EntitySet Name="COURSE_CANCEL" EntityType="CloudEDUModel.COURSE_CANCEL" />
         <FunctionImport Name="EnrollCourse" ReturnType="Edm.Int32" m:HttpMethod="GET">
           <Parameter Name="customer_id" Type="Edm.Int32" Nullable="false" />
           <Parameter Name="course_id" Type="Edm.Int32" Nullable="false" />
@@ -551,20 +684,20 @@
           <Parameter Name="pg_id" Type="Edm.Int32" Nullable="false" />
           <Parameter Name="icon_url" Type="Edm.String" />
         </FunctionImport>
-        <FunctionImport Name="CreateLesson" ReturnType="Edm.Decimal" m:HttpMethod="GET">
-          <Parameter Name="course_id" Type="Edm.Int32" Nullable="false" />
-          <Parameter Name="content" Type="Edm.String" />
-          <Parameter Name="title" Type="Edm.String" />
-          <Parameter Name="number" Type="Edm.Int32" Nullable="false" />
+        <FunctionImport Name="AddDBLog" ReturnType="Edm.Int32" m:HttpMethod="GET">
+          <Parameter Name="MSG" Type="Edm.String" />
+          <Parameter Name="opr" Type="Edm.String" />
         </FunctionImport>
         <FunctionImport Name="GetAllCoursesAttendedByCustomer" ReturnType="Collection(CloudEDUModel.COURSE_AVAIL)" EntitySet="COURSE_AVAIL" m:HttpMethod="GET">
           <Parameter Name="customer_id" Type="Edm.Int32" Nullable="false" />
         </FunctionImport>
-        <FunctionImport Name="AddDBLog" ReturnType="Edm.Boolean" m:HttpMethod="GET">
-          <Parameter Name="opr" Type="Edm.String" />
-          <Parameter Name="msg" Type="Edm.String" />
+        <FunctionImport Name="CreateLesson" ReturnType="Edm.Decimal" m:HttpMethod="GET">
+          <Parameter Name="course_id" Type="Edm.Int32" Nullable="false" />
+          <Parameter Name="title" Type="Edm.String" />
+          <Parameter Name="number" Type="Edm.Int32" Nullable="false" />
+          <Parameter Name="content" Type="Edm.String" />
         </FunctionImport>
-        <FunctionImport Name="RemoveNote" ReturnType="Edm.Boolean" m:HttpMethod="GET">
+        <FunctionImport Name="RemoveNote" ReturnType="Edm.Int32" m:HttpMethod="GET">
           <Parameter Name="id" Type="Edm.Int32" Nullable="false" />
         </FunctionImport>
         <AssociationSet Name="FK_COURSE_CATEGORY" Association="CloudEDUModel.FK_COURSE_CATEGORY">
@@ -578,6 +711,10 @@
         <AssociationSet Name="FK_COMMENT_COURSE" Association="CloudEDUModel.FK_COMMENT_COURSE">
           <End Role="COMMENT" EntitySet="COMMENT" />
           <End Role="COURSE" EntitySet="COURSE" />
+        </AssociationSet>
+        <AssociationSet Name="FK__SALEORDER__COURS__534D60F1" Association="CloudEDUModel.FK__SALEORDER__COURS__534D60F1">
+          <End Role="COURSE" EntitySet="COURSE" />
+          <End Role="SALEORDER" EntitySet="SALEORDER" />
         </AssociationSet>
         <AssociationSet Name="FK_ATTEND_COURSE" Association="CloudEDUModel.FK_ATTEND_COURSE">
           <End Role="COURSE" EntitySet="COURSE" />
@@ -630,6 +767,22 @@
         <AssociationSet Name="FK__NOTE__CUSTOMER_I__2334397B" Association="CloudEDUModel.FK__NOTE__CUSTOMER_I__2334397B">
           <End Role="CUSTOMER" EntitySet="CUSTOMER" />
           <End Role="NOTE" EntitySet="NOTE" />
+        </AssociationSet>
+        <AssociationSet Name="FK__SALEORDER__BUYER__5070F446" Association="CloudEDUModel.FK__SALEORDER__BUYER__5070F446">
+          <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+          <End Role="SALEORDER" EntitySet="SALEORDER" />
+        </AssociationSet>
+        <AssociationSet Name="FK__SALEORDER__SALER__5165187F" Association="CloudEDUModel.FK__SALEORDER__SALER__5165187F">
+          <End Role="CUSTOMER" EntitySet="CUSTOMER" />
+          <End Role="SALEORDER" EntitySet="SALEORDER" />
+        </AssociationSet>
+        <AssociationSet Name="FK__MANAGER__MNGR_TY__44FF419A" Association="CloudEDUModel.FK__MANAGER__MNGR_TY__44FF419A">
+          <End Role="MANAGER" EntitySet="MANAGER" />
+          <End Role="TYPE" EntitySet="TYPE" />
+        </AssociationSet>
+        <AssociationSet Name="GRANTED" Association="CloudEDUModel.GRANTED">
+          <End Role="MANAGER" EntitySet="MANAGER" />
+          <End Role="PERMISSION" EntitySet="PERMISSION" />
         </AssociationSet>
       </EntityContainer>
     </Schema>

@@ -112,7 +112,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Network connection error!");
+                ShowMessageDialog("Network connection error!11");
                 return;
             }
 
@@ -369,7 +369,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch (Exception ex)
             {
-                ShowMessageDialog("Execution error!");
+                ShowMessageDialog("Execution error!12");
                 //if (!IsExceptionHandled("Execution error", ex, download))
                 //{
                    // throw;

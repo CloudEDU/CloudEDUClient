@@ -144,7 +144,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 }
                 catch
                 {
-                    ShowMessageDialog("Network connection error.");
+                    ShowMessageDialog("Network connection error.31");
                     return;
                 }
 
@@ -174,7 +174,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Network connection error!");
+                ShowMessageDialog("Network connection error!4");
             }
         }
 
@@ -225,7 +225,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Format error! Please check your input.");
+                ShowMessageDialog("Format error1! Please check your input.");
                 return;
             }
 
@@ -237,7 +237,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Edit failed! Network connection error.");
+                ShowMessageDialog("Edit failed! Network connection error.2");
                 EditCoursePopup.IsOpen = false;
                 return;
             }

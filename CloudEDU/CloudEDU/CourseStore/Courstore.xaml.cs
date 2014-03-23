@@ -38,7 +38,6 @@ namespace CloudEDU.CourseStore
         public Courstore()
         {
             this.InitializeComponent();
-
             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 
@@ -56,35 +55,56 @@ namespace CloudEDU.CourseStore
             {
                 if (Constants.RecUriDic.Count == 0 && Constants.CategoryNameList.Count == 0)
                 {
-                    DataServiceQuery<RECOMMENDATION> craDsq = (DataServiceQuery<RECOMMENDATION>)(from re in ctx.RECOMMENDATION
-                                                                                                 select re);
-                    TaskFactory<IEnumerable<RECOMMENDATION>> tf = new TaskFactory<IEnumerable<RECOMMENDATION>>();
-                    IEnumerable<RECOMMENDATION> recommendation = await tf.FromAsync(craDsq.BeginExecute(null, null), iar => craDsq.EndExecute(iar));
 
-                    DataServiceQuery<CATEGORY> cateDsq = (DataServiceQuery<CATEGORY>)(from cate in ctx.CATEGORY
-                                                                                      select cate);
-                    TaskFactory<IEnumerable<CATEGORY>> tfc = new TaskFactory<IEnumerable<CATEGORY>>();
-                    IEnumerable<CATEGORY> categories = await tfc.FromAsync(cateDsq.BeginExecute(null, null), iar => cateDsq.EndExecute(iar));
 
-                    foreach (var c in categories)
+
+                    try
                     {
-                        Constants.CategoryNameList.Add(c.CATE_NAME);
+                        DataServiceQuery<CATEGORY> cateDsq = (DataServiceQuery<CATEGORY>)(from cate in ctx.CATEGORY
+                                                                                          select cate);
+                        TaskFactory<IEnumerable<CATEGORY>> tfc = new TaskFactory<IEnumerable<CATEGORY>>();
+                        IEnumerable<CATEGORY> categories = await tfc.FromAsync(cateDsq.BeginExecute(null, null), iar => cateDsq.EndExecute(iar));
+                        foreach (var c in categories)
+                        {
+                            Constants.CategoryNameList.Add(c.CATE_NAME);
+                        }
                     }
-
-                    foreach (var r in recommendation)
+                    catch
                     {
-                        Constants.RecUriDic.Add(r.TITLE, r.ICON_URL);
+                        ShowMessageDialog("categories!");
                     }
+                    try
+                    {
+                        DataServiceQuery<RECOMMENDATION> craDsq = (DataServiceQuery<RECOMMENDATION>)(from re in ctx.RECOMMENDATION
+                                                                                                     select re);
+                        TaskFactory<IEnumerable<RECOMMENDATION>> tf = new TaskFactory<IEnumerable<RECOMMENDATION>>();
+                        IEnumerable<RECOMMENDATION> recommendation = await tf.FromAsync(craDsq.BeginExecute(null, null), iar => craDsq.EndExecute(iar));
+                        foreach (var r in recommendation)
+                        {
+                            Constants.RecUriDic.Add(r.TITLE, r.ICON_URL);
+                        }
+                    }
+                    catch
+                    {
+                        ShowMessageDialog("recommedations!");
+                    }
+                    
+
+
+                    
+
+                    
                 }
             }
             catch
             {
-                ShowMessageDialog();
+                ShowMessageDialog("On nav to");
             }
 
             courseDsq = (DataServiceQuery<COURSE_AVAIL>)(from course_avail in ctx.COURSE_AVAIL select course_avail);
             courseDsq.BeginExecute(OnCourseAvailComplete, null);
             UserProfileBt.DataContext = Constants.User;
+            //UserProfileBt.IsEnabled = false;
         }
 
         /// <summary>
@@ -122,7 +142,7 @@ namespace CloudEDU.CourseStore
             }
             catch
             {
-                ShowMessageDialog();
+                ShowMessageDialog("on course avail complete");
                 // Network Connection error.
             }
         }
@@ -130,25 +150,18 @@ namespace CloudEDU.CourseStore
         /// <summary>
         /// Network Connection error MessageDialog.
         /// </summary>
-        private async void ShowMessageDialog()
+        private async void ShowMessageDialog(String msg = "No Network has been found!")
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                 {
-                    try
-                    {
-                        var messageDialog = new MessageDialog("No Network has been found!");
-                        messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
-                            {
-                                Frame.Navigate(typeof(Courstore));
-                            }));
-                        messageDialog.Commands.Add(new UICommand("Close"));
-                        loadingProgressRing.IsActive = false;
-                        await messageDialog.ShowAsync();
-                    }
-                    catch
-                    {
-                        ShowMessageDialog();
-                    }
+                    var messageDialog = new MessageDialog(msg);
+                    messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                        {
+                            Frame.Navigate(typeof(Courstore));
+                        }));
+                    messageDialog.Commands.Add(new UICommand("Close"));
+                    loadingProgressRing.IsActive = false;
+                    await messageDialog.ShowAsync();
                 });
         }
 

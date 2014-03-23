@@ -54,6 +54,7 @@ namespace CloudEDU.Login
             BIRTHDAY = c.BIRTHDAY;
             BALANCE = c.BALANCE;
             ALLOW = c.ALLOW;
+            //!!!!!!!
             SetAttendTeachNumber();
             //TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();
             //customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER where user.NAME.Equals(InputUsername.Text) select user);
@@ -82,7 +83,7 @@ namespace CloudEDU.Login
             }
             catch
             {
-                ShowMessageDialog();
+                ShowMessageDialog("Set Attend Teach Number ");
             }
         }
 
@@ -138,12 +139,12 @@ namespace CloudEDU.Login
             //u.SetAttendTeachNumber();
             return u;
         }
-
-        private async void ShowMessageDialog()
+        
+        private async void ShowMessageDialog(String msg="No Network has beeeeeen found!")
         {
                 try
                 {
-                    var messageDialog = new MessageDialog("No Network has been found!");
+                    var messageDialog = new MessageDialog(msg);
                     
                     messageDialog.Commands.Add(new UICommand("Close"));
                     //loadingProgressRing.IsActive = false;

@@ -68,7 +68,7 @@ namespace CloudEDU.CourseStore
             }
             catch
             {
-                ShowMessageDialog("Network connection error!");
+                ShowMessageDialog("Network connection error2!");
                 Frame.GoBack();
             }
 
@@ -116,7 +116,7 @@ namespace CloudEDU.CourseStore
             }
             catch
             {
-                ShowMessageDialog("Network connection error!");
+                ShowMessageDialog("Network connection error3!");
                 Frame.GoBack();
             }
 
@@ -331,7 +331,7 @@ namespace CloudEDU.CourseStore
                     }
                     catch
                     {
-                        ShowMessageDialog("Network connection error!");
+                        ShowMessageDialog("Network connection error1!");
                         return;
                     }
                 }
@@ -358,7 +358,7 @@ namespace CloudEDU.CourseStore
         /// </summary>
         private async void ShowMessageDialog(string msg)
         {
-            var messageDialog = new MessageDialog("Format error! Please check your upload infomation.");
+            var messageDialog = new MessageDialog(msg);
             messageDialog.Commands.Add(new UICommand("Close"));
             await messageDialog.ShowAsync();
         }

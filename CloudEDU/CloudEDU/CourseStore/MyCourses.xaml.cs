@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -48,35 +50,66 @@ namespace CloudEDU.CourseStore
         /// property is typically used to configure the page.</param>
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
-            teachDsq = (DataServiceQuery<COURSE_AVAIL>)(from course in ctx.COURSE_AVAIL
-                                                        where course.TEACHER_NAME == Constants.User.NAME
-                                                        select course);
 
-            TaskFactory<IEnumerable<COURSE_AVAIL>> tf = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
-            IEnumerable<COURSE_AVAIL> attends = await tf.FromAsync(ctx.BeginExecute<COURSE_AVAIL>(
-                new Uri("/GetAllCoursesAttendedByCustomer?customer_id=" + Constants.User.ID, UriKind.Relative), null, null),
-                iar => ctx.EndExecute<COURSE_AVAIL>(iar));
-            IEnumerable<COURSE_AVAIL> teaches = await tf.FromAsync(teachDsq.BeginExecute(null, null), iar => teachDsq.EndExecute(iar));
-
-            courseData = new StoreData();
-            foreach (var c in attends)
+            try
             {
-                Course tmpCourse = Constants.CourseAvail2Course(c);
-                tmpCourse.IsBuy = true;
-                tmpCourse.IsTeach = false;
-                courseData.AddCourse(tmpCourse);
-            }
-            foreach (var c in teaches)
-            {
-                Course tmpCourse = Constants.CourseAvail2Course(c);
-                tmpCourse.IsTeach = true;
-                tmpCourse.IsBuy = false;
-                courseData.AddCourse(tmpCourse);
-            }
+                teachDsq = (DataServiceQuery<COURSE_AVAIL>)(from course in ctx.COURSE_AVAIL
+                                                            where course.TEACHER_NAME == Constants.User.NAME
+                                                            select course);
 
-            dataCategory = courseData.GetGroupsByAttendingOrTeaching();
-            cvs1.Source = dataCategory;
-            UserProfileBt.DataContext = Constants.User;
+                TaskFactory<IEnumerable<COURSE_AVAIL>> tf = new TaskFactory<IEnumerable<COURSE_AVAIL>>();
+
+
+                IEnumerable<COURSE_AVAIL> attends = await tf.FromAsync(ctx.BeginExecute<COURSE_AVAIL>(
+                    new Uri("/GetAllCoursesAttendedByCustomer?customer_id=" + Constants.User.ID, UriKind.Relative), null, null),
+                    iar => ctx.EndExecute<COURSE_AVAIL>(iar));
+                IEnumerable<COURSE_AVAIL> teaches = await tf.FromAsync(teachDsq.BeginExecute(null, null), iar => teachDsq.EndExecute(iar));
+
+
+                courseData = new StoreData();
+                foreach (var c in attends)
+                {
+                    Course tmpCourse = Constants.CourseAvail2Course(c);
+                    tmpCourse.IsBuy = true;
+                    tmpCourse.IsTeach = false;
+                    courseData.AddCourse(tmpCourse);
+                }
+                foreach (var c in teaches)
+                {
+                    Course tmpCourse = Constants.CourseAvail2Course(c);
+                    tmpCourse.IsTeach = true;
+                    tmpCourse.IsBuy = false;
+                    courseData.AddCourse(tmpCourse);
+                }
+
+                dataCategory = courseData.GetGroupsByAttendingOrTeaching();
+                cvs1.Source = dataCategory;
+                UserProfileBt.DataContext = Constants.User;
+
+            }
+            catch
+            {
+                ShowMessageDialog("on navi to");
+            }
+            
+        }
+
+
+
+
+        private async void ShowMessageDialog(String msg = "No Network has been found!")
+        {
+            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            {
+                var messageDialog = new MessageDialog(msg);
+                messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
+                {
+                    Frame.Navigate(typeof(Courstore));
+                }));
+                messageDialog.Commands.Add(new UICommand("Close"));
+                //loadingProgressRing.IsActive = false;
+                await messageDialog.ShowAsync();
+            });
         }
 
         private void OnCourseSeachComplete(IAsyncResult ar)

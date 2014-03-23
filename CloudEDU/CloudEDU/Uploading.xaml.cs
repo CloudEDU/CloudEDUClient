@@ -44,7 +44,7 @@ namespace CloudEDU
         private DataServiceQuery<PARENT_GUIDE> pgDsq = null;
 
         List<string> imagesFilterTypeList = new List<string> { ".png", ".jpg", ".bmp" };
-        List<string> docsFilterTypeList = new List<string> { ".doc", ".docx", ".pdf" };
+        List<string> docsFilterTypeList = new List<string> { ".doc", ".docx", ".pdf", ".txt" };
         List<string> audiosFilterTypeList = new List<string> { ".mp3", ".wmv" };
         List<string> videosFilterTypeList = new List<string> { ".mp4", ".avi", ".rm", ".rmvb" };
 
@@ -176,7 +176,7 @@ namespace CloudEDU
         {
             if (!CheckLessonInfomation())
             {
-                ShowMessageDialog("Format error! Please check your upload infomation.");
+                ShowMessageDialog("Format error1! Please check your upload infomation.");
                 return;
             }
             lessonUploadProgressRing.IsActive = true;
@@ -193,7 +193,7 @@ namespace CloudEDU
             if (audioParts != null) allParts.AddRange(audioParts);
             if (videoParts != null) allParts.AddRange(videoParts);
 
-            Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=" + Constants.User.NAME);
+            Uri uploadUri = new Uri(Constants.BaseURI + "Upload.aspx?username=" + Constants.User.NAME);
 
             BackgroundUploader uploader = new BackgroundUploader();
             try
@@ -207,7 +207,7 @@ namespace CloudEDU
             }
             catch
             {
-                ShowMessageDialog("Network connection error!");
+                ShowMessageDialog("Network connection error2!");
                 lessonCount--;
                 ResetPopup();
                 return;
@@ -261,7 +261,7 @@ namespace CloudEDU
 
             List<BackgroundTransferContentPart> imageParts = CreateBackgroundTransferContentPartList(images);
 
-            Uri uploadUri = new Uri("http://10.0.1.65/Upload/Upload.aspx?username=" + Constants.User.NAME);
+            Uri uploadUri = new Uri(Constants.BaseURI + "Upload.aspx?username=" + Constants.User.NAME);
 
             try
             {
@@ -275,7 +275,7 @@ namespace CloudEDU
             }
             catch
             {
-                ShowMessageDialog("Image uplaod error. Please check your network.");
+                ShowMessageDialog("Image uplaod error3. Please check your network.");
             }
         }
 
@@ -372,7 +372,7 @@ namespace CloudEDU
         {
             if (!CheckCourseInfomation())
             {
-                ShowMessageDialog("Format error! Please check your upload infomation.");
+                ShowMessageDialog("Format error4! Please check your upload infomation.");
                 return;
             }
 
@@ -397,7 +397,7 @@ namespace CloudEDU
             }
             catch
             {
-                ShowMessageDialog("Network connection error!");
+                ShowMessageDialog("Network connection error5!");
                 return;
             }
 
@@ -419,7 +419,7 @@ namespace CloudEDU
             }
             catch
             {
-                ShowMessageDialog("Course upload error! Please check your network.");
+                ShowMessageDialog("Course upload error6! Please check your network.");
                 return;
             }
 
@@ -440,7 +440,7 @@ namespace CloudEDU
                 }
                 catch
                 {
-                    ShowMessageDialog("Lesson error! Please check your network.");
+                    ShowMessageDialog("Lesson error7! Please check your network.");
                     return;
                 }
 
@@ -487,7 +487,7 @@ namespace CloudEDU
                 }
                 catch
                 {
-                    ShowMessageDialog("Uplaod error! Please check your network");
+                    ShowMessageDialog("Uplaod error8! Please check your network");
                     return;
                 }
             }
@@ -605,38 +605,58 @@ namespace CloudEDU
         {
             try
             {
-                Progress<UploadOperation> progressCallback = new Progress<UploadOperation>(UploadProgress);
-                if (start)
+                try
                 {
-                    // Start the upload and attach a progress handler.
-                    await upload.StartAsync().AsTask(cts.Token, progressCallback);
+                    Progress<UploadOperation> progressCallback = new Progress<UploadOperation>(UploadProgress);
+                    if (start)
+                    {
+                        // Start the upload and attach a progress handler.
+                        await upload.StartAsync().AsTask(cts.Token, progressCallback);
+                    }
+                    else
+                    {
+                        // The upload was already running when the application started, re-attach the progress handler.
+                        await upload.AttachAsync().AsTask(cts.Token, progressCallback);
+                    }
+
                 }
-                else
+                catch
                 {
-                    // The upload was already running when the application started, re-attach the progress handler.
-                    await upload.AttachAsync().AsTask(cts.Token, progressCallback);
+                    ShowMessageDialog("Error90! Upload canceled.");
                 }
 
-                ResponseInformation response = upload.GetResponseInformation();
-                foreach (var c in response.Headers)
-                {
-                    System.Diagnostics.Debug.WriteLine("{0}, {1}", c.Key, c.Value);
-                }
+                    ResponseInformation response = upload.GetResponseInformation();
+                    foreach (var c in response.Headers)
+                    {
+                        System.Diagnostics.Debug.WriteLine("{0}, {1}. markkkkkkkk", c.Key, c.Value);
+                    }
 
-                if (images != null && images.Count != 0 && hasImage == false)
-                {
-                    toBeUploadCourse.ImageUri = response.Headers[images.FirstOrDefault().Name];
-                    hasImage = true;
-                }
+                    if (images != null && images.Count != 0 && hasImage == false)
+                    {
+                        ///!!!!!!!!
+                        toBeUploadCourse.ImageUri = response.Headers[images.FirstOrDefault().Name];
+                        ///
+                        hasImage = true;
+                    }
+                
+                
+
+                //!!!!!!!!!
                 SaveUploadLessonToListAsync(response);
+               
+                
+                
+                
+                
             }
             catch (TaskCanceledException)
             {
-                ShowMessageDialog("Error! Upload canceled.");
+                ShowMessageDialog("Error9! Upload canceled.");
             }
             catch
             {
-                throw;
+                ShowMessageDialog("Error10! Upload canceled.");
+                //throw;
             }
         }
 
@@ -646,6 +666,7 @@ namespace CloudEDU
         /// <param name="response">The data responed by server.</param>
         private void SaveUploadLessonToListAsync(ResponseInformation response)
         {
+
             if (docs != null && docs.Count != 0 & allLessons[lessonCount - 1].GetDocList().Count == 0)
             {
                 foreach (var doc in docs)
@@ -868,13 +889,13 @@ namespace CloudEDU
         /// <summary>
         /// Network Connection error MessageDialog.
         /// </summary>
-        private async void ShowNetworkMessageDialog()
+        private async void ShowNetworkMessageDialog(String msg ="No network hasssss been found! ")
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
-                    var messageDialog = new MessageDialog("No Network has been found! You will lose all upload data!");
+                    var messageDialog = new MessageDialog(msg);
                     messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
                     {
                         Frame.Navigate(typeof(Uploading));

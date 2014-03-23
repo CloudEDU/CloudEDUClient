@@ -17,8 +17,6 @@ namespace CloudEDU.CourseStore
 
         public DBAccessAPIs()
         {
-
-
             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 
@@ -29,17 +27,14 @@ namespace CloudEDU.CourseStore
         public DataServiceQuery<NOTE> noteDsq = null;
         public DataServiceQuery<RES_TYPE> resTypeDsq = null;
         public DataServiceQuery<COURSE> courseDsq = null;
+        public DataServiceQuery<COURSE_AVAIL> teachDsq = null;
+
         public delegate string deleMethod(int a, string b);
 
         public static string test(deleMethod m)
         {
-
-            
             return m(1, "aaa");
-            
         }
-
-
 
         public delegate void onQueryComplete(IAsyncResult result);
         private onQueryComplete onUQC;
@@ -175,5 +170,8 @@ namespace CloudEDU.CourseStore
             this.onUQC = onComplete;
             resourceDsq.BeginExecute(onResComplete, null);
         }
+
+
+        //public void GetAttendedCourseAvailByName(String name,)
     }
 }

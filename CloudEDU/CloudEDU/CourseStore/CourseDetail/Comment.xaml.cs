@@ -106,13 +106,13 @@ namespace CloudEDU.CourseStore.CourseDetail
         /// <summary>
         /// Network Connection error MessageDialog.
         /// </summary>
-        private async void ShowMessageDialog()
+        private async void ShowMessageDialog(String msg = "No network has beennnn found !")
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
-                    var messageDialog = new MessageDialog("No Network has been found!");
+                    var messageDialog = new MessageDialog(msg);
                     messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
                     {
                         Frame.Navigate(typeof(Comment));
@@ -188,8 +188,8 @@ namespace CloudEDU.CourseStore.CourseDetail
                 WarningTextBlock.Visibility = Visibility.Collapsed;
             });
         }
-
-        private async void ShowMessageDialog(string msg)
+        /*
+        private async void ShowMessageDialog(string msg= "")
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
@@ -198,7 +198,7 @@ namespace CloudEDU.CourseStore.CourseDetail
                 await messageDialog.ShowAsync();
             });
         }
-
+        */
         /// <summary>
         /// Create a stackpanel representing a comment.
         /// </summary>

@@ -46,7 +46,8 @@ namespace CloudEDU.Login
         /// 属性通常用于配置页。</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Constants.User.SetAttendTeachNumber();  
+            //!!!!!!!!!!
+            Constants.User.SetAttendTeachNumber();
             image.DataContext = Constants.User;
             biggestGrid.DataContext = Constants.User;
             customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
@@ -146,7 +147,7 @@ namespace CloudEDU.Login
             }
             catch
             {
-                ShowMessageDialog();
+                ShowMessageDialog("On customer save change");
                 //Network Connection error.
             }
            
@@ -169,13 +170,13 @@ namespace CloudEDU.Login
         /// <summary>
         /// Network Connection error MessageDialog.
         /// </summary>
-        private async void ShowMessageDialog()
+        private async void ShowMessageDialog(String msg = "No Network has been found!")
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
-                    var messageDialog = new MessageDialog("No Network has been found!");
+                    var messageDialog = new MessageDialog(msg);
                     //messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
                     //{
                     //    Frame.Navigate(typeof(Profile));

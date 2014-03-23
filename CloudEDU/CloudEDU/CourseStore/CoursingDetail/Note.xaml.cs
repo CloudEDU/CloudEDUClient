@@ -85,7 +85,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Network connection error!");
+                ShowMessageDialog("Network connection error27!");
             }
         }
 
@@ -105,7 +105,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Network connection error!");
+                ShowMessageDialog("Network connection error!21");
             }
         }
 
@@ -250,13 +250,13 @@ namespace CloudEDU.CourseStore.CoursingDetail
                 }
                 else
                 {
-                    ShowMessageDialog("Delete error.");
+                    ShowMessageDialog("Delete error.22");
                 }
 
             }
             catch
             {
-                ShowMessageDialog("Network connection error.");
+                ShowMessageDialog("Network connection error.23");
             }
         }
 
@@ -305,7 +305,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Network connection error!");
+                ShowMessageDialog("Network connection error38!");
             }
         }
 
@@ -332,7 +332,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Network connection error!");
+                ShowMessageDialog("Network connection error!24");
                 return;
             }
 
@@ -349,7 +349,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Update error! Please check your network.");
+                ShowMessageDialog("Update error25! Please check your network.");
                 addNotePopup.IsOpen = false;
                 return;
             }
@@ -381,7 +381,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             }
             catch
             {
-                ShowMessageDialog("Seach failed or Network connection error!");
+                ShowMessageDialog("Seach failed or Network connection error26!");
                 return;
             }
             List<string> allLessonString = new List<string>();

@@ -123,7 +123,7 @@ namespace CloudEDU.CourseStore
         /// <summary>
         /// Network Connection error MessageDialog.
         /// </summary>
-        private async void ShowMessageDialog()
+        private async void ShowMessageDialog(String msg = "No network has been fooooooound ")
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {

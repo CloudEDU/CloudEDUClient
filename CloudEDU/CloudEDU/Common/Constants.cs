@@ -18,8 +18,8 @@ namespace CloudEDU.Common
 {
     public class Constants
     {
-        public static string BaseURI = "http://10.0.1.65/Upload/";
-        public static string DataServiceURI = "http://10.0.1.16/Service.svc/";
+        public static string BaseURI = "http://10.0.1.90/BackgroundTransferSample/";
+        public static string DataServiceURI = "http://10.0.1.90/DataService/Service.svc/";
 
         public static string FillStar = "\x2605";
         public static string BlankStar = "\x2606";

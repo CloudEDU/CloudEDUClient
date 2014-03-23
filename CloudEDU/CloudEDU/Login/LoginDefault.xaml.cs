@@ -100,12 +100,18 @@ namespace CloudEDU.Login
 
         private async void LoginButton_Click(object sende, RoutedEventArgs e)
         {
+
+            bool isLogined = false;
+
             if (InputPassword.Password.Equals(string.Empty))
             {
                 var messageDialog = new MessageDialog("Please Check your input!");
                 await messageDialog.ShowAsync();
                 return;
             }
+
+
+            
             try
             {
                 TaskFactory<IEnumerable<CUSTOMER>> tf = new TaskFactory<IEnumerable<CUSTOMER>>();
@@ -116,8 +122,30 @@ namespace CloudEDU.Login
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
-                ShowMessageDialog();
+                ShowMessageDialog("customerdsq error!");
             }
+            
+
+            foreach (CUSTOMER c in csl)
+            {
+                if (c.NAME.Equals(Constants.User.NAME))
+                {
+                    if (c.PASSWORD == Constants.ComputeMD5(InputPassword.Password))
+                    {
+                        if (!c.ALLOW)
+                        {
+                            ShowMessageDialog("The User is forbidden");
+                        }
+                        Constants.User = new User(c);
+                        isLogined = true;
+                        Frame.Navigate(typeof(CourseStore.Courstore));
+
+                    }
+                }
+            }
+
+            /*
+
             bool isLogined = false;
             try
             {
@@ -144,7 +172,6 @@ namespace CloudEDU.Login
                             {
                                 TaskFactory<IEnumerable<bool>> tf = new TaskFactory<IEnumerable<bool>>();
                                 IEnumerable<bool> result = await tf.FromAsync(ctx.BeginExecute<bool>(new Uri(courseUplaodUri, UriKind.Relative), null, null), iar => ctx.EndExecute<bool>(iar));
-
                             }
                             catch
                             {
@@ -163,23 +190,23 @@ namespace CloudEDU.Login
                     exp.Message, exp.InnerException, exp.StackTrace);
                 ShowMessageDialog();
             }
-
+            */
             if (!isLogined)
             {
-                var msgDialog = new MessageDialog("Username Or Password is wrong");
-                await msgDialog.ShowAsync();
+                ShowMessageDialog("Username or password is wrong!");
             }
+            
         }
         /// <summary>
         /// Network Connection error MessageDialog.
         /// </summary>
-        private async void ShowMessageDialog()
+        private async void ShowMessageDialog(String msg="No Network has been foundddd!")
         {
             await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
             {
                 try
                 {
-                    var messageDialog = new MessageDialog("No Network has been found!");
+                    var messageDialog = new MessageDialog(msg);
                     messageDialog.Commands.Add(new UICommand("Try Again", (command) =>
                     {
                         Frame.Navigate(typeof(LoginDefault));
