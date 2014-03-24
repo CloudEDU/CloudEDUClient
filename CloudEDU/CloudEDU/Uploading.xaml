@@ -48,8 +48,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
             <RowDefinition Height="100" />
-            <RowDefinition Height="190*" />
-            <RowDefinition Height="150*"/>
+            <RowDefinition Height="100" />
+            <RowDefinition Height="290" />
+            <RowDefinition Height="80*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -66,11 +67,11 @@
             </StackPanel>
         </Grid> 
 
-        <Border Grid.Row="1" BorderBrush="{x:Null}" Background="#7ECEF4" Width="930"
-                HorizontalAlignment="Center" BorderThickness="0" Margin="183,0,258,0">
+        <Border Grid.Row="2" BorderBrush="{x:Null}" Background="#7ECEF4" Width="930"
+                HorizontalAlignment="Center" BorderThickness="0" Margin="183, 0, 258, 0">
                 <TextBox x:Name="courseNameTextBox" TextAlignment="Center" i:WatermarkTextBehavior.Text="Course Name" FontSize="60" BorderThickness="0"/>
         </Border>
-        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="140, 0" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="3" Orientation="Vertical" Margin="140, 0, 140, 0" HorizontalAlignment="Center">
             <TextBox x:Name="CourseDescriptionTextBox" Style="{StaticResource PopupTextBoxStyle}" Width="930" i:WatermarkTextBehavior.Text="Description..." TextWrapping="Wrap" TextAlignment="Center" />
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="priceTextBox" Style="{StaticResource PopupTextBoxStyle}" Width="420" TextAlignment="Center" i:WatermarkTextBehavior.Text="Price"  BorderThickness="0" />
@@ -110,8 +111,8 @@
             </StackPanel>
         </StackPanel>
 
-        <ScrollViewer Grid.Row="3" Style="{StaticResource VerticalScrollViewerStyle}" VerticalScrollBarVisibility="Hidden"
-                      HorizontalAlignment="Center" Margin="140,0,226,20">
+        <ScrollViewer x:Name="lessonScrollView" Grid.Row="4" Style="{StaticResource VerticalScrollViewerStyle}" VerticalScrollBarVisibility="Hidden"
+                      HorizontalAlignment="Center" Margin="0,0,0,50">
             <StackPanel Orientation="Vertical" Width="1000">
                 <StackPanel Orientation="Vertical">
                     <Grid Background="#00B7EE">
@@ -169,9 +170,9 @@
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
-        <ProgressBar x:Name="uploadProgressBar" Grid.Row="3" IsIndeterminate="True" VerticalAlignment="Bottom" Height="30" Visibility="Collapsed" />
+        <ProgressBar x:Name="uploadProgressBar" Grid.Row="4" IsIndeterminate="True" VerticalAlignment="Bottom" Height="30" Visibility="Collapsed" />
 
-        <Popup Grid.RowSpan="4" Name="addLessonPopup" IsOpen="False" IsLightDismissEnabled="False">
+        <Popup Grid.RowSpan="4" Name="addLessonPopup" IsOpen="False" IsLightDismissEnabled="False"  VerticalAlignment="Center" HorizontalAlignment="Center">
             <Popup.ChildTransitions>
                 <TransitionCollection>
                     <PaneThemeTransition />
@@ -179,7 +180,7 @@
             </Popup.ChildTransitions>
 
             <Grid Width="1366" Height="600" Background="White"
-                  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 70, 0, 70">
+                  HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="-683, -200, 0, 0">
                 <StackPanel Orientation="Vertical" Margin="20, 20">
                     <StackPanel Orientation="Horizontal">
                         <TextBox x:Name="lessonName" Style="{StaticResource PopupTextBoxStyle}"

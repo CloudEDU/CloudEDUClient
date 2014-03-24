@@ -214,6 +214,7 @@ namespace CloudEDU
             }
 
             AddLessonInfo();
+            lessonScrollView.ScrollToVerticalOffset(lessonScrollView.VerticalOffset);
             lessonUploadProgressRing.IsActive = false;
             UploadLessionButton.Visibility = Visibility.Visible;
             CancelUploadButton.Visibility = Visibility.Visible;

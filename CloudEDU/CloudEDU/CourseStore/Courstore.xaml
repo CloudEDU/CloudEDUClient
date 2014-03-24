@@ -26,6 +26,7 @@
             <SemanticZoom.ZoomedOutView>
                 <GridView x:Name="ZoomedOutGV" SelectionMode="None"
                           ScrollViewer.IsHorizontalScrollChainingEnabled="False"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                           ItemsSource="{Binding Source={StaticResource cvs1}}">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -58,6 +59,7 @@
                           ItemsSource="{Binding Source={StaticResource cvs1}}"
                           ItemTemplate="{StaticResource GridViewItemTemplate}"
                           ItemContainerStyleSelector="{StaticResource VariableSizedStyleSelector}"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                           IsItemClickEnabled="True" ItemClick="Course_ItemClick">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>

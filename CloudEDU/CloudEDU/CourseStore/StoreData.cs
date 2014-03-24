@@ -150,26 +150,26 @@ namespace CloudEDU.CourseStore
                 {
                     case 1:
                         {
-                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.SquareGridViewItemContainerSize;
                             break;
                         }
                     case 2:
                         {
-                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
-                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
                             break;
                         }
                     case 3:
                         {
-                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
                             (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
-                            (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.SquareGridViewItemContainerSize;
                             break;
                         }
                     case 4:
                         {
-                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
-                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
+                            (g.Courses.ElementAt(0) as Course).ItemContainerType = GridViewItemContainerType.DoubleWidthGridViewItemContsinerSize;
+                            (g.Courses.ElementAt(1) as Course).ItemContainerType = GridViewItemContainerType.DoubleHeightGridViewItemContainerSize;
                             (g.Courses.ElementAt(2) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
                             (g.Courses.ElementAt(3) as Course).ItemContainerType = GridViewItemContainerType.DefaultGridViewItemContainerSize;
                             break;
