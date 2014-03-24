@@ -20,7 +20,7 @@
     
     <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource LoginPageBackgroundThemeBrush}">
         <TextBox x:Name="InputUsername"  HorizontalAlignment="Center" Margin="-120, -70, 0, 0" VerticalAlignment="Center"
-                 Width="300" Height="50" Background="#DDECF1" FontFamily="Candara" TextAlignment="Center" FontSize="25"
+                 Width="300" Height="50" Background="#DDECF1" FontFamily="Candara" TextAlignment="Left" FontSize="25"
                  BorderThickness="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxLength="14"
                  i:WatermarkTextBehavior.Text="Username" TextChanged="InputUsername_TextChanged" />
                 <!--<wm:WatermarkTextBox.WatermarkTextStyle>
@@ -35,10 +35,10 @@
 
         <PasswordBox x:Name="InputPassword" Style="{StaticResource ResourceKey=PasswordBox}" KeyDown="InputPassword_KeyDown" />
         <CheckBox x:Name="CheckAutoLogin" Content="Auto-Log" HorizontalAlignment="center" Margin="300, -70, 0, 0"
-                  VerticalAlignment="Center" Foreground="White" />
-        <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}" Margin="300, 130, 0, 0"
+                  VerticalAlignment="Center" Foreground="White" Visibility="Collapsed" />
+        <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}" Margin="784,400,482,268"
                 Width="100" Height="100" VerticalAlignment="Center" AutomationProperties.Name="" Click="LoginButton_Click" Foreground="white" />
-        <Button Content="Sign Up?" HorizontalAlignment="Center" Margin="0, 200, 0, 0" VerticalAlignment="Center"
+        <Button Content="Sign Up?" HorizontalAlignment="Center" Margin="780,333,482,396" VerticalAlignment="Center"
                 FontFamily="Candara" FontSize="20" BorderThickness="0" Background="Transparent"
                 Foreground="White" Click="SignUpButton_Click" />
 
