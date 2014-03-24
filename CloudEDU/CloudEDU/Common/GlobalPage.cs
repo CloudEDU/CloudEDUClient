@@ -19,7 +19,7 @@ namespace CloudEDU.Common
             // Create the global appbar
             globalAppBar = new AppBar();
             globalAppBar.Content = new AppbarContent();
-            globalAppBar.Background = Application.Current.Resources["LoginPageBackgroundThemeBrush"] as SolidColorBrush;
+            globalAppBar.Background = Application.Current.Resources["AddBarBackgroundBrush"] as SolidColorBrush;
             globalAppBar.Opened += globalAppBar_Opened;
 
             this.BottomAppBar = globalAppBar;

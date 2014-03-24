@@ -210,20 +210,40 @@ namespace CloudEDU.CourseStore
 
         private void SearchKey_KeyUp(object sender, KeyRoutedEventArgs e)
         {
+            if (e.Key == Windows.System.VirtualKey.Escape)
+            {
+                courstoreSearchBox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                courstoreSearchBox.Text = "";
+            }
+            else if (e.Key == Windows.System.VirtualKey.Enter && courstoreSearchBox.Text.Length != 0)
+            {
+                string searchKeyText = courstoreSearchBox.Text;
+                Frame.Navigate(typeof(SearchResult), searchKeyText);
+            }
+            else
+            {
+                courstoreSearchBox.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                courstoreSearchBox.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+            }
+        }
+
+        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            courstoreSearchBox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            courstoreSearchBox.Text = "";
+        }
+
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            courstoreSearchBox.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
+        private void CourstoreGrid_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
             if (e.Key != Windows.System.VirtualKey.Enter)
             {
-                GlobalPage.globalAppBar.IsOpen = true;
-                AppbarContent.searchTextBlock.Focus(Windows.UI.Xaml.FocusState.Programmatic);
-                AppbarContent.searchTextBlock.Text = AppbarContent.searchTextBlock.Text + e.Key.ToString();
-            }
-            else if (e.Key == Windows.System.VirtualKey.Enter)
-            {
-                string searchText = AppbarContent.searchTextBlock.Text;
-                System.Diagnostics.Debug.WriteLine("search Test = " + searchText);
-                if (searchText != null && searchText.Length != 0)
-                {
-                    ((Frame)Window.Current.Content).Navigate(typeof(CourseStore.SearchResult), searchText);
-                }
+                courstoreSearchBox.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                courstoreSearchBox.Focus(Windows.UI.Xaml.FocusState.Programmatic);
             }
         }
     }

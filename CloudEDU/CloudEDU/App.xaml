@@ -19,6 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Global Brush -->
+            <SolidColorBrush x:Key="AddBarBackgroundBrush" Color="#5DB6FF" />
             <SolidColorBrush x:Key="LoginPageBackgroundThemeBrush" Color="#53A1B8" />
             <SolidColorBrush x:Key="StorePageBackgroundThemeBrush" Color="White" />
 
