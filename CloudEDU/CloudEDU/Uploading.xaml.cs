@@ -44,7 +44,7 @@ namespace CloudEDU
         private DataServiceQuery<PARENT_GUIDE> pgDsq = null;
 
         List<string> imagesFilterTypeList = new List<string> { ".png", ".jpg", ".bmp" };
-        List<string> docsFilterTypeList = new List<string> { ".doc", ".docx", ".pdf", ".txt" };
+        List<string> docsFilterTypeList = new List<string> { ".doc", ".docx", ".pdf", ".txt", ".ppt", ".pptx" };
         List<string> audiosFilterTypeList = new List<string> { ".mp3", ".wmv" };
         List<string> videosFilterTypeList = new List<string> { ".mp4", ".avi", ".rm", ".rmvb" };
 

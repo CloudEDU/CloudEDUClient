@@ -70,8 +70,8 @@ namespace CloudEDU
         {
 
 
-            customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
-            customerDsq.BeginExecute(OnCustomerComplete, null);
+            //customerDsq = (DataServiceQuery<CUSTOMER>)(from user in ctx.CUSTOMER select user);
+            //customerDsq.BeginExecute(OnCustomerComplete, null);
 
 
 

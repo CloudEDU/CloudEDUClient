@@ -13,7 +13,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1" Margin="60, 0, 60, 200">
+        <Grid Grid.Row="1" Margin="60, 0, 60, 350">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
@@ -31,7 +31,7 @@
                         </Border.Background>
                     </Border>
                 </Border>
-                <StackPanel Grid.Column="1" Margin="20, 50, 20, 50">
+                <StackPanel Grid.Column="1" Margin="20, 50, 20, 50" VerticalAlignment="Center">
                     <StackPanel.Transitions>
                         <TransitionCollection>
                             <AddDeleteThemeTransition />
@@ -65,7 +65,7 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Column="1" Background="#EDF5F8">
-                <StackPanel Margin="20, 30, 20, 40" Orientation="Vertical">
+                <StackPanel Margin="20, 30, 20, 40" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <StackPanel.ChildrenTransitions>
                         <TransitionCollection>
                             <AddDeleteThemeTransition />

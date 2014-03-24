@@ -18,7 +18,11 @@
             <Button x:Name="UploadCourseButton" Style="{StaticResource UploadAppBarButtonStyle}" AutomationProperties.Name="Upload Course"
                     Click="UploadCourseButton_Click" />
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50, 0, 0, 0" Orientation="Horizontal">
-                <TextBox x:Name="searchBox" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="200" Margin="50, 0, 0, 0" KeyUp="Enter_Clicked" />
+                <TextBlock Text="Search" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                <Border CornerRadius="10" Height="50" Width="200" Margin="10, 0, 0, 0">
+                    <TextBox x:Name="searchBox" VerticalAlignment="Center" Width="200" Height="40" HorizontalAlignment="Center" KeyUp="Enter_Clicked" Background="Azure" />
+                </Border>
+               
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
