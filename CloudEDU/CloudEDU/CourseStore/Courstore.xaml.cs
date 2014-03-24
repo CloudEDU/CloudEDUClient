@@ -212,19 +212,31 @@ namespace CloudEDU.CourseStore
         {
             if (e.Key != Windows.System.VirtualKey.Enter)
             {
-                GlobalPage.globalAppBar.IsOpen = true;
-                AppbarContent.searchTextBlock.Focus(Windows.UI.Xaml.FocusState.Programmatic);
-                AppbarContent.searchTextBlock.Text = AppbarContent.searchTextBlock.Text + e.Key.ToString();
+                courstoreSearchBox.Visibility = Windows.UI.Xaml.Visibility.Visible;
+                courstoreSearchBox.Focus(Windows.UI.Xaml.FocusState.Programmatic);
             }
-            else if (e.Key == Windows.System.VirtualKey.Enter)
+            else if (e.Key == Windows.System.VirtualKey.Escape)
             {
-                string searchText = AppbarContent.searchTextBlock.Text;
-                System.Diagnostics.Debug.WriteLine("search Test = " + searchText);
-                if (searchText != null && searchText.Length != 0)
-                {
-                    ((Frame)Window.Current.Content).Navigate(typeof(CourseStore.SearchResult), searchText);
-                }
+                courstoreSearchBox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+                courstoreSearchBox.Text = "";
+            }
+            else
+            {
+                string searchKeyText = courstoreSearchBox.Text;
+                Frame.Navigate(typeof(SearchResult), searchKeyText);
             }
         }
+
+        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            courstoreSearchBox.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            courstoreSearchBox.Text = "";
+        }
+
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            courstoreSearchBox.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+
     }
 }

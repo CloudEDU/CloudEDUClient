@@ -16,8 +16,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
             <RowDefinition />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        
+
+        <TextBox x:Name="courstoreSearchBox" Grid.Row="2" Width="200" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20, 0" Visibility="Collapsed"
+                 KeyUp="SearchKey_KeyUp" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus" />
+            
         <SemanticZoom Grid.Row="1" x:Name="SemanticZoom">
             <SemanticZoom.ZoomedOutView>
                 <GridView x:Name="ZoomedOutGV" SelectionMode="None"
