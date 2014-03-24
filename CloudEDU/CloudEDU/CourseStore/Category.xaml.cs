@@ -38,7 +38,7 @@ namespace CloudEDU.CourseStore
         public Category()
         {
             this.InitializeComponent();
-
+            
             ctx = new CloudEDUEntities(new Uri(Constants.DataServiceURI));
         }
 

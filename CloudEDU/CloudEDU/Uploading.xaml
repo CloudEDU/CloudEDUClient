@@ -70,7 +70,7 @@
                 HorizontalAlignment="Center" BorderThickness="0" Margin="183,0,258,0">
                 <TextBox x:Name="courseNameTextBox" TextAlignment="Center" i:WatermarkTextBehavior.Text="Course Name" FontSize="60" BorderThickness="0"/>
         </Border>
-        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="140, 0">
+        <StackPanel Grid.Row="2" Orientation="Vertical" Margin="140, 0" HorizontalAlignment="Center">
             <TextBox x:Name="CourseDescriptionTextBox" Style="{StaticResource PopupTextBoxStyle}" Width="930" i:WatermarkTextBehavior.Text="Description..." TextWrapping="Wrap" TextAlignment="Center" />
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="priceTextBox" Style="{StaticResource PopupTextBoxStyle}" Width="420" TextAlignment="Center" i:WatermarkTextBehavior.Text="Price"  BorderThickness="0" />

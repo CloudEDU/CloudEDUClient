@@ -12,7 +12,7 @@
         <CollectionViewSource x:Name="cvs1" IsSourceGrouped="True" />
     </Page.Resources>
 
-    <Grid Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+    <Grid KeyUp="SearchKey_KeyUp" Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="150" />
             <RowDefinition />
@@ -97,8 +97,9 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"
                        HorizontalAlignment="Left" Text="Courstore" VerticalAlignment="Center"
-                       FontSize="100" Margin="0, -10"/>
-            <common:UserProfileButton x:Name="UserProfileBt" Grid.Column="2" DataContext="{Binding Mode=OneWay}" Content="{Binding ImageSource}" Click="UserProfileButton_Click" UserName="{Binding NAME}"/>
+                       FontSize="100" Margin="0, -10" />
+            <common:UserProfileButton x:Name="UserProfileBt" Grid.Column="2" DataContext="{Binding Mode=OneWay}"
+                                      Content="{Binding ImageSource}" Click="UserProfileButton_Click" UserName="{Binding NAME}" />
         </Grid>
     </Grid>
 </common:GlobalPage>

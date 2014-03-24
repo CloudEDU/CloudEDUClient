@@ -37,10 +37,7 @@ namespace CloudEDU.CourseStore
         /// property is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            storeSampleData = new StoreData();
-            dataCategory = storeSampleData.GetSingleGroupByCategoryTitle("newest");
-            cvs1.Source = dataCategory;
-            UserProfileBt.DataContext = Constants.User;
+            
         }
 
         /// <summary>

@@ -207,5 +207,24 @@ namespace CloudEDU.CourseStore
         {
             Frame.Navigate(typeof(Login.Profile));
         }
+
+        private void SearchKey_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key != Windows.System.VirtualKey.Enter)
+            {
+                GlobalPage.globalAppBar.IsOpen = true;
+                AppbarContent.searchTextBlock.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+                AppbarContent.searchTextBlock.Text = AppbarContent.searchTextBlock.Text + e.Key.ToString();
+            }
+            else if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                string searchText = AppbarContent.searchTextBlock.Text;
+                System.Diagnostics.Debug.WriteLine("search Test = " + searchText);
+                if (searchText != null && searchText.Length != 0)
+                {
+                    ((Frame)Window.Current.Content).Navigate(typeof(CourseStore.SearchResult), searchText);
+                }
+            }
+        }
     }
 }

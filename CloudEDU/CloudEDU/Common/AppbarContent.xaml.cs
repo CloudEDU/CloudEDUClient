@@ -1,4 +1,5 @@
-﻿using CloudEDU.Service;
+﻿using CloudEDU.Common;
+using CloudEDU.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -20,9 +22,13 @@ namespace CloudEDU.Common
 {
     public sealed partial class AppbarContent : UserControl
     {
+        public static TextBox searchTextBlock = null;
+     
         public AppbarContent()
         {
             this.InitializeComponent();
+
+            searchTextBlock = searchBox;
         }
 
         /// <summary>
@@ -68,6 +74,18 @@ namespace CloudEDU.Common
             }
             catch
             {
+            }
+        }
+
+        private void Enter_Clicked(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                string searchText = searchBox.Text;
+                if (searchText != null && searchText.Length != 0)
+                {
+                    ((Frame)Window.Current.Content).Navigate(typeof(CourseStore.SearchResult), searchText);
+                }
             }
         }
     }

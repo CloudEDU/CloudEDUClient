@@ -71,6 +71,14 @@ namespace CloudEDU.CourseStore
         #endregion
 
         #region Different ways used to get the groups
+
+        //internal List<GroupInfoList<object>> GetSearchResultBySearchString(string searchString)
+        //{
+        //    List<GroupInfoList<object>> group = new List<GroupInfoList<object>>();
+
+
+        //}
+
         /// <summary>
         /// Get the single group classified by the category Title.
         /// </summary>
@@ -229,6 +237,23 @@ namespace CloudEDU.CourseStore
             groups.Add(teaching);
 
             return groups;
+        }
+
+        internal List<GroupInfoList<object>> GetSearchResultGroup(string searchKey)
+        {
+            List<GroupInfoList<object>> group = new List<GroupInfoList<object>>();
+
+            GroupInfoList<object> searchResult = new GroupInfoList<object>();
+            searchResult.Key = "Search for \"" + searchKey +"\"";
+
+            foreach (Course g in Collection)
+            {
+                searchResult.Add(g);
+            }
+
+            group.Add(searchResult);
+
+            return group;
         }
         #endregion
     }

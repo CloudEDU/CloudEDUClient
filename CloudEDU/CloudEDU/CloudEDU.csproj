@@ -157,6 +157,9 @@
     <Compile Include="CourseStore\MyCourses.xaml.cs">
       <DependentUpon>MyCourses.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CourseStore\SearchResult.xaml.cs">
+      <DependentUpon>SearchResult.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CourseStore\StorageFolderExtension.cs" />
     <Compile Include="CourseStore\StoreData.cs" />
     <Compile Include="CourseStore\CourseOverview.xaml.cs">
@@ -312,6 +315,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CourseStore\CourseOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CourseStore\SearchResult.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

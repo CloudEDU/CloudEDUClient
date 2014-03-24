@@ -94,7 +94,7 @@ namespace CloudEDU
 
             // Create a Frame to act navigation context and navigate to the first page
             var rootFrame = new Frame();
-            if (!rootFrame.Navigate(typeof(LoginSel)))
+            if (!rootFrame.Navigate(typeof(Login.Login)))
             {
                 throw new Exception("Failed to create initial page");
             }

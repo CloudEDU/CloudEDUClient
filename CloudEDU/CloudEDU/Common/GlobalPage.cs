@@ -12,7 +12,7 @@ namespace CloudEDU.Common
 {
     public class GlobalPage : Page
     {
-        AppBar globalAppBar = null;
+        public static AppBar globalAppBar = null;
 
         public GlobalPage()
         {
@@ -20,8 +20,19 @@ namespace CloudEDU.Common
             globalAppBar = new AppBar();
             globalAppBar.Content = new AppbarContent();
             globalAppBar.Background = Application.Current.Resources["LoginPageBackgroundThemeBrush"] as SolidColorBrush;
-            
+            globalAppBar.Opened += globalAppBar_Opened;
+
             this.BottomAppBar = globalAppBar;
+        }
+
+        void globalAppBar_Loaded(object sender, RoutedEventArgs e)
+        {
+            globalAppBar.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+        }
+
+        void globalAppBar_Opened(object sender, object e)
+        {
+            globalAppBar.Focus(Windows.UI.Xaml.FocusState.Programmatic);
         }
 
         /// <summary>
