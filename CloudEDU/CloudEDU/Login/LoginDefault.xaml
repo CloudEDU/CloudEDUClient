@@ -74,7 +74,7 @@
 
             </PasswordBox>
             <CheckBox x:Name="CheckAutoLogin" Content="Auto-Log" HorizontalAlignment="center"
-                  VerticalAlignment="Center" Canvas.Left="648" Canvas.Top="510" Foreground="White" />
+                  VerticalAlignment="Center" Canvas.Left="648" Canvas.Top="510" Foreground="White" Visibility="Collapsed" />
             <Button HorizontalAlignment="Center" Style="{StaticResource NextAppBarButtonStyle}"
                 Width="100" Height="100" VerticalAlignment="Center" AutomationProperties.Name="" Click="LoginButton_Click" Canvas.Left="797" Canvas.Top="450" Foreground="white" />
         </Canvas>

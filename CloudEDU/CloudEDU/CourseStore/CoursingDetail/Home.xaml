@@ -20,8 +20,8 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Vertical">
-            <Grid Width="auto" Background="White">
-                <Image Height="270" Stretch="UniformToFill" Source="{Binding ImageUri}" />
+            <Grid Width="auto" Background="Transparent">
+                <Image Height="300" Stretch="Uniform" Source="{Binding ImageUri}" />
             </Grid>
             <Grid VerticalAlignment="Bottom">
                 <StackPanel x:Name="rateStarsPanel" Orientation="Horizontal" HorizontalAlignment="Left" />

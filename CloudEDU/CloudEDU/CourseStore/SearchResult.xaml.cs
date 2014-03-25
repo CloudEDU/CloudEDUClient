@@ -101,9 +101,9 @@ namespace CloudEDU.CourseStore
         /// <param name="e">Event data that describes the course clicked.</param>
         private void Course_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var courseName = ((Course)e.ClickedItem).Title;
+            var course = (Course)e.ClickedItem;
 
-            Frame.Navigate(typeof(CourseOverview), courseName);
+            Frame.Navigate(typeof(CourseOverview), course);
         }
         private void UserProfileButton_Click(object sender, RoutedEventArgs e)
         {
