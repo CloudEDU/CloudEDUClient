@@ -148,6 +148,7 @@ namespace CloudEDU.CourseStore.CourseDetail
             commentEntity.TITLE = newTitleTextBox.Text;
             commentEntity.RATE = globalRate;
             commentEntity.CONTENT = newContentTextBox.Text;
+            commentEntity.TIME = DateTime.Now;
             ctx.AddToCOMMENT(commentEntity);
             ctx.BeginSaveChanges(OnAddCommentComplete, null); 
         }

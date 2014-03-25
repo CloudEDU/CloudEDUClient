@@ -339,6 +339,7 @@ namespace CloudEDU.CourseStore.CoursingDetail
             updatedNote.TITLE = noteTitle.Text;
             updatedNote.CONTENT = noteContent.Text;
             updatedNote.LESSON_ID = changedLessonID;
+            updatedNote.DATE = DateTime.Now;
             updatedNote.SHARE = sharableCheckBox.IsChecked ?? false;
 
             try
